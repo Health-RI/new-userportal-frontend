@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" (keyup)="onSearch($event)">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let item of searchResults$ | async" [value]="item.title">
+            {{ item.title }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+  </mat-card>

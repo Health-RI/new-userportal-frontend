@@ -1,0 +1,42 @@
+<div class="search-results-container">
+    <!-- Left Side: Filter Menu -->
+    <div class="filter-menu">
+      <h3>Filters</h3>
+      
+      <!-- Group Filter -->
+      <div>
+        <label>Group:</label>
+        <select [(ngModel)]="selectedGroup" (change)="onFilterChange()">
+          <!-- options for groups -->
+        </select>
+      </div>
+  
+      <!-- License Filter -->
+      <div>
+        <label>License:</label>
+        <select [(ngModel)]="selectedLicense" (change)="onFilterChange()">
+          <!-- options for licenses -->
+        </select>
+      </div>
+  
+      <!-- Format Filter -->
+      <div>
+        <label>Format:</label>
+        <select [(ngModel)]="selectedFormat" (change)="onFilterChange()">
+          <!-- options for formats -->
+        </select>
+      </div>
+    </div>
+  
+    <!-- Right Side: Cards Display -->
+    <div class="results-display">
+      <div *ngFor="let item of filteredResults">
+        <mat-card>
+          <!-- Card content here -->
+          <mat-card-title>{{ item.title }}</mat-card-title>
+          <!-- Add more item details here -->
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  

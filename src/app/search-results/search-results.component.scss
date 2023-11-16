@@ -1,0 +1,16 @@
+.search-results-container {
+    display: flex;
+    justify-content: space-between;
+  
+    .filter-menu {
+      width: 20%;
+      padding: 10px;
+      // Add more styles for the filter menu
+    }
+  
+    .results-display {
+      width: 75%;
+      padding: 10px;
+      // Styles for the results cards
+    }
+  }

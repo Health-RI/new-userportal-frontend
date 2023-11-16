@@ -16,23 +16,18 @@ export class SearchComponent {
   constructor(private ckanService: CkanService,
     private router: Router) { }
 
-    ngOnInit() {
-      console.log(this.searchResults$); // Check the actual data
-      console.log(Array.isArray(this.searchResults$)); // Check if it's an array
-    }
-
-    onSearch(event: Event): void {
-      const inputValue = (event.target as HTMLInputElement).value;
-      this.searchResults$ = this.ckanService.searchDatasets(inputValue)
-        .pipe(
-          debounceTime(300),
-          distinctUntilChanged(),
-          catchError(error => {
-            console.error(error);
-            return of([]);
-          })
-        );
-    }
+  onSearch(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.searchResults$ = this.ckanService.searchDatasets(inputValue)
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        catchError(error => {
+          console.error(error);
+          return of([]);
+        })
+      );
+  }
 
 
   onSelectItem(item: any): void {

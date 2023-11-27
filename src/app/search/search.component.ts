@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { CkanService } from '../ckan.service';
 import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-search',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
   searchResults$: Observable<any[]> | undefined;
-  @Output() search = new EventEmitter<string>();
+  searchTerm: string = '';
 
   constructor(private ckanService: CkanService,
     private router: Router) { }
@@ -30,7 +32,21 @@ export class SearchComponent {
   }
 
 
-  onSelectItem(item: any): void {
-    this.router.navigate(['/search-results'], { queryParams: { query: item.value } });
+  onSubmit(): void {
+    if (this.searchTerm) {
+      this.router.navigate(['/search-results'], { queryParams: { query: this.searchTerm } });
+    }
   }
+
+  onSelectItem(item: any): void {
+    const itemId = item.id;
+    this.searchTerm = '';
+    this.router.navigate(['/item-details', itemId]);
+  }
+
+  resetSearchInput(): void {
+
+
+  }
+
 }

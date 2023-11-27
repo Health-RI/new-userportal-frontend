@@ -9,17 +9,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { SearchComponent } from './search/search.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list'
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './ckan.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    ItemDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,9 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     MatButtonModule,
     MatInputModule,
     MatCardModule,
+    MatExpansionModule,
+    MatListModule,
+    MatIconModule,
     HttpClientModule,
     AppRoutingModule // 
   ],

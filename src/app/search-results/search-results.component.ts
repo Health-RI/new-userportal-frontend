@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CkanService } from '../ckan.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -11,11 +10,17 @@ import { Observable } from 'rxjs';
 export class SearchResultsComponent implements OnInit {
   allResults: any[] = [];
   filteredResults: any[] = [];
-  selectedGroup: string | undefined;
-  selectedLicense: string | undefined;
-  selectedFormat: string | undefined;
 
-  constructor(private route: ActivatedRoute, private ckanService: CkanService) {}
+  uniquePublishers: string[] = [];
+  selectedPublishers: string[] = [];
+  filteredPublishers: string[] = []; 
+
+  searchTerms = {
+    publisher: '',
+    // ... other search terms for different filters
+  };
+
+  constructor(private route: ActivatedRoute, private ckanService: CkanService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -25,22 +30,52 @@ export class SearchResultsComponent implements OnInit {
   }
 
   loadSearchResults(query: string): void {
-    // Replace with actual API call to fetch data
     this.ckanService.searchDatasets(query).subscribe(data => {
-      //this.allResults = data.results;
+      this.allResults = data;
+      this.populateUniquePublishers();
+      this.filteredPublishers = [...this.uniquePublishers];
       this.filterResults();
+     
     });
   }
 
   filterResults(): void {
-    this.filteredResults = this.allResults.filter(item =>
-      (!this.selectedGroup || item.group === this.selectedGroup) &&
-      (!this.selectedLicense || item.license === this.selectedLicense) &&
-      (!this.selectedFormat || item.format === this.selectedFormat)
-    );
+    if (this.selectedPublishers.length > 0) {
+      this.filteredResults = this.allResults.filter(item =>
+        this.selectedPublishers.includes(item.publisher_name)
+      );
+    } else {
+      // If no publishers are selected, do not apply any filter
+      this.filteredResults = [...this.allResults];
+    }
   }
 
   onFilterChange(): void {
     this.filterResults();
   }
+
+  populateUniquePublishers(): void {
+    const publisherNames = this.allResults.map(item => item.publisher_name);
+    this.uniquePublishers = Array.from(new Set(publisherNames));
+  }
+
+  clearSelectedPublishers(): void {
+    this.selectedPublishers = []; 
+    this.filterResults(); 
+  }
+
+  searchFilters(): void {
+    this.filteredPublishers = this.uniquePublishers.filter(publisher =>
+      publisher.toLowerCase().includes(this.searchTerms.publisher.toLowerCase())
+    );
+    // Repeat for other filters
+  }
+
+  clearSearchFilter(): void {
+    this.searchTerms.publisher = '';
+    this.searchFilters();
+    // Repeat for other filters
+  }
+
+
 }

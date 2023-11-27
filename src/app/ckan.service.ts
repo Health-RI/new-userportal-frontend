@@ -6,16 +6,20 @@ import { Observable, catchError, map, of } from 'rxjs';
   providedIn: 'root'
 })
 export class CkanService {
-  private apiUrl = 'http://localhost:5500/api/action'; // Replace with your CKAN API URL
+  private apiUrl = 'http://localhost:5500'; // Replace with your CKAN API URL
 
   constructor(private http: HttpClient) { }
 
   searchDatasets(query: string): Observable<any[]> {
-    const url = `${this.apiUrl}/package_search?q=${encodeURIComponent(query)}`;
+    const url = `${this.apiUrl}/api/action/package_search?q=${encodeURIComponent(query)}`;
     return this.http.get<any>(url).pipe(
       map(response => response.result.results.map((item: any) => ({
+        id: item.id,
         title: item.title,
-        description: item.notes
+        description: item.notes,
+        modified: item.metadata_modified,
+        organizationName: item.organization.title,
+        publisher_name: item.publisher_name
       }))),
       catchError(error => {
         console.error(error);
@@ -24,5 +28,7 @@ export class CkanService {
     );
   }
 
-
+  getSchemingPackageShow(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
+  }
 }

@@ -1,42 +1,53 @@
-<div class="search-results-container">
-    <!-- Left Side: Filter Menu -->
-    <div class="filter-menu">
-      <h3>Filters</h3>
-      
-      <!-- Group Filter -->
-      <div>
-        <label>Group:</label>
-        <select [(ngModel)]="selectedGroup" (change)="onFilterChange()">
-          <!-- options for groups -->
-        </select>
-      </div>
-  
-      <!-- License Filter -->
-      <div>
-        <label>License:</label>
-        <select [(ngModel)]="selectedLicense" (change)="onFilterChange()">
-          <!-- options for licenses -->
-        </select>
-      </div>
-  
-      <!-- Format Filter -->
-      <div>
-        <label>Format:</label>
-        <select [(ngModel)]="selectedFormat" (change)="onFilterChange()">
-          <!-- options for formats -->
-        </select>
-      </div>
-    </div>
-  
-    <!-- Right Side: Cards Display -->
-    <div class="results-display">
-      <div *ngFor="let item of filteredResults">
-        <mat-card>
-          <!-- Card content here -->
-          <mat-card-title>{{ item.title }}</mat-card-title>
-          <!-- Add more item details here -->
-        </mat-card>
-      </div>
-    </div>
+<div class="search-results-container">  
+  <!-- Left Side: Filter Menu -->
+  <div class="filter-menu">
+    <h3>Filters</h3>
+
+    <mat-accordion multi="true">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Publisher
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Search filter</mat-label>
+          <input matInput placeholder="Search publishers" [(ngModel)]="searchTerms.publisher" (ngModelChange)="searchFilters()">
+          <button mat-icon-button matSuffix (click)="clearSearchFilter()" *ngIf="searchTerms.publisher">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+    
+        <button mat-button (click)="clearSelectedPublishers()">clear all</button>
+    
+        <mat-selection-list #publisher  [(ngModel)]="selectedPublishers" (ngModelChange)="onFilterChange()">
+          <mat-list-option *ngFor="let publisher of filteredPublishers" [value]="publisher">
+            {{ publisher }}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-expansion-panel>
+    
+      <!-- Repeat for other filter categories like Keywords, Phenotype, etc. -->
+    </mat-accordion>
+
   </div>
-  
+
+  <div class="results-display">
+    <mat-card *ngFor="let item of filteredResults" class="search-result-card">
+      <mat-card-header>
+        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-subtitle>{{ item.organizationName }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        {{ item.description }}
+      </mat-card-content>
+      <mat-card-footer>
+        <div class="card-footer-content">
+          Last updated {{ item.modified | date: 'dd MMMM yyyy' }}
+        </div>
+      </mat-card-footer>
+
+    </mat-card>
+  </div>
+</div>

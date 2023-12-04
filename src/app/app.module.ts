@@ -15,16 +15,18 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list'
 import { HttpClientModule } from '@angular/common/http';
-import { CkanService } from './ckan.service';
+import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     SearchResultsComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

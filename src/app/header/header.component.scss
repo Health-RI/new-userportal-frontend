@@ -1,0 +1,26 @@
+mat-toolbar {
+    .toolbar-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+  
+      .logo {
+        height: auto;
+        max-width: 100%; // or the height of your logo
+        margin-right: 20px;
+      }
+  
+      .toolbar-spacer {
+        flex: 1 1 auto;
+      }
+  
+      a {
+        margin-left: 20px;
+      }
+    }
+  }
+  
+
+  

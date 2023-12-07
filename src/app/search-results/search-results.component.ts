@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CkanService } from '../ckan.service';
+import { CkanService } from '../services/ckan.service';
 
 @Component({
   selector: 'app-search-results',

@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { CkanService } from '../ckan.service';
+import { CkanService } from '../services/ckan.service';
 import { Router } from '@angular/router';
 
 

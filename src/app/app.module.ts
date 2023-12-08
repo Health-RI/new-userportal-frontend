@@ -13,12 +13,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { SearchComponent } from './search/search.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list'
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HeaderComponent } from './header/header.component';
     SearchComponent,
     SearchResultsComponent,
     ItemDetailsComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -38,14 +41,20 @@ import { HeaderComponent } from './header/header.component';
     MatAutocompleteModule,
     MatButtonModule,
     MatInputModule,
+    MatGridListModule,
     MatCardModule,
     MatExpansionModule,
     MatListModule,
     MatIconModule,
+    
     HttpClientModule,
     AppRoutingModule // 
   ],
   providers: [CkanService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+  
+ }

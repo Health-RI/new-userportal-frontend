@@ -8,12 +8,19 @@ mat-toolbar {
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
+      justify-content: space-between;
       
       .logo {
         margin-top: 20px;
-        height: auto;
-        max-width: 100%; // or the height of your logo
+        max-height: 102px; // Adjust to your preferred maximum height
+        max-width: 100%;   // Maintain aspect ratio
+        height: auto;      // Maintain aspect ratio
+        width: auto;
         margin-bottom: 20px;
+
+
+
+
       }
   
       .toolbar-spacer {

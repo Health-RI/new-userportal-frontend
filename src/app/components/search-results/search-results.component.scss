@@ -3,6 +3,7 @@
   grid-template-columns: 300px 1fr; // First column for filters, second for results
   gap: 20px; // Add space between filters and results
 
+
   .filter-menu {
     mat-accordion {
       display: block;
@@ -51,10 +52,12 @@
     }
   }
 
+
   .results-display {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    position: relative;
 
     .search-result-card {
       width: 100%;
@@ -90,5 +93,13 @@
         max-width: 100%; // Full width on smaller devices
       }
     }
+    .paginator-container {
+      width: 100%; // Ensure full width
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      margin-top: auto;
+    }
   }
+
 }

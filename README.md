@@ -1,4 +1,6 @@
-# gdiCatalogApp
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
+# GDI User Portal Front-end
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
 
@@ -25,3 +27,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## License
+
+[Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)

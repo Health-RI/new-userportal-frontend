@@ -1,4 +1,6 @@
-<div class="search-results-container">  
+<app-search></app-search>
+
+<div class="search-results-container">
   <!-- Left Side: Filter Menu -->
   <div class="filter-menu">
     <h3>Filters</h3>
@@ -10,31 +12,32 @@
             Publisher
           </mat-panel-title>
         </mat-expansion-panel-header>
-    
+
         <mat-form-field appearance="outline">
           <mat-label>Search filter</mat-label>
-          <input matInput placeholder="Search publishers" [(ngModel)]="searchTerms.publisher" (ngModelChange)="searchFilters()">
+          <input matInput placeholder="Search publishers" [(ngModel)]="searchTerms.publisher"
+            (ngModelChange)="searchFilters()">
           <button mat-icon-button matSuffix (click)="clearSearchFilter()" *ngIf="searchTerms.publisher">
             <mat-icon>clear</mat-icon>
           </button>
         </mat-form-field>
-    
+
         <button mat-button (click)="clearSelectedPublishers()">clear all</button>
-    
-        <mat-selection-list #publisher  [(ngModel)]="selectedPublishers" (ngModelChange)="onFilterChange()">
+
+        <mat-selection-list #publisher [(ngModel)]="selectedPublishers" (ngModelChange)="onFilterChange()">
           <mat-list-option *ngFor="let publisher of filteredPublishers" [value]="publisher">
             {{ publisher }}
           </mat-list-option>
         </mat-selection-list>
       </mat-expansion-panel>
-    
+
       <!-- Repeat for other filter categories like Keywords, Phenotype, etc. -->
     </mat-accordion>
 
   </div>
 
   <div class="results-display">
-    <mat-card *ngFor="let item of filteredResults" class="search-result-card">
+    <mat-card *ngFor="let item of filteredResults" class="search-result-card" (click)="onSelectItem(item)">
       <mat-card-header>
         <mat-card-title>{{ item.title }}</mat-card-title>
         <mat-card-subtitle>{{ item.organizationName }}</mat-card-subtitle>
@@ -49,5 +52,14 @@
       </mat-card-footer>
 
     </mat-card>
+    <div class="paginator-container">
+      <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage" (page)="handlePageEvent($event)">
+      </mat-paginator>
+    </div>
+    
   </div>
+
+
+
 </div>

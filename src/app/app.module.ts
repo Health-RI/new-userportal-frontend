@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
@@ -50,15 +51,18 @@ import { HomeComponent } from './components/home/home.component';
     MatExpansionModule,
     MatListModule,
     MatIconModule,
-    
+    KeycloakAngularModule,
     HttpClientModule,
-    AppRoutingModule // 
+    AppRoutingModule
   ],
-  providers: [CkanService],
+  providers: [
+    CkanService,
+    KeycloakService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
 
-  
- }
+
+}

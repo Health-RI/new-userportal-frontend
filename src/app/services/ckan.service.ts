@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CkanService {
-  // For Development: Proxy redirects traffic to the backend to avoid CORS issues
-  private apiUrl = ''; // Replace with your CKAN API URL
-
   constructor(private http: HttpClient) { }
 
   searchDatasets(query: string, start: number = 0, rows: number = 12): Observable<{ results: any[], count: number }> {
-    const url = `${this.apiUrl}/api/action/package_search?q=${encodeURIComponent(query)}&start=${start}&rows=${rows}`;
+    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&start=${start}&rows=${rows}`;
     return this.http.get<any>(url).pipe(
       map(response => {
 
@@ -39,7 +37,7 @@ export class CkanService {
   }
 
   getSchemingPackageShow(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
+    return this.http.get(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
   }
 }
 

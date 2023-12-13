@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CkanService } from '../services/ckan.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
+import { CkanService } from '../../services/ckan.service';
 
 @Component({
   selector: 'app-search-results',
@@ -20,7 +21,13 @@ export class SearchResultsComponent implements OnInit {
     // ... other search terms for different filters
   };
 
-  constructor(private route: ActivatedRoute, private ckanService: CkanService) { }
+  totalResults: number = 0;
+  pageSize: number = 12;
+  currentPage: number = 0;
+  pageSizeOptions: number[] = [12, 24, 48];
+  currentSearchQuery: string = '';
+
+  constructor(private route: ActivatedRoute, private ckanService: CkanService,  private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -30,14 +37,28 @@ export class SearchResultsComponent implements OnInit {
   }
 
   loadSearchResults(query: string): void {
-    this.ckanService.searchDatasets(query).subscribe(data => {
-      this.allResults = data;
+    const start = this.currentPage * this.pageSize;
+    this.ckanService.searchDatasets(query,start, this.pageSize).subscribe(data => {
+      this.allResults = data.results;
+      this.totalResults = data.count;
+      console.log(this.totalResults)
       this.populateUniquePublishers();
       this.filteredPublishers = [...this.uniquePublishers];
       this.filterResults();
      
     });
   }
+
+  handlePageEvent(event: PageEvent): void {
+    // Update the page size and index
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex ;
+
+    this.loadSearchResults(this.currentSearchQuery);
+   
+  }
+
+
 
   filterResults(): void {
     if (this.selectedPublishers.length > 0) {
@@ -77,5 +98,8 @@ export class SearchResultsComponent implements OnInit {
     // Repeat for other filters
   }
 
-
+  onSelectItem(item: any): void {
+    const itemId = item.id;
+    this.router.navigate(['/item-details', itemId]);
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { CkanService } from '../services/ckan.service';
+import { CkanService } from '../../services/ckan.service';
 import { Router } from '@angular/router';
 
 
@@ -22,6 +22,7 @@ export class SearchComponent {
     const inputValue = (event.target as HTMLInputElement).value;
     this.searchResults$ = this.ckanService.searchDatasets(inputValue)
       .pipe(
+        map(response => response.results),
         debounceTime(300),
         distinctUntilChanged(),
         catchError(error => {
@@ -29,6 +30,7 @@ export class SearchComponent {
           return of([]);
         })
       );
+      
   }
 
 

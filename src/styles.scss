@@ -3,8 +3,26 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Raleway", sans-serif; background-color: #ffffff; }
 
 
-$primary-color: #123456; // Replace with Health-RI primary color
-$secondary-color: #654321; //
+h1 {
+    font-family: "Titillium Web", sans-serif;
+    background: #ffffff;
+    font-weight: 400;
+  }
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Share Tech Mono", monospace;
+  color: #7276b1;
+}
+
+
+
+
+$primary-color: #123456; 
+$secondary-color: #654321; 

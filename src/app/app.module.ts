@@ -10,15 +10,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { SearchComponent } from './search/search.component';
+import { SearchComponent } from './components/search/search.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list'
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { ItemDetailsComponent } from './item-details/item-details.component';
-import { HeaderComponent } from './header/header.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { HeaderComponent } from './header/header.component';
     SearchComponent,
     SearchResultsComponent,
     ItemDetailsComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -36,16 +42,23 @@ import { HeaderComponent } from './header/header.component';
     FormsModule,
     MatToolbarModule,
     MatAutocompleteModule,
+    MatPaginatorModule,
     MatButtonModule,
     MatInputModule,
+    MatGridListModule,
     MatCardModule,
     MatExpansionModule,
     MatListModule,
     MatIconModule,
+    
     HttpClientModule,
     AppRoutingModule // 
   ],
   providers: [CkanService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+  
+ }

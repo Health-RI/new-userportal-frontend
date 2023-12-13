@@ -6,7 +6,8 @@ import { Observable, catchError, map, of } from 'rxjs';
   providedIn: 'root'
 })
 export class CkanService {
-  private apiUrl = 'http://localhost:5500'; // Replace with your CKAN API URL
+  // For Development: Proxy redirects traffic to the backend to avoid CORS issues
+  private apiUrl = ''; // Replace with your CKAN API URL
 
   constructor(private http: HttpClient) { }
 

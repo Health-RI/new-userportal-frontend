@@ -24,6 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { initKeycloak } from './services/init-keycloak.service';
 
 @NgModule({
   declarations: [
@@ -56,8 +57,14 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
     AppRoutingModule
   ],
   providers: [
-    CkanService,
-    KeycloakService
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    },
+    CkanService
+    
   ],
   bootstrap: [AppComponent]
 })

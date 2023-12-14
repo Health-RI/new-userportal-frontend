@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { KeycloakUserService } from 'src/app/services/keycloak-user.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-header',
@@ -8,23 +8,18 @@ import { KeycloakUserService } from 'src/app/services/keycloak-user.service';
 })
 export class HeaderComponent {
   isLoggedIn: boolean = false;
+  authenticated = false;
 
-  constructor(private keycloakUserService: KeycloakUserService) { 
-    this.checkLoginStatus();
+
+  constructor(private readonly keycloak: KeycloakService) {
+    this.authenticated = this.keycloak.isLoggedIn()
   }
 
-  onLoginClick() {
-    this.keycloakUserService.initKeycloak().then(() => {
-      this.keycloakUserService.login();
-    });
+  login() {
+    this.keycloak.login();
   }
 
-  onLogoutClick() {
-    this.keycloakUserService.logout();
+  logout() {
+    this.keycloak.logout();
   }
-
-  checkLoginStatus() {
-    this.isLoggedIn = this.keycloakUserService.isLoggedIn();
-  }
-
 }

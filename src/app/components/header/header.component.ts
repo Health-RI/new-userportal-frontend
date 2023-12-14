@@ -7,9 +7,7 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  isLoggedIn: boolean = false;
   authenticated = false;
-
 
   constructor(private readonly keycloak: KeycloakService) {
     this.authenticated = this.keycloak.isLoggedIn()

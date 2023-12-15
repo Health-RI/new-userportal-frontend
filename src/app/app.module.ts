@@ -23,6 +23,7 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HomeComponent } from './components/home/home.component';
     ItemDetailsComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    CatalogueDetailsComponent
   ],
   imports: [
     BrowserModule,

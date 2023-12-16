@@ -6,8 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  onSearch(searchValue: string): void {
-    console.log('Search:', searchValue);
-    // Implement your search logic here, like calling a service
-  }
 }

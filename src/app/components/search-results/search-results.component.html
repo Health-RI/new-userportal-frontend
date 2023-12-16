@@ -45,21 +45,14 @@
       <mat-card-content>
         {{ item.description }}
       </mat-card-content>
-      <mat-card-footer>
-        <div class="card-footer-content">
-          Last updated {{ item.modified | date: 'dd MMMM yyyy' }}
-        </div>
+      <mat-card-footer class="card-footer-content">
+        Last updated {{ item.modified | date: 'dd MMMM yyyy' }}
       </mat-card-footer>
-
     </mat-card>
     <div class="paginator-container">
       <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
         [pageIndex]="currentPage" (page)="handlePageEvent($event)">
       </mat-paginator>
     </div>
-    
   </div>
-
-
-
 </div>

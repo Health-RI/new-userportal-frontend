@@ -1,20 +1,29 @@
-<div class="search-bar-container">
-  <form class="search-bar" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Search</mat-label>
-      <input matInput [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearch($event)" [matAutocomplete]="auto"
-        name="search">
-      <button mat-icon-button matSuffix (click)="onSubmit()">
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-  </form>
-</div>
+<div class="flex justify-center p-5">
 
-<mat-autocomplete class="autocomplete" (optionSelected)="onSelectItem($event.option.value)" #auto="matAutocomplete" >
-  <mat-option *ngFor="let item of searchResults$ | async" [value]="item">
-    <span class="title">{{ item.title }}</span>
-    <br>
-    <span class="description">{{ item.description }}</span>
-  </mat-option>
-</mat-autocomplete>
+  <div class="w-full max-w-xl">
+
+    <form class="flex items-center border-gray-300" (ngSubmit)="onSubmit()">
+
+      <div class="relative flex-grow">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearch($event)" [matAutocomplete]="auto" name="search">
+          <button mat-icon-button matSuffix (click)="onSubmit()" class="absolute inset-y-0 right-0 flex items-center px-2 bg-blue-500 text-white">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+    </form>
+
+    <mat-autocomplete class="autocomplete" (optionSelected)="onSelectItem($event.option.value)" #auto="matAutocomplete">
+      <mat-option *ngFor="let item of searchResults$ | async" [value]="item">
+        <span class="title font-bold text-gray-800">{{ item.title }}</span>
+        <br>
+        <span class="description text-sm text-gray-600">{{ item.description }}</span>
+      </mat-option>
+    </mat-autocomplete>
+
+  </div>
+
+</div>

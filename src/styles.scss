@@ -1,28 +1,100 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './palette.scss' as palette;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@include mat.core();
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Raleway", sans-serif; background-color: #ffffff; }
+$userportal-primary: mat.define-palette(palette.$primary);
+$userportal-accent: mat.define-palette(palette.$accent, A200, A100, A400);
+$userportal-warn: mat.define-palette(palette.$warn);
+
+$userportal-theme: mat.define-light-theme((
+  color: (
+    primary: $userportal-primary,
+        accent: $userportal-accent,
+        warn: $userportal-warn,
+      )
+));
+
+@include mat.all-component-themes($userportal-theme);
+
+@font-face {
+  font-family: 'Expose-Regular';
+  src: url('./assets/fonts/Expose-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Expose-Regular.woff') format('woff'),
+    url('./assets/fonts/Expose-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi-Regular';
+  src: url('./assets/fonts/Satoshi-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Satoshi-Regular.woff') format('woff'),
+    url('./assets/fonts/Satoshi-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Tabular-Regular';
+  src: url('./assets/fonts/Tabular-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Tabular-Regular.woff') format('woff'),
+    url('./assets/fonts/Tabular-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+* {
+  font-family: "Satoshi-Regular", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: 1.1em;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+}
 
 
 h1 {
-    font-family: "Titillium Web", sans-serif;
-    background: #ffffff;
-    font-weight: 400;
-  }
+  font-family: "Expose-Regular", sans-serif;
+  background: #ffffff;
+  font-weight: 400;
+}
 
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Share Tech Mono", monospace;
+  font-family: "Tabular-Regular", monospace;
   color: #7276b1;
 }
 
+:root {
+  --claret: #7B1C58;
+  --scampi-blue: #7276B1;
+  --gradis-yellow: #FFD895;
+}
 
+a {
+  text-decoration: none;
+  color: black;
+}
 
-
-$primary-color: #123456; 
-$secondary-color: #654321; 
+a:hover {
+  color: var(--scampi-blue);
+}

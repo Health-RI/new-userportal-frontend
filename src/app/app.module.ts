@@ -23,6 +23,8 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { HomeComponent } from './components/home/home.component';
     ItemDetailsComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { HomeComponent } from './components/home/home.component';
     MatIconModule,
     
     HttpClientModule,
-    AppRoutingModule // 
+    AppRoutingModule,
+    FontAwesomeModule // 
   ],
   providers: [CkanService],
   bootstrap: [AppComponent]

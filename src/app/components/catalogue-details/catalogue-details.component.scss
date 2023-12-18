@@ -1,15 +1,15 @@
 .container {
-    margin-top: 60px;
+    margin-top: 20px;
     height: 300px;
 }
 
 .stats-container {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 50% 50%; 
     justify-items:center;
     margin:auto;
     background-color: #7276b118;
-    width: 80%;
+    max-width: 584px; 
     height: 100%;
     border-radius: 10px; 
 }

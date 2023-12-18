@@ -79,6 +79,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   clearSelectedPublishers(): void {
+    this.clearSearchFilter();
     this.selectedPublishers = [];
     this.filterResults();
   }

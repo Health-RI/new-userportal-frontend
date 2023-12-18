@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,9 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export class HeaderComponent implements OnInit {
   isAuthenticated = false;
   userData: any;
-  faBars = faBars;
+  faUser = faUser;
+  faRightToBracket = faRightToBracket;
+  faRightFromBracket = faRightFromBracket;
 
   constructor(private readonly oidcSecurityService: OidcSecurityService) { }
 
@@ -31,10 +33,7 @@ export class HeaderComponent implements OnInit {
     this.oidcSecurityService.logoff();
   }
 
-  toggleDropdown(): void {
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    if (dropdownMenu) {
-      dropdownMenu.classList.toggle('hidden');
-    }
+  username() {
+    return this.userData?.preferred_username;
   }
 }

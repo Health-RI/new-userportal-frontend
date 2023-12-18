@@ -15,7 +15,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatListModule } from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
@@ -68,7 +68,8 @@ import { environment } from 'src/environment/environment';
         scope: 'openid profile email', // Adjust the scopes as needed
         responseType: 'code',
         silentRenew: true,
-        useRefreshToken: true
+        useRefreshToken: true,
+        renewTimeBeforeTokenExpiresInSeconds: 30,
       }
     })
 

@@ -25,6 +25,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthModule } from 'angular-auth-oidc-client';
+import { environment } from 'src/environment/environment';
+
 
 @NgModule({
   declarations: [
@@ -53,16 +56,31 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatExpansionModule,
     MatListModule,
     MatIconModule,
-    
     HttpClientModule,
     AppRoutingModule,
-    FontAwesomeModule // 
+    FontAwesomeModule,
+    AuthModule.forRoot({
+      config: {
+        authority: environment.identityServerUrl,
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: environment.identityServerClientId,
+        scope: 'openid profile email', // Adjust the scopes as needed
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true
+      }
+    })
+
   ],
-  providers: [CkanService],
+  providers: [
+    CkanService
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
 
-  
- }
+
+}

@@ -4,4 +4,6 @@
     <a routerLink="/" routerLinkActive="active-router" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a routerLink="/datasets" routerLinkActive="active-router">Datasets</a>
     <a routerLink="/about" routerLinkActive="active-router">About</a>
+    <button mat-button *ngIf="!isAuthenticated" (click)="login()">Login</button>
+    <button mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</button>
 </div>

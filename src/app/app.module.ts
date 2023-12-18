@@ -23,8 +23,10 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { initKeycloak } from './services/init-keycloak.service';
+import { MatSelectModule } from '@angular/material/select';
+import { AuthModule } from 'angular-auth-oidc-client';
+import { environment } from 'src/environment/environment';
+
 
 @NgModule({
   declarations: [
@@ -52,19 +54,26 @@ import { initKeycloak } from './services/init-keycloak.service';
     MatExpansionModule,
     MatListModule,
     MatIconModule,
-    KeycloakAngularModule,
+    MatSelectModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AuthModule.forRoot({
+      config: {
+        authority: environment.IdentityServerUrl,
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: environment.IdentityServerClientId,
+        scope: 'openid profile email', // Adjust the scopes as needed
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true
+      }
+    })
+
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initKeycloak,
-      multi: true,
-      deps: [KeycloakService]
-    },
     CkanService
-    
+
   ],
   bootstrap: [AppComponent]
 })

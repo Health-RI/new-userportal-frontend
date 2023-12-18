@@ -1,6 +1,5 @@
 export const environment = {
     backendUrl: "",
-    keyCloakUrl: "",  // KeyCloak url 
-    keyCloakrealm: "", // Replace with your realm name
-    keyCloakclientId: 'gdi-userportal-app' // Replace with your client ID
+    IdentityServerUrl: "",  // KeyCloak url + REALM 
+    IdentityServerClientId: 'gdi-userportal-app' // Replace with your client ID
 }

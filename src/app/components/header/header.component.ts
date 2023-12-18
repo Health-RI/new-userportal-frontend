@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-header',
@@ -7,17 +7,24 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  authenticated = false;
+  isAuthenticated = false;
 
-  constructor(private readonly keycloak: KeycloakService) {
-    this.authenticated = this.keycloak.isLoggedIn()
+
+  constructor(private readonly oidcSecurityService: OidcSecurityService) { }
+
+  async ngOnInit() {
+    this.oidcSecurityService.isAuthenticated$.subscribe(
+      ({ isAuthenticated }) => {
+        this.isAuthenticated = isAuthenticated;
+      });
   }
 
+
   login() {
-    this.keycloak.login();
+    this.oidcSecurityService.authorize();
   }
 
   logout() {
-    this.keycloak.logout();
+    this.oidcSecurityService.logoff();
   }
 }

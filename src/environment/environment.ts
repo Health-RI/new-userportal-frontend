@@ -1,6 +1,5 @@
 export const environment = {
-    backendUrl: "",
-    keyCloakUrl: "https://healthri-keycloack-dev.azurewebsites.net/auth",  // KeyCloak url 
-    keyCloakrealm: "master", // Replace with your realm name
-    keyCloakclientId: "gdi-userportal-app" // Replace with your client ID
+    backendUrl: "http://localhost:5500",
+    IdentityServerUrl: "https://healthri-keycloack-dev.azurewebsites.net/auth/realms/master",  // KeyCloak url  + REALM
+    IdentityServerClientId: "gdi-userportal-app" // Replace with your client ID
 }

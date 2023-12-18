@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +23,6 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { MatSelectModule } from '@angular/material/select';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 
@@ -54,7 +53,6 @@ import { environment } from 'src/environment/environment';
     MatExpansionModule,
     MatListModule,
     MatIconModule,
-    MatSelectModule,
     HttpClientModule,
     AppRoutingModule,
     AuthModule.forRoot({

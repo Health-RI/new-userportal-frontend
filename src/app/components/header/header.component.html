@@ -1,7 +1,47 @@
-<div class="flex flex-row items-center bg-[#f5f5f5] gap-4 pl-4 pr-4 text-xl">
-    <img src="/assets/egdi-logo-horizontal-full-color-rgb.svg" alt="Logo" class="logo mt-5 mb-5" width="270">
-    <span class="grow"></span>
-    <a routerLink="/" routerLinkActive="active-router" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="/datasets" routerLinkActive="active-router">Datasets</a>
-    <a routerLink="/about" routerLinkActive="active-router">About</a>
+<div class="flex flex-row items-center bg-[#f5f5f5] gap-4 pl-4 pr-4 text-lg relative">
+
+  <img src="/assets/egdi-logo-horizontal-full-color-rgb.svg" alt="Logo" class="logo mt-4 mb-5" width="190">
+  <span class="grow"></span>
+
+  <div class="hidden sm:flex">
+      <a routerLink="/" routerLinkActive="active-router" [routerLinkActiveOptions]="{ exact: true }" class="mr-4">Home</a>
+      <a routerLink="/datasets" routerLinkActive="active-router" class="mr-4">Datasets</a>
+      <a routerLink="/about" routerLinkActive="active-router">About</a>
+  </div>
+
+  <div class="sm:hidden absolute right-0 z-50">
+      <button
+          mat-icon-button color="primary"
+          class="text-gray-800 focus:outline-none"
+          (click)="toggleDropdown()"
+      >
+        <fa-icon [icon]="faBars"></fa-icon>
+      </button>
+      <div
+          id="dropdownMenu"
+          class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#f5f5f5] text-xl font-normal"
+      >
+          <div class="py-1">
+              <a
+                  href="/"
+                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  routerLinkActive="active-router"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  >Home</a
+              >
+              <a
+                  href="/datasets"
+                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  routerLinkActive="active-router"
+                  >Datasets</a
+              >
+              <a
+                  href="/about"
+                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  routerLinkActive="active-router"
+                  >About</a
+              >
+          </div>
+      </div>
+  </div>
 </div>

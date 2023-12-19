@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of , from , mergeMap, toArray} from 'rxjs';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
@@ -41,9 +41,13 @@ export class CkanService {
     return this.http.get(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
   }
 
-  getCatalogueDetails(): Observable<any>[]{
-    const urls = [...this.ckanToDcat.keys()].map(item => `${environment.backendUrl}/api/3/action/${item}_list`);
-    return urls.map(url => this.getCatalogueDetail(url));
+getCatalogueDetails(): Observable<any> {
+  const urls = [...this.ckanToDcat.keys()].map(item => `${environment.backendUrl}/api/3/action/${item}_list`);
+
+  return from(urls).pipe(
+    mergeMap(url => this.getCatalogueDetail(url)),
+    toArray(), 
+  );
 }
 
   getCatalogueDetail(url: string): Observable<any> {

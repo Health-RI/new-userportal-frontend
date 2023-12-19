@@ -14,12 +14,13 @@ export class CatalogueDetailsComponent {
 
   ngOnInit(): void {
     this.ckanService
-              .getCatalogueDetails()
-              .map(observable => observable.subscribe(response => this.joinDetails(response)));
+              .getCatalogueDetails().subscribe(response => this.joinDetails(response));
     }
   
-  joinDetails(detail: { [key: string]: number }): void {
-      this.catalogueDetails = {...this.catalogueDetails, ...detail};
+  joinDetails(details: { [key: string]: number }[]): void {
+      for (const detail of details){
+        this.catalogueDetails = {...this.catalogueDetails, ...detail}
+      }
     }
 }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
-import { faUser, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faRightToBracket, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faRightToBracket = faRightToBracket;
   faRightFromBracket = faRightFromBracket;
+  faBars = faBars;
+
 
   constructor(private readonly oidcSecurityService: OidcSecurityService) { }
 

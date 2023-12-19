@@ -28,6 +28,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
+import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { MatMenuModule } from '@angular/material/menu';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    CatalogueDetailsComponent,
   ],
   imports: [
     BrowserModule,

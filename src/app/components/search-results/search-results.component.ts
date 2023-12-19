@@ -14,7 +14,7 @@ export class SearchResultsComponent implements OnInit {
 
   uniquePublishers: string[] = [];
   selectedPublishers: string[] = [];
-  filteredPublishers: string[] = []; 
+  filteredPublishers: string[] = [];
 
   searchTerms = {
     publisher: '',
@@ -27,7 +27,7 @@ export class SearchResultsComponent implements OnInit {
   pageSizeOptions: number[] = [12, 24, 48];
   currentSearchQuery: string = '';
 
-  constructor(private route: ActivatedRoute, private ckanService: CkanService,  private router: Router) { }
+  constructor(private route: ActivatedRoute, private ckanService: CkanService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -38,24 +38,22 @@ export class SearchResultsComponent implements OnInit {
 
   loadSearchResults(query: string): void {
     const start = this.currentPage * this.pageSize;
-    this.ckanService.searchDatasets(query,start, this.pageSize).subscribe(data => {
+    this.ckanService.searchDatasets(query, start, this.pageSize).subscribe(data => {
       this.allResults = data.results;
       this.totalResults = data.count;
-      console.log(this.totalResults)
       this.populateUniquePublishers();
       this.filteredPublishers = [...this.uniquePublishers];
       this.filterResults();
-     
     });
   }
 
   handlePageEvent(event: PageEvent): void {
     // Update the page size and index
     this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex ;
+    this.currentPage = event.pageIndex;
 
     this.loadSearchResults(this.currentSearchQuery);
-   
+
   }
 
 
@@ -81,8 +79,9 @@ export class SearchResultsComponent implements OnInit {
   }
 
   clearSelectedPublishers(): void {
-    this.selectedPublishers = []; 
-    this.filterResults(); 
+    this.clearSearchFilter();
+    this.selectedPublishers = [];
+    this.filterResults();
   }
 
   searchFilters(): void {

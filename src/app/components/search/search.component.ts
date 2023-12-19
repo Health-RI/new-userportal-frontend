@@ -1,6 +1,6 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CkanService } from '../../services/ckan.service';
 import { Router } from '@angular/router';
 
@@ -36,7 +36,7 @@ export class SearchComponent {
 
   onSubmit(): void {
     if (this.searchTerm) {
-      this.router.navigate(['/search-results'], { queryParams: { query: this.searchTerm } });
+      this.router.navigate(['/datasets'], { queryParams: { query: this.searchTerm } });
     }
   }
 

@@ -1,8 +1,22 @@
-<mat-toolbar>
-    <div class="toolbar-container">
-        <img src="../../assets/egdi-logo-horizontal-full-color-rgb.svg" alt="Logo" class="logo">
-        <span class="toolbar-spacer"></span>
-        <button mat-button routerLink="/">Home</button>
-        <button mat-button routerLink="/about">About</button>
+<div class="flex flex-row items-center bg-[#f5f5f5] pl-4 pr-4 text-lg relative">
+
+    <img src="/assets/egdi-logo-horizontal-full-color-rgb.svg" alt="Logo" class="mt-4 mb-4" width="190">
+    <span class="grow"></span>
+    <div class="flex flex-col items-center">
+        <div class="flex flex-row gap-2 items-center justify-end w-full text-sm mb-3">
+            <fa-icon [icon]="faUser" *ngIf="isAuthenticated"></fa-icon>
+            <span *ngIf="isAuthenticated">{{ username() }}</span>
+            <a *ngIf="!isAuthenticated" (click)="login()">
+                <fa-icon [icon]="faRightToBracket"></fa-icon>
+            </a>
+            <a *ngIf="isAuthenticated" (click)="logout()">
+                <fa-icon [icon]="faRightFromBracket"></fa-icon>
+            </a>
+        </div>
+        <div class="flex flex-row gap-4 items-center">
+            <a routerLink="/" routerLinkActive="active-router" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+            <a routerLink="/datasets" routerLinkActive="active-router">Datasets</a>
+            <a routerLink="/about" routerLinkActive="active-router">About</a>
+        </div>
     </div>
-</mat-toolbar>
+</div>

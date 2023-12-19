@@ -15,7 +15,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatListModule } from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
@@ -23,7 +23,12 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthModule } from 'angular-auth-oidc-client';
+import { environment } from 'src/environment/environment';
 import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +39,7 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    AboutComponent,
     CatalogueDetailsComponent
   ],
   imports: [
@@ -52,15 +58,32 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     MatExpansionModule,
     MatListModule,
     MatIconModule,
-    
     HttpClientModule,
-    AppRoutingModule // 
+    AppRoutingModule,
+    FontAwesomeModule,
+    AuthModule.forRoot({
+      config: {
+        authority: environment.identityServerUrl,
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: environment.identityServerClientId,
+        scope: 'openid profile email', // Adjust the scopes as needed
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        renewTimeBeforeTokenExpiresInSeconds: 30,
+      }
+    })
+
   ],
-  providers: [CkanService],
+  providers: [
+    CkanService
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
 
-  
- }
+
+}

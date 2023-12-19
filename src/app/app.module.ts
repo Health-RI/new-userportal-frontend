@@ -27,6 +27,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { environment } from 'src/environment/environment';
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
+    MatMenuModule,
     AuthModule.forRoot({
       config: {
         authority: environment.identityServerUrl,

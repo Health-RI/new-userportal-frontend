@@ -41,17 +41,17 @@ export class CkanService {
     return this.http.get(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
   }
 
-getCatalogueDetails(): Observable<any> {
-  const urls = [...this.ckanToDcat.keys()].map(item => `${environment.backendUrl}/api/3/action/${item}_list`);
+  getCatalogueDetails(): Observable<any> {
+    const urls = [...this.ckanToDcat.keys()].map(item => `${environment.backendUrl}/api/3/action/${item}_list`);
 
-  return from(urls).pipe(
-    mergeMap(url => this.getCatalogueDetail(url)),
-    toArray(), 
-  );
-}
+    return from(urls).pipe(
+      mergeMap(url => this.getCatalogueDetail(url)),
+      toArray(), 
+    );
+  }
 
   getCatalogueDetail(url: string): Observable<any> {
-    let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0] || "") || "";
+    let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0] ?? "") ?? "";
     
     return this.http.get<any>(url).pipe(map(response => {
       const itemCount = response.result.length;

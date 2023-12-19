@@ -1,22 +1,96 @@
 <div class="flex flex-row items-center bg-[#f5f5f5] pl-4 pr-4 text-lg relative">
+  <a
+    routerLink="/"
+    routerLinkActive="active-router"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <img
+      src="/assets/egdi-logo-horizontal-full-color-rgb.svg"
+      alt="Logo"
+      class="mt-4 mb-4"
+      width="190"
+    />
+  </a>
 
-    <img src="/assets/egdi-logo-horizontal-full-color-rgb.svg" alt="Logo" class="mt-4 mb-4" width="190">
-    <span class="grow"></span>
-    <div class="flex flex-col items-center">
-        <div class="flex flex-row gap-2 items-center justify-end w-full text-sm mb-3">
-            <fa-icon [icon]="faUser" *ngIf="isAuthenticated"></fa-icon>
-            <span *ngIf="isAuthenticated">{{ username() }}</span>
-            <a *ngIf="!isAuthenticated" (click)="login()">
-                <fa-icon [icon]="faRightToBracket"></fa-icon>
-            </a>
-            <a *ngIf="isAuthenticated" (click)="logout()">
-                <fa-icon [icon]="faRightFromBracket"></fa-icon>
-            </a>
-        </div>
-        <div class="flex flex-row gap-4 items-center">
-            <a routerLink="/" routerLinkActive="active-router" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-            <a routerLink="/datasets" routerLinkActive="active-router">Datasets</a>
-            <a routerLink="/about" routerLinkActive="active-router">About</a>
-        </div>
+  <span class="grow"></span>
+  <div class="flex flex-col items-center">
+    <div
+      class="hidden sm:flex flex-row gap-2 items-center justify-end w-full text-sm mb-3"
+    >
+      <fa-icon [icon]="faUser" *ngIf="isAuthenticated"></fa-icon>
+      <span *ngIf="isAuthenticated">{{ username() }}</span>
+      <a *ngIf="!isAuthenticated" (click)="login()">
+        <fa-icon [icon]="faRightToBracket"></fa-icon>
+      </a>
+      <a *ngIf="isAuthenticated" (click)="logout()">
+        <fa-icon [icon]="faRightFromBracket"></fa-icon>
+      </a>
     </div>
+    <div class="hidden sm:flex flex-row gap-4 items-center">
+      <a
+        routerLink="/"
+        routerLinkActive="active-router"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+      <a routerLink="/datasets" routerLinkActive="active-router">Datasets</a>
+      <a routerLink="/about" routerLinkActive="active-router">About</a>
+    </div>
+    <div class="sm:hidden absolute right-0 z-50 top-8">
+      <button
+        mat-icon-button
+        color="primary"
+        class="text-gray-800 focus:outline-none"
+        [matMenuTriggerFor]="dropdownMenu"
+      >
+        <fa-icon [icon]="faBars"></fa-icon>
+      </button>
+      <mat-menu
+        #dropdownMenu="matMenu"
+        class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg text-xl font-normal"
+      >
+        <a
+          [routerLink]="['/']"
+          class="text-gray-800 hover:bg-gray-100 block px-4 py-2"
+          routerLinkActive="active-router"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home
+        </a>
+
+        <a
+          [routerLink]="['/datasets']"
+          class="text-gray-800 hover-bg-gray-100 block px-4 py-2"
+          routerLinkActive="active-router"
+          >Datasets
+        </a>
+
+        <a
+          [routerLink]="['/about']"
+          class="text-gray-800 hover:bg-gray-100 block px-4 py-2"
+          routerLinkActive="active-router"
+          >About
+        </a>
+
+        <div *ngIf="isAuthenticated" class="px-4 py-2 border-b border-gray-200">
+          <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
+          {{ username() }}
+        </div>
+
+        <a
+          *ngIf="!isAuthenticated"
+          class="text-gray-800 hover:bg-gray-100 block px-4 py-2"
+          (click)="login()"
+        >
+          <fa-icon [icon]="faRightToBracket" class="mr-2"></fa-icon>Login
+        </a>
+        <a
+          *ngIf="isAuthenticated"
+          class="text-gray-800 hover:bg-gray-100 block px-4 py-2"
+          (click)="logout()"
+        >
+          <fa-icon [icon]="faRightFromBracket" class="mr-2"></fa-icon>Logout
+        </a>
+      </mat-menu>
+    </div>
+  </div>
 </div>

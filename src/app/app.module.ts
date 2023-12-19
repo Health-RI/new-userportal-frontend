@@ -27,6 +27,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
+import { MatMenuModule } from '@angular/material/menu';
 import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
 
 
@@ -40,7 +41,7 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    CatalogueDetailsComponent
+    CatalogueDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +62,7 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
+    MatMenuModule,
     AuthModule.forRoot({
       config: {
         authority: environment.identityServerUrl,

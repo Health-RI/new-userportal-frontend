@@ -99,6 +99,6 @@ export class SearchResultsComponent implements OnInit {
 
   onSelectItem(item: any): void {
     const itemId = item.id;
-    this.router.navigate(['/item-details', itemId]);
+    this.router.navigate(['/datasets', itemId]);
   }
 }

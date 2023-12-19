@@ -43,7 +43,7 @@ export class SearchComponent {
   onSelectItem(item: any): void {
     const itemId = item.id;
     this.searchTerm = '';
-    this.router.navigate(['/item-details', itemId]);
+    this.router.navigate(['/datasets', itemId]);
   }
 
   resetSearchInput(): void {

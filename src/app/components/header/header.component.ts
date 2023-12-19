@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
 import { faUser, faRightToBracket, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +16,7 @@ export class HeaderComponent implements OnInit {
   faBars = faBars;
 
 
-  constructor(private readonly oidcSecurityService: OidcSecurityService, private router: Router) { }
+  constructor(private readonly oidcSecurityService: OidcSecurityService) { }
 
   ngOnInit() {
     this.oidcSecurityService.checkAuth()
@@ -38,10 +37,5 @@ export class HeaderComponent implements OnInit {
 
   username() {
     return this.userData?.preferred_username;
-  }
-
-  onClickLogo(): void {
-    console.log("Click logo")
-    this.router.navigate(['/']);
   }
 }

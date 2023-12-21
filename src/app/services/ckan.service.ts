@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of , from , mergeMap, toArray} from 'rxjs';
 import { environment } from 'src/environment/environment';
+import { Dataset } from '../interfaces/dataset-details.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,8 @@ export class CkanService {
     );
   }
 
-  getSchemingPackageShow(id: string): Observable<any> {
-    return this.http.get(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
+  getSchemingPackageShow(id: string): Observable<Dataset> {
+    return this.http.get<Dataset>(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
   }
 
   getCatalogueDetails(): Observable<any> {

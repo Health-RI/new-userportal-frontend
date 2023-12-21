@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  frontend:
+    image: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main
+#    env_file: TODO how to setup urls via environment variables?
+#      - .env
+    restart: unless-stopped
+#    healthcheck: TODO how to check health?
+#      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+    ports: #TODO - remove after nginx is configured
+      - "0.0.0.0:4200:80"

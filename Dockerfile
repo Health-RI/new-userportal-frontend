@@ -12,6 +12,4 @@ FROM nginx:latest
 
 COPY --from=build /usr/local/app/dist/gdi-userportal-app /usr/share/nginx/html
 
-USER nginx
-
 EXPOSE 80

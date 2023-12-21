@@ -3,12 +3,8 @@ version: "3"
 services:
   frontend:
     image: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main
-    environment:
-      - BACKEND_URL=http://localhost:5500
-      - IDENTITY_SERVER_URL=http://keycloak:8080/realms/ckan
-      - IDENTITY_SERVER_CLIENT_ID=ckan
     restart: unless-stopped
-#    healthcheck: TODO how to check health?
-#      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
-    ports: #TODO - remove after nginx is configured
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+    ports:
       - "0.0.0.0:4200:80"

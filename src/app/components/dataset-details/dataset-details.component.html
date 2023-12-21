@@ -1,0 +1,24 @@
+<div class="flex flex-col lg:flex-row w-full p-10" *ngIf="isNotEmtpy()">
+  <div class="flex flex-col w-full lg:w-2/3 gap-5 p-5">
+    <h2 class="text-2xl">{{ datasetDetails['title'].value }}</h2>
+    <p>
+      {{ datasetDetails['notes']!.value }}
+    </p>
+    <h3>Themes</h3>
+    <div class="flex flex-row flex-wrap gap-3">
+      <mat-chip *ngFor="let theme of getThemes()">{{theme}}</mat-chip>
+    </div>
+    <h3>Keywords</h3>
+    <div class="flex flex-row flex-wrap gap-3">
+      <mat-chip *ngFor="let keyword of getKeywords()">{{keyword.name}}</mat-chip>
+    </div>
+  </div>
+  <div class="flex flex-col gap-3 p-5 bg-[#F5F5F5] w-full lg:w-1/3">
+    <div *ngFor="let key of sorted_details">
+      <div *ngIf="!!datasetDetails[key]?.visible && !!datasetDetails[key]?.value" class="flex flex-col">
+        <h3 class="mr-5 grow">{{ getLabel(datasetDetails[key]) }}</h3>
+        <span>{{ getValue(datasetDetails[key].value) }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
-import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { ItemDetailsComponent } from './components/dataset-details/dataset-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 

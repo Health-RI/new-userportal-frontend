@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>{{ label }} </mat-label>
+  <mat-select multiple>
+    @for (topping of toppingList; track topping) {
+    <mat-option [value]="topping">{{ topping }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

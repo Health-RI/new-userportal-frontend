@@ -36,9 +36,9 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
-  loadSearchResults(query: string): void {
+  loadSearchResults(query: string, filter: string = ""): void {
     const start = this.currentPage * this.pageSize;
-    this.ckanService.searchDatasets(query, start, this.pageSize).subscribe(data => {
+    this.ckanService.searchDatasets(query, filter, start, this.pageSize).subscribe(data => {
       this.allResults = data.results;
       this.totalResults = data.count;
       this.populateUniquePublishers();

@@ -16,6 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
@@ -29,7 +31,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
-
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     HomeComponent,
     AboutComponent,
     CatalogueDetailsComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,8 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     MatExpansionModule,
     MatListModule,
     MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,

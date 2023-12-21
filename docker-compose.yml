@@ -3,8 +3,10 @@ version: "3"
 services:
   frontend:
     image: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main
-#    env_file: TODO how to setup urls via environment variables?
-#      - .env
+    environment:
+      - BACKEND_URL=http://localhost:5500
+      - IDENTITY_SERVER_URL=http://keycloak:8080/realms/ckan
+      - IDENTITY_SERVER_CLIENT_ID=ckan
     restart: unless-stopped
 #    healthcheck: TODO how to check health?
 #      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  frontend:
+    image: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+    ports:
+      - "0.0.0.0:4200:80"

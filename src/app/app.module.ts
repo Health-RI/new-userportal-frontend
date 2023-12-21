@@ -21,7 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
-import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { ItemDetailsComponent } from './components/dataset-details/dataset-details.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
@@ -30,6 +30,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
 import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
 import { FilterComponent } from './components/filter/filter.component';
 
@@ -68,6 +69,7 @@ import { FilterComponent } from './components/filter/filter.component';
     AppRoutingModule,
     FontAwesomeModule,
     MatMenuModule,
+    MatChipsModule,
     AuthModule.forRoot({
       config: {
         authority: environment.identityServerUrl,

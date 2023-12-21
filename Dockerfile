@@ -6,11 +6,11 @@ COPY ./ /usr/local/app/
 
 RUN npm install
 
-RUN npm run build
+RUN npm run build --configuration=production
 
 FROM nginx:latest
 
-COPY --from=build /usr/local/app/dist/sample-angular-app /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/gdi-userportal-app /usr/share/nginx/html
 
 USER nginx
 

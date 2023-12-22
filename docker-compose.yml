@@ -2,9 +2,14 @@ version: "3"
 
 services:
   frontend:
-    image: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main
+    build: 
+      context: .
     restart: unless-stopped
+    environment:
+      - BACKEND_HOST=http://backend:7002
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
     ports:
       - "0.0.0.0:4200:80"
+    extra_hosts:
+      - "backend:host-gateway"

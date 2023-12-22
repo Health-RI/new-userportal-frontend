@@ -10,95 +10,77 @@ import { CkanService } from '../../services/ckan.service';
 })
 export class SearchResultsComponent implements OnInit {
   allResults: any[] = [];
-  filteredResults: any[] = [];
-
-  uniquePublishers: string[] = [];
-  selectedPublishers: string[] = [];
-  filteredPublishers: string[] = [];
-
-  searchTerms = {
-    publisher: '',
-    // ... other search terms for different filters
-  };
-
+  results: any[] = [];
   totalResults: number = 0;
+  
+  currentSearchQuery: string = '';
+  currentFilters: any = {};
+  currentFilterQuery: string = '';
+
   pageSize: number = 12;
   currentPage: number = 0;
   pageSizeOptions: number[] = [12, 24, 48];
-  currentSearchQuery: string = '';
 
-  constructor(private route: ActivatedRoute, private ckanService: CkanService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private ckanService: CkanService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const query = params['query'];
-      this.loadSearchResults(query);
+    this.ckanService.searchDatasets("", "", 0, this.pageSize).subscribe(data => {
+      this.allResults = data.results;
+    });
+    console.log(this.allResults);
+    
+    this.route.queryParams.subscribe( _ => {
+      this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
     });
   }
 
-  loadSearchResults(query: string, filter: string = ""): void {
+  loadSearchResults(query: string, filter:string): void {
     const start = this.currentPage * this.pageSize;
     this.ckanService.searchDatasets(query, filter, start, this.pageSize).subscribe(data => {
-      this.allResults = data.results;
+      this.results = data.results;
       this.totalResults = data.count;
-      this.populateUniquePublishers();
-      this.filteredPublishers = [...this.uniquePublishers];
-      this.filterResults();
     });
   }
 
   handlePageEvent(event: PageEvent): void {
-    // Update the page size and index
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
-    this.loadSearchResults(this.currentSearchQuery);
-
-  }
-
-
-
-  filterResults(): void {
-    if (this.selectedPublishers.length > 0) {
-      this.filteredResults = this.allResults.filter(item =>
-        this.selectedPublishers.includes(item.publisher_name)
-      );
-    } else {
-      // If no publishers are selected, do not apply any filter
-      this.filteredResults = [...this.allResults];
-    }
-  }
-
-  onFilterChange(): void {
-    this.filterResults();
-  }
-
-  populateUniquePublishers(): void {
-    const publisherNames = this.allResults.map(item => item.publisher_name);
-    this.uniquePublishers = Array.from(new Set(publisherNames));
-  }
-
-  clearSelectedPublishers(): void {
-    this.clearSearchFilter();
-    this.selectedPublishers = [];
-    this.filterResults();
-  }
-
-  searchFilters(): void {
-    this.filteredPublishers = this.uniquePublishers.filter(publisher =>
-      publisher.toLowerCase().includes(this.searchTerms.publisher.toLowerCase())
-    );
-    // Repeat for other filters
-  }
-
-  clearSearchFilter(): void {
-    this.searchTerms.publisher = '';
-    this.searchFilters();
-    // Repeat for other filters
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
   }
 
   onSelectItem(item: any): void {
     const itemId = item.id;
     this.router.navigate(['/datasets', itemId]);
   }
+
+  onReceiveFilter(filter:any){
+    this.currentFilters = {...this.currentFilters, ...filter};
+    
+    this.currentFilterQuery = Object.entries(this.currentFilters)
+                                    .map((filter:any) => [filter[0], this.handleFilterValuesWithSpace(filter[1])])
+                                    .map(this.createQueryFromFilter)
+                                    .reduce((acc:string, str:string) => acc + str, "");
+    
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+  }
+
+  handleFilterValuesWithSpace(values: string[]) {
+    return values.map((value: string) => value.includes(" ") ? `"${value}"`: value);
+  }
+
+  createQueryFromFilter(filter: any){
+    return filter[1].length === 0 ? '' : `${filter[0]}:(${filter[1].join(" OR ")})+`;
+  }
+
+  onClearFilter(){
+    this.currentFilters = {}
+    this.currentFilterQuery = "";
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery)
+  }
+
 }
+
+/*
+//http://localhost:5500/api/action/package_search?fq=publisher_name:(Switchboard)+title:(health%20OR%20sport)
+*/

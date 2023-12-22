@@ -1,17 +1,60 @@
 <app-search></app-search>
 
-<div class="flex justify-center">
-  <app-filter class="mx-3" label="Publisher"></app-filter>
-  <app-filter class="mx-3" label="Formats"></app-filter>
-  <app-filter class="mx-3" label="Catalogues"></app-filter>
-  <app-filter class="mx-3" label="Categories"></app-filter>
-  <app-filter class="mx-3" label="Keywords"></app-filter>
+<div
+  class="flex justify-center flex-col items-center lg:flex-row md:justify-center"
+>
+  <app-filter
+    class="mx-3 my-auto"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Publishers"
+    prop="publisher_name"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3"
+    [data]="results"
+    [parentFilters]="currentFilters"
+    label="Formats"
+    prop="publisher_name"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3 my-auto"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Catalogues"
+    prop="organizationName"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Themes"
+    prop="themes"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3 hidden xl:block"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Keywords"
+    prop="tags"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <button
+    *ngIf="currentFilterQuery"
+    class="bg-[#7B1C58] hover:bg-[#480B37] text-white font-bold px-6 h-14 mx-10 rounded my-auto"
+    (click)="onClearFilter()"
+  >
+    Clear Filters
+  </button>
 </div>
-
 <div class="flex flex-col md:flex-row p-10">
-  <div class="grid grid-cols-2 mx-10 gap-3">
+  <div class="flex flex-col mx-10">
     <mat-card
-      *ngFor="let item of filteredResults"
+      *ngFor="let item of results"
       class="p-6 rounded-md mb-10 mx-5"
       (click)="onSelectItem(item)"
     >

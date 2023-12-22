@@ -13,7 +13,7 @@ export class CkanService {
   constructor(private http: HttpClient) { }
 
   searchDatasets(query: string, filter: string = "", start: number = 0, rows: number = 12): Observable<{ results: any[], count: number }> {
-    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&fq=${filter}&start=${start}&rows=${rows}`;
+    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&fq=${encodeURIComponent(filter)}&start=${start}&rows=${rows}`;
     return this.http.get<any>(url).pipe(
       map(response => {
 
@@ -23,7 +23,9 @@ export class CkanService {
           description: item.notes,
           modified: item.metadata_modified,
           organizationName: item.organization.title,
-          publisher_name: item.publisher_name
+          publisher_name: item.publisher_name,
+          tags: item.tags.map((tag:any) => tag.name),
+          themes: item.theme
         }));
 
         return {

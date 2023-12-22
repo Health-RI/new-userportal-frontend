@@ -13,7 +13,7 @@ export class CkanService {
   constructor(private http: HttpClient) { }
 
   searchDatasets(query: string, start: number = 0, rows: number = 12): Observable<{ results: any[], count: number }> {
-    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&start=${start}&rows=${rows}`;
+    const url = `${environment.backendUrl}/api/3/action/package_search?q=${encodeURIComponent(query)}&start=${start}&rows=${rows}`;
     return this.http.get<any>(url).pipe(
       map(response => {
 
@@ -39,7 +39,7 @@ export class CkanService {
   }
 
   getSchemingPackageShow(id: string): Observable<Dataset> {
-    return this.http.get<Dataset>(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
+    return this.http.get<Dataset>(`${environment.backendUrl}/api/3/action/scheming_package_show?type=dataset&id=${id}`);
   }
 
   getCatalogueDetails(): Observable<any> {

@@ -10,6 +10,6 @@ services:
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
     ports:
-      - "0.0.0.0:4200:80"
+      - "0.0.0.0:443:443"
     extra_hosts:
       - "backend:host-gateway"

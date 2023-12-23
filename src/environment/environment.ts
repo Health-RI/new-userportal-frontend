@@ -1,6 +1,10 @@
 export const environment = {
-    production: false,
-    backendUrl: "",
-    identityServerUrl: "https://healthri-keycloack-dev.azurewebsites.net/auth/realms/master",  // KeyCloak url  + REALM
-    identityServerClientId: "gdi-userportal-app" // Replace with your client ID
+    // @ts-ignore
+    production: window['env']['production'],
+    // @ts-ignore
+    backendUrl: window['env']['backendUrl'],
+    // @ts-ignore
+    identityServerUrl: window['env']['identityServerUrl'],
+    // @ts-ignore
+    identityServerClientId: window['env']['identityServerClientId']
 }

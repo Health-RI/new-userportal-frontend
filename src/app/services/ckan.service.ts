@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of , from , mergeMap, toArray} from 'rxjs';
+import { Observable, catchError, map, of, from, mergeMap, toArray } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { Dataset } from '../interfaces/dataset-details.interface';
 
@@ -8,7 +8,7 @@ import { Dataset } from '../interfaces/dataset-details.interface';
   providedIn: 'root'
 })
 export class CkanService {
-  ckanToDcat: Map<string, string> = new Map(Object.entries({package: "Dataset", organization: "Catalogue", tag: "Keyword", group: "Theme"}));
+  ckanToDcat: Map<string, string> = new Map(Object.entries({ package: "Dataset", organization: "Catalogue", tag: "Keyword", group: "Theme" }));
 
   constructor(private http: HttpClient) { }
 
@@ -47,19 +47,19 @@ export class CkanService {
 
     return from(urls).pipe(
       mergeMap(url => this.getCatalogueDetail(url)),
-      toArray(), 
+      toArray(),
     );
   }
 
   getCatalogueDetail(url: string): Observable<any> {
     let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0] ?? "") ?? "";
-    
+
     return this.http.get<any>(url).pipe(map(response => {
       const itemCount = response.result.length;
-      itemCategory = itemCount > 1 ? itemCategory + "s": itemCategory;
+      itemCategory = itemCount > 1 ? itemCategory + "s" : itemCategory;
       return { [itemCategory]: itemCount };
-      }),
-      
+    }),
+
       catchError(error => {
         console.error(error);
         return of({ [itemCategory]: 0 });

@@ -6,10 +6,13 @@ services:
       context: .
     restart: unless-stopped
     environment:
-      - BACKEND_HOST=http://backend:7002
+      - BACKEND_URL=http://catalogue.local.gdi.lu
+      - IDENTITY_SERVER_URL=http://id.local.gdi.lu
+      - IDENTITY_SERVER_CLIENT_ID=ckan
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
     ports:
-      - "0.0.0.0:443:443"
+      - "80:80"
     extra_hosts:
-      - "backend:host-gateway"
+      - "catalogue.local.gdi.lu:host-gateway"
+      - "id.local.gdi.lu:host-gateway"

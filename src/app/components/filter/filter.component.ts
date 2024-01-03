@@ -16,7 +16,7 @@ export class FilterComponent implements OnChanges {
   currentValues: string[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.filterValues = this.getUniqueFilterValues() as string[];
+    this.filterValues = this.getUniqueFilterValues();
     if (changes["parentFilters"] && Object.keys(this.parentFilters).length === 0) {
       this.currentValues = [];
     }

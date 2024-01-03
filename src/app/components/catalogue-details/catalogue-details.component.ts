@@ -14,7 +14,8 @@ export class CatalogueDetailsComponent {
 
   ngOnInit(): void {
     this.ckanService
-              .getCatalogueDetails().subscribe(response => this.joinDetails(response));
+              .getCatalogueDetails()
+              .subscribe(response => this.joinDetails(response));
     }
   
   joinDetails(details: { [key: string]: number }[]): void {

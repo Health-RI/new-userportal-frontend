@@ -22,10 +22,14 @@ export class CkanService {
           title: item.title,
           description: item.notes,
           modified: item.metadata_modified,
-          organizationName: item.organization.title,
+          organization: item.organization.title,
           publisher_name: item.publisher_name,
-          tags: item.tags.map((tag:any) => tag.name),
-          themes: item.theme
+          tags: item.tags.map((tag:  { name: string}) => tag.name),
+          theme: item.theme[0].slice(2, -2)
+                               .replaceAll(/https?:\/\//g, '')
+                               .replaceAll('"', '')
+                               .replaceAll(' ', '')
+                               .split(',')
         }));
 
         return {
@@ -54,7 +58,7 @@ export class CkanService {
   }
 
   getCatalogueDetail(url: string): Observable<any> {
-    let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0] ?? "") ?? "";
+    let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0]!)!;
     
     return this.http.get<any>(url).pipe(map(response => {
       const itemCount = response.result.length;

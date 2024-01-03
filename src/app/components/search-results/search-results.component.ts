@@ -26,9 +26,9 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
     this.ckanService.searchDatasets("", "", 0, this.pageSize).subscribe(data => {
       this.allResults = data.results;
+      console.log(this.allResults[0].themes)
     });
-    console.log(this.allResults);
-    
+
     this.route.queryParams.subscribe( _ => {
       this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
     });
@@ -58,7 +58,7 @@ export class SearchResultsComponent implements OnInit {
     this.currentFilters = {...this.currentFilters, ...filter};
     
     this.currentFilterQuery = Object.entries(this.currentFilters)
-                                    .map((filter:any) => [filter[0], this.handleFilterValuesWithSpace(filter[1])])
+                                    .map(([label, value]) => [label, this.handleFilterValuesWithSpace(value as string[])])
                                     .map(this.createQueryFromFilter)
                                     .reduce((acc:string, str:string) => acc + str, "");
     
@@ -70,7 +70,10 @@ export class SearchResultsComponent implements OnInit {
   }
 
   createQueryFromFilter(filter: any){
-    return filter[1].length === 0 ? '' : `${filter[0]}:(${filter[1].join(" OR ")})+`;
+    const [prop, values] = filter;
+    const separator =  prop === "theme" ? "": ":"
+    const correctedValues = prop === "organization" ? values.map((value: string) => value.toLowerCase()): values
+    return correctedValues.length === 0 ? '' : `${prop}${separator}(${correctedValues.join(" OR ")})+`;
   }
 
   onClearFilter(){
@@ -80,7 +83,3 @@ export class SearchResultsComponent implements OnInit {
   }
 
 }
-
-/*
-//http://localhost:5500/api/action/package_search?fq=publisher_name:(Switchboard)+title:(health%20OR%20sport)
-*/

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { CkanService } from '../../services/ckan.service';
+import { Filter } from 'src/app/interfaces/filter';
+import { PartialDataset } from 'src/app/interfaces/dataset';
 
 @Component({
   selector: 'app-search-results',
@@ -9,12 +11,12 @@ import { CkanService } from '../../services/ckan.service';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  allResults: any[] = [];
-  results: any[] = [];
+  allResults: PartialDataset[] = [];
+  results: PartialDataset[] = [];
   totalResults: number = 0;
   
   currentSearchQuery: string = '';
-  currentFilters: any = {};
+  currentFilters: Filter[] = [];
   currentFilterQuery: string = '';
 
   pageSize: number = 12;
@@ -26,7 +28,6 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
     this.ckanService.searchDatasets("", "", 0, this.pageSize).subscribe(data => {
       this.allResults = data.results;
-      console.log(this.allResults[0].themes)
     });
 
     this.route.queryParams.subscribe( _ => {
@@ -53,33 +54,46 @@ export class SearchResultsComponent implements OnInit {
     const itemId = item.id;
     this.router.navigate(['/datasets', itemId]);
   }
+  
+  onClearFilter(): void {
+    this.currentFilters = []
+    this.currentFilterQuery = "";
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery)
+  }
 
-  onReceiveFilter(filter:any){
-    this.currentFilters = {...this.currentFilters, ...filter};
-    
-    this.currentFilterQuery = Object.entries(this.currentFilters)
-                                    .map(([label, value]) => [label, this.handleFilterValuesWithSpace(value as string[])])
-                                    .map(this.createQueryFromFilter)
-                                    .reduce((acc:string, str:string) => acc + str, "");
-    
+  onReceiveFilter(filter: Filter): void {
+    this.updateFilters(filter);
+    this.createQuery();
     this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+  }
+
+  updateFilters(newFilter: Filter): void {
+    const filterLabels = this.currentFilters.map(filter => filter.label);
+    const indexFilter = filterLabels.indexOf(newFilter.label);
+    indexFilter === -1 ? this.currentFilters = [...this.currentFilters, newFilter] : this.updateFilterWithNewValues(newFilter, indexFilter);
+  }
+  
+  updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
+    this.currentFilters = this.currentFilters.map((filter: Filter, idx: number) => idx === indexOfFilterToUpdate ? newFilter: filter);
+  }
+
+  private createQuery(): void {
+    this.currentFilterQuery = this.currentFilters
+                                .map((filter: Filter) => {
+                                  return {...filter, values: this.handleFilterValuesWithSpace(filter.values)} 
+                                })
+                                .map(this.createQueryFromFilter)
+                                .reduce((acc:string, str:string) => acc + str, "");
   }
 
   handleFilterValuesWithSpace(values: string[]) {
     return values.map((value: string) => value.includes(" ") ? `"${value}"`: value);
   }
 
-  createQueryFromFilter(filter: any){
-    const [prop, values] = filter;
-    const separator =  prop === "theme" ? "": ":"
-    const correctedValues = prop === "organization" ? values.map((value: string) => value.toLowerCase()): values
-    return correctedValues.length === 0 ? '' : `${prop}${separator}(${correctedValues.join(" OR ")})+`;
+  createQueryFromFilter(filter: Filter): string {
+    const { ckanLabel: label, values } = filter;
+    const separator =  label === "theme" ? "" : ":"
+    const correctedValues = label === "organization" ? values.map((value: string) => value.toLowerCase()): values
+    return correctedValues.length === 0 ? '' : `${label}${separator}(${correctedValues.join(" OR ")})+`;
   }
-
-  onClearFilter(){
-    this.currentFilters = {}
-    this.currentFilterQuery = "";
-    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery)
-  }
-
 }

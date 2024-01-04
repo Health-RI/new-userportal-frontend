@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
+import { Filter } from 'src/app/interfaces/filter';
 
 @Component({
   selector: 'app-filter',
@@ -6,9 +8,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
   styleUrl: './filter.component.scss',
 })
 export class FilterComponent implements OnChanges {
-  @Input() label:any;
+  @Input() label: string = "";
   @Input() data: any;
-  @Input() parentFilters: any;
+  @Input() parentFilters: Filter[] = [];
   @Input() prop: any;
   @Output() filterEmitter: EventEmitter<any> = new EventEmitter<any>();
 
@@ -17,20 +19,26 @@ export class FilterComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.filterValues = this.getUniqueFilterValues();
-    if (changes["parentFilters"] && Object.keys(this.parentFilters).length === 0) {
+    if (changes["parentFilters"] && this.parentFilters.length === 0) {
       this.currentValues = [];
     }
   }
   
-  onSelectChange(e:any){
+  onSelectChange(e: MatSelectChange): void {
     this.currentValues = e.value;
-    this.sendFilterToParent({
-      [this.prop]: e.value
-    })
+    this.sendFilterToParent();
   }
   
-  sendFilterToParent(filter:any): void {
-    this.filterEmitter.emit(filter);
+  sendFilterToParent(): void {
+    this.filterEmitter.emit(this.createFilter());
+  }
+
+  createFilter(): Filter {
+    return {
+      label: this.label,
+      values: this.currentValues,
+      ckanLabel: this.prop
+    }
   }
     
   getUniqueFilterValues(): string[] {

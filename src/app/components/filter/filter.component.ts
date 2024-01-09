@@ -49,6 +49,6 @@ export class FilterComponent implements OnChanges {
           .filter((item: PartialDataset) => !!item[this.prop])
           .flatMap((item: PartialDataset) => item[this.prop])
       ),
-    ] as string[];
+    ].sort() as string[];
   }
 }

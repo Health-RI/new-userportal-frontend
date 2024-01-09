@@ -27,9 +27,7 @@ export class CkanService {
     start: number = 0,
     rows: number = 12
   ): Observable<{ results: PartialDataset[]; count: number }> {
-    const url = `${
-      environment.backendUrl
-    }/api/action/package_search?q=${encodeURIComponent(
+    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(
       query
     )}&fq=${encodeURIComponent(filter)}&start=${start}&rows=${rows}`;
     return this.http.get<any>(url).pipe(
@@ -81,13 +79,11 @@ export class CkanService {
   }
 
   private getCatalogueDetail(url: string): Observable<CatalogueDetail> {
-    let itemCategory: string = CkanService.ckanToDcat.get(
-      url.split('/').pop()!.split('_')[0]
-    )!;
+    let itemCategory: string = CkanService.ckanToDcat.get(url.split('/').pop()!.split('_')[0])!;
 
     return this.http.get<any>(url).pipe(
       map((response) => {
-        const itemCount: number = response.result.length;
+        const itemCount: number = new Set(response.result).size;
         itemCategory = itemCount > 1 ? itemCategory + 's' : itemCategory;
         return { [itemCategory]: itemCount };
       }),

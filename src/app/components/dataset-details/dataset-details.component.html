@@ -33,7 +33,7 @@
             </div>
             <div class="w-full">
               <h4>URL:</h4>
-              <p><a href="{{ distribution.url }}" target="_blank">{{ distribution.url }}</a></p>
+              <p><a href="{{ distribution.url }}" rel="noopener" target="_blank">{{ distribution.url }}</a></p>
             </div>
             <div class="w-full lg:w-1/2">
               <h4>Issued:</h4>
@@ -45,11 +45,11 @@
             </div>
             <div class="w-full" *ngIf="distribution.access_url">
               <h4>Access URL:</h4>
-              <p><a href="{{ distribution.access_url }}" target="_blank">{{ distribution.access_url }}</a></p>
+              <p><a href="{{ distribution.access_url }}" rel="noopener" target="_blank">{{ distribution.access_url }}</a></p>
             </div>
             <div class="w-full" *ngIf="distribution.download_url">
               <h4>Download URL:</h4>
-              <p><a href="{{ distribution.download_url }}" target="_blank">{{ distribution.download_url }}</a></p>
+              <p><a href="{{ distribution.download_url }}" rel="noopener" target="_blank">{{ distribution.download_url }}</a></p>
             </div>
             <div class="w-full lg:w-1/2" *ngIf="distribution.access_services">
               <h4>Access Services:</h4>
@@ -85,7 +85,7 @@
             </div>
             <div class="w-full lg:w-1/2" *ngIf="distribution.cache_url">
               <h4>Cache Url:</h4>
-              <p><a href="{{ distribution.cache_url }}" target="_blank">{{ distribution.cache_url }}</a></p>
+              <p><a href="{{ distribution.cache_url }}" rel="noopener" target="_blank">{{ distribution.cache_url }}</a></p>
             </div>
             <div class="w-full lg:w-1/2" *ngIf="distribution.cache_last_updated">
               <h4>Cache Last Updated:</h4>

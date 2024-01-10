@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CkanService } from '../../services/ckan.service';
 import { DatasetDetails } from '../../interfaces/dataset-details.interface';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 
 @Component({
@@ -10,6 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./dataset-details.component.scss']
 })
 export class ItemDetailsComponent {
+  faFile = faFile;
   datasetDetails: DatasetDetails = {};
   currentLanguage: string = 'en'; // Current language
   sorted_details = [
@@ -59,7 +61,7 @@ export class ItemDetailsComponent {
     return field.field_label[this.currentLanguage] ?? field.field_label;
   }
   
-  getValue(value: any): string {
+  getFormattedDate(value: any): string {
     let date = moment(value, moment.ISO_8601);
     if(date.isValid()) {
       return date.format("D MMMM YYYY");
@@ -69,5 +71,13 @@ export class ItemDetailsComponent {
 
   isNotEmtpy() {
     return !!this.datasetDetails && Object.keys(this.datasetDetails).length > 0
+  }
+
+  getDistributions(): any[] {
+    let distributions = this.datasetDetails["resources"];
+    if (!!distributions && Array.isArray(distributions.value)) {
+      return distributions.value;
+    }
+    return [];
   }
 }

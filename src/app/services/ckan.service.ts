@@ -10,7 +10,7 @@ import { PortalStatistics } from '../interfaces/portal-statistics';
   providedIn: 'root',
 })
 export class CkanService {
-  private static readonly CKAN_FIELDS_TO_DCAT_PROPS: { [ckanField: string]: string } = {
+  private static readonly CKAN_FIELDS_TO_DCAT_PROPS = {
     package: 'Dataset',
     organization: 'Catalogue',
     tag: 'Keyword',
@@ -41,7 +41,7 @@ export class CkanService {
           publisher_name: item.publisher_name,
           tags: item.tags.map((tag: { name: string }) => tag.name),
           theme: item.theme[0]
-            ? JSON.parse(item.theme[0]).map((theme: string) => theme.replaceAll(/https?:\/\//g, ''))
+            ? JSON.parse(item.theme[0]).map((theme: string) => `"${theme}"`)
             : null,
           format: item.resources[0]?.format,
         }));

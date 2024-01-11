@@ -42,7 +42,7 @@ export class ItemDetailsComponent {
   }
 
   getThemes(): string[] {
-    let themes = this.datasetDetails["theme"];
+    const themes = this.datasetDetails["theme"];
     if (!!themes && Array.isArray(themes.value)) {
       return themes.value;
     }
@@ -50,7 +50,7 @@ export class ItemDetailsComponent {
   }
 
   getKeywords(): any[] {
-    let keywords = this.datasetDetails["tags"];
+    const keywords = this.datasetDetails["tags"];
     if (!!keywords && Array.isArray(keywords.value)) {
       return keywords.value;
     }
@@ -61,8 +61,8 @@ export class ItemDetailsComponent {
     return field.field_label[this.currentLanguage] ?? field.field_label;
   }
   
-  getFormattedDate(value: any): string {
-    let date = moment(value, moment.ISO_8601);
+  getValue(value: any): string {
+    const date = moment(value, moment.ISO_8601);
     if(date.isValid()) {
       return date.format("D MMMM YYYY");
     }
@@ -74,7 +74,7 @@ export class ItemDetailsComponent {
   }
 
   getDistributions(): any[] {
-    let distributions = this.datasetDetails["resources"];
+    const distributions = this.datasetDetails["resources"];
     if (!!distributions && Array.isArray(distributions.value)) {
       return distributions.value;
     }

@@ -30,7 +30,7 @@ import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
-
+import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -81,8 +81,11 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
 
   ],
   providers: [
-    CkanService
-
+    CkanService,
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: "dd MMMM YYYY" }
+    },
   ],
   bootstrap: [AppComponent]
 })

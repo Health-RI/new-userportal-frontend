@@ -16,10 +16,9 @@
     <mat-accordion multi="true">
       <mat-expansion-panel *ngFor="let distribution of getDistributions()">
         <mat-expansion-panel-header>
-          <div class="fa fa-file-o"></div>
           <span class="flex flex-row justify-between w-full">
             <span>{{ distribution.name }}</span>
-            <mat-chip highlighted color="primary">
+            <mat-chip highlighted color="primary" class="mr-3">
               <fa-icon [icon]="faFile"></fa-icon>
               <span class="ml-2">{{ distribution.format }}</span>
             </mat-chip>
@@ -37,11 +36,11 @@
             </div>
             <div class="w-full lg:w-1/2">
               <h4>Issued:</h4>
-              <p>{{ getFormattedDate(distribution.issued) }}</p>
+              <p>{{ distribution.issued | date }}</p>
             </div>
             <div class="w-full lg:w-1/2">
               <h4>Modified:</h4>
-              <p>{{ getFormattedDate(distribution.modified) }}</p>
+              <p>{{ distribution.modified | date }}</p>
             </div>
             <div class="w-full" *ngIf="distribution.access_url">
               <h4>Access URL:</h4>
@@ -89,7 +88,7 @@
             </div>
             <div class="w-full lg:w-1/2" *ngIf="distribution.cache_last_updated">
               <h4>Cache Last Updated:</h4>
-              <p>{{ getFormattedDate(distribution.cache_last_updated) }}</p>
+              <p>{{ distribution.cache_last_updated | date }}</p>
             </div>
             <div class="w-full">
               <h4>Documentation:</h4>
@@ -104,7 +103,7 @@
     <div *ngFor="let key of sorted_details">
       <div *ngIf="!!datasetDetails[key]?.visible && !!datasetDetails[key]?.value" class="flex flex-col">
         <h3 class="mr-5 grow">{{ getLabel(datasetDetails[key]) }}</h3>
-        <span>{{ getFormattedDate(datasetDetails[key].value) }}</span>
+        <span>{{ getValue(datasetDetails[key].value) }}</span>
       </div>
     </div>
   </div>

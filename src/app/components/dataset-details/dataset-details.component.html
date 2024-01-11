@@ -14,7 +14,7 @@
     </div>
     <h3>Distributions</h3>
     <mat-accordion multi="true">
-      <mat-expansion-panel *ngFor="let distribution of getDistributions()">
+      <mat-expansion-panel *ngFor="let distribution of getDistributions()" class="distributions-panel">
         <mat-expansion-panel-header>
           <span class="flex flex-row justify-between w-full">
             <span>{{ distribution.name }}</span>

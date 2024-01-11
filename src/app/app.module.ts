@@ -16,6 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { CkanService } from './services/ckan.service';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
@@ -29,8 +31,8 @@ import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
-import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
-
+import { FilterComponent } from './components/filter/filter.component';
+import { PortalStatisticsComponent } from './components/portal-statistics/portal-statistics.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    CatalogueDetailsComponent,
+    PortalStatisticsComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,8 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
     MatExpansionModule,
     MatListModule,
     MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
@@ -76,18 +81,10 @@ import { CatalogueDetailsComponent } from './components/catalogue-details/catalo
         silentRenew: true,
         useRefreshToken: true,
         renewTimeBeforeTokenExpiresInSeconds: 30,
-      }
-    })
-
+      },
+    }),
   ],
-  providers: [
-    CkanService
-
-  ],
-  bootstrap: [AppComponent]
+  providers: [CkanService],
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-
-
-
-}
+export class AppModule {}

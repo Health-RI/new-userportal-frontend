@@ -31,7 +31,7 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     // Retrieve all values for filters (must go through all the pages)
-    this.ckanService.searchDatasets('', '', 0, 1_000_000_000_000).subscribe((data) => {
+    this.ckanService.searchDatasets('', '', 0, CkanService.MAX_RESULT_PAGES).subscribe((data) => {
       this.allResults = data.results;
     });
 

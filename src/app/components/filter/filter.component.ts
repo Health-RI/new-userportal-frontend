@@ -49,6 +49,12 @@ export class FilterComponent implements OnChanges {
           .filter((item: PartialDataset) => !!item[this.prop])
           .flatMap((item: PartialDataset) => item[this.prop])
       ),
-    ].sort() as string[];
+    ].sort(FilterComponent.sortData) as string[];
+  }
+
+  private static sortData(a: string | Date, b: string | Date): number {
+    if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
+    else if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b);
+    else throw new Error('PartialDataset fields must be either of type string or Date');
   }
 }

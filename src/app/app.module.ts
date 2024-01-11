@@ -31,8 +31,8 @@ import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
-import { CatalogueDetailsComponent } from './components/catalogue-details/catalogue-details.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { PortalStatisticsComponent } from './components/portal-statistics/portal-statistics.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +44,8 @@ import { FilterComponent } from './components/filter/filter.component';
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    CatalogueDetailsComponent,
-    FilterComponent
+    PortalStatisticsComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,18 +81,10 @@ import { FilterComponent } from './components/filter/filter.component';
         silentRenew: true,
         useRefreshToken: true,
         renewTimeBeforeTokenExpiresInSeconds: 30,
-      }
-    })
-
+      },
+    }),
   ],
-  providers: [
-    CkanService
-
-  ],
-  bootstrap: [AppComponent]
+  providers: [CkanService],
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-
-
-
-}
+export class AppModule {}

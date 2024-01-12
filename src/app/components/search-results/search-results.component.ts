@@ -4,7 +4,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { CkanService } from '../../services/ckan.service';
 import { Filter } from 'src/app/interfaces/filter';
 import { PartialDataset } from 'src/app/interfaces/dataset';
-import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-search-results',
@@ -34,7 +33,13 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
     // Retrieve all values for filters (must go through all the pages)
     this.ckanService
-      .searchDatasets('', '', this.currentSortingField, 0, CkanService.MAX_RESULT_PAGES)
+      .searchDatasets(
+        this.currentSearchQuery,
+        this.currentFilterQuery,
+        this.currentSortingField,
+        0,
+        CkanService.MAX_RESULT_PAGES
+      )
       .subscribe((data) => {
         this.allResults = data.results;
       });
@@ -94,8 +99,9 @@ export class SearchResultsComponent implements OnInit {
     );
   }
 
-  onSortSelectChange(event: any): void {
-    this.currentSortingField = event.target?.value;
+  onSortSelectChange(event: Event): void {
+    console.log(event);
+    this.currentSortingField = (event.target as HTMLSelectElement).value;
     this.loadSearchResults(
       this.currentSearchQuery,
       this.currentFilterQuery,
@@ -111,7 +117,7 @@ export class SearchResultsComponent implements OnInit {
       : this.updateFilterWithNewValues(newFilter, indexFilter);
   }
 
-  updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
+  private updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
     this.currentFilters = this.currentFilters.map((filter: Filter, idx: number) =>
       idx === indexOfFilterToUpdate ? newFilter : filter
     );

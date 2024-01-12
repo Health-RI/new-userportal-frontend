@@ -4,12 +4,12 @@
     <app-search></app-search>
   </div>
   <div class="basis-1/4 mb-10 md:mb-0 md:mt-2">
-    <label for="select-order-by">Order by:</label>
+    <label for="select-sort-by">Sort by:</label>
     <select
       [(ngModel)]="currentSortingField"
       (change)="onSortSelectChange($event)"
-      id="select-order-by"
-      class="rounded-md border-2 ml-2 mb-3 select-order-by"
+      id="select-sort-by"
+      class="rounded-md border-2 ml-2 mb-3 select-sort-by"
     >
       <option value="relevance desc">Relevance</option>
       <option value="metadata_created desc">Last created</option>

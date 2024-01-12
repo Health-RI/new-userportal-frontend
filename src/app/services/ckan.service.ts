@@ -23,12 +23,13 @@ export class CkanService {
   searchDatasets(
     query: string,
     filter: string = '',
+    sortBy: string = '',
     start: number = 0,
     rows: number = 12
   ): Observable<{ results: PartialDataset[]; count: number }> {
     const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(
       query
-    )}&fq=${encodeURIComponent(filter)}&start=${start}&rows=${rows}`;
+    )}&fq=${encodeURIComponent(filter)}&sort=${sortBy}&start=${start}&rows=${rows}`;
 
     return this.http.get<any>(url).pipe(
       map((response) => {

@@ -1,37 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, from, mergeMap, toArray } from 'rxjs';
+import { Observable, catchError, map, of, forkJoin } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { Dataset } from '../interfaces/dataset-details.interface';
+import { Dataset } from '../interfaces/dataset-details';
+import { PartialDataset } from '../interfaces/dataset';
+import { PortalStatistics } from '../interfaces/portal-statistics';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CkanService {
-  ckanToDcat: Map<string, string> = new Map(Object.entries({ package: "Dataset", organization: "Catalogue", tag: "Keyword", group: "Theme" }));
+  private static readonly CKAN_FIELDS_TO_DCAT_PROPS = {
+    package: 'Dataset',
+    organization: 'Catalogue',
+    tag: 'Keyword',
+    group: 'Theme',
+  };
+  public static readonly MAX_RESULT_PAGES: number = 1000;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  searchDatasets(query: string, start: number = 0, rows: number = 12): Observable<{ results: any[], count: number }> {
-    const url = `${environment.backendUrl}/api/3/action/package_search?q=${encodeURIComponent(query)}&start=${start}&rows=${rows}`;
+  searchDatasets(
+    query: string,
+    filter: string = '',
+    start: number = 0,
+    rows: number = 12
+  ): Observable<{ results: PartialDataset[]; count: number }> {
+    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(
+      query
+    )}&fq=${encodeURIComponent(filter)}&start=${start}&rows=${rows}`;
+
     return this.http.get<any>(url).pipe(
-      map(response => {
-
+      map((response) => {
         const items = response.result.results.map((item: any) => ({
           id: item.id,
           title: item.title,
           description: item.notes,
           modified: item.metadata_modified,
-          organizationName: item.organization.title,
-          publisher_name: item.publisher_name
+          organization: item.organization.title,
+          publisher_name: item.publisher_name,
+          tags: item.tags.map((tag: { name: string }) => tag.name),
+          theme: item.theme[0]
+            ? JSON.parse(item.theme[0]).map((theme: string) => `"${theme}"`)
+            : null,
+          format: item.resources[0]?.format,
         }));
 
         return {
           results: items,
-          count: response.result.count
+          count: response.result.count,
         };
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error(error);
         return of({ results: [], count: 0 });
       })
@@ -39,33 +59,37 @@ export class CkanService {
   }
 
   getSchemingPackageShow(id: string): Observable<Dataset> {
-    return this.http.get<Dataset>(`${environment.backendUrl}/api/3/action/scheming_package_show?type=dataset&id=${id}`);
-  }
-
-  getCatalogueDetails(): Observable<any> {
-    const urls = [...this.ckanToDcat.keys()].map(item => `${environment.backendUrl}/api/3/action/${item}_list`);
-
-    return from(urls).pipe(
-      mergeMap(url => this.getCatalogueDetail(url)),
-      toArray(),
+    return this.http.get<Dataset>(
+      `${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`
     );
   }
 
-  getCatalogueDetail(url: string): Observable<any> {
-    let itemCategory: string = this.ckanToDcat.get(url.split("/").pop()?.split("_")?.[0] ?? "") ?? "";
+  getPortalStatistics(): Observable<PortalStatistics> {
+    const observables = Object.entries(CkanService.CKAN_FIELDS_TO_DCAT_PROPS).map(
+      ([ckanField, dcatProp]) => this.getSingleStatistic(ckanField, dcatProp)
+    );
 
-    return this.http.get<any>(url).pipe(map(response => {
-      const itemCount = response.result.length;
-      itemCategory = itemCount > 1 ? itemCategory + "s" : itemCategory;
-      return { [itemCategory]: itemCount };
-    }),
+    return forkJoin(observables).pipe(
+      map((results: PortalStatistics[]) =>
+        results.reduce((statistics, singleStat) => ({ ...statistics, ...singleStat }), {})
+      )
+    );
+  }
 
-      catchError(error => {
+  private getSingleStatistic(ckanField: string, dcatProp: string): Observable<PortalStatistics> {
+    const url = `${environment.backendUrl}/api/3/action/${ckanField}_list`;
+
+    return this.http.get<any>(url).pipe(
+      map((response) => {
+        const count = new Set(response.result).size;
+        const dcatPropCorrected = count > 1 ? dcatProp + 's' : dcatProp;
+        return { [dcatPropCorrected]: count };
+      }),
+
+      catchError((error) => {
         console.error(error);
-        return of({ [itemCategory]: 0 });
+        return of({ [dcatProp]: 0 });
       })
     );
   }
 }
-
-

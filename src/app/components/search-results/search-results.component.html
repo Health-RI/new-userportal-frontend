@@ -1,50 +1,73 @@
 <app-search></app-search>
 
+<div class="flex justify-center flex-col items-center lg:flex-row">
+  <app-filter
+    class="mx-3"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Publishers"
+    prop="publisher_name"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Catalogues"
+    prop="organization"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Themes"
+    prop="theme"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <app-filter
+    class="mx-3"
+    [data]="allResults"
+    [parentFilters]="currentFilters"
+    label="Keywords"
+    prop="tags"
+    (filterEmitter)="onReceiveFilter($event)"
+  ></app-filter>
+  <button
+    *ngIf="currentFilterQuery"
+    class="bg-[#7B1C58] hover:bg-[#480B37] text-white shadow-md font-bold px-6 h-14 mx-10 mb-6 rounded"
+    (click)="onClearFilter()"
+  >
+    Clear Filters
+  </button>
+</div>
 <div class="flex flex-col md:flex-row p-10">
-  <div class="w-full md:w-1/4">
-    <mat-accordion multi="true">
-      <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Publisher
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="flex flex-col justify-end">
-          <mat-form-field>
-            <input matInput placeholder="Filter" [(ngModel)]="searchTerms.publisher" (ngModelChange)="searchFilters()">
-            <button mat-icon-button matSuffix (click)="clearSearchFilter()"><mat-icon>clear</mat-icon></button>
-          </mat-form-field>
-          <button mat-button (click)="clearSelectedPublishers()">clear selection</button>
-        </div>
-        <mat-selection-list #publisher [(ngModel)]="selectedPublishers" (ngModelChange)="onFilterChange()">
-          <mat-list-option *ngFor="let publisher of filteredPublishers" [value]="publisher">
-            {{ publisher }}
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-expansion-panel>
-
-      <!-- Repeat for other filter categories like Keywords, Phenotype, etc. -->
-    </mat-accordion>
-  </div>
-
-  <div class="flex flex-col grow md:pl-10 mt-5 md:mt-0">
-    <mat-card *ngFor="let item of filteredResults" (click)="onSelectItem(item)">
+  <div class="flex flex-col mx-10">
+    <mat-card
+      *ngFor="let item of results"
+      class="p-6 rounded-md mb-10 mx-5 custom-card"
+      (click)="onSelectItem(item)"
+    >
       <mat-card-header>
         <mat-card-title>{{ item.title }}</mat-card-title>
-        <mat-card-subtitle>{{ item.organizationName }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ item.organization }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         {{ item.description }}
       </mat-card-content>
       <mat-card-footer class="card-footer-content">
-        Last updated {{ item.modified | date: 'dd MMMM yyyy' }}
+        Last updated {{ item.modified | date : "dd MMMM yyyy" }}
       </mat-card-footer>
     </mat-card>
 
     <div>
-      <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-        [pageIndex]="currentPage" (page)="handlePageEvent($event)">
+      <mat-paginator
+        [length]="totalResults"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage"
+        (page)="handlePageEvent($event)"
+      >
       </mat-paginator>
     </div>
   </div>

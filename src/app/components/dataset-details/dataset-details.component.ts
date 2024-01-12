@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CkanService } from '../../services/ckan.service';
-import { DatasetDetails } from '../../interfaces/dataset-details.interface';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { DatasetDetails } from '../../interfaces/dataset-details';
 import * as moment from 'moment';
 
 @Component({

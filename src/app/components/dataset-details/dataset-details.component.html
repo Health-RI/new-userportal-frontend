@@ -1,4 +1,4 @@
-<div class="flex flex-col lg:flex-row w-full p-10" *ngIf="isNotEmtpy()">
+<div class="flex flex-col lg:flex-row items-start w-full p-10" *ngIf="isNotEmtpy()">
   <div class="flex flex-col w-full lg:w-2/3 gap-5 p-5">
     <h2 class="text-2xl">{{ datasetDetails['title'].value }}</h2>
     <p>
@@ -26,31 +26,31 @@
         </mat-expansion-panel-header>
         <div class="flex flex-col p-3 bg-gray-100">
           <div class="flex flex-row flex-wrap">
-            <div class="w-full" *ngIf="distribution.description">
+            <div class="mb-3 w-full" *ngIf="distribution.description">
               <h4>Description:</h4>
               <p>{{ distribution.description }}</p>
             </div>
-            <div class="w-full">
+            <div class="mb-3 w-full">
               <h4>URL:</h4>
               <p><a href="{{ distribution.url }}" rel="noopener" target="_blank">{{ distribution.url }}</a></p>
             </div>
-            <div class="w-full lg:w-1/2">
+            <div class="mb-3 w-full lg:w-1/2">
               <h4>Issued:</h4>
               <p>{{ distribution.issued | date }}</p>
             </div>
-            <div class="w-full lg:w-1/2">
+            <div class="mb-3 w-full lg:w-1/2">
               <h4>Modified:</h4>
               <p>{{ distribution.modified | date }}</p>
             </div>
-            <div class="w-full" *ngIf="distribution.access_url">
+            <div class="mb-3 w-full" *ngIf="distribution.access_url">
               <h4>Access URL:</h4>
               <p><a href="{{ distribution.access_url }}" rel="noopener" target="_blank">{{ distribution.access_url }}</a></p>
             </div>
-            <div class="w-full" *ngIf="distribution.download_url">
+            <div class="mb-3 w-full" *ngIf="distribution.download_url">
               <h4>Download URL:</h4>
               <p><a href="{{ distribution.download_url }}" rel="noopener" target="_blank">{{ distribution.download_url }}</a></p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.access_services">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.access_services">
               <h4>Access Services:</h4>
               <p>{{ distribution.access_services }}</p>
             </div>
@@ -58,7 +58,7 @@
               <h4>Compress Format:</h4>
               <p>{{ distribution.compress_format }}</p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.availability">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.availability">
               <h4>Availability:</h4>
               <p>{{ distribution.availability }}</p>
             </div>
@@ -66,31 +66,31 @@
               <h4>Language:</h4>
               <p>{{ distribution.language }}</p>
             </div>
-            <div class="w-full lg:w-1/2">
+            <div class="mb-3 w-full lg:w-1/2">
               <h4>Rights:</h4>
               <p>{{ distribution.rights }}</p>
             </div>
-            <div class="w-full lg:w-1/2">
+            <div class="mb-3 w-full lg:w-1/2">
               <h4>State:</h4>
               <p>{{ distribution.state }}</p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.temporal_resolution">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.temporal_resolution">
               <h4>Temporal Resolution:</h4>
               <p>{{ distribution.temporal_resolution }}</p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.spatial_resolution_in_meters">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.spatial_resolution_in_meters">
               <h4>Spatial Resolution (meters):</h4>
               <p>{{ distribution.spatial_resolution_in_meters }}</p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.cache_url">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.cache_url">
               <h4>Cache Url:</h4>
               <p><a href="{{ distribution.cache_url }}" rel="noopener" target="_blank">{{ distribution.cache_url }}</a></p>
             </div>
-            <div class="w-full lg:w-1/2" *ngIf="distribution.cache_last_updated">
+            <div class="mb-3 w-full lg:w-1/2" *ngIf="distribution.cache_last_updated">
               <h4>Cache Last Updated:</h4>
               <p>{{ distribution.cache_last_updated | date }}</p>
             </div>
-            <div class="w-full">
+            <div class="mb-3 w-full">
               <h4>Documentation:</h4>
               <p>{{ distribution.documentation }}</p>
             </div>

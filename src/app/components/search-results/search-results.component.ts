@@ -100,7 +100,6 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onSortSelectChange(event: Event): void {
-    console.log(event);
     this.currentSortingField = (event.target as HTMLSelectElement).value;
     this.loadSearchResults(
       this.currentSearchQuery,

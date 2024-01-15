@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
   currentSearchQuery: string = '';
   currentFilters: Filter[] = [];
   currentFilterQuery: string = '';
-  currentSortingField: string = 'relevance desc';
+  currentSortingField: string = 'score desc';
 
   pageSize: number = 12;
   currentPage: number = 0;

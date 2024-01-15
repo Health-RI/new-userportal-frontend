@@ -4,35 +4,29 @@ import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CkanService } from '../../services/ckan.service';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
   searchResults$: Observable<any[]> | undefined;
   searchTerm: string = '';
 
-  constructor(private ckanService: CkanService,
-    private router: Router) { }
+  constructor(private ckanService: CkanService, private router: Router) {}
 
   onSearch(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
-    this.searchResults$ = this.ckanService.searchDatasets(inputValue)
-      .pipe(
-        map(response => response.results),
-        debounceTime(300),
-        distinctUntilChanged(),
-        catchError(error => {
-          console.error(error);
-          return of([]);
-        })
-      );
-      
+    this.searchResults$ = this.ckanService.searchDatasets(inputValue).pipe(
+      map((response) => response.results),
+      debounceTime(300),
+      distinctUntilChanged(),
+      catchError((error) => {
+        console.error(error);
+        return of([]);
+      })
+    );
   }
-
 
   onSubmit(): void {
     if (this.searchTerm) {
@@ -46,9 +40,5 @@ export class SearchComponent {
     this.router.navigate(['/datasets', itemId]);
   }
 
-  resetSearchInput(): void {
-
-
-  }
-
+  resetSearchInput(): void {}
 }

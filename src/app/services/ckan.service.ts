@@ -41,10 +41,10 @@ export class CkanService {
           organization: item.organization.title,
           publisher_name: item.publisher_name,
           tags: item.tags.map((tag: { name: string }) => tag.name),
-          theme: item.theme[0]
+          theme: item.theme?.[0]
             ? JSON.parse(item.theme[0]).map((theme: string) => `"${theme}"`)
             : null,
-          format: item.resources[0]?.format,
+          format: item.resources?.[0]?.format,
         }));
 
         return {

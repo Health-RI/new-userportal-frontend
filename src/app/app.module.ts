@@ -31,6 +31,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
+import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 import { FilterComponent } from './components/filter/filter.component';
 import { PortalStatisticsComponent } from './components/portal-statistics/portal-statistics.component';
 
@@ -84,7 +85,13 @@ import { PortalStatisticsComponent } from './components/portal-statistics/portal
       },
     }),
   ],
-  providers: [CkanService],
-  bootstrap: [AppComponent],
+  providers: [
+    CkanService,
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: "dd MMMM YYYY" }
+    },
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

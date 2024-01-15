@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CkanService } from '../../services/ckan.service';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { DatasetDetails } from '../../interfaces/dataset-details';
 import * as moment from 'moment';
 
@@ -10,6 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./dataset-details.component.scss']
 })
 export class ItemDetailsComponent {
+  faFile = faFile;
   datasetDetails: DatasetDetails = {};
   currentLanguage: string = 'en'; // Current language
   sorted_details = [
@@ -40,7 +42,7 @@ export class ItemDetailsComponent {
   }
 
   getThemes(): string[] {
-    let themes = this.datasetDetails["theme"];
+    const themes = this.datasetDetails["theme"];
     if (!!themes && Array.isArray(themes.value)) {
       return themes.value;
     }
@@ -48,7 +50,7 @@ export class ItemDetailsComponent {
   }
 
   getKeywords(): any[] {
-    let keywords = this.datasetDetails["tags"];
+    const keywords = this.datasetDetails["tags"];
     if (!!keywords && Array.isArray(keywords.value)) {
       return keywords.value;
     }
@@ -60,7 +62,7 @@ export class ItemDetailsComponent {
   }
   
   getValue(value: any): string {
-    let date = moment(value, moment.ISO_8601);
+    const date = moment(value, moment.ISO_8601);
     if(date.isValid()) {
       return date.format("D MMMM YYYY");
     }
@@ -69,5 +71,13 @@ export class ItemDetailsComponent {
 
   isNotEmtpy() {
     return !!this.datasetDetails && Object.keys(this.datasetDetails).length > 0
+  }
+
+  getDistributions(): any[] {
+    const distributions = this.datasetDetails["resources"];
+    if (!!distributions && Array.isArray(distributions.value)) {
+      return distributions.value;
+    }
+    return [];
   }
 }

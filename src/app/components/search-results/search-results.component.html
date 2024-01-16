@@ -1,5 +1,22 @@
-<app-search></app-search>
-
+<div class="flex flex-col mt-10 justify-evenly items-center md:flex-row">
+  <div class="basis-1/4"></div>
+  <div class="basis-1/2">
+    <app-search></app-search>
+  </div>
+  <div class="basis-1/4 mb-10 md:mb-0 md:mt-2">
+    <label for="select-sort-by">Sort by:</label>
+    <select
+      [(ngModel)]="currentSortingField"
+      (change)="onSortSelectChange($event)"
+      id="select-sort-by"
+      class="rounded-md border-2 ml-2 mb-3 select-sort-by"
+    >
+      <option value="score desc">Relevance</option>
+      <option value="metadata_created desc">Last created</option>
+      <option value="metadata_modified desc">Last modified</option>
+    </select>
+  </div>
+</div>
 <div class="flex justify-center flex-col items-center lg:flex-row">
   <app-filter
     class="mx-3"
@@ -45,7 +62,7 @@
   <div class="flex flex-col mx-10">
     <mat-card
       *ngFor="let item of results"
-      class="p-6 rounded-md mb-10 mx-5 custom-card"
+      class="p-6 rounded-md mb-10 mx-5 card"
       (click)="onSelectItem(item)"
     >
       <mat-card-header>

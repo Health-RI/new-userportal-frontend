@@ -18,6 +18,7 @@ export class SearchResultsComponent implements OnInit {
   currentSearchQuery: string = '';
   currentFilters: Filter[] = [];
   currentFilterQuery: string = '';
+  currentSortingField: string = 'score desc';
 
   pageSize: number = 12;
   currentPage: number = 0;
@@ -31,28 +32,46 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     // Retrieve all values for filters (must go through all the pages)
-    this.ckanService.searchDatasets('', '', 0, CkanService.MAX_RESULT_PAGES).subscribe((data) => {
-      this.allResults = data.results;
-    });
+    this.ckanService
+      .searchDatasets(
+        this.currentSearchQuery,
+        this.currentFilterQuery,
+        this.currentSortingField,
+        0,
+        CkanService.MAX_RESULT_PAGES
+      )
+      .subscribe((data) => {
+        this.allResults = data.results;
+      });
 
     this.route.queryParams.subscribe((_) => {
-      this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+      this.loadSearchResults(
+        this.currentSearchQuery,
+        this.currentFilterQuery,
+        this.currentSortingField
+      );
     });
   }
 
-  loadSearchResults(query: string, filter: string): void {
+  loadSearchResults(query: string, filter: string, sortBy: string): void {
     const start = this.currentPage * this.pageSize;
-    this.ckanService.searchDatasets(query, filter, start, this.pageSize).subscribe((data) => {
-      this.results = data.results;
-      this.totalResults = data.count;
-    });
+    this.ckanService
+      .searchDatasets(query, filter, sortBy, start, this.pageSize)
+      .subscribe((data) => {
+        this.results = data.results;
+        this.totalResults = data.count;
+      });
   }
 
   handlePageEvent(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
-    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+    this.loadSearchResults(
+      this.currentSearchQuery,
+      this.currentFilterQuery,
+      this.currentSortingField
+    );
   }
 
   onSelectItem(item: any): void {
@@ -63,13 +82,30 @@ export class SearchResultsComponent implements OnInit {
   onClearFilter(): void {
     this.currentFilters = [];
     this.currentFilterQuery = '';
-    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+    this.loadSearchResults(
+      this.currentSearchQuery,
+      this.currentFilterQuery,
+      this.currentSortingField
+    );
   }
 
   onReceiveFilter(filter: Filter): void {
     this.updateFilters(filter);
     this.createQuery();
-    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery);
+    this.loadSearchResults(
+      this.currentSearchQuery,
+      this.currentFilterQuery,
+      this.currentSortingField
+    );
+  }
+
+  onSortSelectChange(event: Event): void {
+    this.currentSortingField = (event.target as HTMLSelectElement).value;
+    this.loadSearchResults(
+      this.currentSearchQuery,
+      this.currentFilterQuery,
+      this.currentSortingField
+    );
   }
 
   private updateFilters(newFilter: Filter): void {
@@ -80,7 +116,7 @@ export class SearchResultsComponent implements OnInit {
       : this.updateFilterWithNewValues(newFilter, indexFilter);
   }
 
-  updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
+  private updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
     this.currentFilters = this.currentFilters.map((filter: Filter, idx: number) =>
       idx === indexOfFilterToUpdate ? newFilter : filter
     );

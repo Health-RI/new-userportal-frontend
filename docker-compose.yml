@@ -6,13 +6,14 @@ services:
       context: .
     restart: unless-stopped
     environment:
-      - BACKEND_URL=http://catalogue.local.gdi.lu
-      - IDENTITY_SERVER_URL=http://id.local.gdi.lu
+      - BACKEND_URL=http://catalogue.local.onemilliongenomes.eu
+      - FRONTEND_URL=http://discover.local.onemilliongenomes.eu
+      - IDENTITY_SERVER_URL=http://id.local.onemilliongenomes.eu
       - IDENTITY_SERVER_CLIENT_ID=ckan
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
     ports:
       - "80:80"
     extra_hosts:
-      - "catalogue.local.gdi.lu:host-gateway"
-      - "id.local.gdi.lu:host-gateway"
+      - "catalogue.local.onemilliongenomes.eu:host-gateway"
+      - "id.local.onemilliongenomes.eu:host-gateway"

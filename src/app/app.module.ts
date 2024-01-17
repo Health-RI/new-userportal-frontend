@@ -27,7 +27,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthModule } from 'angular-auth-oidc-client';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
@@ -77,11 +77,11 @@ import { PortalStatisticsComponent } from './components/portal-statistics/portal
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
         clientId: environment.identityServerClientId,
-        scope: 'openid profile email', // Adjust the scopes as needed
+        scope: 'openid profile email offline_access',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
-        renewTimeBeforeTokenExpiresInSeconds: 30,
+        logLevel: LogLevel.Debug,
       },
     }),
   ],

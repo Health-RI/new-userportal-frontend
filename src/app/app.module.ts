@@ -27,13 +27,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
-import { environment } from 'src/environment/environment';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 import { FilterComponent } from './components/filter/filter.component';
 import { PortalStatisticsComponent } from './components/portal-statistics/portal-statistics.component';
+import { AuthConfigModule } from './auth/auth-config.module';
 
 @NgModule({
   declarations: [
@@ -71,19 +70,7 @@ import { PortalStatisticsComponent } from './components/portal-statistics/portal
     FontAwesomeModule,
     MatMenuModule,
     MatChipsModule,
-    AuthModule.forRoot({
-      config: {
-        authority: environment.identityServerUrl,
-        redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
-        clientId: environment.identityServerClientId,
-        scope: 'openid profile email offline_access',
-        responseType: 'code',
-        silentRenew: true,
-        useRefreshToken: true,
-        logLevel: LogLevel.Debug,
-      },
-    }),
+    AuthConfigModule,
   ],
   providers: [
     CkanService,

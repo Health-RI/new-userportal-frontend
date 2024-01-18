@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
               "js-sha256",
               "base64-js"
-           ],
+            ],
             "outputPath": "dist/gdi-userportal-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -30,7 +30,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/silent-renew.html"
             ],
             "styles": [
               "src/palette.scss",
@@ -70,7 +71,7 @@
           "options": {
             "buildTarget": "gdi-userportal-app:build",
             "proxyConfig": "./src/proxy.conf.json"
-            },
+          },
           "configurations": {
             "production": {
               "buildTarget": "gdi-userportal-app:build:production"

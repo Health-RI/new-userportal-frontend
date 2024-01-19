@@ -42,7 +42,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          load: true
           context: .
           file: ./Dockerfile
           build-args: IMAGE_NAME=${{ env.IMAGE_NAME_LOWER }}

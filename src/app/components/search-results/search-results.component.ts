@@ -11,7 +11,6 @@ import { PartialDataset } from 'src/app/interfaces/dataset';
   styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit {
-  allResults: PartialDataset[] = [];
   results: PartialDataset[] = [];
   totalResults: number = 0;
 
@@ -31,19 +30,6 @@ export class SearchResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Retrieve all values for filters (must go through all the pages)
-    this.ckanService
-      .searchDatasets(
-        this.currentSearchQuery,
-        this.currentFilterQuery,
-        this.currentSortingField,
-        0,
-        CkanService.MAX_RESULT_PAGES
-      )
-      .subscribe((data) => {
-        this.allResults = data.results;
-      });
-
     this.route.queryParams.subscribe((_) => {
       this.loadSearchResults(
         this.currentSearchQuery,
@@ -139,14 +125,14 @@ export class SearchResultsComponent implements OnInit {
   }
 
   private createQueryFromFilter(filter: Filter): string {
-    const { ckanLabel: label, values } = filter;
-    const separator = label === 'theme' || label === 'format' ? '' : ':';
+    const { ckanProp, values } = filter;
+    const separator = ckanProp === 'theme' || ckanProp === 'format' ? '' : ':';
     const correctedValues =
-      label === 'organization'
+      ckanProp === 'organization'
         ? values.map((value: string) => value.toLowerCase().replaceAll(' ', '-'))
         : values;
     return correctedValues.length === 0
       ? ''
-      : `${label}${separator}(${correctedValues.join(' OR ')})+`;
+      : `${ckanProp}${separator}(${correctedValues.join(' OR ')})+`;
   }
 }

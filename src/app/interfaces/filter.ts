@@ -1,5 +1,5 @@
 export interface Filter {
-    label: string;
-    values: string[];
-    ckanLabel: string;
+  label: string;
+  values: string[];
+  ckanProp: string;
 }

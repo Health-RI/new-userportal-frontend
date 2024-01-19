@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, forkJoin } from 'rxjs';
+import { Observable, catchError, map, of, forkJoin, count } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { Dataset } from '../interfaces/dataset-details';
 import { PartialDataset } from '../interfaces/dataset';
@@ -10,13 +10,7 @@ import { PortalStatistics } from '../interfaces/portal-statistics';
   providedIn: 'root',
 })
 export class CkanService {
-  private static readonly CKAN_FIELDS_TO_DCAT_PROPS = {
-    package: 'Dataset',
-    organization: 'Catalogue',
-    tag: 'Keyword',
-    group: 'Theme',
-  };
-  public static readonly MAX_RESULT_PAGES: number = 1000;
+  private static readonly COUNTER_PROPS: string[] = ['dataset', 'catalogue', 'keyword', 'theme'];
 
   constructor(private http: HttpClient) {}
 
@@ -63,9 +57,25 @@ export class CkanService {
     );
   }
 
+  getPropList(label: string): Observable<any> {
+    const url = `${environment.backendUrl}/api/action/${label}_list`;
+    return this.http.get<any>(url).pipe(
+      map(
+        (response) => ({
+          count: response.result.count,
+          values: response.result.values,
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of({ results: [], count: 0 });
+        })
+      )
+    );
+  }
+
   getPortalStatistics(): Observable<PortalStatistics> {
-    const observables = Object.entries(CkanService.CKAN_FIELDS_TO_DCAT_PROPS).map(
-      ([ckanField, dcatProp]) => this.getSingleStatistic(ckanField, dcatProp)
+    const observables = CkanService.COUNTER_PROPS.map((prop: string) =>
+      this.getSingleStatistic(prop)
     );
 
     return forkJoin(observables).pipe(
@@ -75,19 +85,19 @@ export class CkanService {
     );
   }
 
-  private getSingleStatistic(ckanField: string, dcatProp: string): Observable<PortalStatistics> {
-    const url = `${environment.backendUrl}/api/3/action/${ckanField}_list`;
+  private getSingleStatistic(prop: string): Observable<PortalStatistics> {
+    const url = `${environment.backendUrl}/api/3/action/${prop}_list`;
 
     return this.http.get<any>(url).pipe(
       map((response) => {
-        const count = new Set(response.result).size;
-        const dcatPropCorrected = count > 1 ? dcatProp + 's' : dcatProp;
-        return { [dcatPropCorrected]: count };
+        let propCorrected = prop[0].toUpperCase() + prop.slice(1);
+        propCorrected = response.result.count > 1 ? propCorrected + 's' : propCorrected;
+        return { [propCorrected]: response.result.count };
       }),
 
       catchError((error) => {
         console.error(error);
-        return of({ [dcatProp]: 0 });
+        return of({ [prop]: 0 });
       })
     );
   }

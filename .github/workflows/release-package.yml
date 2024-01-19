@@ -20,9 +20,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Set lowercase image name
-        run: echo "IMAGE_NAME_LOWER=$(echo $IMAGE_NAME | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -34,7 +31,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
@@ -42,9 +39,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          context: .
-          file: ./Dockerfile
-          build-args: IMAGE_NAME=${{ env.IMAGE_NAME_LOWER }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -59,4 +53,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO_LOWER }}:${{ github.sha }}'
+          images: 'ghcr.io/${{ env.REPO_LOWER }}:main

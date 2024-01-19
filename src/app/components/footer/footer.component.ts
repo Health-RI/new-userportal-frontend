@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { faLinkedin, faXTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-footer',
@@ -14,7 +15,8 @@ export class FooterComponent {
   faGithub = faGithub;
   faXTwitter = faXTwitter;
   faGlobe = faGlobe;
-
+  faExclamationCircle = faExclamationCircle;
+  
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
       'linkedin',

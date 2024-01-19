@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +6,4 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  faExclamationCircle = faExclamationCircle;
 }

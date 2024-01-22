@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
-import { CkanService } from '../../services/ckan.service';
-import { Filter } from 'src/app/interfaces/filter';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PartialDataset } from 'src/app/interfaces/dataset';
+import { Filter } from 'src/app/interfaces/filter';
+import { CkanService } from '../../services/ckan.service';
 
 @Component({
   selector: 'app-search-results',

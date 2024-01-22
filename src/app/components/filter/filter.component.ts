@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { PartialDataset } from 'src/app/interfaces/dataset';
 import { Filter } from 'src/app/interfaces/filter';
@@ -31,14 +23,18 @@ export class FilterComponent implements OnInit, OnChanges {
   ngOnInit() {
     const prop = this.label[0].toLowerCase() + this.label.slice(1, -1);
     this.ckanService.getPropList(prop).subscribe((data: { count: number; values: string[] }) => {
-      this.filterValues = data.values
-        .sort(FilterComponent.sortData)
-        .map((value: string) =>
-          this.label === 'Catalogues'
-            ? value[0].toUpperCase() + value.slice(1).replaceAll('-', ' ')
-            : value
-        );
+      this.filterValues = data.values.sort(FilterComponent.sortData).map(this.transformValuesIfNecessary);
     });
+  }
+
+  private static sortData(a: string | Date, b: string | Date): number {
+    if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
+    else if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b);
+    else throw new Error('PartialDataset fields must be either of type string or Date');
+  }
+
+  private transformValuesIfNecessary(value: string): string {
+    return this.label === 'Catalogues' ? value[0].toUpperCase() + value.slice(1).replaceAll('-', ' ') : value;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,17 +55,12 @@ export class FilterComponent implements OnInit, OnChanges {
   private createFilter(): Filter {
     return {
       label: this.label,
-      values:
-        this.label === 'Themes'
-          ? this.currentValues.map((value) => `"${value}"`)
-          : this.currentValues,
+      values: this.escapeValuesIfNecessary(),
       ckanProp: this.ckanProp,
     };
   }
 
-  private static sortData(a: string | Date, b: string | Date): number {
-    if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
-    else if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b);
-    else throw new Error('PartialDataset fields must be either of type string or Date');
+  private escapeValuesIfNecessary(): string[] {
+    return this.label === 'Themes' ? this.currentValues.map((value) => `"${value}"`) : this.currentValues;
   }
 }

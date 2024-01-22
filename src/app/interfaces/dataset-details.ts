@@ -14,5 +14,12 @@ export interface DatasetDetails {
 }
 
 export interface Dataset {
-  result: DatasetDetails
+  result: DatasetDetails;
+}
+
+export interface Response {
+  result: {
+    count: number;
+    results: string[];
+  };
 }

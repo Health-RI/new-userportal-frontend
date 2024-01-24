@@ -11,7 +11,28 @@ env:
   AZURE_WEBAPP_NAME: catalogue-test
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: |
+          npm install
+      - name: Lint
+        run: |
+          npm run lint
+      - name: Prettier
+        run: |
+          npx prettier --check .
+      - name: Test
+        run: |
+          npm run test
+
   build-and-push-image:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -51,3 +72,14 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: "${{ env.IMAGE_NAME }}:main"
+
+  ort:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+        with:
+          report-formats: CycloneDx,SpdxDocument,WebApp,PlainTextTemplate,Opossum
+          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"

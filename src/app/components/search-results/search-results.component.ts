@@ -26,38 +26,28 @@ export class SearchResultsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ckanService: CkanService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((_) => {
-      this.loadSearchResults(
-        this.currentSearchQuery,
-        this.currentFilterQuery,
-        this.currentSortingField
-      );
+      this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
     });
   }
 
   loadSearchResults(query: string, filter: string, sortBy: string): void {
     const start = this.currentPage * this.pageSize;
-    this.ckanService
-      .searchDatasets(query, filter, sortBy, start, this.pageSize)
-      .subscribe((data) => {
-        this.results = data.results;
-        this.totalResults = data.count;
-      });
+    this.ckanService.searchDatasets(query, filter, sortBy, start, this.pageSize).subscribe((data) => {
+      this.results = data.results;
+      this.totalResults = data.count;
+    });
   }
 
   handlePageEvent(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
-    this.loadSearchResults(
-      this.currentSearchQuery,
-      this.currentFilterQuery,
-      this.currentSortingField
-    );
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
   }
 
   onSelectItem(item: any): void {
@@ -68,30 +58,18 @@ export class SearchResultsComponent implements OnInit {
   onClearFilter(): void {
     this.currentFilters = [];
     this.currentFilterQuery = '';
-    this.loadSearchResults(
-      this.currentSearchQuery,
-      this.currentFilterQuery,
-      this.currentSortingField
-    );
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
   }
 
   onReceiveFilter(filter: Filter): void {
     this.updateFilters(filter);
     this.createQuery();
-    this.loadSearchResults(
-      this.currentSearchQuery,
-      this.currentFilterQuery,
-      this.currentSortingField
-    );
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
   }
 
   onSortSelectChange(event: Event): void {
     this.currentSortingField = (event.target as HTMLSelectElement).value;
-    this.loadSearchResults(
-      this.currentSearchQuery,
-      this.currentFilterQuery,
-      this.currentSortingField
-    );
+    this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
   }
 
   private updateFilters(newFilter: Filter): void {
@@ -104,7 +82,7 @@ export class SearchResultsComponent implements OnInit {
 
   private updateFilterWithNewValues(newFilter: Filter, indexOfFilterToUpdate: number): void {
     this.currentFilters = this.currentFilters.map((filter: Filter, idx: number) =>
-      idx === indexOfFilterToUpdate ? newFilter : filter
+      idx === indexOfFilterToUpdate ? newFilter : filter,
     );
   }
 
@@ -128,11 +106,7 @@ export class SearchResultsComponent implements OnInit {
     const { ckanProp, values } = filter;
     const separator = ckanProp === 'theme' || ckanProp === 'format' ? '' : ':';
     const correctedValues =
-      ckanProp === 'organization'
-        ? values.map((value: string) => value.toLowerCase().replaceAll(' ', '-'))
-        : values;
-    return correctedValues.length === 0
-      ? ''
-      : `${ckanProp}${separator}(${correctedValues.join(' OR ')})+`;
+      ckanProp === 'organization' ? values.map((value: string) => value.toLowerCase().replaceAll(' ', '-')) : values;
+    return correctedValues.length === 0 ? '' : `${ckanProp}${separator}(${correctedValues.join(' OR ')})+`;
   }
 }

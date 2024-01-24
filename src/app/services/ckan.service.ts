@@ -19,10 +19,10 @@ export class CkanService {
     filter: string = '',
     sortBy: string = '',
     start: number = 0,
-    rows: number = 12
+    rows: number = 12,
   ): Observable<{ results: PartialDataset[]; count: number }> {
     const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&fq=${encodeURIComponent(
-      filter
+      filter,
     )}&sort=${sortBy}&start=${start}&rows=${rows}`;
 
     return this.http.get<Response>(url).pipe(
@@ -47,7 +47,7 @@ export class CkanService {
       catchError((error) => {
         console.error(error);
         return of({ results: [], count: 0 });
-      })
+      }),
     );
   }
 
@@ -66,8 +66,8 @@ export class CkanService {
         catchError((error) => {
           console.error(error);
           return of({ results: [], count: 0 });
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -75,7 +75,7 @@ export class CkanService {
     const observables = CkanService.COUNTER_PROPS.map((prop: string) => this.getSingleStatistic(prop));
 
     return forkJoin(observables).pipe(
-      map((results: PortalStatistics[]) => results.reduce((statistics, singleStat) => ({ ...statistics, ...singleStat }), {}))
+      map((results: PortalStatistics[]) => results.reduce((statistics, singleStat) => ({ ...statistics, ...singleStat }), {})),
     );
   }
 
@@ -92,7 +92,7 @@ export class CkanService {
       catchError((error) => {
         console.error(error);
         return of({ [propCorrected]: 0 });
-      })
+      }),
     );
   }
 }

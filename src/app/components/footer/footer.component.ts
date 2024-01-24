@@ -17,10 +17,10 @@ export class FooterComponent {
   faGlobe = faGlobe;
   faExclamationCircle = faExclamationCircle;
 
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-    this.matIconRegistry.addSvgIcon(
-      'linkedin',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/linkedin.svg')
-    );
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+  ) {
+    this.matIconRegistry.addSvgIcon('linkedin', this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/linkedin.svg'));
   }
 }

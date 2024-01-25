@@ -8,7 +8,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
   faLinkedin = faLinkedin;
@@ -16,11 +16,11 @@ export class FooterComponent {
   faXTwitter = faXTwitter;
   faGlobe = faGlobe;
   faExclamationCircle = faExclamationCircle;
-  
+
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
       'linkedin',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/linkedin.svg')
     );
-    }
+  }
 }

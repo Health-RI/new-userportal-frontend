@@ -1,25 +1,43 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { PartialDataset } from 'src/app/interfaces/dataset';
 import { Filter } from 'src/app/interfaces/filter';
+import { CkanService } from 'src/app/services/ckan.service';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
 })
-export class FilterComponent implements OnChanges {
+export class FilterComponent implements OnInit, OnChanges {
   @Input() label!: string;
-  @Input() data!: PartialDataset[];
+  @Input() ckanProp!: keyof PartialDataset;
   @Input() parentFilters!: Filter[];
-  @Input() prop!: keyof PartialDataset;
   @Output() filterEmitter: EventEmitter<Filter> = new EventEmitter<Filter>();
 
   filterValues: string[] = [];
   currentValues: string[] = [];
 
+  constructor(private ckanService: CkanService) {}
+
+  ngOnInit() {
+    const prop = this.label[0].toLowerCase() + this.label.slice(1, -1);
+    this.ckanService.getPropList(prop).subscribe((data: { count: number; values: string[] }) => {
+      this.filterValues = data.values.sort(FilterComponent.sortData).map(this.transformValuesIfNecessary);
+    });
+  }
+
+  private static sortData(a: string | Date, b: string | Date): number {
+    if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
+    else if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b);
+    else throw new Error('PartialDataset fields must be either of type string or Date');
+  }
+
+  private transformValuesIfNecessary(value: string): string {
+    return this.label === 'Catalogues' ? value[0].toUpperCase() + value.slice(1).replaceAll('-', ' ') : value;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    this.filterValues = this.getUniqueFilterValues();
     if (changes['parentFilters'] && this.parentFilters.length === 0) {
       this.currentValues = [];
     }
@@ -37,24 +55,12 @@ export class FilterComponent implements OnChanges {
   private createFilter(): Filter {
     return {
       label: this.label,
-      values: this.currentValues,
-      ckanLabel: this.prop,
+      values: this.escapeValuesIfNecessary(),
+      ckanProp: this.ckanProp,
     };
   }
 
-  private getUniqueFilterValues(): string[] {
-    return [
-      ...new Set(
-        this.data
-          .filter((item: PartialDataset) => !!item[this.prop])
-          .flatMap((item: PartialDataset) => item[this.prop])
-      ),
-    ].sort(FilterComponent.sortData) as string[];
-  }
-
-  private static sortData(a: string | Date, b: string | Date): number {
-    if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
-    else if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b);
-    else throw new Error('PartialDataset fields must be either of type string or Date');
+  private escapeValuesIfNecessary(): string[] {
+    return this.label === 'Themes' ? this.currentValues.map((value) => `"${value}"`) : this.currentValues;
   }
 }

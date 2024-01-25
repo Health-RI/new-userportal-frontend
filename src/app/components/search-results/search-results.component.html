@@ -20,34 +20,30 @@
 <div class="flex justify-center flex-col items-center lg:flex-row">
   <app-filter
     class="mx-3"
-    [data]="allResults"
-    [parentFilters]="currentFilters"
     label="Publishers"
-    prop="publisher_name"
+    ckanProp="publisher_name"
+    [parentFilters]="currentFilters"
     (filterEmitter)="onReceiveFilter($event)"
   ></app-filter>
   <app-filter
     class="mx-3"
-    [data]="allResults"
-    [parentFilters]="currentFilters"
     label="Catalogues"
-    prop="organization"
+    ckanProp="organization"
+    [parentFilters]="currentFilters"
     (filterEmitter)="onReceiveFilter($event)"
   ></app-filter>
   <app-filter
     class="mx-3"
-    [data]="allResults"
-    [parentFilters]="currentFilters"
     label="Themes"
-    prop="theme"
+    ckanProp="theme"
+    [parentFilters]="currentFilters"
     (filterEmitter)="onReceiveFilter($event)"
   ></app-filter>
   <app-filter
     class="mx-3"
-    [data]="allResults"
-    [parentFilters]="currentFilters"
     label="Keywords"
-    prop="tags"
+    ckanProp="tags"
+    [parentFilters]="currentFilters"
     (filterEmitter)="onReceiveFilter($event)"
   ></app-filter>
   <button

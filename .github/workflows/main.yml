@@ -3,7 +3,7 @@ name: Publish and Deploy main
 on:
   workflow_run:
     workflows: ["Run Tests"]
-    branches: ['main']
+    branches: [main]
     types:
       - completed
 

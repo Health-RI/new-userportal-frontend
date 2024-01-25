@@ -3,13 +3,13 @@ name: Publish and Deploy main
 on:
   workflow_run:
     workflows: ["Run Tests"]
-    branches: ['fix-CD']
+    branches: ['main']
     types:
       - completed
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend
   AZURE_WEBAPP_NAME: catalogue-test
   DOCKER_METADATA_OUTPUT_TAGS:
 
@@ -97,4 +97,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: "${{ env.DOCKER_METADATA_OUTPUT_TAGS }}"
+          images: "${{ env.IMAGE_NAME }}"

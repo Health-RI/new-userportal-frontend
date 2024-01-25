@@ -1,8 +1,11 @@
-name: Build and publish a Docker image
+name: Publish and Deploy Docker image
 
 on:
-  push:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["Test and scan Docker image"]
+    branches: [main]
+    types:
+      - completed
   workflow_dispatch:
 
 env:
@@ -12,42 +15,26 @@ env:
   DOCKER_METADATA_OUTPUT_TAGS:
 
 jobs:
-  test:
+  ort:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    strategy:
+      fail-fast: false
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
         with:
-          node-version: 20
-      - name: Install
-        run: |
-          npm install
-      - name: Lint
-        run: |
-          npm run lint
-      - name: Prettier
-        run: |
-          npx prettier --check .
+          report-formats: CycloneDx,SpdxDocument,WebApp,PlainTextTemplate,Opossum
+          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-  build-and-push-image:
-    needs: test
+  scan-docker-image:
     runs-on: ubuntu-latest
+    needs: ort
     permissions:
       contents: read
-      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -72,6 +59,29 @@ jobs:
           vuln-type: "os,library"
           severity: "CRITICAL,HIGH"
 
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    needs: scan-docker-image
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.IMAGE_NAME }}
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -90,14 +100,3 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: "${{ env.DOCKER_METADATA_OUTPUT_TAGS }}"
-
-  ort:
-    strategy:
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
-        with:
-          report-formats: CycloneDx,SpdxDocument,WebApp,PlainTextTemplate,Opossum
-          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"

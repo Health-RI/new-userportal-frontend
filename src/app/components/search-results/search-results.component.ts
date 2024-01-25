@@ -30,7 +30,7 @@ export class SearchResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((_) => {
+    this.route.queryParams.subscribe(() => {
       this.loadSearchResults(this.currentSearchQuery, this.currentFilterQuery, this.currentSortingField);
     });
   }

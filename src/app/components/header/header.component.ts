@@ -5,7 +5,7 @@ import { faUser, faRightToBracket, faRightFromBracket, faBars } from '@fortaweso
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated = false;
@@ -15,16 +15,14 @@ export class HeaderComponent implements OnInit {
   faRightFromBracket = faRightFromBracket;
   faBars = faBars;
 
-
-  constructor(private readonly oidcSecurityService: OidcSecurityService) { }
+  constructor(private readonly oidcSecurityService: OidcSecurityService) {}
 
   ngOnInit() {
-    this.oidcSecurityService.checkAuth()
-      .subscribe((loginResponse: LoginResponse) => {
-        const { isAuthenticated, userData } = loginResponse;
-        this.isAuthenticated = isAuthenticated;
-        this.userData = userData;
-      });
+    this.oidcSecurityService.checkAuth().subscribe((loginResponse: LoginResponse) => {
+      const { isAuthenticated, userData } = loginResponse;
+      this.isAuthenticated = isAuthenticated;
+      this.userData = userData;
+    });
   }
 
   login() {
@@ -32,11 +30,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.oidcSecurityService.logoffAndRevokeTokens()
-      .subscribe(({ isAuthenticated, userData }) => {
-        this.isAuthenticated = isAuthenticated;
-        this.userData = userData;
-      });
+    this.oidcSecurityService.logoffAndRevokeTokens().subscribe(({ isAuthenticated, userData }) => {
+      this.isAuthenticated = isAuthenticated;
+      this.userData = userData;
+    });
   }
 
   username() {

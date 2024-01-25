@@ -24,7 +24,8 @@ $userportal-theme: mat.define-light-theme(
 
 @font-face {
   font-family: "Expose-Regular";
-  src: url("./assets/fonts/Expose-Regular.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/Expose-Regular.woff2") format("woff2"),
     url("./assets/fonts/Expose-Regular.woff") format("woff"),
     url("./assets/fonts/Expose-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -34,7 +35,8 @@ $userportal-theme: mat.define-light-theme(
 
 @font-face {
   font-family: "Satoshi-Regular";
-  src: url("./assets/fonts/Satoshi-Regular.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/Satoshi-Regular.woff2") format("woff2"),
     url("./assets/fonts/Satoshi-Regular.woff") format("woff"),
     url("./assets/fonts/Satoshi-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -44,7 +46,8 @@ $userportal-theme: mat.define-light-theme(
 
 @font-face {
   font-family: "Tabular-Regular";
-  src: url("./assets/fonts/Tabular-Regular.woff2") format("woff2"),
+  src:
+    url("./assets/fonts/Tabular-Regular.woff2") format("woff2"),
     url("./assets/fonts/Tabular-Regular.woff") format("woff"),
     url("./assets/fonts/Tabular-Regular.ttf") format("truetype");
   font-weight: 400;

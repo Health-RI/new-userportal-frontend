@@ -29,7 +29,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
-import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { FilterComponent } from './components/filter/filter.component';
 import { PortalStatisticsComponent } from './components/portal-statistics/portal-statistics.component';
 import { AuthConfigModule } from './auth/auth-config.module';
@@ -76,9 +76,9 @@ import { AuthConfigModule } from './auth/auth-config.module';
     CkanService,
     {
       provide: DATE_PIPE_DEFAULT_OPTIONS,
-      useValue: { dateFormat: "dd MMMM YYYY" }
+      useValue: { dateFormat: 'dd MMMM YYYY' },
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

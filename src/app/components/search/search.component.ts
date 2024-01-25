@@ -13,7 +13,10 @@ export class SearchComponent {
   searchResults$: Observable<any[]> | undefined;
   searchTerm: string = '';
 
-  constructor(private ckanService: CkanService, private router: Router) {}
+  constructor(
+    private ckanService: CkanService,
+    private router: Router,
+  ) {}
 
   onSearch(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
@@ -24,7 +27,7 @@ export class SearchComponent {
       catchError((error) => {
         console.error(error);
         return of([]);
-      })
+      }),
     );
   }
 

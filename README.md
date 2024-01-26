@@ -1,3 +1,8 @@
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/test.yml/badge.svg)
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/release.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GenomicDataInfrastructure_gdi-userportal-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GenomicDataInfrastructure_gdi-userportal-frontend)
+[![GitHub contributors](https://img.shields.io/github/contributors/GenomicDataInfrastructure/gdi-userportal-frontend)](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/graphs/contributors)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
 # GDI User Portal Front-end

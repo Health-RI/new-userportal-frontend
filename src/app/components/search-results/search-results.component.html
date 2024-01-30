@@ -54,11 +54,11 @@
     Clear Filters
   </button>
 </div>
-<div class="flex flex-col md:flex-row p-10">
-  <div class="flex flex-col mx-10">
+
+<div class="m-auto mx-32 mt-10">
     <mat-card
       *ngFor="let item of results"
-      class="p-6 rounded-md mb-10 mx-5 card"
+      class="p-6 rounded-md my-16 card"
       (click)="onSelectItem(item)"
     >
       <mat-card-header>
@@ -82,6 +82,5 @@
         (page)="handlePageEvent($event)"
       >
       </mat-paginator>
-    </div>
   </div>
 </div>

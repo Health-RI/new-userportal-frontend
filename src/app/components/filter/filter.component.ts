@@ -23,7 +23,7 @@ export class FilterComponent implements OnInit, OnChanges {
   ngOnInit() {
     const prop = this.label[0].toLowerCase() + this.label.slice(1, -1);
     this.ckanService.getPropList(prop).subscribe((data: { count: number; values: string[] }) => {
-      this.filterValues = data.values.sort(FilterComponent.sortData).map(this.transformValuesIfNecessary);
+      this.filterValues = data.values.sort(FilterComponent.sortData).map(value => this.transformValuesIfNecessary(value));
     });
   }
 

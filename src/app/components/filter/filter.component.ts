@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Stichting Health-RI
+// SPDX-FileContributor: PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { PartialDataset } from 'src/app/interfaces/dataset';

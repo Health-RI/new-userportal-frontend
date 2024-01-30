@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Stichting Health-RI
+// SPDX-FileContributor: PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
 import { faUser, faRightToBracket, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons';

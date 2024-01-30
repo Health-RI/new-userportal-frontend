@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Stichting Health-RI
+// SPDX-FileContributor: PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 export const environment = {
   // @ts-expect-error assets/env.js is loading the values of these variables
   production: window['env']['production'],

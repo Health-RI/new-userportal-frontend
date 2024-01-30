@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Stichting Health-RI
+// SPDX-FileContributor: PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { Component } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';

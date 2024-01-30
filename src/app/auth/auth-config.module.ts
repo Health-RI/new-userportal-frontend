@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { NgModule } from '@angular/core';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { environment } from 'src/environment/environment';

@@ -56,31 +56,31 @@
 </div>
 
 <div class="m-auto mx-32 mt-10">
-    <mat-card
-      *ngFor="let item of results"
-      class="p-6 rounded-md my-16 card"
-      (click)="onSelectItem(item)"
-    >
-      <mat-card-header>
-        <mat-card-title>{{ item.title }}</mat-card-title>
-        <mat-card-subtitle>{{ item.organization }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        {{ item.description }}
-      </mat-card-content>
-      <mat-card-footer class="card-footer-content">
-        Last updated {{ item.modified | date: "dd MMMM yyyy" }}
-      </mat-card-footer>
-    </mat-card>
+  <mat-card
+    *ngFor="let item of results"
+    class="p-6 rounded-md my-16 card"
+    (click)="onSelectItem(item)"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ item.title }}</mat-card-title>
+      <mat-card-subtitle>{{ item.organization }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      {{ item.description }}
+    </mat-card-content>
+    <mat-card-footer class="card-footer-content">
+      Last updated {{ item.modified | date: "dd MMMM yyyy" }}
+    </mat-card-footer>
+  </mat-card>
 
-    <div>
-      <mat-paginator
-        [length]="totalResults"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        [pageIndex]="currentPage"
-        (page)="handlePageEvent($event)"
-      >
-      </mat-paginator>
+  <div>
+    <mat-paginator
+      [length]="totalResults"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="currentPage"
+      (page)="handlePageEvent($event)"
+    >
+    </mat-paginator>
   </div>
 </div>

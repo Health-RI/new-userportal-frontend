@@ -1,3 +1,11 @@
+<!--
+SPDX-FileCopyrightText: 2024 Stichting Health-RI
+SPDX-FileContributor: PNED G.I.E.
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+[![REUSE status](https://api.reuse.software/badge/github.com/GenomicDataInfrastructure/gdi-userportal-frontend)](https://api.reuse.software/info/github.com/GenomicDataInfrastructure/gdi-userportal-frontend)
 ![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/main.yml/badge.svg)
 ![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/test.yml/badge.svg)
 ![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/actions/workflows/release.yml/badge.svg)
@@ -35,4 +43,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## License
 
-[Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
+This work is licensed under multiple licences. Because keeping this section up-to-date is challenging, here is a brief summary as of January 2024:
+
+- All original source code is licensed under [Apache-2.0](./LICENSES/Apache-2.0.txt).
+- All documentation is licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
+- All the fonts are licensed under [OFL-1.1](./LICENSES/OFL-1.1.txt).
+- Some configuration and data files are licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
+- For more accurate information, check the individual files.

@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2024 Stichting Health-RI
+# SPDX-FileContributor: PNED G.I.E.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
@@ -24,8 +29,11 @@ yarn-error.log
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
+!.vscode/tasks.json.license
 !.vscode/launch.json
+!.vscode/launch.json.license
 !.vscode/extensions.json
+!.vscode/extensions.json.license
 .history/*
 
 # Miscellaneous

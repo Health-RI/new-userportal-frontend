@@ -23,7 +23,6 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # GDI User Portal Front-end
 
-
 The GDI User Portal Front-end is a crucial component of the Genomic Data Infrastructure (GDI) project, which aims to facilitate access to genomic, phenotypic, and clinical data across Europe. The GDI project is committed to establishing a federated, sustainable, and secure infrastructure to enable seamless data access. Leveraging the outcomes of the Beyond 1 Million Genomes (B1MG) project, the GDI project is actively realizing the ambitious goals set forth by the 1+Million Genomes (1+MG) initiative.
 
 The GDI User Portal Front-end serves as the user-friendly interface for this initiative, utilizing [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3. This frontend application plays a crucial role in enhancing user experience and ensuring efficient interaction with the genomic data infrastructure.
@@ -37,7 +36,6 @@ The GDI User Portal Front-end serves as the user-friendly interface for this ini
 Before using the GDI User Portal Front-end, make sure you have the required dependencies installed. Follow the installation instructions below:
 
 `npm install`
-
 
 ## Development server
 

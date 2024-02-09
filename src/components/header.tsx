@@ -2,20 +2,22 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUser,
-  faRightToBracket,
-  faRightFromBracket,
   faBars,
+  faRightFromBracket,
+  faRightToBracket,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const activeTab = usePathname();
 
   // Mock authentication state and functions
   const isAuthenticated = false;
@@ -34,14 +36,23 @@ function Header() {
           height="69"
         />
       </Link>
-      <div className="hidden sm:flex items-center text-primary hover:text-secondary text-lg">
-        <Link href="/" className="mr-10 hover:text-primary">
+      <div className="sm:flex items-center text-primary text-lg">
+        <Link
+          href="/"
+          className={`mr-10 hover:text-info ${activeTab === "/" ? "text-secondary" : ""}`}
+        >
           Home
         </Link>
-        <Link href="/datasets" className="mr-10 hover:text-primary">
+        <Link
+          href="/datasets"
+          className={`mr-10 hover:text-info ${activeTab.includes("datasets") ? "text-secondary" : ""}`}
+        >
           Datasets
         </Link>
-        <Link href="/about" className="mr-10 hover:text-primary">
+        <Link
+          href="/about"
+          className={`mr-10 hover:text-info ${activeTab === "/about" ? "text-secondary" : ""}`}
+        >
           About
         </Link>
         {isAuthenticated && <FontAwesomeIcon icon={faUser} />}

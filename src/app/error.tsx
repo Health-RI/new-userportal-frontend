@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 interface ErrorBoundaryProps {
-  error: Error & { digest?: string };
+  error?: Error & { digest?: string };
   statusCode?: number;
 }
 

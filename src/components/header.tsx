@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
 import Button from "@/components/Button";
 
@@ -29,6 +29,21 @@ function Header() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const targetElement = event.target as Element;
+      if (isMenuOpen && !targetElement.closest(".menu-container")) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
@@ -74,7 +89,7 @@ function Header() {
           </button>
         )}
       </div>
-      <div className="relative md:hidden">
+      <div className="menu-container relative md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="text-primary focus:outline-none"

@@ -26,6 +26,10 @@ function Header() {
   const login = () => console.log("Login");
   const logout = () => console.log("Logout");
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
       <Link href="/">
@@ -41,18 +45,21 @@ function Header() {
         <Link
           href="/"
           className={`mr-10 hover:text-info ${activeTab === "/" ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           Home
         </Link>
         <Link
           href="/datasets"
           className={`mr-10 hover:text-info ${activeTab.includes("datasets") ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           Datasets
         </Link>
         <Link
           href="/about"
           className={`mr-10 hover:text-info ${activeTab === "/about" ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           About
         </Link>
@@ -67,7 +74,7 @@ function Header() {
           </button>
         )}
       </div>
-      <div className="relative sm:hidden">
+      <div className="relative md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="text-primary focus:outline-none"
@@ -79,18 +86,21 @@ function Header() {
             <Link
               href="/"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               Home
             </Link>
             <Link
               href="/datasets"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               Datasets
             </Link>
             <Link
               href="/about"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               About
             </Link>

@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
 import Button from "@/components/Button";
 
@@ -25,6 +25,25 @@ function Header() {
   const username = () => "User";
   const login = () => console.log("Login");
   const logout = () => console.log("Logout");
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const targetElement = event.target as Element;
+      if (isMenuOpen && !targetElement.closest(".menu-container")) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
@@ -41,18 +60,21 @@ function Header() {
         <Link
           href="/"
           className={`mr-10 hover:text-info ${activeTab === "/" ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           Home
         </Link>
         <Link
           href="/datasets"
           className={`mr-10 hover:text-info ${activeTab.includes("datasets") ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           Datasets
         </Link>
         <Link
           href="/about"
           className={`mr-10 hover:text-info ${activeTab === "/about" ? "text-secondary" : ""}`}
+          onClick={closeMenu}
         >
           About
         </Link>
@@ -67,7 +89,7 @@ function Header() {
           </button>
         )}
       </div>
-      <div className="relative sm:hidden">
+      <div className="menu-container relative md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="text-primary focus:outline-none"
@@ -79,18 +101,21 @@ function Header() {
             <Link
               href="/"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               Home
             </Link>
             <Link
               href="/datasets"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               Datasets
             </Link>
             <Link
               href="/about"
               className="block px-4 py-2 text-primary hover:bg-secondary hover:text-white"
+              onClick={closeMenu}
             >
               About
             </Link>

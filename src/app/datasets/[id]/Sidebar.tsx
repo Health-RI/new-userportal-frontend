@@ -3,16 +3,21 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Dataset } from "@/types/dataset.types";
 import formatDatasetLanguage from "@/utils/formatDatasetLanguage";
+import { formatDate } from "@/utils/formatDate";
 
-export default function Sidebar({ dataset }: { dataset: Dataset }) {
+interface SidebarProps {
+  dataset: Dataset;
+}
+
+const Sidebar = ({ dataset }: SidebarProps) => {
   return (
-    <div className="flex w-full flex-col gap-3 bg-secondary p-5 text-white lg:w-1/3">
+    <div className="flex w-full flex-col gap-3 rounded bg-secondary p-5 text-white lg:w-1/3">
       <div className="mb-3">
         <h3 className="text-base text-warning sm:text-lg lg:text-xl">
           Metadata Created
         </h3>
         <span className="text-sm sm:text-base lg:text-lg">
-          {dataset.metadataCreated}
+          {dataset.metadataCreated && formatDate(dataset.metadataCreated)}
         </span>
       </div>
       <div className="mb-3">
@@ -20,7 +25,7 @@ export default function Sidebar({ dataset }: { dataset: Dataset }) {
           Metadata Modified
         </h3>
         <span className="text-sm sm:text-base lg:text-lg">
-          {dataset.metadataCreated}
+          {dataset.metadataCreated && formatDate(dataset.metadataModified)}
         </span>
       </div>
       <div className="mb-3">
@@ -134,4 +139,6 @@ export default function Sidebar({ dataset }: { dataset: Dataset }) {
       </div>
     </div>
   );
-}
+};
+
+export default Sidebar;

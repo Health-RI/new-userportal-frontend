@@ -81,7 +81,7 @@ describe('CkanService', () => {
     const req = httpTestingController.expectOne(
       (req) =>
         req.method === 'GET' &&
-        req.url === `${environment.backendUrl}/api/action/package_search` &&
+        req.url === `${environment.backendUrl}/package_search` &&
         req.params.get('q') === testQuery &&
         req.params.get('fq') === testFilter &&
         req.params.get('start') === testStart.toString() &&

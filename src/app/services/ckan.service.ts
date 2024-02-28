@@ -26,7 +26,7 @@ export class CkanService {
     start: number = 0,
     rows: number = 12,
   ): Observable<{ results: PartialDataset[]; count: number }> {
-    const url = `${environment.backendUrl}/api/action/package_search?q=${encodeURIComponent(query)}&fq=${encodeURIComponent(
+    const url = `${environment.backendUrl}/package_search?q=${encodeURIComponent(query)}&fq=${encodeURIComponent(
       filter,
     )}&sort=${sortBy}&start=${start}&rows=${rows}`;
 
@@ -57,11 +57,11 @@ export class CkanService {
   }
 
   getSchemingPackageShow(id: string): Observable<Dataset> {
-    return this.http.get<Dataset>(`${environment.backendUrl}/api/action/scheming_package_show?type=dataset&id=${id}`);
+    return this.http.get<Dataset>(`${environment.backendUrl}/scheming_package_show?type=dataset&id=${id}`);
   }
 
   getPropList(label: string): Observable<{ count: number; values: string[] }> {
-    const url = `${environment.backendUrl}/api/action/${label}_list`;
+    const url = `${environment.backendUrl}/${label}_list`;
     return this.http.get<Response>(url).pipe(
       map(
         (response) => ({

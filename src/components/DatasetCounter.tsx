@@ -2,34 +2,18 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { datasetCount } from "@/services/ckan/index.server";
 
-const DatasetCounter = () => {
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchDatasetCount = async () => {
-      try {
-        const count = await datasetCount();
-        console.log(count);
-        setCount(count);
-      } catch (error) {
-        console.error("Error fetching dataset count:", error);
-        setCount(0); // Fallback to 0 in case of an error
-      }
-    };
-
-    fetchDatasetCount();
-  }, []);
-
+export async function DatasetCounter() {
+  const count = await datasetCount();
   return (
     <div className="mb-4 mt-10 flex items-baseline">
       {count !== null ? (
         <>
-          <p className="mr-3 text-4xl font-bold">{count.toLocaleString()}</p>
+          <p className="mr-3 text-4xl font-bold">
+            {count.toLocaleString("en-GB")}
+          </p>
           <p className="self-end text-xl font-bold">Datasets</p>
         </>
       ) : (
@@ -37,6 +21,4 @@ const DatasetCounter = () => {
       )}
     </div>
   );
-};
-
-export default DatasetCounter;
+}

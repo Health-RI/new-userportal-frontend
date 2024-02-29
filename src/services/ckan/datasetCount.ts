@@ -9,6 +9,6 @@ export const makeDatasetCount = (DMS: string) => {
   return async (): Promise<number> => {
     const url = constructCkanActionUrl(DMS, 'dataset_list');
     const response = await axios.get(url);
-    return response.data.result.count; 
+    return response.data.result.count;
   };
 };

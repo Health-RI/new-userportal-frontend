@@ -4,8 +4,8 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { datasetCount } from '@/services/ckan/index.server';
+import React, { useState, useEffect } from "react";
+import { datasetCount } from "@/services/ckan/index.server";
 
 const DatasetCounter = () => {
   const [count, setCount] = useState<number | null>(null);
@@ -14,10 +14,10 @@ const DatasetCounter = () => {
     const fetchDatasetCount = async () => {
       try {
         const count = await datasetCount();
-        console.log(count)
+        console.log(count);
         setCount(count);
       } catch (error) {
-        console.error('Error fetching dataset count:', error);
+        console.error("Error fetching dataset count:", error);
         setCount(0); // Fallback to 0 in case of an error
       }
     };
@@ -26,11 +26,11 @@ const DatasetCounter = () => {
   }, []);
 
   return (
-    <div className="mt-10 mb-4 flex items-baseline">
+    <div className="mb-4 mt-10 flex items-baseline">
       {count !== null ? (
         <>
-          <p className="text-4xl font-bold mr-3">{count.toLocaleString()}</p>
-          <p className="text-xl font-bold self-end">Datasets</p>
+          <p className="mr-3 text-4xl font-bold">{count.toLocaleString()}</p>
+          <p className="self-end text-xl font-bold">Datasets</p>
         </>
       ) : (
         <p>Loading...</p>

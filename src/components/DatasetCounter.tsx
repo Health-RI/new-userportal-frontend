@@ -9,16 +9,8 @@ export async function DatasetCounter() {
   const count = await datasetCount();
   return (
     <div className="mb-4 mt-10 flex items-baseline">
-      {count !== null ? (
-        <>
-          <p className="mr-3 text-4xl font-bold">
-            {count.toLocaleString("en-GB")}
-          </p>
-          <p className="self-end text-xl font-bold">Datasets</p>
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <p className="mr-3 text-4xl font-bold">{count.toLocaleString("en-GB")}</p>
+      <p className="self-end text-xl font-bold">Datasets</p>
     </div>
   );
 }

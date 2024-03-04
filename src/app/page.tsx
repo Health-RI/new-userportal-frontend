@@ -5,10 +5,8 @@
 "use client";
 
 import { DatasetCounter } from "@/components/DatasetCounter";
-import { Search } from "@/components/Search";
 import { PortalStatistics } from "@/components/PortalStatistics";
-import { OrganizationList } from "@/components/OrganizationList";
-import { useRouter } from "next/navigation";
+import { Search } from "@/components/Search";
 import Image from "next/image";
 import logo from "../public/gdi_logo.png";
 import data from "../public/data-matters.jpg";
@@ -17,14 +15,16 @@ import gdi_visuals from "../public/gdi_visuals.png";
 import Link from "next/link";
 
 const HomePage = () => {
-  const router = useRouter();
+  const initialQueryParams: Record<string, string> = {
+    q: '',
+  };
 
   return (
     <div className="container mx-auto space-y-20 px-4 pt-20">
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
         <div className="text-center lg:text-left">
           <DatasetCounter />
-          <Search />
+          <Search queryParams={initialQueryParams}/>
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               WELCOME TO GDI
@@ -125,17 +125,13 @@ const HomePage = () => {
             </div>
             <a
               href="/subscribe-newsletter"
-              className="hover:bg-warningg rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
+              className="hover:bg-warning rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
             >
               Subscribe to our Newsletter
             </a>
           </div>
         </div>
       </div>
-
-      {/* <div className="w-full flex justify-center">
-            <OrganizationList organizations = {[]}/>
-      </div> */}
 
       <div className="my-12 flex flex-col items-center justify-between md:flex-row">
         <div className="p-4 md:flex-1">

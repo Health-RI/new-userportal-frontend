@@ -7,7 +7,7 @@ import { constructCkanActionUrl } from './utils';
 
 export const makePortalStatistics = (DMS: string) => {
   return async (): Promise<{ [key: string]: number }> => {
-    const props = ['dataset', 'catalogue', 'keyword'];
+    const props = ['theme', 'catalogue', 'keyword'];
     const counts = await Promise.all(
       props.map(async (prop) => {
         const url = constructCkanActionUrl(DMS, `${prop}_list`);

@@ -85,7 +85,7 @@ const HomePage = () => {
           <h3 className="mb-4 text-2xl font-bold text-primary">The Data</h3>
           <p className="text-lg">
             The project involves human genomic and related phenotypic and
-            clinical data held in databases across Europe. 'Real' synthetic data
+            clinical data held in databases across Europe. Real synthetic data
             will be used for validation before data are available through the
             infrastructure.
           </p>

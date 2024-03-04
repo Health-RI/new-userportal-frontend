@@ -12,7 +12,7 @@
     "lint": "next lint",
     "test": "jest",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write .",
+    "format": "prettier --check .",
     "format:fix": "prettier --write --list-different ."
   },
   "dependencies": {
@@ -39,7 +39,6 @@
     "sharp": "^0.33.2",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "util": "^0.12.5",
     "utils": "^0.2.2"
   },
   "devDependencies": {

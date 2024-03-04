@@ -16,7 +16,7 @@ import Link from "next/link";
 
 const HomePage = () => {
   const initialQueryParams: Record<string, string> = {
-    q: '',
+    q: "",
   };
 
   return (
@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
         <div className="text-center lg:text-left">
           <DatasetCounter />
-          <Search queryParams={initialQueryParams}/>
+          <Search queryParams={initialQueryParams} />
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               WELCOME TO GDI
@@ -125,7 +125,7 @@ const HomePage = () => {
             </div>
             <a
               href="/subscribe-newsletter"
-              className="hover:bg-warning rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
+              className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out hover:bg-warning"
             >
               Subscribe to our Newsletter
             </a>

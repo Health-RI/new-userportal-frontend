@@ -28,7 +28,7 @@ export function Search({ queryParams }: SearchBarProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
-  
+
   return (
     <div className="my-6 w-full">
       <form className="flex" onSubmit={handleSubmit}>
@@ -45,7 +45,7 @@ export function Search({ queryParams }: SearchBarProps) {
           type="submit"
           className="flex items-center justify-center bg-secondary p-4 text-white"
         >
-          <FontAwesomeIcon icon={faSearch} className="text-white text-lg" />
+          <FontAwesomeIcon icon={faSearch} className="text-lg text-white" />
         </button>
       </form>
     </div>

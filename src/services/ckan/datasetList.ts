@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import axios from 'axios';
 import { PackageSearchOptions, PackageSearchResult } from './types/packageSearch.types';
-import { mapCKANPackageToDataset, constructCkanActionUrl } from './utils';
+import { constructCkanActionUrl, mapCKANPackageToDataset } from './utils';
 
 export const makeDatasetList = (DMS: string) => {
   return async (options: PackageSearchOptions): Promise<PackageSearchResult> => {
@@ -23,19 +23,26 @@ export const makeDatasetList = (DMS: string) => {
 };
 
 const buildFilterQueryPart = (filters: string[]): string => {
-  return filters.length > 0 ? `(${filters.join(' OR ')})` : '';
+  return filters.length > 0
+    ? `(${filters
+        .map((filter: string) => (filter.startsWith('http') ? `"${filter}"` : filter))
+        .map((value: string) => (value.includes(' ') ? `"${value}"` : value))
+        .join(' OR ')})`
+    : '';
 };
 
 const constructQueryParams = (options: PackageSearchOptions): string => {
   const groupFilter = buildFilterQueryPart(options.groups || []);
   const orgFilter = buildFilterQueryPart(options.orgs || []);
   const tagFilter = buildFilterQueryPart(options.tags || []);
+  const publisherFilter = buildFilterQueryPart(options.publishers || []);
   const resFormatFilter = buildFilterQueryPart(options.resFormat || []);
 
   const filters = [
     groupFilter && `groups:${groupFilter}`,
     orgFilter && `organization:${orgFilter}`,
     tagFilter && `tags:${tagFilter}`,
+    publisherFilter && `publisher:${publisherFilter}`,
     resFormatFilter && `res_format:${resFormatFilter}`,
   ]
     .filter(Boolean)

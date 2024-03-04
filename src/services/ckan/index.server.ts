@@ -17,4 +17,4 @@ const datasetCount = makeDatasetCount(DMS_URL);
 const portalStatistics = makePortalStatistics(DMS_URL);
 const organizationList = makeOrganizationList(DMS_URL);
 
-export { datasetList, datasetGet, datasetCount, portalStatistics, organizationList};
+export { datasetList, datasetGet, datasetCount, portalStatistics, organizationList };

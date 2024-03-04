@@ -17,10 +17,12 @@ export async function PortalStatistics() {
               className="transform transition duration-500 ease-in-out hover:scale-105"
             >
               <div className="cursor-pointer rounded-lg bg-white p-4 text-center shadow-md hover:shadow-xl">
-                <div className="text-xl md:text-2xl font-semibold hover:text-info">
+                <div className="text-xl font-semibold hover:text-info md:text-2xl">
                   {value.toLocaleString("en-GB")}
                 </div>
-                <div className="text-sm md:text-md mt-2 hover:text-info">{key}</div>
+                <div className="md:text-md mt-2 text-sm hover:text-info">
+                  {key}
+                </div>
               </div>
             </div>
           ))}
@@ -28,4 +30,4 @@ export async function PortalStatistics() {
       </div>
     </div>
   );
-};
+}

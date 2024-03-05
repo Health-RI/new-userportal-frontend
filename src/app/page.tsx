@@ -9,7 +9,7 @@ import { PortalStatistics } from "@/components/PortalStatistics";
 import { Search } from "@/components/Search";
 import Image from "next/image";
 import logo from "../public/gdi-logo.png";
-import data from "../public/data-matters.jpg";
+import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
 import gdi_visuals from "../public/gdi-visuals.png";
 import Link from "next/link";
@@ -62,8 +62,8 @@ const HomePage = () => {
       <div className="mb-36 grid items-center gap-10 md:grid-cols-2">
         <div className="relative order-2 flex h-full items-center justify-center md:order-1">
           <Image
-            src={data}
-            alt="DNA visualization"
+            src={office}
+            alt="Office"
             className="rounded-lg transition-shadow duration-300 ease-in-out hover:shadow-lg"
           />
         </div>

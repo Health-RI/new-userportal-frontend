@@ -10,13 +10,13 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('makePortalStatistics', () => {
-  const mockDatasetResponse = { data: { result: { count: 1155 } } };
+  const mockThemeResponse = { data: { result: { count: 379 } } };
   const mockCatalogueResponse = { data: { result: { count: 5 } } };
   const mockKeywordResponse = { data: { result: { count: 490 } } };
 
   beforeEach(() => {
     mockedAxios.get
-      .mockResolvedValueOnce(mockDatasetResponse)
+      .mockResolvedValueOnce(mockThemeResponse)
       .mockResolvedValueOnce(mockCatalogueResponse)
       .mockResolvedValueOnce(mockKeywordResponse);
   });
@@ -32,12 +32,12 @@ describe('makePortalStatistics', () => {
     const portalStatistics = await getPortalStatistics();
 
     expect(portalStatistics).toEqual({
-      Datasets: 1155,
+      Themes: 379,
       Catalogues: 5,
       Keywords: 490,
     });
 
-    expect(mockedAxios.get).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/dataset_list?`);
+    expect(mockedAxios.get).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`);
     expect(mockedAxios.get).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`);
     expect(mockedAxios.get).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`);
   });

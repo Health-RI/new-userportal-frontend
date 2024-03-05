@@ -11,7 +11,7 @@ function getEnvVariable(key: string, defaultValue: string): string {
 }
 
 const serverConfig: ServerConfig = {
-  ckanUrl: getEnvVariable('CKAN_URL', 'http://localhost:5500'),
+  ckanUrl: getEnvVariable('CKAN_URL', 'https://ckan-test.healthdata.nl'),
 };
 
 export default serverConfig;

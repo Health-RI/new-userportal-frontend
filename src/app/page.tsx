@@ -8,10 +8,10 @@ import { DatasetCounter } from "@/components/DatasetCounter";
 import { PortalStatistics } from "@/components/PortalStatistics";
 import { Search } from "@/components/Search";
 import Image from "next/image";
-import logo from "../public/gdi_logo.png";
+import logo from "../public/gdi-logo.png";
 import data from "../public/data-matters.jpg";
 import dna from "../public/dna.jpg";
-import gdi_visuals from "../public/gdi_visuals.png";
+import gdi_visuals from "../public/gdi-visuals.png";
 import Link from "next/link";
 
 const HomePage = () => {

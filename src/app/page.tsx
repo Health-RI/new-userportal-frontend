@@ -125,7 +125,7 @@ const HomePage = () => {
             </div>
             <a
               href="/subscribe-newsletter"
-              className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out hover:bg-warning"
+              className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
             >
               Subscribe to our Newsletter
             </a>

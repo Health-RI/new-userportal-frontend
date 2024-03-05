@@ -67,5 +67,5 @@ To get more help on Next JS, go check out the [Next JS API Reference](https://ne
 - All documentation is licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
 - All the fonts are licensed under [OFL-1.1](./LICENSES/OFL-1.1.txt).
 - Some configuration and data files are licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
-- Some of the 
+- Some of the images are licensed under [CC0-1.0] (LICENSES/CC0-1.0.txt)
 - For more accurate information, check the individual files.

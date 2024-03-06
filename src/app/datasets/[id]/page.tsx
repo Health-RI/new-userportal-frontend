@@ -9,6 +9,7 @@ import PageSubHeading from "@/components/PageSubHeading";
 import { datasetGet } from "@/services/ckan/index.server";
 import DistributionAccordion from "./DistributionAccordion";
 import Sidebar from "./Sidebar";
+import AddToBasketBtn from "./AddToBasketBtn";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -19,17 +20,24 @@ export default async function Page({ params }: { params: { id: string } }) {
     return (
       <div className="flex w-full flex-col items-start p-10 lg:flex-row">
         <div className="flex w-full flex-col gap-5 p-5 lg:w-2/3">
-          <PageHeading>{dataset.title}</PageHeading>
+          <div className="flex w-full flex-col items-start justify-between lg:flex-row lg:items-center">
+            <PageHeading className="w-2/3 sm:mb-4">{dataset.title}</PageHeading>
+            <AddToBasketBtn dataset={dataset} />
+          </div>
           <p>{dataset.notes}</p>
-          <PageSubHeading>Themes</PageSubHeading>
+          {dataset.theme?.length > 0 && <PageSubHeading>Themes</PageSubHeading>}
           <Chips chips={dataset.theme || []} />
-          <PageSubHeading>Keywords</PageSubHeading>
+          {dataset.keywords?.length > 0 && (
+            <PageSubHeading>Keywords</PageSubHeading>
+          )}
           <Chips
             chips={
               dataset.keywords?.map((keyword) => keyword.displayName) || []
             }
           />
-          <PageSubHeading>Distributions</PageSubHeading>
+          {dataset.distributions.length > 0 && (
+            <PageSubHeading>Distributions</PageSubHeading>
+          )}
           <DistributionAccordion distributions={dataset.distributions || []} />
         </div>
         <Sidebar dataset={dataset} />

@@ -37,14 +37,18 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
 testem.log
 /typings
+.next
 
 # System files
 .DS_Store
 Thumbs.db
+
+tsconfig.tsbuildinfo
+.env
+.env.local

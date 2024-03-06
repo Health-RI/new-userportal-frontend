@@ -21,11 +21,17 @@ jobs:
       - name: Install
         run: |
           npm install
+      - name: Test
+        run: |
+          npm run test
       - name: Lint
         run: |
           npm run lint
       - name: Prettier
         run: |
-          npx prettier --check .
+          npm run format
+      - name: Type check
+        run: |
+          npm run type-check
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v2

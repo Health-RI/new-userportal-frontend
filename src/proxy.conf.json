@@ -1,8 +1,0 @@
-{
-  "/api": {
-    "target": "https://ckan-test.healthdata.nl",
-    "secure": true,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}

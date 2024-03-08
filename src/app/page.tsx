@@ -102,7 +102,7 @@ const HomePage = () => {
       <div className="mb-36 rounded-xl border bg-primary p-8 text-white">
         <div className="container mx-auto flex flex-wrap items-center justify-between md:flex-nowrap">
           <h2 className="mb-6 text-2xl font-bold text-warning md:mb-0 md:text-3xl lg:text-4xl">
-            PARTICIPATE
+            DOE MEE
           </h2>
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <div className="mb-4 flex w-full flex-wrap justify-around text-warning">
@@ -115,12 +115,12 @@ const HomePage = () => {
                 Learn more about B1MG
               </a> */}
               <a
-                href="https://gdi.onemilliongenomes.eu/"
+                href="https://www.health-ri.nl/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mb-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
               >
-                Learn more about GDI
+                Kom meer te weten over Health-RI
               </a>
             </div>
             <a

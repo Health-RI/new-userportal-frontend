@@ -13,7 +13,8 @@ module.exports = {
         // Functional color names
         primary: "var(--color-dark-blue)",
         secondary: "var(--color-waikawa-gray)",
-        info: "var(--color-light-blue)",
+        info: "var(--color-dark-blue)",
+        // info: "var(--color-light-blue)",
         warning: "var(--color-deep-yellow)",
 
         // Descriptive color names as an alternative reference or for specific use cases.

@@ -40,7 +40,7 @@ function Footer() {
             href="https://www.linkedin.com/company/health-ri/"
             target="_blank"
             rel="noopener"
-            className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon
               icon={faLinkedin}
@@ -52,7 +52,7 @@ function Footer() {
             href="https://twitter.com/health__ri"
             target="_blank"
             rel="noopener"
-            className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon
               icon={faXTwitter}
@@ -64,7 +64,7 @@ function Footer() {
             href="https://www.youtube.com/channel/UCOnAoZWtUjuDZE8ZjnYeBtA"
             target="_blank"
             rel="noopener"
-            className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon icon={faYoutube} className="text-lg md:text-2xl" />
           </a>
@@ -73,13 +73,13 @@ function Footer() {
             href="https://www.health-ri.nl/"
             target="_blank"
             rel="noopener"
-            className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon icon={faGlobe} className="text-lg md:text-2xl" />
           </a>
         </div>
         <a
-          className="text-xs hover:text-info md:text-left md:text-sm"
+          className="text-xs md:text-left md:text-sm"
           href="mailto:gdi-coordination@elixir-europe.org"
         >
           datacatalogue&#64;health-ri.nl

@@ -11,7 +11,7 @@ const AboutPage: React.FC = () => {
     <div className="container mx-auto  px-4 sm:px-2 lg:px-0">
       <div className="mb-8 text-center"></div>
       <PageHeading className="mb-4">
-        About Genomic Data Infrastructure (GDI)
+        Over Health-RI
       </PageHeading>
       <p>
         The Genomic Data Infrastructure (GDI) project aims to enable access to

@@ -27,16 +27,16 @@ const HomePage = () => {
           <Search queryParams={initialQueryParams} />
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
-              WELCOME TO GDI
+              Welkom bij Health-RI
             </h2>
             <p className="mb-6 text-lg">
-              The Genomic Data Infrastructure (GDI) project is enabling access
-              to genomic and related phenotypic and clinical data across Europe.
+              Betere gezondheid voor burgers en patiënten door hergebruik van gezondheidsdata met een
+              geïntegreerde gezondheidsdata-infrastructuur voor onderzoek, beleid en innovatie.
             </p>
             <div className="flex justify-center lg:justify-start">
               <Link href="/datasets">
                 <button className="inline-block rounded bg-primary px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-secondary">
-                  Discover GDI datasets
+                  Ontdek datasets
                 </button>
               </Link>
             </div>
@@ -46,7 +46,7 @@ const HomePage = () => {
           <div className="w-full max-w-[600px]">
             <Image
               src={gdi_visuals}
-              alt="GDI Visualization"
+              alt="Health-RI Visualization"
               width={600}
               height={400}
               className="rounded-lg"
@@ -106,14 +106,14 @@ const HomePage = () => {
           </h2>
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <div className="mb-4 flex w-full flex-wrap justify-around text-warning">
-              <a
+              {/* <a
                 href="https://b1mg-project.eu/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mb-2 mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
               >
                 Learn more about B1MG
-              </a>
+              </a> */}
               <a
                 href="https://gdi.onemilliongenomes.eu/"
                 target="_blank"
@@ -127,7 +127,7 @@ const HomePage = () => {
               href="/subscribe-newsletter"
               className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
             >
-              Subscribe to our Newsletter
+              Meld je aan voor de nieuwsbrief
             </a>
           </div>
         </div>

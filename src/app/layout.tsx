@@ -9,7 +9,7 @@ import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { exposeFont, satoshiFont, tabularFont } from "../utils/fonts";
+import { exposeFont, satoshiFont, latoFont } from "../utils/fonts";
 import "./globals.css";
 config.autoAddCss = false;
 
@@ -21,10 +21,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${exposeFont.variable} ${tabularFont.variable} ${satoshiFont.variable}`}
+      className={`${exposeFont.variable} ${latoFont.variable} ${satoshiFont.variable}`}
     >
       <head>
-        <title>GDI - User Portal</title>
+        <title>Health-RI - Nationale gezondheidsdatacatalogus</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>

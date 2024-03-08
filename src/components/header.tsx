@@ -23,7 +23,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
+import logo from "../public/healthri_logo.svg";
 import Avatar from "./avatar";
 import Button from "./button";
 import Notification from "./notification";
@@ -86,7 +86,7 @@ function Header() {
             href="/about"
             className={`rounded-full border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
-            About
+            Over de catalogus
           </Link>
         </div>
       </div>
@@ -148,7 +148,7 @@ function Header() {
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
-              About
+              Over de catalogus
             </Link>
             <Link
               href="/basket"
@@ -179,7 +179,7 @@ function Header() {
                 className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
-                Logout
+                Log uit
               </button>
             )}
           </div>

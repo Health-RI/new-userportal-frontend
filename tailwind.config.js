@@ -11,10 +11,10 @@ module.exports = {
     extend: {
       colors: {
         // Functional color names
-        primary: "var(--color-claret)",
-        secondary: "var(--color-wine-berry)",
-        info: "var(--color-scampi-blue)",
-        warning: "var(--color-grandis-yellow)",
+        primary: "var(--color-dark-blue)",
+        secondary: "var(--color-waikawa-gray)",
+        info: "var(--color-light-blue)",
+        warning: "var(--color-deep-yellow)",
 
         // Descriptive color names as an alternative reference or for specific use cases.
         "wine-berry": "var(--color-wine-berry)",
@@ -29,9 +29,9 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        sans: ["var(--font-tabular)", "sans-serif"],
-        medium: ["var(--font-expose)", "sans-serif"],
-        light: ["var(--font-satoshi)", "sans-serif"],
+        sans: ["var(--font-lato)", "sans-serif"],
+        medium: ["var(--font-lato)", "sans-serif"],
+        light: ["var(--font-lato)", "sans-serif"],
       },
     },
   },

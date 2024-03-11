@@ -78,15 +78,17 @@ function Header() {
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
       <div className="flex justify-between gap-x-12 lg:gap-x-24">
-        <Link href="/">
-          <Image
-            src={logo}
-            alt="Logo"
-            className="mb-4 mt-4"
-            width="190"
-            height="69"
-          />
-        </Link>
+        <div className="float-left">
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="Logo"
+              className="mb-4 mt-4 h-16"
+              // width="190"
+              // height="69"
+            />
+          </Link>
+        </div>
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"

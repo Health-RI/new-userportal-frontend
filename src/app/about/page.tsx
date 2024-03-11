@@ -12,29 +12,23 @@ const AboutPage: React.FC = () => {
       <div className="mb-8 text-center"></div>
       <PageHeading className="mb-4">Over Health-RI</PageHeading>
       <p>
-        The Genomic Data Infrastructure (GDI) project aims to enable access to
-        genomic and related phenotypic and clinical data to improve research,
-        policymaking and healthcare across Europe. The GDI project aims to
-        unlock a data network of over one million genome sequences for research
-        and clinical reference. This will create unprecedented opportunities for
-        transnational and multi-stakeholder actions in personalised medicine for
-        cancer, common, rare and infectious diseases as well as access to a
-        reference genome collection representing the European population (Genome
-        of Europe).
+        De missie van Health-RI is een betere gezondheid voor burgers en
+        patiënten door hergebruik van gezondheids-data met een geïntegreerde
+        gezondheidsdata-infrastructuur voor onderzoek, beleid en innovatie.
       </p>
 
-      <PageSubHeading className="my-4">User Portal</PageSubHeading>
+      <PageSubHeading className="my-4">
+        Nationale Gezondheidsdatacatalogus
+      </PageSubHeading>
       <p>
-        The User Portal, developed by the Genomic Data Infrastructure (GDI)
-        project, is the central entry point for accessing genomic data. As part
-        of the Genomic Data Infrastructure (GDI) project, it unlocks a vast
-        repository of over one million genome sequences, this platform is
-        currently under development and will serve as the main European-level
-        hub for data access, providing a user-friendly interface for researchers
-        and healthcare professionals.{" "}
+        De nationale gezondheidsdatacatalogus is een belangrijk hulpmiddel voor
+        het verzamelen, organiseren en delen van gezondheidsgerelateerde data op
+        nationaal niveau. Het doel van deze catalogus is om een overzichtelijke
+        en toegankelijke bron van informatie te creëren voor zorgprofessionals,
+        onderzoekers, beleidsmakers en andere belanghebbenden.
       </p>
 
-      <PageSubHeading className="my-4">Key Objectives</PageSubHeading>
+      {/* <PageSubHeading className="my-4">Key Objectives</PageSubHeading>
       <ul className="list-inside list-disc">
         <li>
           To link and to provide cross-border access to genomic and related
@@ -57,27 +51,46 @@ const AboutPage: React.FC = () => {
           stakeholders, notably European citizens, data holders, healthcare
           professionals, researchers and public health authorities
         </li>
-      </ul>
+      </ul> */}
 
       <p className="mt-20">
-        For more detailed information, please visit the{" "}
+        Voor meer informatie, bezoek de{" "}
         <a
-          href="https://gdi.onemilliongenomes.eu/"
+          href="https://www.health-ri.nl/"
           className="text-blue-500 hover:underline"
         >
-          GDI Website
+          Health-RI Website
         </a>
         .
       </p>
       <p className="mt-4">
-        Please report any problems you find in{" "}
+        Rapporteer problemen op{" "}
         <a
-          href="https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/issues"
+          href="https://github.com/Health-RI/new-userportal-frontend/issues"
           className="text-blue-500 hover:underline"
         >
           GitHub Issues
         </a>
         .
+      </p>
+      <PageSubHeading className="my-4">Ontwikkeling</PageSubHeading>
+      <p>
+        Deze portal is gebaseerd op de userportal die binnen het Genomic Data
+        Infrastructure (GDI) project is mede-ontwikkeld door Health-RI en de{" "}
+        <a href="https://lnds.lu" className="text-blue-500 hover:underline">
+          Luxembourg National Data Service
+        </a>
+        . De broncode is beschikbaar onder de Apache 2.0 licentie op{" "}
+        <a
+          href="https://github.com/Health-RI/new-userportal-frontend/"
+          className="text-blue-500 hover:underline"
+        >
+          Github
+        </a>
+      </p>
+      <p className="mt-20">
+        GDI project receives funding from the European Union's Digital Europe
+        Programme under grant agreement number 101081813.
       </p>
     </div>
   );

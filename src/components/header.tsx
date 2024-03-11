@@ -29,7 +29,7 @@ import Button from "./button";
 import Notification from "./notification";
 
 function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const activeTab = usePathname();
   const { basket, isLoading } = useDatasetBasket();
@@ -57,6 +57,24 @@ function Header() {
     };
   }, [isMenuOpen]);
 
+  let loginBtn;
+
+  if (status !== "loading") {
+    loginBtn = session ? (
+      <>
+        <Notification />
+        <Avatar user={session.user as User} />
+      </>
+    ) : (
+      <Button
+        icon={faUser}
+        text="Login"
+        type="primary"
+        onClick={() => signIn("keycloak")}
+      />
+    );
+  }
+
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
       <div className="flex justify-between gap-x-12 lg:gap-x-24">
@@ -72,49 +90,39 @@ function Header() {
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
-            className={`rounded-full border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/datasets"
-            className={`rounded-full border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
           >
             Datasets
           </Link>
           <Link
             href="/about"
-            className={`rounded-full border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
             Over de catalogus
           </Link>
         </div>
       </div>
       <div className="mr-3 hidden items-center gap-x-5 sm:flex md:gap-x-8">
-        <Link
-          href="/basket"
-          className="relative flex items-center text-info hover:text-primary"
-        >
-          <FontAwesomeIcon icon={faShoppingCart} size="lg" />
-          {!isLoading && basket.length > 0 && (
-            <span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-primary px-2 py-1 text-xs font-bold leading-none text-red-100">
-              {basket.length}
-            </span>
-          )}
-        </Link>
-        {session ? (
-          <>
-            <Notification />
-            <Avatar user={session.user as User} />
-          </>
-        ) : (
-          <Button
-            icon={faUser}
-            text="Login"
-            type="primary"
-            onClick={() => signIn("keycloak")}
-          />
+        {!isLoading && (
+          <Link
+            href="/basket"
+            className="relative flex items-center text-info hover:text-primary"
+          >
+            <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+            {basket.length > 0 && (
+              <span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-primary px-2 py-1 text-xs font-bold leading-none text-red-100">
+                {basket.length}
+              </span>
+            )}
+          </Link>
         )}
+        {loginBtn}
       </div>
 
       <div className="menu-container relative sm:hidden">

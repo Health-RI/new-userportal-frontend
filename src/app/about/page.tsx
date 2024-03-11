@@ -89,8 +89,8 @@ const AboutPage: React.FC = () => {
         </a>
       </p>
       <p className="mt-20">
-        GDI project receives funding from the European Union&lsquo;s Digital Europe
-        Programme under grant agreement number 101081813.
+        GDI project receives funding from the European Union&lsquo;s Digital
+        Europe Programme under grant agreement number 101081813.
       </p>
     </div>
   );

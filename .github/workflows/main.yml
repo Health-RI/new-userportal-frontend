@@ -6,12 +6,9 @@
 name: Publish and Deploy main
 
 on:
-  push:
-    branches:
-      - '**'
   workflow_run:
     workflows: ["Run Tests"]
-    branches: [SRP-284_reskin]
+    branches: [main]
     types:
       - completed
 

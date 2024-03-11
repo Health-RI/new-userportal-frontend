@@ -5,16 +5,12 @@
 "use client";
 
 import {
-  faGithub,
   faLinkedin,
   faXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import Image from "next/image";
-import flag from "../public/eu-flag.png";
 
 function Footer() {
   return (

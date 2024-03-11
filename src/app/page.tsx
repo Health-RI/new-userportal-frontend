@@ -11,7 +11,7 @@ import Image from "next/image";
 import logo from "../public/gdi-logo.png";
 import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
-import gdi_visuals from "../public/gdi-visuals.png";
+import hri_banner from "../public/HRI_banner.jpg";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -22,10 +22,20 @@ const HomePage = () => {
   return (
     <div className="container mx-auto space-y-20 px-4 pt-20">
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
+        <div className="flex justify-center md:justify-end">
+          <div className="w-full">
+            <Image
+              src={hri_banner}
+              alt="Health-RI Visualization"
+              className="rounded-lg"
+            />
+          </div>
+        </div>
+
         <div className="text-center lg:text-left">
           <DatasetCounter />
           <Search queryParams={initialQueryParams} />
-          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
+          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               Welkom bij Health-RI
             </h2>
@@ -42,17 +52,6 @@ const HomePage = () => {
                 </button>
               </Link>
             </div>
-          </div>
-        </div>
-        <div className="flex justify-center md:justify-end">
-          <div className="w-full max-w-[600px]">
-            <Image
-              src={gdi_visuals}
-              alt="Health-RI Visualization"
-              width={600}
-              height={400}
-              className="rounded-lg"
-            />
           </div>
         </div>
       </div>
@@ -135,7 +134,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="my-12 flex flex-col items-center justify-between md:flex-row">
+      {/* <div className="my-12 flex flex-col items-center justify-between md:flex-row">
         <div className="p-4 md:flex-1">
           <h3 className="mb-4 text-3xl font-bold leading-tight text-primary md:text-4xl">
             Realising a vision for European healthcare
@@ -150,7 +149,7 @@ const HomePage = () => {
             <Image src={logo} alt="GDI Logo" />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

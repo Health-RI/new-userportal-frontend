@@ -17,7 +17,7 @@ function Footer() {
     <footer className="flex flex-col items-center justify-between gap-y-4 border-t-4 border-t-primary bg-primary p-7 text-white md:flex-row md:gap-x-4 md:gap-y-0">
       <div className="flex items-center gap-4">
         {/* <Image src={flag} alt="EU flag" width={80} /> */}
-        <p className="text-xs md:text-sm">
+        <p className="text-xs md:text-sm lg:w-1/2">
           {/* GDI project receives funding from the European Union’s Digital Europe
           <br />
           Programme under grant agreement number 101081813. */}
@@ -38,7 +38,7 @@ function Footer() {
             href="https://www.linkedin.com/company/health-ri/"
             target="_blank"
             rel="noopener"
-            // className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon
               icon={faLinkedin}
@@ -50,7 +50,7 @@ function Footer() {
             href="https://twitter.com/health__ri"
             target="_blank"
             rel="noopener"
-            // className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon
               icon={faXTwitter}
@@ -62,7 +62,7 @@ function Footer() {
             href="https://www.youtube.com/channel/UCOnAoZWtUjuDZE8ZjnYeBtA"
             target="_blank"
             rel="noopener"
-            // className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon icon={faYoutube} className="text-lg md:text-2xl" />
           </a>
@@ -71,7 +71,7 @@ function Footer() {
             href="https://www.health-ri.nl/"
             target="_blank"
             rel="noopener"
-            // className="hover:text-info"
+          // className="hover:text-info"
           >
             <FontAwesomeIcon icon={faGlobe} className="text-lg md:text-2xl" />
           </a>

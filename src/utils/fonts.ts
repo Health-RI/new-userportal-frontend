@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { Lato } from 'next/font/google'
-
+import { Lato } from 'next/font/google';
 
 export const latoFont = Lato({
   weight: ['300', '400', '700'],
@@ -11,7 +10,6 @@ export const latoFont = Lato({
   variable: '--font-lato',
   display: 'swap',
 });
-
 
 import localFont from 'next/font/local';
 

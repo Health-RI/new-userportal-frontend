@@ -30,8 +30,10 @@ const HomePage = () => {
               Welkom bij Health-RI
             </h2>
             <p className="mb-6 text-lg">
-              Betere gezondheid voor burgers en patiënten door hergebruik van gezondheidsdata met een
-              geïntegreerde gezondheidsdata-infrastructuur voor onderzoek, beleid en innovatie.
+              Betere gezondheid voor burgers en patiënten door hergebruik van
+              gezondheidsdata met een geïntegreerde
+              gezondheidsdata-infrastructuur voor onderzoek, beleid en
+              innovatie.
             </p>
             <div className="flex justify-center lg:justify-start">
               <Link href="/datasets">

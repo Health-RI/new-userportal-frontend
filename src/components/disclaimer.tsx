@@ -14,11 +14,13 @@ function Disclaimer() {
         <FontAwesomeIcon icon={faExclamationCircle} />
       </div>
       <div className="text-pretty text-xs md:text-sm">
-        Voordat u doorgaat, is het belangrijk om te weten dat dit momenteel de test (Beta) versie is
-        van de Nationale gezondheidsdatacatalogus. Dit betekent dat op dit moment de zoekopties
-        nog zeer beperkt zijn. Bij het implementeren van het DCAT metadata schema worden in de
-        ontwikkeling van de catalogus betere zoek en filter methoden aangeboden.
-        Onze excuses voor enige instabiliteit en niet-werkende linkjes die u zou kunnen tegenkomen.
+        Voordat u doorgaat, is het belangrijk om te weten dat dit momenteel de
+        test (Beta) versie is van de Nationale gezondheidsdatacatalogus. Dit
+        betekent dat op dit moment de zoekopties nog zeer beperkt zijn. Bij het
+        implementeren van het DCAT metadata schema worden in de ontwikkeling van
+        de catalogus betere zoek en filter methoden aangeboden. Onze excuses
+        voor enige instabiliteit en niet-werkende linkjes die u zou kunnen
+        tegenkomen.
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { DatasetCounter } from "@/components/DatasetCounter";
 import { PortalStatistics } from "@/components/PortalStatistics";
 import { Search } from "@/components/Search";
 import Image from "next/image";
-import logo from "../public/gdi-logo.png";
+// import logo from "../public/gdi-logo.png";
 import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
 import hri_banner from "../public/HRI_banner.jpg";

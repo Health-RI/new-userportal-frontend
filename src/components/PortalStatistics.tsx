@@ -35,7 +35,7 @@ export function PortalStatistics() {
             >
               <div className="cursor-pointer rounded-lg bg-white p-4 text-center shadow-md hover:shadow-xl">
                 <div className="text-xl font-semibold hover:text-info md:text-2xl">
-                  {value.toLocaleString("en-GB")}
+                  {value.toLocaleString("nl-NL")}
                 </div>
                 <div className="md:text-md mt-2 text-sm hover:text-info">
                   {key}

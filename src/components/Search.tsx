@@ -37,7 +37,7 @@ export function Search({ queryParams }: SearchBarProps) {
           type="search"
           value={queryParams?.q}
           onChange={handleQueryChange}
-          placeholder="Search datasets..."
+          placeholder="Zoek datasets..."
           name="search"
           autoComplete="on"
         />

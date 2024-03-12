@@ -9,18 +9,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Disclaimer() {
   return (
-    <div className="md:mt-15 m-5 mt-20 flex flex-row items-center gap-4 rounded-lg bg-claret p-5 text-white">
+    <div className="md:mt-15 m-5 mt-20 flex flex-row items-center gap-4 rounded-lg bg-warning p-5 text-white">
       <div className="text-2xl">
         <FontAwesomeIcon icon={faExclamationCircle} />
       </div>
       <div className="text-pretty text-xs md:text-sm">
-        Please note that this version of GDI User Portal is the result of
-        deliverable &quot;MS11 - Development of the user portal deployed&quot;,
-        which is still undergoing further feature developments and testing
-        before its release in production. Therefore, you may witness some
-        instabilities and broken links. Should you have any feedback, please let
-        us know so we can take into account for the future releases accordingly.
-        Your help in this regard is greatly appreciated!
+        Voordat u doorgaat, is het belangrijk om te weten dat dit momenteel de
+        test (Beta) versie is van de Nationale gezondheidsdatacatalogus. Dit
+        betekent dat op dit moment de zoekopties nog zeer beperkt zijn. Bij het
+        implementeren van het DCAT metadata schema worden in de ontwikkeling van
+        de catalogus betere zoek en filter methoden aangeboden. Onze excuses
+        voor enige instabiliteit en niet-werkende linkjes die u zou kunnen
+        tegenkomen.
       </div>
     </div>
   );

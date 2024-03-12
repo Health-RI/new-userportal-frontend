@@ -23,7 +23,7 @@ export function DatasetCounter() {
 
   return (
     <div className="mb-4 mt-10 flex items-baseline text-primary">
-      <p className="mr-3 text-4xl font-bold">{count.toLocaleString("en-GB")}</p>
+      <p className="mr-3 text-4xl font-bold">{count.toLocaleString("nl-NL")}</p>
       <p className="self-end text-xl font-bold">Datasets</p>
     </div>
   );

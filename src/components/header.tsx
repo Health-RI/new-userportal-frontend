@@ -23,7 +23,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
+import logo from "../public/healthri_logo.svg";
 import Avatar from "./avatar";
 import Button from "./button";
 import Notification from "./notification";
@@ -78,15 +78,17 @@ function Header() {
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
       <div className="flex justify-between gap-x-12 lg:gap-x-24">
-        <Link href="/">
-          <Image
-            src={logo}
-            alt="Logo"
-            className="mb-4 mt-4"
-            width="190"
-            height="69"
-          />
-        </Link>
+        <div className="float-left">
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="Logo"
+              className="mb-4 mt-4 h-16 w-fit"
+              // width="190"
+              // height="69"
+            />
+          </Link>
+        </div>
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
@@ -104,7 +106,7 @@ function Header() {
             href="/about"
             className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
-            About
+            Over de catalogus
           </Link>
         </div>
       </div>
@@ -156,7 +158,7 @@ function Header() {
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
-              About
+              Over de catalogus
             </Link>
             <Link
               href="/basket"
@@ -187,7 +189,7 @@ function Header() {
                 className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
-                Logout
+                Log uit
               </button>
             )}
           </div>

@@ -35,7 +35,7 @@ const HomePage = () => {
         <div className="text-center lg:text-left">
           <DatasetCounter />
           <Search queryParams={initialQueryParams} />
-          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0">
+          <div className="mx-auto mt-12 w-full rounded-lg bg-white lg:mx-0">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               Welkom bij Health-RI
             </h2>

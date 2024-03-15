@@ -9,7 +9,7 @@ services:
       context: .
     restart: unless-stopped
     environment:
-      - CKAN_URL=https://ckan-test.healthdata.nl
+      - NEXT_PUBLIC_CKAN_URL=https://ckan-test.healthdata.nl
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=your-secret
       - KEYCLOAK_CLIENT_ID=ckan

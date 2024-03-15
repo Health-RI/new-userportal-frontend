@@ -8,7 +8,7 @@ import Button from "@/components/button";
 import DatasetList from "@/components/datasetList";
 import FilterList from "@/components/filterList";
 import PaginationContainer from "@/components/paginationContainer";
-import SearchBar from "@/components/searchBar";
+import SearchBar from "@/components/SearchBar";
 import { useWindowSize } from "@/hooks";
 import { FieldDetails } from "@/services/ckan/types/fieldDetails.types";
 import { PackageSearchResult } from "@/services/ckan/types/packageSearch.types";

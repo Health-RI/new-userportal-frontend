@@ -6,7 +6,7 @@ import Error from "@/app/error";
 import Chips from "@/components/Chips";
 import PageHeading from "@/components/PageHeading";
 import PageSubHeading from "@/components/PageSubHeading";
-import { datasetGet } from "@/services/ckan/index.server";
+import { datasetGet } from "@/services/ckan";
 import DistributionAccordion from "./DistributionAccordion";
 import Sidebar from "./Sidebar";
 import AddToBasketBtn from "./AddToBasketBtn";

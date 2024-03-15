@@ -7,13 +7,9 @@ interface ServerConfig {
   daamUrl: string;
 }
 
-function getEnvVariable(key: string, defaultValue: string): string {
-  return process.env[key] || defaultValue;
-}
-
 const serverConfig: ServerConfig = {
-  ckanUrl: getEnvVariable('NEXT_PUBLIC_CKAN_URL', 'https://ckan-test.healthdata.nl'),
-  daamUrl: getEnvVariable('DAAM_URL', 'http://localhost:8080'),
+  ckanUrl: process.env.NEXT_PUBLIC_CKAN_URL || 'https://ckan-test.healthdata.nl',
+  daamUrl: process.env.DAAM_URL || 'http://localhost:8080',
 };
 
 export default serverConfig;

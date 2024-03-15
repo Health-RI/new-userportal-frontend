@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import ClientWrapper from "@/app/datasets/clientWrapper";
-import { datasetList, fieldDetailsGet } from "@/services/ckan/index.server";
+import { datasetList, fieldDetailsGet } from "@/services/ckan";
 import { Field } from "@/services/ckan/types/fieldDetails.types";
 import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
 import { parseFilterValuesSingleQueryString } from "@/utils/textProcessing";

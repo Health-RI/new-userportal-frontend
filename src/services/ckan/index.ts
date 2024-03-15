@@ -11,6 +11,7 @@ import { makeDatasetList } from './datasetList';
 import { makeFieldDetailsGet } from './fieldDetailsGet';
 
 const DMS_URL = serverConfig.ckanUrl;
+
 const datasetList = makeDatasetList(DMS_URL);
 const datasetGet = makeDatasetGet(DMS_URL);
 const datasetCount = makeDatasetCount(DMS_URL);

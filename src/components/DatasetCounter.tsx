@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 import React, { useEffect, useState } from "react";
-import { datasetCount } from "@/services/ckan/index.server";
+import { datasetCount } from "@/services/ckan";
 
 export function DatasetCounter() {
   const [count, setCount] = useState<number | null>(null);

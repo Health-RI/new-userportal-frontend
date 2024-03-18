@@ -52,7 +52,7 @@ describe('POST function', () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ success: true });
     expect(mockedAxios.post).toHaveBeenCalledWith(
-      `${serverConfig.daamUrl}/api/v1/applications/create-application`,
+      `${serverConfig.daamUrl}/api/v1/applications/create`,
       { datasetIds },
       {
         headers: {

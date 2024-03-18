@@ -23,7 +23,6 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
-    "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.1",
@@ -35,6 +34,7 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.33.2",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "utils": "^0.2.2"

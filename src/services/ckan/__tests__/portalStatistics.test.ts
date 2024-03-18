@@ -10,7 +10,7 @@ describe('makePortalStatistics', () => {
   const mockFetch = jest.fn<(input: string | Request | URL, init?: RequestInit | undefined) => Promise<Response>>();
 
   beforeEach(() => {
-    mockFetch.mockClear().mockImplementation((url: string | Request | URL, init?: RequestInit | undefined) => {
+    mockFetch.mockClear().mockImplementation((url: string | Request | URL) => {
       if (url === 'http://localhost:5500/api/3/action/theme_list?') {
         return Promise.resolve(new Response(JSON.stringify({ result: { count: 379 } })));
       } else if (url === 'http://localhost:5500/api/3/action/catalogue_list?') {

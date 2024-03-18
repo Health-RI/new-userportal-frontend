@@ -9,7 +9,7 @@ import { constructCkanActionUrl } from './utils';
 export const makeDatasetCount = (DMS: string) => {
   return async (): Promise<number> => {
     const url = constructCkanActionUrl(DMS, 'dataset_list');
-    const raw_response = await fetch(url, { cache: 'force-cache' });
+    const raw_response = await fetch(url, { cache: 'force-cache', next: { revalidate: 24 * 3600 } });
     const response = await raw_response.json();
     return response.result.count;
   };

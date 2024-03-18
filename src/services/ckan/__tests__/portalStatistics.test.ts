@@ -36,8 +36,17 @@ describe('makePortalStatistics', () => {
     });
 
     expect(global.fetch).toHaveBeenCalledTimes(3);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`, { cache: 'force-cache' });
-    expect(global.fetch).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`, { cache: 'force-cache' });
-    expect(global.fetch).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`, { cache: 'force-cache' });
+    expect(global.fetch).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`, {
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
+    });
+    expect(global.fetch).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`, {
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
+    });
+    expect(global.fetch).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`, {
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
+    });
   });
 });

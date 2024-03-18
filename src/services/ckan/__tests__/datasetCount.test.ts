@@ -25,6 +25,9 @@ describe('makeDatasetCount', () => {
     const count = await getDatasetCount();
 
     expect(count).toEqual(100);
-    expect(global.fetch).toHaveBeenCalledWith(`${DMS_URL}/api/3/action/dataset_list?`, { cache: 'force-cache' });
+    expect(global.fetch).toHaveBeenCalledWith(`${DMS_URL}/api/3/action/dataset_list?`, {
+      cache: 'force-cache',
+      next: { revalidate: 86400 },
+    });
   });
 });

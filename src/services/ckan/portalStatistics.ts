@@ -12,7 +12,7 @@ export const makePortalStatistics = (DMS: string) => {
     const counts = await Promise.all(
       props.map(async (prop) => {
         const url = constructCkanActionUrl(DMS, `${prop}_list`);
-        const raw_response = await fetch(url, { cache: 'force-cache' });
+        const raw_response = await fetch(url, { cache: 'force-cache', next: { revalidate: 24 * 3600 } });
         const response = await raw_response.json();
         return response.result.count;
       }),

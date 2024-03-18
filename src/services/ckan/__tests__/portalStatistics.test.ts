@@ -1,28 +1,26 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
+// SPDX-FileContributor: Stichting Health-RI
 //
 // SPDX-License-Identifier: Apache-2.0
 
 import { jest } from '@jest/globals';
-import axios from 'axios';
 import { makePortalStatistics } from '../portalStatistics';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
 describe('makePortalStatistics', () => {
-  const mockThemeResponse = { data: { result: { count: 379 } } };
-  const mockCatalogueResponse = { data: { result: { count: 5 } } };
-  const mockKeywordResponse = { data: { result: { count: 490 } } };
+  const mockFetch = jest.fn<(input: string | Request | URL, init?: RequestInit | undefined) => Promise<Response>>();
 
   beforeEach(() => {
-    mockedAxios.get
-      .mockResolvedValueOnce(mockThemeResponse)
-      .mockResolvedValueOnce(mockCatalogueResponse)
-      .mockResolvedValueOnce(mockKeywordResponse);
-  });
-
-  afterEach(() => {
-    mockedAxios.get.mockClear();
+    mockFetch.mockClear().mockImplementation((url: string | Request | URL, init?: RequestInit | undefined) => {
+      if (url === 'http://localhost:5500/api/3/action/theme_list?') {
+        return Promise.resolve(new Response(JSON.stringify({ result: { count: 379 } })));
+      } else if (url === 'http://localhost:5500/api/3/action/catalogue_list?') {
+        return Promise.resolve(new Response(JSON.stringify({ result: { count: 5 } })));
+      } else if (url === 'http://localhost:5500/api/3/action/keyword_list?') {
+        return Promise.resolve(new Response(JSON.stringify({ result: { count: 490 } })));
+      }
+      return Promise.reject(new Error('Unknown URL'));
+    });
+    global.fetch = mockFetch;
   });
 
   test('fetches and returns the correct counts for portal statistics', async () => {
@@ -37,8 +35,9 @@ describe('makePortalStatistics', () => {
       keywords: 490,
     });
 
-    expect(mockedAxios.get).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`);
-    expect(mockedAxios.get).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`);
-    expect(mockedAxios.get).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`);
+    expect(global.fetch).toHaveBeenCalledTimes(3);
+    expect(global.fetch).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`, { cache: 'force-cache' });
+    expect(global.fetch).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`, { cache: 'force-cache' });
+    expect(global.fetch).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`, { cache: 'force-cache' });
   });
 });

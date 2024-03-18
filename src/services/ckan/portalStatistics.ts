@@ -12,7 +12,6 @@ export const makePortalStatistics = (DMS: string) => {
     const counts = await Promise.all(
       props.map(async (prop) => {
         const url = constructCkanActionUrl(DMS, `${prop}_list`);
-        // const response = await axios.get(url);
         const raw_response = await fetch(url, { cache: 'force-cache' });
         const response = await raw_response.json();
         return response.result.count;

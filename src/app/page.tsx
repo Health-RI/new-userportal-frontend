@@ -6,7 +6,7 @@
 
 import { DatasetCounter } from "@/components/DatasetCounter";
 import { PortalStatistics } from "@/components/PortalStatistics";
-import { Search } from "@/components/Search";
+import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
 import logo from "../public/gdi-logo.png";
 import office from "../public/office.jpg";
@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
         <div className="text-center lg:text-left">
           <DatasetCounter />
-          <Search queryParams={initialQueryParams} />
+          <SearchBar queryParams={initialQueryParams} size="large" />
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               WELCOME TO GDI
@@ -105,12 +105,12 @@ const HomePage = () => {
             PARTICIPATE
           </h2>
           <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <div className="mb-4 flex w-full flex-wrap justify-around text-warning">
+            <div className="flex w-full flex-wrap justify-around text-warning">
               <a
                 href="https://b1mg-project.eu/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-2 mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
+                className="mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
               >
                 Learn more about B1MG
               </a>
@@ -118,17 +118,11 @@ const HomePage = () => {
                 href="https://gdi.onemilliongenomes.eu/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
+                className="rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
               >
                 Learn more about GDI
               </a>
             </div>
-            <a
-              href="/subscribe-newsletter"
-              className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
-            >
-              Subscribe to our Newsletter
-            </a>
           </div>
         </div>
       </div>

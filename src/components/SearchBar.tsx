@@ -24,17 +24,15 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   useEffect(() => {
-    if (query.trim()) {
-      datasetList({
-        query: query,
-        limit: 5,
-      }).then((result) => {
-        const titles = result.datasets.map((dataset) => dataset.title);
-        setSuggestions(titles);
-      });
-    } else {
-      setSuggestions([]);
-    }
+    const fetchSuggestions = async () => {
+      if (!query.trim()) {
+        setSuggestions([]);
+        return;
+      }
+      const result = await datasetList({ query: query });
+      setSuggestions(result.datasets.map((dataset) => dataset.title));
+    };
+    fetchSuggestions();
   }, [query]);
 
   function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -79,11 +77,11 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           onBlur={handleBlur}
         ></input>
         {suggestions.length > 0 && (
-          <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-lg">
+          <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">
             {suggestions.map((suggestion, index) => (
               <li
                 key={index}
-                className="cursor-pointer px-4 py-2 first:rounded-t-md last:rounded-b-md hover:bg-gray-100"
+                className="cursor-pointer px-4 py-2 first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
                 onMouseDown={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion}

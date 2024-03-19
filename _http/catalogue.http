@@ -2,4 +2,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-GET http://localhost:4200/api/3/action/package_search?start=0&rows=5
+GET https://ckan-test.healthdata.nl/api/3/action/package_search?start=0&rows=12&fq=tags%3ACancer+registry
+
+###
+GET https://ckan-test.healthdata.nl/api/3/action/package_search?start=0&rows=12&fq=extras_theme%3A(%22http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2Fomit_0010062%22)%20AND%20extras_publisher_name%3A(%22afdeling%20nkr-analyse%22)%20AND%20tags%3A(%22Cancer%20registry%22)
+
+###
+GET https://ckan-test.healthdata.nl/api/3/action/tag_list

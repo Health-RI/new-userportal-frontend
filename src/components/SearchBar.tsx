@@ -24,15 +24,15 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   useEffect(() => {
-    const fetchSuggestions = async () => {
+    const timeoutId = setTimeout(async () => {
       if (!query.trim()) {
         setSuggestions([]);
         return;
       }
-      const result = await datasetList({ query: query });
-      setSuggestions(result.datasets.map((dataset) => dataset.title));
-    };
-    fetchSuggestions();
+      const result = await datasetList({ query });
+      setSuggestions(result.datasets.map(dataset => dataset.title));
+    }, 500); 
+    return () => clearTimeout(timeoutId);
   }, [query]);
 
   function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>): void {

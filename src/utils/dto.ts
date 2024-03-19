@@ -9,10 +9,10 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 function convertDataToFilterItemProps(data: FieldDetails[], fieldToIconMap: Record<string, IconDefinition>): FilterItemProps[] {
   return data.map((fieldDetails: FieldDetails) => {
     return {
-      label: fieldDetails.field.charAt(0).toUpperCase() + fieldDetails.field.slice(1) + 's',
+      label: fieldDetails.field + 's',
       data: fieldDetails.values.map((v: string) => {
         return {
-          label: v.charAt(0).toUpperCase() + v.slice(1),
+          label: v,
           value: v,
         };
       }),

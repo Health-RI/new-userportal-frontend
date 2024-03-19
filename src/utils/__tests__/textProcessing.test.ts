@@ -66,7 +66,7 @@ describe('Parse filter values from a single query string', () => {
 
   it('should parse filter values with uppercase letters', () => {
     const filterValues = '(Afdeling NKR-analyse,DI Dr. Gerhard Fülöp,Helena Jericek Klanscek)';
-    const expected = ['afdeling nkr-analyse', 'di dr. gerhard fülöp', 'helena jericek klanscek'];
+    const expected = ['Afdeling NKR-analyse', 'DI Dr. Gerhard Fülöp', 'Helena Jericek Klanscek'];
 
     const parsedValues = parseFilterValuesSingleQueryString(filterValues);
 

@@ -28,10 +28,10 @@ describe('Map field details objects to filter item props', () => {
 
     const expected = [
       {
-        label: 'Publishers',
+        label: 'publishers',
         data: [
           {
-            label: 'Adeling NKR-analyse',
+            label: 'adeling NKR-analyse',
             value: 'adeling NKR-analyse',
           },
           {
@@ -39,21 +39,21 @@ describe('Map field details objects to filter item props', () => {
             value: 'Centro Nacional de Epidemiología',
           },
           {
-            label: 'Sciensano Network of General Practitioners team',
+            label: 'sciensano Network of General Practitioners team',
             value: 'sciensano Network of General Practitioners team',
           },
         ],
         icon: faUser,
       },
       {
-        label: 'Catalogues',
+        label: 'catalogues',
         data: [
           {
             label: 'EU',
             value: 'EU',
           },
           {
-            label: 'Lumc',
+            label: 'lumc',
             value: 'lumc',
           },
           {
@@ -84,7 +84,7 @@ describe('Map field details objects to filter item props', () => {
 
     const expected = [
       {
-        label: 'Publishers',
+        label: 'publishers',
         data: [],
         icon: faUser,
       },
@@ -110,7 +110,7 @@ describe('Map field details objects to filter item props', () => {
 
     const expected = [
       {
-        label: 'Publishers',
+        label: 'publishers',
         data: [],
         icon: undefined,
       },

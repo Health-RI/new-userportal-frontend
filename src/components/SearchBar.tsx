@@ -30,8 +30,8 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
         return;
       }
       const result = await datasetList({ query });
-      setSuggestions(result.datasets.map(dataset => dataset.title));
-    }, 500); 
+      setSuggestions(result.datasets.map((dataset) => dataset.title));
+    }, 500);
     return () => clearTimeout(timeoutId);
   }, [query]);
 

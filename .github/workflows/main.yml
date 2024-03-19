@@ -19,15 +19,15 @@ env:
 
 jobs:
   # ort:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - uses: actions/checkout@v4
-    #   - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
-    #     with:
-    #       allow-dynamic-versions: "true"
-    #       fail-on: "issues"
-    #       run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
+  # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - uses: actions/checkout@v4
+  #   - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+  #     with:
+  #       allow-dynamic-versions: "true"
+  #       fail-on: "issues"
+  #       run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -52,13 +52,13 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
+            type=schedule,priority=400
+            type=ref,event=branch,priority=600
+            type=ref,event=pr,priority=500
+            type=semver,pattern={{version}},priority=700
+            type=semver,pattern={{major}}.{{minor}},priority=900
+            type=semver,pattern={{major}},priority=800
+            type=sha,priority=1000
 
       - name: Extract last tag
         id: tag

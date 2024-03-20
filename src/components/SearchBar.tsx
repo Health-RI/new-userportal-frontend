@@ -25,7 +25,9 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   useEffect(() => {
-    const initialQuery = Array.isArray(queryParams.q) ? queryParams.q[0] : queryParams.q;
+    const initialQuery = Array.isArray(queryParams.q)
+      ? queryParams.q[0]
+      : queryParams.q;
     if (initialQuery) {
       setQuery(initialQuery);
       setFetchSuggestions(false);
@@ -56,7 +58,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
       router.push(`/datasets?${params}`);
     }
   }
-  
+
   function redirectToDataset(searchQuery: string): void {
     const params = new URLSearchParams(queryParams as Record<string, string>);
     params.set("page", "1");
@@ -65,7 +67,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   function handleClick(): void {
-    redirectToDataset(query)
+    redirectToDataset(query);
   }
 
   function handleSuggestionClick(suggestion: string) {

@@ -16,6 +16,7 @@ type SearchBarProps = {
 function SearchBar({ queryParams, size }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [fetchSuggestions, setFetchSuggestions] = useState(false);
   const router = useRouter();
 
   let sizeClass = "h-11";
@@ -24,19 +25,28 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (!query.trim()) {
-        setSuggestions([]);
-        return;
-      }
-      const result = await datasetList({ query });
-      setSuggestions(result.datasets.map((dataset) => dataset.title));
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [query]);
+    const initialQuery = Array.isArray(queryParams.q) ? queryParams.q[0] : queryParams.q;
+    if (initialQuery) {
+      setQuery(initialQuery);
+      setFetchSuggestions(false);
+    }
+  }, [queryParams.q]);
+
+  useEffect(() => {
+    if (fetchSuggestions && query.trim()) {
+      const timeoutId = setTimeout(async () => {
+        const result = await datasetList({ query, limit: 5 });
+        setSuggestions(result.datasets.map((dataset) => dataset.title));
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setSuggestions([]);
+    }
+  }, [query, fetchSuggestions]);
 
   function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setQuery(e.target.value);
+    setFetchSuggestions(true);
   }
 
   function handleBlur(e: React.FocusEvent<HTMLInputElement>): void {
@@ -46,24 +56,27 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
       router.push(`/datasets?${params}`);
     }
   }
-
-  function handleClick(): void {
+  
+  function redirectToDataset(searchQuery: string): void {
     const params = new URLSearchParams(queryParams as Record<string, string>);
     params.set("page", "1");
-    if (!query) params.delete("q");
-    else params.set("q", query);
-
+    params.set("q", searchQuery);
     router.push(`/datasets?${params}`);
+  }
+
+  function handleClick(): void {
+    redirectToDataset(query)
   }
 
   function handleSuggestionClick(suggestion: string) {
     setQuery(suggestion);
     setSuggestions([]);
+    redirectToDataset(suggestion);
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    handleClick();
+    redirectToDataset(query);
   }
 
   return (
@@ -82,7 +95,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
               <li
                 key={index}
                 className="cursor-pointer px-4 py-2 first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
-                onMouseDown={() => handleSuggestionClick(suggestion)}
+                onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion}
               </li>

@@ -7,7 +7,6 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { datasetList } from "@/services/ckan";
-import { datasetGet } from "@/services/ckan";
 
 type SearchBarProps = {
   queryParams: Record<string, string | string[] | undefined>;

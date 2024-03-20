@@ -7,15 +7,21 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { datasetList } from "@/services/ckan";
+import { datasetGet } from "@/services/ckan";
 
 type SearchBarProps = {
   queryParams: Record<string, string | string[] | undefined>;
   size?: "regular" | "large";
 };
 
+type DatasetSuggestion = {
+  id: string;
+  title: string;
+};
+
 function SearchBar({ queryParams, size }: SearchBarProps) {
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<DatasetSuggestion[]>([]);
   const [fetchSuggestions, setFetchSuggestions] = useState(false);
   const router = useRouter();
 
@@ -30,7 +36,6 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
       : queryParams.q;
     if (initialQuery) {
       setQuery(initialQuery);
-      setFetchSuggestions(false);
     }
   }, [queryParams.q]);
 
@@ -38,7 +43,12 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
     if (fetchSuggestions && query.trim()) {
       const timeoutId = setTimeout(async () => {
         const result = await datasetList({ query, limit: 5 });
-        setSuggestions(result.datasets.map((dataset) => dataset.title));
+        setSuggestions(
+          result.datasets.map((dataset) => ({
+            id: dataset.id,
+            title: dataset.title,
+          })),
+        );
       }, 500);
       return () => clearTimeout(timeoutId);
     } else {
@@ -59,26 +69,28 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
     }
   }
 
-  function redirectToDataset(searchQuery: string): void {
+  function redirectToSpecificDataset(datasetId: string): void {
+    router.push(`/datasets/${datasetId}`);
+  }
+
+  function redirectToSearchResults(query: string): void {
     const params = new URLSearchParams(queryParams as Record<string, string>);
     params.set("page", "1");
-    params.set("q", searchQuery);
+    if (!query) params.delete("q");
+    else params.set("q", query);
+
     router.push(`/datasets?${params}`);
   }
 
-  function handleClick(): void {
-    redirectToDataset(query);
-  }
-
-  function handleSuggestionClick(suggestion: string) {
-    setQuery(suggestion);
+  function handleSuggestionClick(suggestion: DatasetSuggestion) {
     setSuggestions([]);
-    redirectToDataset(suggestion);
+    redirectToSpecificDataset(suggestion.id);
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    redirectToDataset(query);
+    setSuggestions([]);
+    redirectToSearchResults(query);
   }
 
   return (
@@ -99,7 +111,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
                 className="cursor-pointer px-4 py-2 first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
-                {suggestion}
+                {suggestion.title}
               </li>
             ))}
           </ul>
@@ -108,9 +120,8 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           className={`${sizeClass} item-stretch absolute bottom-0 right-0 flex border-primary`}
         >
           <button
-            type="button"
+            type="submit"
             className="flex w-full cursor-pointer items-center rounded-r-lg bg-primary px-4 tracking-wide text-white transition-colors duration-200 hover:bg-secondary sm:w-auto"
-            onClick={handleClick}
           >
             <FontAwesomeIcon icon={faSearch} />
           </button>

@@ -1,30 +1,63 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
-//
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { datasetList } from "@/services/ckan";
 
 type SearchBarProps = {
   queryParams: Record<string, string | string[] | undefined>;
   size?: "regular" | "large";
 };
 
+type DatasetSuggestion = {
+  id: string;
+  title: string;
+};
+
 function SearchBar({ queryParams, size }: SearchBarProps) {
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<DatasetSuggestion[]>([]);
+  const [fetchSuggestions, setFetchSuggestions] = useState(false);
   const router = useRouter();
 
   let sizeClass = "h-11";
-
   if (size === "large") {
     sizeClass = "h-14";
   }
 
+  useEffect(() => {
+    const initialQuery = Array.isArray(queryParams.q)
+      ? queryParams.q[0]
+      : queryParams.q;
+    if (initialQuery) {
+      setQuery(initialQuery);
+    }
+  }, [queryParams.q]);
+
+  useEffect(() => {
+    if (fetchSuggestions && query.trim()) {
+      const timeoutId = setTimeout(async () => {
+        const result = await datasetList({ query, limit: 5 });
+        setSuggestions(
+          result.datasets.map((dataset) => ({
+            id: dataset.id,
+            title: dataset.title,
+          })),
+        );
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setSuggestions([]);
+    }
+  }, [query, fetchSuggestions]);
+
   function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setQuery(e.target.value);
+    setFetchSuggestions(true);
   }
 
   function handleBlur(e: React.FocusEvent<HTMLInputElement>): void {
@@ -35,7 +68,11 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
     }
   }
 
-  function handleClick(): void {
+  function redirectToSpecificDataset(datasetId: string): void {
+    router.push(`/datasets/${datasetId}`);
+  }
+
+  function redirectToSearchResults(query: string): void {
     const params = new URLSearchParams(queryParams as Record<string, string>);
     params.set("page", "1");
     if (!query) params.delete("q");
@@ -44,9 +81,15 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
     router.push(`/datasets?${params}`);
   }
 
+  function handleSuggestionClick(suggestion: DatasetSuggestion) {
+    setSuggestions([]);
+    redirectToSpecificDataset(suggestion.id);
+  }
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    handleClick();
+    setSuggestions([]);
+    redirectToSearchResults(query);
   }
 
   return (
@@ -59,13 +102,25 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           onChange={handleQueryChange}
           onBlur={handleBlur}
         ></input>
+        {suggestions.length > 0 && (
+          <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion.id}
+                className="w-full cursor-pointer px-4 py-2 text-left first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion.title}
+              </button>
+            ))}
+          </div>
+        )}
         <div
           className={`${sizeClass} item-stretch absolute bottom-0 right-0 flex border-primary`}
         >
           <button
-            type="button"
+            type="submit"
             className="flex w-full cursor-pointer items-center rounded-r-lg bg-primary px-4 tracking-wide text-white transition-colors duration-200 hover:bg-secondary sm:w-auto"
-            onClick={handleClick}
           >
             <FontAwesomeIcon icon={faSearch} />
           </button>

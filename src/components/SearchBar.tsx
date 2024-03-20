@@ -103,17 +103,17 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           onBlur={handleBlur}
         ></input>
         {suggestions.length > 0 && (
-          <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                className="cursor-pointer px-4 py-2 first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
+          <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion.id}
+                className="w-full cursor-pointer px-4 py-2 text-left first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion.title}
-              </li>
+              </button>
             ))}
-          </ul>
+          </div>
         )}
         <div
           className={`${sizeClass} item-stretch absolute bottom-0 right-0 flex border-primary`}

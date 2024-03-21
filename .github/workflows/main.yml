@@ -14,8 +14,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend
-  AZURE_WEBAPP_NAME: catalogue-test
+  IMAGE_NAME: ghcr.io/health-ri/new-userportal-frontend
+  AZURE_WEBAPP_NAME: catalogus-test
 
 jobs:
   ort:

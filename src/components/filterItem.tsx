@@ -12,6 +12,10 @@ export type FilterItemProps = {
   icon: IconDefinition;
 };
 
+function capitalizeFirstLetter(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function FilterItem({ label, data, icon }: FilterItemProps) {
   return (
     <div>
@@ -20,7 +24,7 @@ function FilterItem({ label, data, icon }: FilterItemProps) {
           icon={icon}
           className="text-xs font-extrabold text-info"
         />
-        <p className="text-bold text-info">{label}</p>
+        <p className="text-bold text-info">{capitalizeFirstLetter(label)}</p>
       </div>
       <MultipleSelector
         label={label}

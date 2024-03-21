@@ -24,33 +24,26 @@ export const makeDatasetList = (DMS: string) => {
 };
 
 const buildFilterQueryPart = (filters: string[]): string => {
-  return filters.length > 0
-    ? `(${filters
-        .map((filter: string) => (filter.startsWith('http') ? `"${filter}"` : filter))
-        .map((value: string) => (value.includes(' ') ? `"${value}"` : value))
-        .join(' OR ')})`
-    : '';
+  return filters.map((filter: string) => `"${filter}"`).join(' AND ');
 };
 
 const constructQueryParams = (options: PackageSearchOptions): string => {
-  const groupFilter = buildFilterQueryPart(options.groups || []);
-  const orgFilter = buildFilterQueryPart(options.orgs || []);
-  const tagFilter = buildFilterQueryPart(options.tags || []);
+  const catalogueFilter = buildFilterQueryPart(options.catalogues || []);
+  const themeFilter = buildFilterQueryPart(options.themes || []);
   const publisherFilter = buildFilterQueryPart(options.publishers || []);
-  const resFormatFilter = buildFilterQueryPart(options.resFormat || []);
+  const keywordFilter = buildFilterQueryPart(options.keywords || []);
 
   const filters = [
-    groupFilter && `groups:${groupFilter}`,
-    orgFilter && `organization:${orgFilter}`,
-    tagFilter && `tags:${tagFilter}`,
-    publisherFilter && `publisher:${publisherFilter}`,
-    resFormatFilter && `res_format:${resFormatFilter}`,
+    catalogueFilter && `organization:(${catalogueFilter})`,
+    themeFilter && `extras_theme:(${themeFilter})`,
+    publisherFilter && `extras_publisher_name:(${publisherFilter})`,
+    keywordFilter && `tags:(${keywordFilter})`,
   ]
     .filter(Boolean)
-    .join('+');
+    .join(' AND ');
 
   let queryParams = `start=${options.offset || 0}&rows=${options.limit || 10}`;
-  queryParams += filters ? `&fq=${filters}` : '';
+  queryParams += filters ? `&fq=${encodeURIComponent(filters)}` : '';
   queryParams += options.query ? `&q=${options.query}` : '';
   queryParams += options.sort ? `&sort=${options.sort}` : '';
   queryParams += options.include_private ? `&include_private=${options.include_private}` : '';

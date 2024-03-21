@@ -6,12 +6,12 @@
 
 import { DatasetCounter } from "@/components/DatasetCounter";
 import { PortalStatistics } from "@/components/PortalStatistics";
-import { Search } from "@/components/Search";
+import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
-// import logo from "../public/gdi-logo.png";
+import logo from "../public/gdi-logo.png";
 import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
-import hri_banner from "../public/HRI_banner.jpg";
+import gdi_visuals from "../public/gdi-visuals.png";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -22,36 +22,35 @@ const HomePage = () => {
   return (
     <div className="container mx-auto space-y-20 px-4 pt-20">
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
-        <div className="flex justify-center md:justify-end">
-          <div className="w-full">
-            <Image
-              src={hri_banner}
-              alt="Health-RI Visualization"
-              className="rounded-lg"
-            />
-          </div>
-        </div>
-
         <div className="text-center lg:text-left">
           <DatasetCounter />
-          <Search queryParams={initialQueryParams} />
-          <div className="mx-auto mt-12 w-full rounded-lg bg-white lg:mx-0">
+          <SearchBar queryParams={initialQueryParams} size="large" />
+          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
-              Welkom bij Health-RI
+              WELCOME TO GDI
             </h2>
             <p className="mb-6 text-lg">
-              Betere gezondheid voor burgers en patiënten door hergebruik van
-              gezondheidsdata met een geïntegreerde
-              gezondheidsdata-infrastructuur voor onderzoek, beleid en
-              innovatie.
+              The Genomic Data Infrastructure (GDI) project is enabling access
+              to genomic and related phenotypic and clinical data across Europe.
             </p>
             <div className="flex justify-center lg:justify-start">
               <Link href="/datasets">
                 <button className="inline-block rounded bg-primary px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-secondary">
-                  Ontdek datasets
+                  Discover GDI datasets
                 </button>
               </Link>
             </div>
+          </div>
+        </div>
+        <div className="flex justify-center md:justify-end">
+          <div className="w-full max-w-[600px]">
+            <Image
+              src={gdi_visuals}
+              alt="GDI Visualization"
+              width={600}
+              height={400}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </div>
@@ -103,38 +102,32 @@ const HomePage = () => {
       <div className="mb-36 rounded-xl border bg-primary p-8 text-white">
         <div className="container mx-auto flex flex-wrap items-center justify-between md:flex-nowrap">
           <h2 className="mb-6 text-2xl font-bold text-warning md:mb-0 md:text-3xl lg:text-4xl">
-            DOE MEE
+            PARTICIPATE
           </h2>
           <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <div className="mb-4 flex w-full flex-wrap justify-around text-warning">
-              {/* <a
+            <div className="flex w-full flex-wrap justify-around text-warning">
+              <a
                 href="https://b1mg-project.eu/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-2 mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
+                className="mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
               >
                 Learn more about B1MG
-              </a> */}
+              </a>
               <a
-                href="https://www.health-ri.nl/"
+                href="https://gdi.onemilliongenomes.eu/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
+                className="rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
               >
-                Kom meer te weten over Health-RI
+                Learn more about GDI
               </a>
             </div>
-            <a
-              href="/subscribe-newsletter"
-              className="rounded border border-warning px-6 py-3 text-warning transition duration-300 ease-in-out"
-            >
-              Meld je aan voor de nieuwsbrief
-            </a>
           </div>
         </div>
       </div>
 
-      {/* <div className="my-12 flex flex-col items-center justify-between md:flex-row">
+      <div className="my-12 flex flex-col items-center justify-between md:flex-row">
         <div className="p-4 md:flex-1">
           <h3 className="mb-4 text-3xl font-bold leading-tight text-primary md:text-4xl">
             Realising a vision for European healthcare
@@ -149,7 +142,7 @@ const HomePage = () => {
             <Image src={logo} alt="GDI Logo" />
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

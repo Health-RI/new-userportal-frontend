@@ -4,11 +4,10 @@
 import { Dataset } from './../../../types/dataset.types';
 
 export interface PackageSearchOptions {
-  tags?: string[];
-  orgs?: string[];
-  groups?: string[];
+  keywords?: string[];
+  catalogues?: string[];
+  themes?: string[];
   publishers?: string[];
-  resFormat?: string[];
   offset?: number;
   limit?: number;
   query?: string;

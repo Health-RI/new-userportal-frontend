@@ -31,10 +31,7 @@ function removeEndingPunctuation(text: string): string {
 }
 
 function parseFilterValuesSingleQueryString(filterValues: string): string[] {
-  return filterValues
-    .slice(1, -1)
-    .split(',')
-    .map((value) => value.toLowerCase());
+  return filterValues.slice(1, -1).split(',');
 }
 
 export { parseFilterValuesSingleQueryString, truncateDescription };

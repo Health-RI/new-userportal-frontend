@@ -99,44 +99,46 @@ describe('datasetList', () => {
   test('applies tag filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      tags: ['education', 'science'],
+      keywords: ['education', 'science'],
       limit: 1,
     };
 
     await datasetList(searchOptions);
 
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('tags:(education OR science)'));
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('tags%3A(%22education%22%20AND%20%22science%22)'));
   });
 
   test('applies organization filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      orgs: ['org1', 'org2'],
+      catalogues: ['org1', 'org2'],
       limit: 1,
     };
 
     await datasetList(searchOptions);
 
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('organization:(org1 OR org2)'));
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('organization%3A(%22org1%22%20AND%20%22org2%22)'));
   });
 
   test('combines multiple filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      tags: ['technology', 'http://example.com/other-tag'],
+      keywords: ['technology', 'http://example.com/other-tag'],
       publishers: ['A random publisher'],
-      orgs: ['org1'],
-      groups: ['group1'],
-      resFormat: ['PDF', 'CSV'],
+      catalogues: ['org1'],
+      themes: ['group1'],
       limit: 1,
     };
 
     await datasetList(searchOptions);
 
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('tags:(technology OR "http://example.com/other-tag")'));
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('publisher:("A random publisher")'));
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('organization:(org1)'));
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('groups:(group1)'));
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('res_format:(PDF OR CSV)'));
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      expect.stringContaining('tags%3A(%22technology%22%20AND%20%22http%3A%2F%2Fexample.com%2Fother-tag%22)'),
+    );
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      expect.stringContaining('extras_publisher_name%3A(%22A%20random%20publisher%22)'),
+    );
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('organization%3A(%22org1%22)'));
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('extras_theme%3A(%22group1%22)'));
   });
 });

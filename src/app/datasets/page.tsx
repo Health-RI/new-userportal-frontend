@@ -20,19 +20,18 @@ async function DatasetPage({ searchParams }: DatasetPageProps) {
   const DATASET_PER_PAGE = 12;
 
   const options: PackageSearchOptions = {
-    tags: searchParams.keywords
+    keywords: searchParams.keywords
       ? parseFilterValuesSingleQueryString(searchParams.keywords as string)
       : undefined,
-    orgs: searchParams.catalogues
+    catalogues: searchParams.catalogues
       ? parseFilterValuesSingleQueryString(searchParams.catalogues as string)
       : undefined,
-    groups: searchParams.themes
+    themes: searchParams.themes
       ? parseFilterValuesSingleQueryString(searchParams.themes as string)
       : undefined,
     publishers: searchParams.publishers
       ? parseFilterValuesSingleQueryString(searchParams.publishers as string)
       : undefined,
-    resFormat: [],
     offset: searchParams.page ? Number(searchParams.page) - 1 : 0,
     limit: DATASET_PER_PAGE,
     query: searchParams?.q as string | undefined,

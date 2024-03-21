@@ -223,16 +223,13 @@ const MultipleSelector = React.forwardRef<
     const handleUnselect = React.useCallback(
       (option: Option) => {
         const newOptions = convertQueryStringToOptions(
-          params.get(label.toLowerCase()) as string,
+          params.get(label) as string,
         ).filter((o) => o.value !== option.value);
 
         if (newOptions.length === 0) {
-          params.delete(label.toLowerCase());
+          params.delete(label);
         } else {
-          params.set(
-            label.toLowerCase(),
-            convertOptionsToQueryString(newOptions),
-          );
+          params.set(label, convertOptionsToQueryString(newOptions));
         }
         router.push(`${pathname}?${params}`);
 
@@ -261,20 +258,18 @@ const MultipleSelector = React.forwardRef<
 
     useEffect(() => {
       if (value) {
-        params.set(label.toLowerCase(), convertOptionsToQueryString(value));
+        params.set(label, convertOptionsToQueryString(value));
         router.push(`${pathname}?${params}`);
       }
     }, [value, label, params, router, pathname]);
 
     useEffect(() => {
-      if (!params.has(label.toLowerCase())) {
+      if (!params.has(label)) {
         setSelected([]);
         return;
       }
 
-      const values = convertQueryStringToOptions(
-        params.get(label.toLowerCase()) as string,
-      );
+      const values = convertQueryStringToOptions(params.get(label) as string);
 
       const existingValues = values.filter((v: Option) =>
         arrayDefaultOptions.find((option: Option) => option.value === v.value),
@@ -323,7 +318,7 @@ const MultipleSelector = React.forwardRef<
         .split(",")
         .map((v: string) => ({
           value: v,
-          label: v.charAt(0).toUpperCase() + v.slice(1),
+          label: v,
         }));
     };
 
@@ -348,10 +343,7 @@ const MultipleSelector = React.forwardRef<
               return;
             }
             setInputValue("");
-            const newOptions = [
-              ...selected,
-              { value, label: value.charAt(0).toUpperCase() + value.slice(1) },
-            ];
+            const newOptions = [...selected, { value, label: value }];
             setSelected(newOptions);
             onChange?.(newOptions);
           }}
@@ -399,7 +391,7 @@ const MultipleSelector = React.forwardRef<
 
       if (creatable) {
         return (value: string, search: string) => {
-          return value.toLowerCase().includes(search.toLowerCase()) ? 1 : -1;
+          return value.includes(search) ? 1 : -1;
         };
       }
       // Using default filter in `cmdk`. We don't have to provide it.
@@ -546,7 +538,7 @@ const MultipleSelector = React.forwardRef<
                                 setInputValue("");
                                 const newOptions = [...selected, option];
                                 params.set(
-                                  label.toLowerCase(),
+                                  label,
                                   convertOptionsToQueryString(newOptions),
                                 );
                                 router.push(`${pathname}?${params}`);

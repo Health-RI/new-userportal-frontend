@@ -29,6 +29,8 @@ jobs:
 
   build-and-push-image:
     runs-on: ubuntu-latest
+    environment:
+      name: acc
     needs: ort
     permissions:
       contents: read
@@ -83,3 +85,11 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+        
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+        with:
+          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: "${{ steps.tag.outputs.last_tag }}"

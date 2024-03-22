@@ -38,6 +38,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
@@ -47,10 +54,10 @@ jobs:
             type=schedule,priority=400
             type=ref,event=branch,priority=600
             type=ref,event=pr,priority=500
-            type=semver,pattern={{version}},priority=700
-            type=semver,pattern={{major}}.{{minor}},priority=900
-            type=semver,pattern={{major}},priority=800
-            type=sha,priority=1000
+            type=semver,pattern={{version}},priority=800
+            type=semver,pattern={{major}}.{{minor}},priority=1000
+            type=semver,pattern={{major}},priority=900
+            type=sha,priority=700
 
       - name: Extract last tag
         id: tag
@@ -85,7 +92,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-        
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c

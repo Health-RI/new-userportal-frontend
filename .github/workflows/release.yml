@@ -27,7 +27,9 @@ jobs:
   #         fail-on: "issues"
   #         run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-  build-and-push-image:
+  build-and-push-image-deploy-to-acc:
+    outputs:
+      docker_tag: ${{ steps.tag.outputs.last_tag }}
     runs-on: ubuntu-latest
     environment:
       name: acc
@@ -106,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-    needs: build-and-push-image
+    needs: build-and-push-image-deploy-to-acc
     permissions:
       contents: read
 
@@ -117,12 +119,11 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
         with:
           app-name: ${{ vars.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: "${{ needs.build-and-push-image.outputs.last_tag }}"
-      
+          images: "${{ needs.build-and-push-image-deploy-to-acc.outputs.docker_tag }}"

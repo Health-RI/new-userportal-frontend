@@ -20,6 +20,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 type AvatarProps = {
   user: User;
@@ -61,7 +62,11 @@ function Avatar({ user }: AvatarProps) {
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faFolder} className="text-sm" />
-            <span>Applications</span>
+            <Link
+              href="/applications"
+            >
+              Applications
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faGear} className="text-sm" />

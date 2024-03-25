@@ -11,6 +11,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { exposeFont, satoshiFont, tabularFont } from "../utils/fonts";
 import "./globals.css";
+import { PublicEnvScript } from "next-runtime-env";
 config.autoAddCss = false;
 
 export default function RootLayout({
@@ -26,6 +27,7 @@ export default function RootLayout({
       <head>
         <title>GDI - User Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <PublicEnvScript />
       </head>
       <body>
         <DatasetBasketProvider>

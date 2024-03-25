@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
+import { env } from 'next-runtime-env';
 
 interface ServerConfig {
   ckanUrl: string;
@@ -8,8 +9,8 @@ interface ServerConfig {
 }
 
 const serverConfig: ServerConfig = {
-  ckanUrl: process.env.NEXT_PUBLIC_CKAN_URL || 'https://ckan-test.healthdata.nl',
-  daamUrl: process.env.DAAM_URL || 'http://localhost:8080',
+  ckanUrl: env('NEXT_PUBLIC_CKAN_URL') || 'https://ckan-test.healthdata.nl',
+  daamUrl: env('DAAM_URL') || 'http://localhost:8080',
 };
 
 export default serverConfig;

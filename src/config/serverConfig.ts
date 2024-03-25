@@ -10,7 +10,7 @@ interface ServerConfig {
 
 const serverConfig: ServerConfig = {
   ckanUrl: env('NEXT_PUBLIC_CKAN_URL') || 'https://ckan-test.healthdata.nl',
-  daamUrl: env('DAAM_URL') || 'http://localhost:8080',
+  daamUrl: env('NEXT_PUBLIC_DAAM_URL') || 'http://localhost:8080',
 };
 
 export default serverConfig;

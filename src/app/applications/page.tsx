@@ -17,34 +17,45 @@ const ApplicationsPage: React.FC = () => {
   //     .then((res) => setData(res))
   // });
 
+  const collapseLimit = 2;
+
   const data = [
     {
       id: 1,
       title: 'My datasetr 1',
-      currentState: 'what state',
+      currentState: 'Submited',
       stateChangedAt: new Date()
     },
     {
       id: 2,
       title: 'My datasetr 2',
-      currentState: 'what state',
+      currentState: 'Draft',
+      stateChangedAt: new Date()
+    }, {
+      id: 3,
+      title: 'My datasetr 23',
+      currentState: 'Approved',
       stateChangedAt: new Date()
     }
   ];
+  const collapsable = data.length > collapseLimit;
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-5">
       <PageHeading className="mt-8">
         Manage your Applications
       </PageHeading>
       <span>View and update your submited applications</span>
 
-      {data.map((item) => (
-        <ApplicationItem
-          key={item.id}
-          application={item}
-        />
-      ))}
+      <div className="flex flex-col items-center grow mt-5">
+        {data.map((item) => (
+          <ApplicationItem
+            key={item.id}
+            application={item}
+            collapsable={collapsable}
+          />
+        ))}
+      </div>
     </div>
   );
 };

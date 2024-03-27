@@ -1,4 +1,4 @@
-export interface Application {
+export interface ListedApplication {
     id: number;
     title: string;
     currentState: string;

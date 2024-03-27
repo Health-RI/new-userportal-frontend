@@ -8,36 +8,17 @@ import { listApplications } from "@/services/daam/index.client";
 import React, { useEffect, useState } from "react";
 import ApplicationItem from "./applicationItem";
 import PageHeading from "@/components/PageHeading";
+import { ListedApplication } from "@/types/application.types";
 
 const ApplicationsPage: React.FC = () => {
-  // const [data, setData] = useState<ListedApplication[]>([]);
-
-  // useEffect(() => {
-  //   listApplications()
-  //     .then((res) => setData(res))
-  // });
-
+  const [data, setData] = useState<ListedApplication[]>([]);
   const collapseLimit = 2;
 
-  const data = [
-    {
-      id: 1,
-      title: 'My datasetr 1',
-      currentState: 'Submited',
-      stateChangedAt: new Date()
-    },
-    {
-      id: 2,
-      title: 'My datasetr 2',
-      currentState: 'Draft',
-      stateChangedAt: new Date()
-    }, {
-      id: 3,
-      title: 'My datasetr 23',
-      currentState: 'Approved',
-      stateChangedAt: new Date()
-    }
-  ];
+  useEffect(() => {
+    listApplications()
+      .then((res) => setData(res))
+  });
+
   const collapsable = data.length > collapseLimit;
 
   return (

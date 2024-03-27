@@ -3,10 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 import { jest } from '@jest/globals';
 import axios from 'axios';
-import { POST } from './../route';
+import { GET, POST } from './../route';
 import { getServerSession } from 'next-auth';
 import { encrypt } from '@/utils/encryption';
 import serverConfig from '@/config/serverConfig';
+import { ListedApplication } from '@/types/application.types';
 
 jest.mock('axios');
 jest.mock('next-auth/next');
@@ -74,5 +75,60 @@ describe('POST function', () => {
 
     expect(response.status).toBe(500);
     expect(await response.json()).toEqual({ error: 'Failed to create application' });
+  });
+});
+
+
+describe('GET function', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test('returns unauthorized if session is not available', async () => {
+    mockedGetServerSession.mockResolvedValueOnce(null);
+
+    const response = await GET();
+
+    expect(response.status).toBe(401);
+    expect(await response.json()).toEqual({ error: 'Unauthorized' });
+  });
+
+
+  test('successfully gets applications', async () => {
+    const encryptedToken = encrypt('decryptedToken');
+    const mockApiResponse = [
+      {
+        id: 1,
+        title: 'Test application 1',
+        stateChangedAt: new Date('27-03-2024'),
+        currentState: 'Submited'
+      },
+      {
+        id: 2,
+        title: 'Test application 2',
+        stateChangedAt: new Date('25-03-2024'),
+        currentState: 'Approved'
+      }
+    ] as ListedApplication[];
+    mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
+    mockedAxios.get.mockResolvedValueOnce(mockApiResponse);
+  
+    const response = await GET();
+
+    const responseJson =await response.json();
+
+    expect(response.status).toBe(200);
+    expect(responseJson.length).toEqual(2);
+    expect(responseJson[0].id).toEqual(1);
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      `${serverConfig.daamUrl}/api/v1/applications`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer decryptedToken`,
+        },
+      },
+    );
   });
 });

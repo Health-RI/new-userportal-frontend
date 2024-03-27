@@ -1,4 +1,4 @@
-import { Application } from "@/types/application.types";
+import { ListedApplication } from "@/types/application.types";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function ApplicationItem({
     application,
     collapsable
-}: { application: Application, collapsable: boolean },) {
+}: { application: ListedApplication, collapsable: boolean },) {
 
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapsed = () => setCollapsed(!collapsed);

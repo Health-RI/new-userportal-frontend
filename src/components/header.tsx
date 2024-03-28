@@ -106,12 +106,6 @@ function Header() {
           >
             About
           </Link>
-          <Link
-            href="/applications"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/applications" ? "bg-primary text-white" : ""}`}
-          >
-            Applications
-          </Link>
         </div>
       </div>
       <div className="mr-3 hidden items-center gap-x-5 sm:flex md:gap-x-8">

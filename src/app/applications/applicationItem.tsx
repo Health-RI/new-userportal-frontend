@@ -12,7 +12,7 @@ export default function ApplicationItem({
     const toggleCollapsed = () => setCollapsed(!collapsed);
 
     return collapsable && collapsed ? (
-        <div className="mt-4 p-4 cursor-pointer bg-white-smoke rounded-lg border-2 w-5/6 flex justify-between items-center" onClick={toggleCollapsed}>
+        <div className="mt-4 p-4 cursor-pointer bg-white-smoke rounded-lg border-2 w-5/6 flex justify-between items-center" onClick={toggleCollapsed} role="button">
             <div></div>
             <span className="text-primary text-xl">Application Id: {application.id}</span>
             <FontAwesomeIcon icon={collapsed ? faChevronDown : faChevronUp} className="text-sm" />
@@ -20,7 +20,7 @@ export default function ApplicationItem({
     ) : (
         <div className="mt-4 bg-white-smoke rounded-lg border-2 w-5/6">
             <div className="flex items-center flex-col">
-                <div className="p-4 cursor-pointer bg-white-smoke rounded-lg w-full flex justify-between items-center" onClick={toggleCollapsed}>
+                <div className="p-4 cursor-pointer bg-white-smoke rounded-lg w-full flex justify-between items-center" onClick={toggleCollapsed} role="button">
                     <div></div>
                     <span className="text-primary text-xl">Application Id: {application.id}</span>
                     {collapsable ?

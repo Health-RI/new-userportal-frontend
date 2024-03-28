@@ -37,7 +37,7 @@ describe('listApplications', () => {
   });
 
   test('sends a GET request and retrives applications of signed in user', async () => {
-    var response = await listApplications();
+    const response = await listApplications();
 
     expect(response.data).toBe(mockApiResponse.data);
     expect(mockedAxios.get).toHaveBeenCalledWith(

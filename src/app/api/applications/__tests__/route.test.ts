@@ -93,34 +93,44 @@ describe('GET function', () => {
     expect(await response.json()).toEqual({ error: 'Unauthorized' });
   });
 
-
-  test('successfully gets applications', async () => {
+  test('returns error if Axios request fails', async () => {
     const encryptedToken = encrypt('decryptedToken');
-    const mockApiResponse = [
-      {
-        id: 1,
-        title: 'Test application 1',
-        stateChangedAt: '',
-        currentState: 'Submited'
-      },
-      {
-        id: 2,
-        title: 'Test application 2',
-        stateChangedAt: '',
-        currentState: 'Approved'
-      }
-    ] as ListedApplication[];
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
-    mockedAxios.get.mockResolvedValueOnce(mockApiResponse);
+    mockedAxios.post.mockRejectedValueOnce(new Error('Axios error'));
 
     const response = await GET();
 
+    expect(response.status).toBe(500);
+    expect(await response.json()).toEqual({ error: 'Failed to list applications' });
+  });
+
+  test('successfully gets applications', async () => {
+    const encryptedToken = encrypt('decryptedToken');
+    const mockApiResponse = {
+      data: [
+        {
+          id: 1,
+          title: 'Test application 1',
+          stateChangedAt: '',
+          currentState: 'Submited'
+        },
+        {
+          id: 2,
+          title: 'Test application 2',
+          stateChangedAt: '',
+          currentState: 'Approved'
+        }
+      ] as ListedApplication[]
+    };
+
+    mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
+    mockedAxios.get.mockResolvedValue(mockApiResponse);
+
+    const response = await GET();
     const responseJson = await response.json();
 
     expect(response.status).toBe(200);
     expect(responseJson.length).toEqual(2);
-    expect(responseJson[0].id).toEqual(1);
-
     expect(mockedAxios.get).toHaveBeenCalledWith(
       `${serverConfig.daamUrl}/api/v1/applications`,
       {

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create application'}, { status: 500 });
+    return NextResponse.json({ error: 'Failed to create application' }, { status: 500 });
   }
 }
 
@@ -35,9 +35,8 @@ export async function GET() {
 
   try {
     const response = await listApplications(session);
-   
     return NextResponse.json(response.data);
   } catch (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to list applications' }, { status: 500 });
   }
 }

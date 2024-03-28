@@ -11,20 +11,22 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('listApplications', () => {
-  const mockApiResponse = [
-    {
-      id: 1,
-      title: 'Test application 1',
-      stateChangedAt: new Date('27-03-2024'),
-      currentState: 'Submited'
-    },
-    {
-      id: 2,
-      title: 'Test application 2',
-      stateChangedAt: new Date('25-03-2024'),
-      currentState: 'Approved'
-    }
-  ] as ListedApplication[];
+  const mockApiResponse = {
+    data: [
+      {
+        id: 1,
+        title: 'Test application 1',
+        stateChangedAt: '',
+        currentState: 'Submited'
+      },
+      {
+        id: 2,
+        title: 'Test application 2',
+        stateChangedAt: '',
+        currentState: 'Approved'
+      }
+    ] as ListedApplication[]
+  };
 
   beforeEach(() => {
     mockedAxios.get.mockResolvedValue(mockApiResponse);
@@ -35,9 +37,9 @@ describe('listApplications', () => {
   });
 
   test('sends a GET request and retrives applications of signed in user', async () => {
-    var data = await listApplications();
+    var response = await listApplications();
 
-    expect(data.length).toBe(2);
+    expect(response.data).toBe(mockApiResponse.data);
     expect(mockedAxios.get).toHaveBeenCalledWith(
       '/api/applications',
       { headers: { 'Content-Type': 'application/json' } },

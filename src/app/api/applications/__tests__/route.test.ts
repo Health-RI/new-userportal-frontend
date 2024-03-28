@@ -100,13 +100,13 @@ describe('GET function', () => {
       {
         id: 1,
         title: 'Test application 1',
-        stateChangedAt: new Date('27-03-2024'),
+        stateChangedAt: '',
         currentState: 'Submited'
       },
       {
         id: 2,
         title: 'Test application 2',
-        stateChangedAt: new Date('25-03-2024'),
+        stateChangedAt: '',
         currentState: 'Approved'
       }
     ] as ListedApplication[];

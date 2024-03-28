@@ -32,7 +32,7 @@ export default function ApplicationItem({
 
             <div className="flex justify-center gap-10 p-6">
                 <span className="px-2">State: {application.currentState}</span>
-                <span className="px-2">Last Modified: {application.stateChangedAt.toLocaleString()}</span>
+                <span className="px-2">State Modified: {application.stateChangedAt?.split('T')[0]}</span>
             </div>
         </div>
     );

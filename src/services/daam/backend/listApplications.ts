@@ -5,10 +5,10 @@
 import { ListedApplication } from '@/types/application.types';
 import { ExtendedSession } from '@/utils/auth';
 import { decrypt } from '@/utils/encryption';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export const makeListApplications = (daamUrl: string) => {
-return async (session: ExtendedSession): Promise<ListedApplication[]> => {
+return async (session: ExtendedSession): Promise<AxiosResponse<ListedApplication[]>> => {
     return await axios.get(`${daamUrl}/api/v1/applications`, {
       headers: {
         'Content-Type': 'application/json',

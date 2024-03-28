@@ -16,8 +16,8 @@ const ApplicationsPage: React.FC = () => {
 
   useEffect(() => {
     listApplications()
-      .then((res) => setData(res))
-  });
+      .then((res) => setData(res.data))
+  }, []);
 
   const collapsable = data.length > collapseLimit;
 

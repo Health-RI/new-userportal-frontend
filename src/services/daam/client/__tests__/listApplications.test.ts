@@ -17,15 +17,15 @@ describe('listApplications', () => {
         id: 1,
         title: 'Test application 1',
         stateChangedAt: '',
-        currentState: 'Submited'
+        currentState: 'Submited',
       },
       {
         id: 2,
         title: 'Test application 2',
         stateChangedAt: '',
-        currentState: 'Approved'
-      }
-    ] as ListedApplication[]
+        currentState: 'Approved',
+      },
+    ] as ListedApplication[],
   };
 
   beforeEach(() => {
@@ -40,9 +40,6 @@ describe('listApplications', () => {
     const response = await listApplications();
 
     expect(response.data).toBe(mockApiResponse.data);
-    expect(mockedAxios.get).toHaveBeenCalledWith(
-      '/api/applications',
-      { headers: { 'Content-Type': 'application/json' } },
-    );
+    expect(mockedAxios.get).toHaveBeenCalledWith('/api/applications', { headers: { 'Content-Type': 'application/json' } });
   });
 });

@@ -8,11 +8,12 @@ import { decrypt } from '@/utils/encryption';
 import axios, { AxiosResponse } from 'axios';
 
 export const makeListApplications = (daamUrl: string) => {
-return async (session: ExtendedSession): Promise<AxiosResponse<ListedApplication[]>> => {
+  return async (session: ExtendedSession): Promise<AxiosResponse<ListedApplication[]>> => {
     return await axios.get(`${daamUrl}/api/v1/applications`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${decrypt(session.access_token)}`,
       },
     });
-}};
+  };
+};

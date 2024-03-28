@@ -78,7 +78,6 @@ describe('POST function', () => {
   });
 });
 
-
 describe('GET function', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -112,15 +111,15 @@ describe('GET function', () => {
           id: 1,
           title: 'Test application 1',
           stateChangedAt: '',
-          currentState: 'Submited'
+          currentState: 'Submited',
         },
         {
           id: 2,
           title: 'Test application 2',
           stateChangedAt: '',
-          currentState: 'Approved'
-        }
-      ] as ListedApplication[]
+          currentState: 'Approved',
+        },
+      ] as ListedApplication[],
     };
 
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
@@ -131,14 +130,11 @@ describe('GET function', () => {
 
     expect(response.status).toBe(200);
     expect(responseJson.length).toEqual(2);
-    expect(mockedAxios.get).toHaveBeenCalledWith(
-      `${serverConfig.daamUrl}/api/v1/applications`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer decryptedToken`,
-        },
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${serverConfig.daamUrl}/api/v1/applications`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer decryptedToken`,
       },
-    );
+    });
   });
 });

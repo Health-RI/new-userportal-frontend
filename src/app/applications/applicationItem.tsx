@@ -4,36 +4,58 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 export default function ApplicationItem({
-    application,
-    collapsable
-}: { application: ListedApplication, collapsable: boolean },) {
+  application,
+  collapsable,
+}: {
+  application: ListedApplication;
+  collapsable: boolean;
+}) {
+  const [collapsed, setCollapsed] = useState(true);
+  const toggleCollapsed = () => setCollapsed(!collapsed);
 
-    const [collapsed, setCollapsed] = useState(true);
-    const toggleCollapsed = () => setCollapsed(!collapsed);
-
-    return collapsable && collapsed ? (
-        <div className="mt-4 p-4 cursor-pointer bg-white-smoke rounded-lg border-2 w-5/6 flex justify-between items-center" onClick={toggleCollapsed} role="button">
+  return collapsable && collapsed ? (
+    <button
+      className="mt-4 flex w-5/6 cursor-pointer items-center justify-between rounded-lg border-2 bg-white-smoke p-4"
+      onClick={toggleCollapsed}
+    >
+      <div></div>
+      <span className="text-xl text-primary">
+        Application Id: {application.id}
+      </span>
+      <FontAwesomeIcon
+        icon={collapsed ? faChevronDown : faChevronUp}
+        className="text-sm"
+      />
+    </button>
+  ) : (
+    <div className="mt-4 w-5/6 rounded-lg border-2 bg-white-smoke">
+      <div className="flex flex-col items-center">
+        <button
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg bg-white-smoke p-4"
+          onClick={toggleCollapsed}
+        >
+          <div></div>
+          <span className="text-xl text-primary">
+            Application Id: {application.id}
+          </span>
+          {collapsable ? (
+            <FontAwesomeIcon
+              icon={collapsed ? faChevronDown : faChevronUp}
+              className="text-sm"
+            />
+          ) : (
             <div></div>
-            <span className="text-primary text-xl">Application Id: {application.id}</span>
-            <FontAwesomeIcon icon={collapsed ? faChevronDown : faChevronUp} className="text-sm" />
-        </div>
-    ) : (
-        <div className="mt-4 bg-white-smoke rounded-lg border-2 w-5/6">
-            <div className="flex items-center flex-col">
-                <div className="p-4 cursor-pointer bg-white-smoke rounded-lg w-full flex justify-between items-center" onClick={toggleCollapsed} role="button">
-                    <div></div>
-                    <span className="text-primary text-xl">Application Id: {application.id}</span>
-                    {collapsable ?
-                        (<FontAwesomeIcon icon={collapsed ? faChevronDown : faChevronUp} className="text-sm" />) : (<div></div>)
-                    }
-                </div>
-                <span className="text-xl">Title: {application.title}</span>
-            </div>
+          )}
+        </button>
+        <span className="text-xl">Title: {application.title}</span>
+      </div>
 
-            <div className="flex justify-center gap-10 p-6">
-                <span className="px-2">State: {application.currentState}</span>
-                <span className="px-2">State Modified: {application.stateChangedAt?.split('T')[0]}</span>
-            </div>
-        </div>
-    );
+      <div className="flex justify-center gap-10 p-6">
+        <span className="px-2">State: {application.currentState}</span>
+        <span className="px-2">
+          State Modified: {application.stateChangedAt?.split("T")[0]}
+        </span>
+      </div>
+    </div>
+  );
 }

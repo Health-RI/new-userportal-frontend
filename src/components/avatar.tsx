@@ -62,11 +62,7 @@ function Avatar({ user }: AvatarProps) {
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faFolder} className="text-sm" />
-            <Link
-              href="/applications"
-            >
-              Applications
-            </Link>
+            <Link href="/applications">Applications</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faGear} className="text-sm" />

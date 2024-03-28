@@ -112,10 +112,10 @@ describe('GET function', () => {
     ] as ListedApplication[];
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
     mockedAxios.get.mockResolvedValueOnce(mockApiResponse);
-  
+
     const response = await GET();
 
-    const responseJson =await response.json();
+    const responseJson = await response.json();
 
     expect(response.status).toBe(200);
     expect(responseJson.length).toEqual(2);

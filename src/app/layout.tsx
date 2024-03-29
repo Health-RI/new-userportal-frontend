@@ -2,16 +2,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import Disclaimer from "@/components/disclaimer";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { latoFont } from "../utils/fonts";
 import "./globals.css";
 import { PublicEnvScript } from "next-runtime-env";
+import Disclaimer from "./disclaimer";
+import Footer from "./footer";
+import "./globals.css";
+import Header from "./header";
+import SessionProviderWrapper from "./sessionProviderWrapper";
 config.autoAddCss = false;
 
 export default function RootLayout({
@@ -28,7 +29,7 @@ export default function RootLayout({
       </head>
       <body>
         <DatasetBasketProvider>
-          <div className="grid h-screen w-screen grid-rows-[auto_1fr_auto]">
+          <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
             <SessionProviderWrapper>
               <div>
                 <Header />

@@ -4,17 +4,17 @@
 
 "use client";
 
-import Button from "@/components/button";
-import DatasetList from "@/components/datasetList";
-import FilterList from "@/components/filterList";
-import PaginationContainer from "@/components/paginationContainer";
 import SearchBar from "@/components/SearchBar";
+import Button from "@/components/button";
 import { useWindowSize } from "@/hooks";
 import { FieldDetails } from "@/services/ckan/types/fieldDetails.types";
 import { PackageSearchResult } from "@/services/ckan/types/packageSearch.types";
 import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
 import { faFilter, faX } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import DatasetList from "./datasetList";
+import FilterList from "./filterList";
+import PaginationContainer from "./paginationContainer";
 
 type ClientWrapperProps = {
   datasets: PackageSearchResult;

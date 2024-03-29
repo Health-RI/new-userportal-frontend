@@ -3,19 +3,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Error from "@/app/error";
-import Chips from "@/components/Chips";
-import PageHeading from "@/components/PageHeading";
-import PageSubHeading from "@/components/PageSubHeading";
+import Chips from "@/components/chips";
+import PageHeading from "@/components/pageHeading";
+import PageSubHeading from "@/components/pageSubHeading";
+import Sidebar from "@/components/sidebar";
 import { datasetGet } from "@/services/ckan";
-import DistributionAccordion from "./DistributionAccordion";
-import Sidebar from "./Sidebar";
 import AddToBasketBtn from "./AddToBasketBtn";
+import DistributionAccordion from "./DistributionAccordion";
+import { createDatasetSidebarItems } from "./sidebarItems";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
 
   try {
     const dataset = await datasetGet(id);
+    const sidebarItems = createDatasetSidebarItems(dataset);
 
     return (
       <div className="flex w-full flex-col items-start p-10 lg:flex-row">
@@ -40,7 +42,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           )}
           <DistributionAccordion distributions={dataset.distributions || []} />
         </div>
-        <Sidebar dataset={dataset} />
+        <aside className="w-full lg:w-1/3">
+          <Sidebar items={sidebarItems} />
+        </aside>
       </div>
     );
   } catch (error) {

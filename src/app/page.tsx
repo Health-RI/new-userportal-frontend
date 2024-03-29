@@ -4,14 +4,14 @@
 
 "use client";
 
-import { DatasetCounter } from "@/components/DatasetCounter";
-import { PortalStatistics } from "@/components/PortalStatistics";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/searchBar";
 import Image from "next/image";
 import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
 import hri_banner from "../public/HRI_banner.jpg";
 import Link from "next/link";
+import { DatasetCounter } from "./datasetCounter";
+import { PortalStatistics } from "./portalStatistics";
 
 const HomePage = () => {
   const initialQueryParams: Record<string, string> = {

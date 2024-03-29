@@ -4,6 +4,8 @@
 
 "use client";
 
+import Button from "@/components/button";
+import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {
@@ -13,10 +15,9 @@ import {
   faInfoCircle,
   faRightFromBracket,
   faRightToBracket,
-  faUser,
   faShoppingCart,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -25,7 +26,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
 import Avatar from "./avatar";
-import Button from "./button";
 import Notification from "./notification";
 
 function Header() {

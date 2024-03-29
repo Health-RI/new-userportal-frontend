@@ -4,15 +4,15 @@
 
 "use client";
 
-import { DatasetCounter } from "@/components/DatasetCounter";
-import { PortalStatistics } from "@/components/PortalStatistics";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/searchBar";
 import Image from "next/image";
-import logo from "../public/gdi-logo.png";
-import office from "../public/office.jpg";
-import dna from "../public/dna.jpg";
-import gdi_visuals from "../public/gdi-visuals.png";
 import Link from "next/link";
+import dna from "../public/dna.jpg";
+import logo from "../public/gdi-logo.png";
+import gdi_visuals from "../public/gdi-visuals.png";
+import office from "../public/office.jpg";
+import { DatasetCounter } from "./datasetCounter";
+import { PortalStatistics } from "./portalStatistics";
 
 const HomePage = () => {
   const initialQueryParams: Record<string, string> = {

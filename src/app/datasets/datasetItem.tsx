@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import { useWindowSize } from "@/hooks";
-import { truncateDescription } from "@/utils/textProcessing";
-import Link from "next/link";
-import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/button";
-import Chips from "./Chips";
-import { Dataset } from "@/types/dataset.types";
+import Chips from "@/components/chips";
+import { useWindowSize } from "@/hooks";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import { Dataset } from "@/types/dataset.types";
+import { truncateDescription } from "@/utils/textProcessing";
+import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 type DatasetItemProps = {
   dataset: Dataset;

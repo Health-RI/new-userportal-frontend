@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import Button from "@/components/button";
 import { type FieldDetails } from "@/services/ckan/types/fieldDetails.types";
 import { convertDataToFilterItemProps } from "@/utils/dto";
 import {
@@ -14,7 +15,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Button from "./button";
 import FilterItem, { FilterItemProps } from "./filterItem";
 
 const fieldToIconMap: Record<string, IconDefinition> = {

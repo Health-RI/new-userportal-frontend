@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
 import Button from "@/components/button";
-import FieldAttachmentContainer from "@/components/fieldAttachmentContainer";
+import PageHeading from "@/components/pageHeading";
 import { faPaperPlane, faSave } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import FieldAttachmentContainer from "./fieldAttachmentContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 type ApplicationDetailsPageProps = {

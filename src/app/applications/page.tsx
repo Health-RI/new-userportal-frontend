@@ -4,11 +4,11 @@
 
 "use client";
 
+import PageHeading from "@/components/pageHeading";
 import { listApplications } from "@/services/daam/index.client";
+import { ListedApplication } from "@/types/application.types";
 import React, { useEffect, useState } from "react";
 import ApplicationItem from "./applicationItem";
-import PageHeading from "@/components/PageHeading";
-import { ListedApplication } from "@/types/application.types";
 
 const ApplicationsPage: React.FC = () => {
   const [data, setData] = useState<ListedApplication[]>([]);

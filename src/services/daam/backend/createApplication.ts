@@ -11,6 +11,7 @@ export const makeCreateApplication = (daamUrl: string) => {
     const requestBody = {
       datasetIds: datasetIds,
     };
+
     await axios.post(`${daamUrl}/api/v1/applications/create`, requestBody, {
       headers: {
         'Content-Type': 'application/json',

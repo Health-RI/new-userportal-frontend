@@ -10,7 +10,7 @@ import FilterList from "@/components/filterList";
 import PaginationContainer from "@/components/paginationContainer";
 import SearchBar from "@/components/SearchBar";
 import { useWindowSize } from "@/hooks";
-import { FieldDetails } from "@/services/ckan/types/fieldDetails.types";
+import { Facet } from "@/services/ckan/types/packageSearch.types";
 import { PackageSearchResult } from "@/services/ckan/types/packageSearch.types";
 import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
 import { faFilter, faX } from "@fortawesome/free-solid-svg-icons";
@@ -20,14 +20,14 @@ type ClientWrapperProps = {
   datasets: PackageSearchResult;
   datasetPerPage: number;
   queryParams: Record<string, string>;
-  filterData: FieldDetails[];
+  facets: Facet[];
 };
 
 export default function ClientWrapper({
   datasets,
   datasetPerPage,
   queryParams,
-  filterData,
+  facets,
 }: ClientWrapperProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { width } = useWindowSize();
@@ -42,7 +42,7 @@ export default function ClientWrapper({
       {isFilterOpen ? (
         <div className="relative col-span-10 col-start-2 rounded-lg border bg-white-smoke p-6">
           <FilterList
-            filterData={filterData}
+            facets={facets}
             displayContinueButton={true}
             setIsFilterOpen={setIsFilterOpen}
             queryParams={queryParams}
@@ -70,7 +70,7 @@ export default function ClientWrapper({
           </div>
           <div className="border-1 col-start-2 col-end-5 hidden rounded-lg border bg-white-smoke p-6 xl:block">
             <FilterList
-              filterData={filterData}
+              facets={facets}
               setIsFilterOpen={setIsFilterOpen}
               queryParams={queryParams}
             />

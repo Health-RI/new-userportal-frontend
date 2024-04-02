@@ -7,16 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MultipleSelector, { type Option } from "./ui/multipleSelector";
 
 export type FilterItemProps = {
+  field: string;
   label: string;
   data: Option[];
   icon: IconDefinition;
 };
 
-function capitalizeFirstLetter(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function FilterItem({ label, data, icon }: FilterItemProps) {
+function FilterItem({ field, label, data, icon }: FilterItemProps) {
   return (
     <div>
       <div className="mb-3 flex items-center gap-x-3">
@@ -24,10 +21,10 @@ function FilterItem({ label, data, icon }: FilterItemProps) {
           icon={icon}
           className="text-xs font-extrabold text-info"
         />
-        <p className="text-bold text-info">{capitalizeFirstLetter(label)}</p>
+        <p className="text-bold text-info">{label}</p>
       </div>
       <MultipleSelector
-        label={label}
+        field={field}
         defaultOptions={data}
         placeholder={label}
         className="text-[0.8rem]"

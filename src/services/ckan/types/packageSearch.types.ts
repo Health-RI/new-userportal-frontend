@@ -4,10 +4,7 @@
 import { Dataset } from './../../../types/dataset.types';
 
 export interface PackageSearchOptions {
-  keywords?: string[];
-  catalogues?: string[];
-  themes?: string[];
-  publishers?: string[];
+  facets?: Record<string, string[]>;
   offset?: number;
   limit?: number;
   query?: string;
@@ -18,4 +15,12 @@ export interface PackageSearchOptions {
 export interface PackageSearchResult {
   datasets: Dataset[];
   count: number;
+  facets: Facet[];
 }
+
+export type Facet = {
+  field: string;
+  label: string;
+  values: string[];
+  count: number;
+};

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type FieldDetails } from "@/services/ckan/types/fieldDetails.types";
+import { type Facet } from "@/services/ckan/types/packageSearch.types";
 import { convertDataToFilterItemProps } from "@/utils/dto";
 import {
   faBook,
@@ -10,6 +10,9 @@ import {
   faMagnifyingGlass,
   faTags,
   faUser,
+  faFile,
+  faKey,
+  faLocation,
   type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,27 +21,30 @@ import Button from "./button";
 import FilterItem, { FilterItemProps } from "./filterItem";
 
 const fieldToIconMap: Record<string, IconDefinition> = {
-  publisher: faUser,
-  catalogue: faBook,
+  publisher_name: faUser,
+  organization: faBook,
   theme: faTags,
-  keyword: faMagnifyingGlass,
+  tags: faMagnifyingGlass,
+  res_format: faFile,
+  access_rights: faKey,
+  spatial_uri: faLocation,
 };
 
 type FilterListProps = {
-  filterData: FieldDetails[];
+  facets: Facet[];
   displayContinueButton?: boolean;
   setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: Record<string, string | string[] | undefined>;
 };
 
 function FilterList({
-  filterData,
+  facets,
   displayContinueButton = false,
   setIsFilterOpen,
   queryParams,
 }: FilterListProps) {
   const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
-    filterData,
+    facets,
     fieldToIconMap,
   );
 
@@ -58,8 +64,13 @@ function FilterList({
         Filters
       </h1>
       {filterItemProps.map((props) => (
-        <li key={props.label} className="list-none">
-          <FilterItem label={props.label} data={props.data} icon={props.icon} />
+        <li key={props.field} className="list-none">
+          <FilterItem
+            field={props.field}
+            label={props.label}
+            data={props.data}
+            icon={props.icon}
+          />
         </li>
       ))}
       <div className="mt-4 flex justify-between">

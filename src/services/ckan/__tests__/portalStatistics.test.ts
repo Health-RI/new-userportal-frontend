@@ -11,12 +11,23 @@ describe('makePortalStatistics', () => {
 
   beforeEach(() => {
     mockFetch.mockClear().mockImplementation((url: string | Request | URL) => {
-      if (url === 'http://localhost:5500/api/3/action/theme_list?') {
-        return Promise.resolve(new Response(JSON.stringify({ result: { count: 379 } })));
-      } else if (url === 'http://localhost:5500/api/3/action/catalogue_list?') {
-        return Promise.resolve(new Response(JSON.stringify({ result: { count: 5 } })));
-      } else if (url === 'http://localhost:5500/api/3/action/keyword_list?') {
-        return Promise.resolve(new Response(JSON.stringify({ result: { count: 490 } })));
+      if (
+        url ===
+        'http://localhost:5500/api/3/action/package_search?facet.field=["organization","theme","tags"]&rows=0&facet.limit=-1'
+      ) {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              result: {
+                facets: {
+                  organization: { org1: 1 },
+                  theme: { theme1: 1, theme2: 2 },
+                  tags: { tag1: 1, tag2: 2, tag3: 3 },
+                },
+              },
+            }),
+          ),
+        );
       }
       return Promise.reject(new Error('Unknown URL'));
     });
@@ -30,23 +41,19 @@ describe('makePortalStatistics', () => {
     const portalStatistics = await getPortalStatistics();
 
     expect(portalStatistics).toEqual({
-      themes: 379,
-      catalogues: 5,
-      keywords: 490,
+      catalogues: 1,
+      themes: 2,
+      keywords: 3,
     });
 
-    expect(global.fetch).toHaveBeenCalledTimes(3);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, `${DMS_URL}/api/3/action/theme_list?`, {
-      cache: 'force-cache',
-      next: { revalidate: 86400 },
-    });
-    expect(global.fetch).toHaveBeenNthCalledWith(2, `${DMS_URL}/api/3/action/catalogue_list?`, {
-      cache: 'force-cache',
-      next: { revalidate: 86400 },
-    });
-    expect(global.fetch).toHaveBeenNthCalledWith(3, `${DMS_URL}/api/3/action/keyword_list?`, {
-      cache: 'force-cache',
-      next: { revalidate: 86400 },
-    });
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenNthCalledWith(
+      1,
+      `${DMS_URL}/api/3/action/package_search?facet.field=["organization","theme","tags"]&rows=0&facet.limit=-1`,
+      {
+        cache: 'force-cache',
+        next: { revalidate: 3600 },
+      },
+    );
   });
 });

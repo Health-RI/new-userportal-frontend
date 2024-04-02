@@ -3,15 +3,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import ClientWrapper from "@/app/datasets/clientWrapper";
-import { datasetList, fieldDetailsGet } from "@/services/ckan";
-import { Field } from "@/services/ckan/types/fieldDetails.types";
+import { datasetList } from "@/services/ckan";
 import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
-import { parseFilterValuesSingleQueryString } from "@/utils/textProcessing";
 import { redirect } from "next/navigation";
 
 type DatasetPageProps = {
   searchParams: Record<string, string>;
 };
+
+function parseFacets(
+  searchParams: Record<string, string>,
+): Record<string, string[]> {
+  const facets: Record<string, string[]> = {};
+  for (const key in searchParams) {
+    if (!["page", "q", "sort"].includes(key)) {
+      facets[key] = searchParams[key].split(",");
+    }
+  }
+  return facets;
+}
 
 async function DatasetPage({ searchParams }: DatasetPageProps) {
   if (!searchParams?.page) {
@@ -20,18 +30,7 @@ async function DatasetPage({ searchParams }: DatasetPageProps) {
   const DATASET_PER_PAGE = 12;
 
   const options: PackageSearchOptions = {
-    keywords: searchParams.keywords
-      ? parseFilterValuesSingleQueryString(searchParams.keywords as string)
-      : undefined,
-    catalogues: searchParams.catalogues
-      ? parseFilterValuesSingleQueryString(searchParams.catalogues as string)
-      : undefined,
-    themes: searchParams.themes
-      ? parseFilterValuesSingleQueryString(searchParams.themes as string)
-      : undefined,
-    publishers: searchParams.publishers
-      ? parseFilterValuesSingleQueryString(searchParams.publishers as string)
-      : undefined,
+    facets: parseFacets(searchParams),
     offset: searchParams.page ? Number(searchParams.page) - 1 : 0,
     limit: DATASET_PER_PAGE,
     query: searchParams?.q as string | undefined,
@@ -41,19 +40,12 @@ async function DatasetPage({ searchParams }: DatasetPageProps) {
 
   const datasets = await datasetList(options);
 
-  const filterData = await Promise.all([
-    fieldDetailsGet(Field.PUBLISHER),
-    fieldDetailsGet(Field.CATALOGUE),
-    fieldDetailsGet(Field.THEME),
-    fieldDetailsGet(Field.KEYWORD),
-  ]);
-
   return (
     <ClientWrapper
       queryParams={searchParams}
       datasets={datasets}
       datasetPerPage={DATASET_PER_PAGE}
-      filterData={filterData}
+      facets={datasets.facets}
     />
   );
 }

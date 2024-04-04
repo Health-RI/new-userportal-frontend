@@ -23,10 +23,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
-import Avatar from "./avatar";
-import Button from "./button";
-import Notification from "./notification";
+import logo from "@/public/egdi-logo-horizontal-full-color-rgb.svg";
+import Avatar from "./Avatar";
+import Button from "../button";
+import ApplicationIcon from "./ApplicationIcon";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -62,7 +62,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <Notification />
+        <ApplicationIcon />
         <Avatar user={session.user as User} />
       </>
     ) : (

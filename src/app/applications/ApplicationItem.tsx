@@ -75,7 +75,7 @@ export default function ApplicationItem({
             <h3 className="mb-4 text-lg font-bold text-primary">Datasets</h3>
             {application.datasets.map((dataset) => (
               <a
-                href={`/datasets/${dataset.id}`}
+                href={`/datasets/${dataset.externalId}`}
                 key={dataset.id}
                 className="mb-2 block flex items-baseline gap-2 hover:underline"
               >

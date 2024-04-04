@@ -31,7 +31,7 @@ export default function ApplicationItem({
         >
           <div className="flex items-center gap-4">
             <h3 className="text-xl text-primary md:text-2xl">
-              Application ID: {application.id}
+              {application.title}
             </h3>
             <div className="rounded bg-warning px-2.5 py-0.5 text-sm font-semibold">
               {application.currentState}

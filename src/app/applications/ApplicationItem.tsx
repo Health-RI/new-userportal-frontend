@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDate } from "@/utils/formatDate";
+import { getLabelName } from "@/utils/getLabelName";
 import { useState } from "react";
 
 export default function ApplicationItem({
@@ -83,7 +84,7 @@ export default function ApplicationItem({
                   className="text-md text-info"
                 />
                 <h3 className="sm:text-md text-base font-bold text-info lg:text-lg">
-                  {dataset.title}
+                  {getLabelName(dataset.title)}
                 </h3>
               </a>
             ))}

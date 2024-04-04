@@ -2,6 +2,11 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+export interface Label {
+  language: string;
+  name: string;
+}
+
 export interface ListedApplication {
   id: number;
   title: string;
@@ -14,6 +19,6 @@ export interface ListedApplication {
 
 export interface ApplicationDataset {
   id: number;
-  title: string;
-  url: string;
+  title: Label[];
+  url: Label[];
 }

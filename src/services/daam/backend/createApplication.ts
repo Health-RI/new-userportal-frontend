@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import axios from 'axios';
-import { decrypt } from '@/utils/encryption';
 import { ExtendedSession } from '@/utils/auth';
+import { decrypt } from '@/utils/encryption';
+import axios from 'axios';
 
 export const makeCreateApplication = (daamUrl: string) => {
   return async (datasetIds: string[], session: ExtendedSession): Promise<void> => {

@@ -13,7 +13,7 @@ interface ButtonProps {
   icon?: IconDefinition;
   href?: string;
   onClick?: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   className?: string;
   props?: React.ComponentPropsWithoutRef<"a">;
   children?: React.ReactNode;

@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import Sidebar from "@/components/Sidebar";
 import Button from "@/components/button";
 import PageHeading from "@/components/pageHeading";
-import { faPaperPlane, faSave } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import FieldAttachmentContainer from "./fieldAttachmentContainer";
+import Sidebar from "@/components/sidebar";
+import { RetrievedApplication } from "@/types/application.types";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 type ApplicationDetailsPageProps = {
@@ -18,9 +18,29 @@ type ApplicationDetailsPageProps = {
 export default function ApplicationDetailsPage({
   params,
 }: ApplicationDetailsPageProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [application, setApplication] = useState<RetrievedApplication>(
+    {} as RetrievedApplication,
+  );
+
   const { id } = params;
-  const sidebarItems = createApplicationSidebarItems();
+
+  useEffect(() => {
+    async function getApplication() {
+      const response = await fetch(`/api/applications/${id}`);
+
+      // if (!response.ok) {
+      //   return "Error fetching data";
+      // }
+      // const application = await response.json();
+      console.log(response.body);
+      // return application;
+    }
+
+    getApplication();
+    console.log(application);
+  }, [application, id]);
+
+  const sidebarItems = createApplicationSidebarItems(application);
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,18 +57,12 @@ export default function ApplicationDetailsPage({
             <PageHeading>Application {id}</PageHeading>
             <div className="mt-4 flex gap-x-3 sm:mt-0">
               <Button
-                type="warning"
-                text="Save changes"
-                icon={faSave}
-                disabled={files.length === 0}
-                className="h-fit text-[10px] sm:text-xs"
-              />
-              <Button
                 type="primary"
                 text="Submit"
                 className="h-fit text-[10px] sm:text-xs"
                 icon={faPaperPlane}
-                disabled={files.length === 0}
+                disabled={[].length === 0}
+                // onClick={() => submitApplication(id))}
               />
             </div>
           </div>
@@ -63,11 +77,9 @@ export default function ApplicationDetailsPage({
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
 
-        <FieldAttachmentContainer
-          fieldName="Field 1"
-          files={files}
-          setFiles={setFiles}
-        />
+        {/* {application.forms.map((form) => (
+          <FormContainer form={form} key={form.id} />
+        ))} */}
       </form>
 
       <aside className="col-span-3 col-start-9 hidden xl:block">

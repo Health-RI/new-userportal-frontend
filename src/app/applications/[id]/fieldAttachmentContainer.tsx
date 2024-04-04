@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
+import { addAttachmentToApplication } from "@/services/daam/index.client";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FileUploaded from "./fileUploaded";
@@ -11,16 +12,30 @@ type FieldAttachmentContainerProps = {
   fieldName: string;
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  params: { id: string };
 };
 
 function FieldAttachmentContainer({
   fieldName,
   files,
   setFiles,
+  params,
 }: FieldAttachmentContainerProps) {
-  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const newFile = e.target?.files?.[0];
-    if (newFile) setFiles((files) => [...files, newFile]);
+  const { id } = params;
+
+  function onUploadFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    try {
+      const data = new FormData();
+      data.set("file", file);
+
+      addAttachmentToApplication(id, data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -32,7 +47,7 @@ function FieldAttachmentContainer({
         <input
           type="file"
           id="file-upload"
-          onChange={onFileChange}
+          onChange={onUploadFile}
           className="hidden"
         />
         <label

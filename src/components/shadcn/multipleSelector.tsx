@@ -8,17 +8,18 @@ import { faSort, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 
-import { Badge } from "@/components/ui/badge";
+import { cn } from "@/utils/tailwindMerge";
 import {
   Command,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { cn } from "@/utils/tailwindMerge";
-import { Command as CommandPrimitive, useCommandState } from "cmdk";
+  Command as CommandPrimitive,
+  useCommandState,
+} from "cmdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { forwardRef, useEffect } from "react";
+import { Badge } from "./badge";
 
 export interface Option {
   value: string;

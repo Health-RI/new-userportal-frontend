@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { FilterItemProps } from '@/components/filterItem';
+import { FilterItemProps } from '@/app/datasets/filterItem';
 import { FieldDetails } from '@/services/ckan/types/fieldDetails.types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 

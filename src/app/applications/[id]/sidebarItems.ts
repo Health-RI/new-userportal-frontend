@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { SidebarItem } from '@/components/sidebar';
+import { RetrievedApplication } from '@/types/application.types';
 
-function createApplicationSidebarItems(): SidebarItem[] {
+function createApplicationSidebarItems(application: RetrievedApplication): SidebarItem[] {
+  const { datasets, applicant, events } = application;
   return [
     {
       label: 'Dataset',

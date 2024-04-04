@@ -4,8 +4,8 @@
 
 "use client";
 
-import SearchBar from "@/components/SearchBar";
 import Button from "@/components/button";
+import SearchBar from "@/components/searchBar";
 import { useWindowSize } from "@/hooks";
 import { FieldDetails } from "@/services/ckan/types/fieldDetails.types";
 import { PackageSearchResult } from "@/services/ckan/types/packageSearch.types";

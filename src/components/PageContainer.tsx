@@ -13,9 +13,7 @@ interface PageContainerProps {
 
 function PageContainer({ children, className }: PageContainerProps) {
   return (
-    <div
-      className={`container mx-auto  mt-8 px-4 sm:px-2 lg:px-0 ${className}`}
-    >
+    <div className={`container mx-auto space-y-20 px-4 pt-20 ${className}`}>
       {children}
     </div>
   );

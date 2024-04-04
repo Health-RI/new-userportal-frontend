@@ -6,6 +6,7 @@
 import { useState } from "react";
 import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
+import LoadingContainer from "@/components/LoadingContainer";
 import CenteredListContainer from "@/components/CenteredListContainer";
 import DatasetList from "@/components/datasetList";
 import Alert, { AlertState } from "@/components/Alert";
@@ -26,15 +27,7 @@ export default function Page() {
   }
 
   if (isLoading || status === "loading") {
-    return (
-      <div className="w-full" style={{ height: "calc(100vh - 100px)" }}>
-        <div className="flex h-full items-center justify-center">
-          <div className="text-lg font-semibold text-primary">
-            Loading your basket...
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingContainer text="Loading your basket..." />;
   }
 
   const requestNow = async () => {

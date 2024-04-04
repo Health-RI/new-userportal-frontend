@@ -6,6 +6,27 @@ import axios from 'axios';
 import { PackageSearchOptions, PackageSearchResult } from './types/packageSearch.types';
 import { constructCkanActionUrl, mapCKANPackageToDataset } from './utils';
 
+const mapFacetToLabel = (facet: string) => {
+  switch (facet) {
+    case 'organization':
+      return 'Catalogues';
+    case 'theme':
+      return 'Themes';
+    case 'tags':
+      return 'Keywords';
+    case 'publisher_name':
+      return 'Publishers';
+    case 'res_format':
+      return 'File Formats';
+    case 'access_rights':
+      return 'Access Rights';
+    case 'spatial_uri':
+      return 'Spatial Coverage';
+    default:
+      return facet;
+  }
+};
+
 export const makeDatasetList = (DMS: string) => {
   return async (options: PackageSearchOptions): Promise<PackageSearchResult> => {
     const queryParams = constructQueryParams(options);
@@ -13,9 +34,19 @@ export const makeDatasetList = (DMS: string) => {
 
     try {
       const response = await axios.get(url);
+      const facets = response.data.result.facets || {};
+      const fields = Object.keys(facets).map((field) => {
+        return {
+          field: field,
+          label: mapFacetToLabel(field),
+          count: Object.keys(facets[field]).length,
+          values: Object.keys(facets[field]).sort((a: string, b: string) => a.localeCompare(b)),
+        };
+      });
       return {
         datasets: response.data.result.results.map(mapCKANPackageToDataset),
         count: response.data.result.count,
+        facets: fields,
       };
     } catch (error) {
       throw new Error(`HTTP error! ${error}`);
@@ -28,21 +59,16 @@ const buildFilterQueryPart = (filters: string[]): string => {
 };
 
 const constructQueryParams = (options: PackageSearchOptions): string => {
-  const catalogueFilter = buildFilterQueryPart(options.catalogues || []);
-  const themeFilter = buildFilterQueryPart(options.themes || []);
-  const publisherFilter = buildFilterQueryPart(options.publishers || []);
-  const keywordFilter = buildFilterQueryPart(options.keywords || []);
+  const nonNullFacets = options.facets || {};
+  const facets = Object.keys(nonNullFacets).map((facet) => {
+    const facetValues = nonNullFacets[facet];
+    const query = buildFilterQueryPart(facetValues || []);
+    return query && `${facet}:(${query})`;
+  });
 
-  const filters = [
-    catalogueFilter && `organization:(${catalogueFilter})`,
-    themeFilter && `extras_theme:(${themeFilter})`,
-    publisherFilter && `extras_publisher_name:(${publisherFilter})`,
-    keywordFilter && `tags:(${keywordFilter})`,
-  ]
-    .filter(Boolean)
-    .join(' AND ');
+  const filters = facets.filter(Boolean).join(' AND ');
 
-  let queryParams = `start=${options.offset || 0}&rows=${options.limit || 10}`;
+  let queryParams = `facet.field=["access_rights","theme","tags","spatial_uri","organization","publisher_name","res_format"]&facet.limit=-1&start=${options.offset || 0}&rows=${options.limit || 10}`;
   queryParams += filters ? `&fq=${encodeURIComponent(filters)}` : '';
   queryParams += options.query ? `&q=${options.query}` : '';
   queryParams += options.sort ? `&sort=${options.sort}` : '';

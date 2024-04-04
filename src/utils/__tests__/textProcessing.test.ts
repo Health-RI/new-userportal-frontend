@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { parseFilterValuesSingleQueryString, truncateDescription } from '../textProcessing';
+import { truncateDescription } from '../textProcessing';
 
 describe('Truncate description', () => {
   it('should truncate description to 30 words for screen of 700px (small)', () => {
@@ -51,25 +51,5 @@ describe('Truncate description', () => {
     const truncatedDesc = truncateDescription(description, screenWidth);
 
     expect(truncatedDesc).toEqual(expected);
-  });
-});
-
-describe('Parse filter values from a single query string', () => {
-  it('should parse simple filter values from query string', () => {
-    const filterValues = '(publisher1,publisher2,publisher3)';
-    const expected = ['publisher1', 'publisher2', 'publisher3'];
-
-    const parsedValues = parseFilterValuesSingleQueryString(filterValues);
-
-    expect(parsedValues).toEqual(expected);
-  });
-
-  it('should parse filter values with uppercase letters', () => {
-    const filterValues = '(Afdeling NKR-analyse,DI Dr. Gerhard Fülöp,Helena Jericek Klanscek)';
-    const expected = ['Afdeling NKR-analyse', 'DI Dr. Gerhard Fülöp', 'Helena Jericek Klanscek'];
-
-    const parsedValues = parseFilterValuesSingleQueryString(filterValues);
-
-    expect(parsedValues).toEqual(expected);
   });
 });

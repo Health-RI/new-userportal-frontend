@@ -3,20 +3,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FilterItemProps } from '@/components/filterItem';
-import { FieldDetails } from '@/services/ckan/types/fieldDetails.types';
+import { Facet } from '@/services/ckan/types/packageSearch.types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-function convertDataToFilterItemProps(data: FieldDetails[], fieldToIconMap: Record<string, IconDefinition>): FilterItemProps[] {
-  return data.map((fieldDetails: FieldDetails) => {
+function convertDataToFilterItemProps(facets: Facet[], fieldToIconMap: Record<string, IconDefinition>): FilterItemProps[] {
+  return facets.map((facet: Facet) => {
     return {
-      label: fieldDetails.field + 's',
-      data: fieldDetails.values.map((v: string) => {
+      field: facet.field,
+      label: facet.label,
+      data: facet.values.map((v: string) => {
         return {
           label: v,
           value: v,
         };
       }),
-      icon: fieldToIconMap[fieldDetails.field],
+      icon: fieldToIconMap[facet.field],
     };
   });
 }

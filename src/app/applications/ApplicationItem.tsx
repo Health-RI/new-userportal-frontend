@@ -26,23 +26,40 @@ export default function ApplicationItem({
   return (
     <div className="flex w-full flex-col">
       <div className="w-full">
-        <button
+        <div
           className="flex w-full cursor-pointer items-center justify-between"
           onClick={toggleCollapsed}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              toggleCollapsed();
+            }
+          }}
         >
           <div className="flex items-center gap-4">
-            <h3 className="text-xl text-primary md:text-2xl">
-              {application.title}
-            </h3>
+            <a
+              href={`/applications/${application.id}`}
+              className="text-primary hover:underline"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = `/applications/${application.id}`;
+              }}
+            >
+              <h3 className="text-xl text-primary md:text-2xl">
+                {application.title}
+              </h3>
+            </a>
             <div className="rounded bg-warning px-2.5 py-0.5 text-sm font-semibold">
-              {application.currentState}
+              {application.currentState.split("/").pop()}
             </div>
           </div>
           <FontAwesomeIcon
             icon={collapsed ? faChevronDown : faChevronUp}
             className="text-sm"
           />
-        </button>
+        </div>
       </div>
 
       {!collapsed && (

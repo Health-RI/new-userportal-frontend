@@ -19,6 +19,7 @@ export interface ListedApplication {
 
 export interface ApplicationDataset {
   id: number;
+  externalId: string;
   title: Label[];
   url: Label[];
 }

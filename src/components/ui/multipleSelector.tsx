@@ -280,6 +280,11 @@ const MultipleSelector = React.forwardRef<
       setSelected(existingValues || []);
     }, [params, field, arrayDefaultOptions]);
 
+    useEffect(
+      () => setOptions(transToGroupOption(arrayDefaultOptions, groupBy)),
+      [arrayDefaultOptions, groupBy],
+    );
+
     useEffect(() => {
       /** If `onSearch` is provided, do not trigger options updated. */
       if (!arrayOptions || onSearch) {

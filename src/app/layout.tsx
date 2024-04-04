@@ -4,7 +4,7 @@
 
 import Disclaimer from "@/components/disclaimer";
 import Footer from "@/components/footer";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";

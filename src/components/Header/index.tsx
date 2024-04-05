@@ -15,6 +15,7 @@ import {
   faRightToBracket,
   faUser,
   faShoppingCart,
+  faFileText,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -154,7 +155,10 @@ function Header() {
               href="/applications"
               className="block px-4 py-2 hover:bg-primary hover:text-white"
               onClick={closeMenu}
-            ></Link>
+            >
+              <FontAwesomeIcon icon={faFileText} className="mr-2" />
+              Applications
+            </Link>
             <Link
               href="/about"
               className="block px-4 py-2 hover:bg-primary hover:text-white"

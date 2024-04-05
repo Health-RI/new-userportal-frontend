@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import React, { useState, useRef, useEffect } from "react";
 import { ListedApplication } from "@/types/application.types";
 import {
   faChevronDown,
@@ -11,7 +12,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDate } from "@/utils/formatDate";
 import { getLabelName } from "@/utils/getLabelName";
-import { useState } from "react";
 
 export default function ApplicationItem({
   application,
@@ -22,6 +22,15 @@ export default function ApplicationItem({
 }) {
   const [collapsed, setCollapsed] = useState(!isExpanded);
   const toggleCollapsed = () => setCollapsed(!collapsed);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.style.maxHeight = collapsed
+        ? "0px"
+        : `${contentRef.current.scrollHeight}px`;
+    }
+  }, [collapsed]);
 
   return (
     <div className="flex w-full flex-col">
@@ -62,7 +71,10 @@ export default function ApplicationItem({
         </div>
       </div>
 
-      {!collapsed && (
+      <div
+        ref={contentRef}
+        style={{ overflow: "hidden", transition: "max-height 0.5s ease" }}
+      >
         <div className="mt-4 flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
           <div className="md:flex-1">
             <div className="mb-4">
@@ -107,7 +119,7 @@ export default function ApplicationItem({
             ))}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

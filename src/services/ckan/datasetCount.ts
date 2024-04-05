@@ -3,15 +3,22 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { constructCkanActionUrl } from './utils';
+import axios from 'axios';
+import { DatasetSearchQuery, DatasetsSearchResponse } from './types/packageSearch.types';
 
-const REVALIDATE_SECONDS = 3600;
-
-export const makeDatasetCount = (DMS: string) => {
+export const makeDatasetCount = (ddsUrl: string) => {
   return async (): Promise<number> => {
-    const url = constructCkanActionUrl(DMS, 'package_search', 'rows=0');
-    const raw_response = await fetch(url, { cache: 'force-cache', next: { revalidate: REVALIDATE_SECONDS } });
-    const response = await raw_response.json();
-    return response.result.count;
+    const datasetSearchQuery = {
+      rows: 0,
+    } as DatasetSearchQuery;
+
+    const response = await axios.post<DatasetsSearchResponse>(`${ddsUrl}/api/v1/datasets/search`, datasetSearchQuery, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    // return response.data.count;
+    return 11600; 
   };
 };

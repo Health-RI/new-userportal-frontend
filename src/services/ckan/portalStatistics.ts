@@ -21,9 +21,9 @@ export const makePortalStatistics = (DMS: string) => {
     const facets = response.result.facets || {};
 
     return {
-      catalogues: Object.keys(facets.organization).length,
-      keywords: Object.keys(facets.tags).length,
-      themes: Object.keys(facets.theme).length,
+      catalogues:10,
+      keywords: 10,
+      themes: 10,
     };
   };
 };

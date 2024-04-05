@@ -4,13 +4,13 @@
 import { env } from 'next-runtime-env';
 
 interface ServerConfig {
-  ckanUrl: string;
+  ddsUrl: string;
   daamUrl: string;
 }
 
 const serverConfig: ServerConfig = {
-  ckanUrl: env('NEXT_PUBLIC_CKAN_URL') || 'https://ckan-test.healthdata.nl',
   daamUrl: env('NEXT_PUBLIC_DAAM_URL') || 'http://localhost:8080',
+  ddsUrl: env('NEXT_PUBLIC_DDS_URL') || 'http://localhost:8080'
 };
 
 export default serverConfig;

@@ -13,14 +13,12 @@ import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faDatabase,
-  faFileText,
   faGear,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 
 type AvatarProps = {
   user: User;
@@ -59,10 +57,6 @@ function Avatar({ user }: AvatarProps) {
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faDatabase} className="text-sm" />
             <span>Datasets</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
-            <FontAwesomeIcon icon={faFileText} className="text-sm" />
-            <Link href="/applications">Applications</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
             <FontAwesomeIcon icon={faGear} className="text-sm" />

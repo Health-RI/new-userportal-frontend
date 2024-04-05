@@ -3,27 +3,37 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { constructCkanActionUrl } from './utils';
 import { PortalStatistics } from './types/portalStatistics.types';
+import axios from 'axios';
+import { DatasetSearchQuery, DatasetsSearchResponse } from './types/packageSearch.types';
 
-const REVALIDATE_SECONDS = 3600;
-
-export const makePortalStatistics = (DMS: string) => {
+export const makePortalStatistics = (ddsUrl: string) => {
   return async (): Promise<PortalStatistics> => {
-    const url = constructCkanActionUrl(
-      DMS,
-      'package_search',
-      `facet.field=["organization","theme","tags"]&rows=0&facet.limit=-1`,
-    );
-    const raw_response = await fetch(url, { cache: 'force-cache', next: { revalidate: REVALIDATE_SECONDS } });
+    const datasetSearchQuery = {
+      rows: 0,
+      facets: [
+        {
+          facet: 'organization',
+        },
+        {
+          facet: 'theme',
+        },
+        {
+          facet: 'tags',
+        },
+      ],
+    } as DatasetSearchQuery;
 
-    const response = await raw_response.json();
-    const facets = response.result.facets || {};
+    const response = await axios.post<DatasetsSearchResponse>(`${ddsUrl}/api/v1/datasets/search`, datasetSearchQuery, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     return {
-      catalogues:10,
-      keywords: 10,
-      themes: 10,
+      catalogues: response.data.facetGroups.find((x) => x.label === 'organization')?.facets.length ?? 0,
+      keywords: response.data.facetGroups.find((x) => x.label === 'tags')?.facets.length ?? 0,
+      themes: response.data.facetGroups.find((x) => x.label === 'theme')?.facets.length ?? 0,
     };
   };
 };

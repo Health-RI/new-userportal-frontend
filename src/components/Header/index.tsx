@@ -151,6 +151,11 @@ function Header() {
               Datasets
             </Link>
             <Link
+              href="/applications"
+              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              onClick={closeMenu}
+            ></Link>
+            <Link
               href="/about"
               className="block px-4 py-2 hover:bg-primary hover:text-white"
               onClick={closeMenu}

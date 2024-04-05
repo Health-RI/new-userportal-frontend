@@ -30,10 +30,12 @@ export const makePortalStatistics = (ddsUrl: string) => {
       },
     });
 
+    const countFacet = (facet: string) => response.data.facetGroups.find((x) => x.label === facet)?.facets.length ?? 0;
+
     return {
-      catalogues: response.data.facetGroups.find((x) => x.label === 'organization')?.facets.length ?? 0,
-      keywords: response.data.facetGroups.find((x) => x.label === 'tags')?.facets.length ?? 0,
-      themes: response.data.facetGroups.find((x) => x.label === 'theme')?.facets.length ?? 0,
+      catalogues: countFacet('organization'),
+      keywords: countFacet('tags'),
+      themes: countFacet('theme'),
     };
   };
 };

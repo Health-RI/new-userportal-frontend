@@ -73,7 +73,7 @@ export default function ApplicationItem({
 
       <div
         ref={contentRef}
-        style={{ overflow: "hidden", transition: "max-height 0.5s ease" }}
+        className="transition-max-height overflow-hidden duration-500 ease-in-out"
       >
         <div className="mt-4 flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
           <div className="md:flex-1">

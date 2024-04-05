@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import { ListedApplication } from "@/types/application.types";
 import {
   faChevronDown,
@@ -26,7 +26,9 @@ export default function ApplicationItem({
 
   useEffect(() => {
     if (contentRef.current) {
-      contentRef.current.style.maxHeight = collapsed ? '0px' : `${contentRef.current.scrollHeight}px`;
+      contentRef.current.style.maxHeight = collapsed
+        ? "0px"
+        : `${contentRef.current.scrollHeight}px`;
     }
   }, [collapsed]);
 
@@ -71,7 +73,7 @@ export default function ApplicationItem({
 
       <div
         ref={contentRef}
-        style={{ overflow: 'hidden', transition: 'max-height 0.5s ease' }}
+        style={{ overflow: "hidden", transition: "max-height 0.5s ease" }}
       >
         <div className="mt-4 flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
           <div className="md:flex-1">

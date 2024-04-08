@@ -16,20 +16,44 @@ import ListItem from "@/components/List/ListItem";
 import Button from "@/components/button";
 import { ListedApplication } from "@/types/application.types";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { AxiosError } from "axios";
+import Error from "@/app/error";
+
+type Status = "loading" | "error" | "success";
+
+interface ApplicationResponse {
+  status: Status;
+  applications?: ListedApplication[];
+  errorCode?: number;
+}
 
 const ApplicationsPage: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [applications, setApplications] = useState<ListedApplication[]>([]);
+  const [response, setResponse] = useState<ApplicationResponse>({
+    status: "loading",
+  });
 
   useEffect(() => {
-    listApplications().then((res) => {
-      setApplications(res.data);
-      setLoading(false);
-    });
+    async function fetchData() {
+      try {
+        const response = await listApplications();
+        setResponse({ applications: response.data, status: "success" });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          setResponse({ status: "error", errorCode: error.response?.status });
+          console.error(error);
+        } else {
+          setResponse({ status: "error", errorCode: 500 });
+          console.error(error);
+        }
+      }
+    }
+    fetchData();
   }, []);
 
-  if (loading) {
+  if (response.status === "loading") {
     return <LoadingContainer text="Loading your applications..." />;
+  } else if (response.status === "error") {
+    return <Error statusCode={response.errorCode} />;
   }
 
   return (
@@ -37,9 +61,9 @@ const ApplicationsPage: React.FC = () => {
       <PageHeading className="mb-4">Manage your Applications</PageHeading>
       <span>View and update your submited applications</span>
       <CenteredListContainer>
-        {applications.length > 0 ? (
+        {response.applications?.length && response.applications.length > 0 ? (
           <List>
-            {applications.map((item, index) => (
+            {response.applications?.map((item, index) => (
               <ListItem
                 key={item.id}
                 className="flex items-center justify-between"

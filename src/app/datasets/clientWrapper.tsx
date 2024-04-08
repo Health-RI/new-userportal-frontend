@@ -6,7 +6,7 @@
 
 import DatasetList from "@/components/datasetList";
 import FilterList from "./FilterList";
-import PaginationContainer from "@/components/paginationContainer";
+import PaginationContainer from "@/components/PaginationContainer";
 import SearchBar from "@/components/SearchBar";
 import PageContainer from "@/components/PageContainer";
 import { useWindowSize } from "@/hooks";
@@ -69,7 +69,7 @@ export default function ClientWrapper({
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
               <DatasetList datasets={datasets.datasets} />
             </div>
-            <div className="col-start-0 col-span-12 mt-20 text-info xl:col-span-8 xl:col-start-5">
+            <div className="col-start-0 col-span-12 mt-20 xl:col-span-8 xl:col-start-5">
               <PaginationContainer
                 datasetCount={datasets.count}
                 datasetPerPage={datasetPerPage}

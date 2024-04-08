@@ -93,7 +93,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="text-sm w-full">
+    <form onSubmit={handleSubmit} className="w-full text-sm">
       <div className="relative">
         <input
           placeholder="Search"

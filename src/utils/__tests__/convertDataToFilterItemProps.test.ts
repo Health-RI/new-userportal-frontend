@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
-import { convertDataToFilterItemProps } from '../dto';
+import { convertDataToFilterItemProps } from '../convertDataToFilterItemProps';
 
 describe('Map field details objects to filter item props', () => {
   it('should map field details to filter item props', () => {

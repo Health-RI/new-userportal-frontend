@@ -3,28 +3,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import axios from 'axios';
-import { PackageSearchOptions, PackageSearchResult } from './types/packageSearch.types';
+import { FacetType, PackageSearchOptions, PackageSearchResult } from './types/packageSearch.types';
 import { constructCkanActionUrl, mapCKANPackageToDataset } from './utils';
 
-const mapFacetToLabel = (facet: string) => {
-  switch (facet) {
-    case 'organization':
-      return 'Catalogues';
-    case 'theme':
-      return 'Themes';
-    case 'tags':
-      return 'Keywords';
-    case 'publisher_name':
-      return 'Publishers';
-    case 'res_format':
-      return 'File Formats';
-    case 'access_rights':
-      return 'Access Rights';
-    case 'spatial_uri':
-      return 'Spatial Coverage';
-    default:
-      return facet;
-  }
+const facetToLabelMapping: Record<FacetType, string> = {
+  organization: 'Catalogues',
+  theme: 'Themes',
+  access_rigths: 'Access Rights',
+  publisher_name: 'Publishers',
+  res_format: 'File Formats',
+  spatial_uri: 'Spatial Coverage',
+  tags: 'Keywords',
 };
 
 export const makeDatasetList = (DMS: string) => {

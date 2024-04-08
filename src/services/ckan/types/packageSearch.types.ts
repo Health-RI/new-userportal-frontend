@@ -25,6 +25,18 @@ export interface PackageSearchResult {
 //   count: number;
 // };
 
+export type FacetType = 'organization' | 'theme' | 'tags' | 'publisher_name' | 'res_format' | 'access_rigths' | 'spatial_uri';
+
+export const facetToLabelMapping: Record<string, string> = {
+  organization: 'Catalogues',
+  theme: 'Themes',
+  access_rigths: 'Access Rights',
+  publisher_name: 'Publishers',
+  res_format: 'File Formats',
+  spatial_uri: 'Spatial Coverage',
+  tags: 'Keywords',
+};
+
 export type DatasetSearchQueryFacet = {
   facetGroup: string;
   facet: string;

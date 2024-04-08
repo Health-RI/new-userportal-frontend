@@ -40,7 +40,7 @@ export default function Page() {
       emptyBasket();
     } catch (error) {
       setAlert({
-        message: "Somethng went wrong. Please try again.",
+        message: "Something went wrong. Please try again.",
         type: "error",
       });
     }

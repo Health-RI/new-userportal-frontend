@@ -3,7 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { type Facet } from "@/services/ckan/types/packageSearch.types";
-import { convertDataToFilterItemProps } from "@/utils/dto";
+import {
+  convertDataToFilterItemProps,
+  FilterItemProps,
+} from "@/utils/convertDataToFilterItemProps";
 import {
   faBook,
   faFilter,
@@ -13,12 +16,13 @@ import {
   faFile,
   faKey,
   faLocation,
+  faX,
   type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Button from "./button";
-import FilterItem, { FilterItemProps } from "./filterItem";
+import Button from "@/components/button";
+import FilterItem from "./FilterItem";
 
 const fieldToIconMap: Record<string, IconDefinition> = {
   publisher_name: faUser,
@@ -32,15 +36,13 @@ const fieldToIconMap: Record<string, IconDefinition> = {
 
 type FilterListProps = {
   facets: Facet[];
-  displayContinueButton?: boolean;
-  setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: Record<string, string | string[] | undefined>;
 };
 
 function FilterList({
   facets,
-  displayContinueButton = false,
-  setIsFilterOpen,
+  toggleFullScreenFilter,
   queryParams,
 }: FilterListProps) {
   const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
@@ -57,12 +59,22 @@ function FilterList({
 
   return (
     <div className="flex flex-col gap-y-10 rounded-lg bg-white-smoke px-6 py-8">
-      <h1 className="text-xl">
-        <span className="mr-2">
-          <FontAwesomeIcon icon={faFilter} />
-        </span>
-        Filters
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl">
+          <span className="mr-2">
+            <FontAwesomeIcon icon={faFilter} />
+          </span>
+          Filters
+        </h1>
+        {toggleFullScreenFilter && (
+          <button
+            className="hover:text-secondary"
+            onClick={() => toggleFullScreenFilter(false)}
+          >
+            <FontAwesomeIcon icon={faX} />
+          </button>
+        )}
+      </div>
       {filterItemProps.map((props) => (
         <li key={props.field} className="list-none">
           <FilterItem
@@ -85,12 +97,12 @@ function FilterList({
             />
           </Link>
         )}
-        {displayContinueButton && (
+        {toggleFullScreenFilter && (
           <Button
             text="Continue"
             type="info"
             className="w-fit text-xs"
-            onClick={() => setIsFilterOpen(false)}
+            onClick={() => toggleFullScreenFilter(false)}
           ></Button>
         )}
       </div>

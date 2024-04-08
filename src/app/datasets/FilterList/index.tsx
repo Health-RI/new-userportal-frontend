@@ -20,7 +20,6 @@ import {
   type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
 import Button from "@/components/button";
 import FilterItem from "./FilterItem";
 
@@ -60,7 +59,7 @@ function FilterList({
   return (
     <div className="flex flex-col gap-y-10 rounded-lg bg-white-smoke px-6 py-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl">
+        <h1 className="text-xl text-primary">
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>
@@ -85,27 +84,24 @@ function FilterList({
           />
         </li>
       ))}
-      <div className="mt-4 flex justify-between">
-        {isAnyFilterApplied() && (
-          <Link
-            href={`/datasets?page=1${queryParams.q ? `&q=${queryParams.q}` : ""}`}
-          >
+      {isAnyFilterApplied() || toggleFullScreenFilter ? (
+        <div className="mt-4 flex justify-end gap-x-4">
+          {isAnyFilterApplied() && (
             <Button
+              href={`/datasets?page=1${queryParams.q ? `&q=${queryParams.q}` : ""}`}
               text="Clear Filters"
-              type="primary"
-              className="w-fit text-xs"
+              type="warning"
             />
-          </Link>
-        )}
-        {toggleFullScreenFilter && (
-          <Button
-            text="Continue"
-            type="info"
-            className="w-fit text-xs"
-            onClick={() => toggleFullScreenFilter(false)}
-          ></Button>
-        )}
-      </div>
+          )}
+          {toggleFullScreenFilter && (
+            <Button
+              text="Continue"
+              type="info"
+              onClick={() => toggleFullScreenFilter(false)}
+            ></Button>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -63,7 +63,7 @@ export default function ClientWrapper({
             <p className="col-start-0 col-span-12 mb-12 mt-5 text-center text-sm text-info">
               {`${datasets.count} ${datasets.count > 1 ? "datasets" : "dataset"} found`}
             </p>
-            <div className="border-1 col-start-0 col-span-4 mr-6 hidden rounded-lg border bg-white-smoke xl:block">
+            <div className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block">
               <FilterList facets={facets} queryParams={queryParams} />
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">

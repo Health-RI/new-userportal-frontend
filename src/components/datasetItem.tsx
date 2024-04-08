@@ -34,7 +34,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
     <>
       <Link href={`/datasets/${dataset.id}`} className="hover:underline">
         <div className="mb-4 flex justify-between">
-          <h3 className="text-xl text-info md:text-2xl">{dataset.title}</h3>
+          <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
           <p className="text-sm text-info md:text-base">
             {dataset.metadataCreated?.split("T")[0]}
           </p>
@@ -44,10 +44,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
         {dataset.organization.title}
       </p>
       <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
-      <Chips
-        chips={dataset.theme || []}
-        className="break-all bg-warning text-xs text-black md:text-sm"
-      />
+      <Chips chips={dataset.theme || []} />
       <div className="mt-4 flex w-full justify-end">
         {!isLoading && (
           <Button

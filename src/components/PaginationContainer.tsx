@@ -40,25 +40,25 @@ function PaginationContainer({
         {currentPage !== 1 && (
           <PaginationPrevious
             href={createHref(currentPage - 1)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           />
         )}
         <PaginationLink
           href={createHref(1)}
           isActive={currentPage === 1}
-          className="text-info hover:text-hover-color"
+          className="hover:text-hover-color text-info"
         >
           1
         </PaginationLink>
         {currentPage > 4 && (
-          <PaginationItem className="text-info hover:text-hover-color">
+          <PaginationItem className="hover:text-hover-color text-info">
             <PaginationEllipsis />
           </PaginationItem>
         )}
         {currentPage > 3 && (
           <PaginationLink
             href={createHref(currentPage - 2)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {currentPage - 2}
           </PaginationLink>
@@ -66,7 +66,7 @@ function PaginationContainer({
         {Number(currentPage) > 2 && (
           <PaginationLink
             href={createHref(currentPage - 1)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {currentPage - 1}
           </PaginationLink>
@@ -75,7 +75,7 @@ function PaginationContainer({
           <PaginationLink
             href={createHref(currentPage)}
             isActive
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {currentPage}
           </PaginationLink>
@@ -83,7 +83,7 @@ function PaginationContainer({
         {currentPage < lastPageNb - 1 && (
           <PaginationLink
             href={createHref(currentPage + 1)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {currentPage + 1}
           </PaginationLink>
@@ -91,20 +91,20 @@ function PaginationContainer({
         {currentPage < lastPageNb - 2 && (
           <PaginationLink
             href={createHref(currentPage + 2)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {currentPage + 2}
           </PaginationLink>
         )}
         {currentPage < lastPageNb - 3 && (
-          <PaginationItem className="text-info hover:text-hover-color">
+          <PaginationItem className="hover:text-hover-color text-info">
             <PaginationEllipsis />
           </PaginationItem>
         )}
         {currentPage !== lastPageNb && (
           <PaginationLink
             href={createHref(lastPageNb)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           >
             {lastPageNb}
           </PaginationLink>
@@ -112,7 +112,7 @@ function PaginationContainer({
         {currentPage !== lastPageNb && (
           <PaginationNext
             href={createHref(currentPage + 1)}
-            className="text-info hover:text-hover-color"
+            className="hover:text-hover-color text-info"
           />
         )}
       </PaginationContent>

@@ -16,7 +16,7 @@ type PaginationProps = {
   datasetCount: number;
   datasetPerPage: number;
   pathname: string;
-  queryParams: Record<string, string>;
+  queryParams: URLSearchParams;
 };
 
 function PaginationContainer({
@@ -25,11 +25,11 @@ function PaginationContainer({
   pathname,
   queryParams,
 }: PaginationProps) {
-  const currentPage = Number(queryParams.page) || 1;
+  const currentPage = Number(queryParams.get("page")) || 1;
   const lastPageNb = Math.ceil(datasetCount / datasetPerPage) || 1;
 
   function createHref(page: number) {
-    const params = new URLSearchParams(queryParams);
+    const params = new URLSearchParams(queryParams.toString());
     params.set("page", page.toString());
     return `${pathname}?${params}`;
   }

@@ -36,7 +36,7 @@ const fieldToIconMap: Record<string, IconDefinition> = {
 type FilterListProps = {
   facets: Facet[];
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
-  queryParams: Record<string, string | string[] | undefined>;
+  queryParams: URLSearchParams;
 };
 
 function FilterList({
@@ -51,8 +51,8 @@ function FilterList({
 
   function isAnyFilterApplied() {
     if (!queryParams) return false;
-    return Object.keys(queryParams).some(
-      (key) => key !== "page" && key !== "q" && queryParams[key],
+    return Array.from(queryParams.keys()).some(
+      (key) => key !== "page" && key !== "q" && queryParams.get(key),
     );
   }
 
@@ -88,7 +88,7 @@ function FilterList({
         <div className="mt-4 flex justify-end gap-x-4">
           {isAnyFilterApplied() && (
             <Button
-              href={`/datasets?page=1${queryParams.q ? `&q=${queryParams.q}` : ""}`}
+              href={`/datasets?page=1${queryParams.get("q") ? `&q=${queryParams.get("q")}` : ""}`}
               text="Clear Filters"
               type="warning"
             />

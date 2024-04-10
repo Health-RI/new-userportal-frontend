@@ -15,6 +15,7 @@ import {
   faRightToBracket,
   faUser,
   faShoppingCart,
+  faFileText,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,10 +24,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../public/healthri_logo.svg";
-import Avatar from "./avatar";
-import Button from "./button";
-import Notification from "./notification";
+import logo from "../../public/healthri_logo.svg";
+import Avatar from "./Avatar";
+import Button from "../button";
+import ApplicationIcon from "./ApplicationIcon";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -62,7 +63,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <Notification />
+        <ApplicationIcon />
         <Avatar user={session.user as User} />
       </>
     ) : (
@@ -84,27 +85,27 @@ function Header() {
               src={logo}
               alt="Logo"
               className="mb-4 mt-4 h-16 w-fit"
-              // width="190"
-              // height="69"
+            // width="190"
+            // height="69"
             />
           </Link>
         </div>
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/datasets"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
           >
             Datasets
           </Link>
           <Link
             href="/about"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
             Over de catalogus
           </Link>
@@ -135,7 +136,7 @@ function Header() {
           <FontAwesomeIcon icon={faBars} className="text-xl" />
         </button>
         {isMenuOpen && (
-          <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
+          <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
             <Link
               href="/"
               className="block px-4 py-2 hover:bg-primary hover:text-white"
@@ -151,6 +152,14 @@ function Header() {
             >
               <FontAwesomeIcon icon={faDatabase} className="mr-2" />
               Datasets
+            </Link>
+            <Link
+              href="/applications"
+              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              onClick={closeMenu}
+            >
+              <FontAwesomeIcon icon={faFileText} className="mr-2" />
+              Applications
             </Link>
             <Link
               href="/about"

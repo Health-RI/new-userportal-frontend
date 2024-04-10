@@ -3,5 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { createApplication } from './client/createApplication';
+import { listApplications } from './client/listApplications';
 
-export { createApplication };
+export { createApplication, listApplications };

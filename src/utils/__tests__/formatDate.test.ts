@@ -9,4 +9,10 @@ describe('formatDate', () => {
     const expected = '2024-02-09';
     expect(formatDate(input)).toEqual(expected);
   });
+
+  it('returns the same date if the date is incorrect', () => {
+    const input = 'blah';
+    const expected = 'blah';
+    expect(formatDate(input)).toEqual(expected);
+  });
 });

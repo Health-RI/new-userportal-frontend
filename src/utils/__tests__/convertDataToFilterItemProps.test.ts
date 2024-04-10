@@ -3,32 +3,34 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Field } from '../../services/ckan/types/fieldDetails.types';
-import { convertDataToFilterItemProps } from '../dto';
+import { convertDataToFilterItemProps } from '../convertDataToFilterItemProps';
 
 describe('Map field details objects to filter item props', () => {
   it('should map field details to filter item props', () => {
-    const fieldDetails = [
+    const facets = [
       {
-        field: Field.PUBLISHER,
+        field: 'publisher_name',
+        label: 'Publishers',
         values: ['adeling NKR-analyse', 'Centro Nacional de Epidemiología', 'sciensano Network of General Practitioners team'],
         count: 3,
       },
       {
-        field: Field.CATALOGUE,
+        field: 'organization',
+        label: 'Catalogues',
         values: ['EU', 'lumc', 'Umcg'],
         count: 3,
       },
     ];
 
     const fieldToIconMap = {
-      publisher: faUser,
-      catalogue: faBook,
+      publisher_name: faUser,
+      organization: faBook,
     };
 
     const expected = [
       {
-        label: 'publishers',
+        field: 'publisher_name',
+        label: 'Publishers',
         data: [
           {
             label: 'adeling NKR-analyse',
@@ -46,7 +48,8 @@ describe('Map field details objects to filter item props', () => {
         icon: faUser,
       },
       {
-        label: 'catalogues',
+        field: 'organization',
+        label: 'Catalogues',
         data: [
           {
             label: 'EU',
@@ -65,58 +68,62 @@ describe('Map field details objects to filter item props', () => {
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldDetails, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
 
     expect(result).toEqual(expected);
   });
-  it('should return object with empty data for fieldDetails with empty values', () => {
-    const fieldDetails = [
+  it('should return object with empty data for facet with empty values', () => {
+    const facets = [
       {
-        field: Field.PUBLISHER,
+        field: 'publisher_name',
+        label: 'Publishers',
         values: [],
         count: 3,
       },
     ];
 
     const fieldToIconMap = {
-      publisher: faUser,
+      publisher_name: faUser,
     };
 
     const expected = [
       {
-        label: 'publishers',
+        field: 'publisher_name',
+        label: 'Publishers',
         data: [],
         icon: faUser,
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldDetails, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
 
     expect(result).toEqual(expected);
   });
 
-  it('should return object with undefined icon if field of fieldDetails object is not in keys of fieldToIconMap object', () => {
-    const fieldDetails = [
+  it('should return object with undefined icon if field of facet object is not in keys of fieldToIconMap object', () => {
+    const facets = [
       {
-        field: Field.PUBLISHER,
+        field: 'publisher_name',
+        label: 'Publishers',
         values: [],
         count: 3,
       },
     ];
 
     const fieldToIconMap = {
-      catalogue: faBook,
+      organization: faBook,
     };
 
     const expected = [
       {
-        label: 'publishers',
+        field: 'publisher_name',
+        label: 'Publishers',
         data: [],
         icon: undefined,
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldDetails, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
 
     expect(result).toEqual(expected);
   });

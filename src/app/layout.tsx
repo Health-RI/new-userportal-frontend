@@ -4,7 +4,7 @@
 
 import Disclaimer from "@/components/disclaimer";
 import Footer from "@/components/footer";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -28,7 +28,7 @@ export default function RootLayout({
       </head>
       <body>
         <DatasetBasketProvider>
-          <div className="grid h-screen w-screen grid-rows-[auto_1fr_auto]">
+          <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
             <SessionProviderWrapper>
               <div>
                 <Header />

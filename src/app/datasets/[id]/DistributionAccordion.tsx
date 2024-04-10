@@ -41,7 +41,7 @@ const DistributionAccordion = ({
           <div
             onClick={() => toggleItem(index)}
             onKeyPress={() => toggleItem(index)}
-            className="flex transform cursor-pointer items-center justify-between rounded border-2 border-b-0 bg-white-smoke p-4 transition duration-300 ease-in-out"
+            className="flex cursor-pointer items-center justify-between rounded border-2 border-b-0 bg-white-smoke p-4"
           >
             <span className="flex items-center">
               <FontAwesomeIcon icon={faFile} className="text-primary" />

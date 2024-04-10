@@ -8,7 +8,9 @@ if (typeof window !== 'undefined') {
 
 import { makeCreateApplication } from './backend/createApplication';
 import serverConfig from '../../config/serverConfig';
+import { makeListApplications } from './backend/listApplications';
 
 const createApplication = makeCreateApplication(serverConfig.daamUrl);
+const listApplications = makeListApplications(serverConfig.daamUrl);
 
-export { createApplication };
+export { createApplication, listApplications };

@@ -6,24 +6,24 @@
 
 import { DatasetCounter } from "@/components/DatasetCounter";
 import { PortalStatistics } from "@/components/PortalStatistics";
+import PageContainer from "@/components/PageContainer";
 import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
 import office from "../public/office.jpg";
 import dna from "../public/dna.jpg";
 import hri_banner from "../public/HRI_banner.jpg";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const HomePage = () => {
-  const initialQueryParams: Record<string, string> = {
-    q: "",
-  };
+  const queryParams = useSearchParams();
 
   return (
-    <div className="container mx-auto space-y-20 px-4 pt-20">
+    <PageContainer>
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
-        <div className="text-center lg:text-left">
+        <div className="text-center md:pl-4 md:pr-4 lg:text-left">
           <DatasetCounter />
-          <SearchBar queryParams={initialQueryParams} size="large" />
+          <SearchBar queryParams={queryParams} size="large" />
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               Welkom bij Health-RI

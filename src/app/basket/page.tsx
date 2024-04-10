@@ -4,7 +4,10 @@
 "use client";
 
 import { useState } from "react";
+import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
+import LoadingContainer from "@/components/LoadingContainer";
+import CenteredListContainer from "@/components/CenteredListContainer";
 import DatasetList from "@/components/datasetList";
 import Alert, { AlertState } from "@/components/Alert";
 import Button from "@/components/button";
@@ -24,15 +27,7 @@ export default function Page() {
   }
 
   if (isLoading || status === "loading") {
-    return (
-      <div className="w-full" style={{ height: "calc(100vh - 100px)" }}>
-        <div className="flex h-full items-center justify-center">
-          <div className="text-lg font-semibold text-primary">
-            Loading your basket...
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingContainer text="Loading your basket..." />;
   }
 
   const requestNow = async () => {
@@ -45,7 +40,7 @@ export default function Page() {
       emptyBasket();
     } catch (error) {
       setAlert({
-        message: "Somethng went wrong. Please try again.",
+        message: "Something went wrong. Please try again.",
         type: "error",
       });
     }
@@ -80,7 +75,7 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full p-10">
+    <PageContainer>
       {alert && (
         <Alert
           type={alert.type}
@@ -89,7 +84,7 @@ export default function Page() {
         />
       )}
       <PageHeading>{heading}</PageHeading>
-      <div className="m-auto flex w-full flex-col items-center gap-4 p-5 lg:w-2/3">
+      <CenteredListContainer>
         <div className="flex w-full justify-between">
           {basket.length > 0 && (
             <Button
@@ -116,7 +111,7 @@ export default function Page() {
             />
           </div>
         )}
-      </div>
-    </div>
+      </CenteredListContainer>
+    </PageContainer>
   );
 }

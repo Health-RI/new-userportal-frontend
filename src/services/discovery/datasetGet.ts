@@ -8,11 +8,11 @@ import { ExtendedSession } from '@/utils/auth';
 import { decrypt } from '@/utils/encryption';
 
 export const makeDatasetGet = (ddsUrl: string) => {
-  return async (id: string, session: ExtendedSession): Promise<RetrievedDataset> => {
+  return async (id: string, session?: ExtendedSession): Promise<RetrievedDataset> => {
     const response = await axios.get<RetrievedDataset>(`${ddsUrl}/api/v1/datasets/${id}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${decrypt(session.access_token)}`,
+        Authorization: `Bearer ${decrypt(session?.access_token ?? '')}`,
       },
     });
     return response.data;

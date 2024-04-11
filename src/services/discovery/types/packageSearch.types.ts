@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
-import { Dataset } from './../../../types/dataset.types';
 
 export interface PackageSearchOptions {
   facets?: Record<string, string[]>;
@@ -13,7 +12,7 @@ export interface PackageSearchOptions {
 }
 
 export interface PackageSearchResult {
-  datasets: Dataset[];
+  datasets: SearchedDataset[];
   count: number;
   facets: Facet[];
 }
@@ -25,7 +24,15 @@ export interface PackageSearchResult {
 //   count: number;
 // };
 
-export type FacetType = 'organization' | 'theme' | 'tags' | 'publisher_name' | 'res_format' | 'access_rigths' | 'spatial_uri';
+export enum FacetType {
+  Organization = 'organization',
+  Theme = 'theme',
+  Tags = 'tags',
+  PublisherName = 'publisher_name',
+  ResponseFormat = 'res_format',
+  AccessRights = 'access_rigths',
+  SpatialUrl = 'spatial_uri',
+}
 
 export const facetToLabelMapping: Record<string, string> = {
   organization: 'Catalogues',
@@ -75,6 +82,7 @@ export type DatasetsSearchResponse = {
 
 export type FacetGroup = {
   label: string;
+  key: string;
   facets: Facet[];
 };
 
@@ -82,3 +90,5 @@ export type Facet = {
   label: string;
   values: ValueLabel[];
 };
+
+export const CkanKey = 'ckan';

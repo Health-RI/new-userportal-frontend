@@ -16,13 +16,12 @@ import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { datasetList } from "@/services/ckan";
-import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
+import { datasetList } from "@/services/discovery";
+import { Facet, PackageSearchOptions } from "@/services/discovery/types/packageSearch.types";
 import { redirect } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
 
 function parseFacets(queryParams: URLSearchParams): Record<string, string[]> {
   const facets: Record<string, string[]> = {};

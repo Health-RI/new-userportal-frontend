@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { datasetList } from "@/services/ckan";
+import { datasetList } from "@/services/discovery";
 
 type SearchBarProps = {
   queryParams: URLSearchParams;

@@ -1,8 +1,11 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
-import { Dataset } from './../../types/dataset.types';
+import { ExtendedSession } from '@/utils/auth';
+import { Dataset } from '../../types/dataset.types';
 import { CKANPackage } from './types/package.types';
+import { decrypt } from '@/utils/encryption';
+import { DatasetSearchQuery } from './types/packageSearch.types';
 
 export const mapCKANPackageToDataset = (ckanPackage: CKANPackage): Dataset => {
   return {
@@ -124,6 +127,22 @@ export const mapCKANPackageToDataset = (ckanPackage: CKANPackage): Dataset => {
   };
 };
 
-export const constructCkanActionUrl = (DMS: string, action: string, queryParams: string = ''): string => {
-  return `${DMS}/api/3/action/${action}?${queryParams}`;
+export const constructSearchUrl = (discoveryUrl: string): string => {
+  return `${discoveryUrl}//api/v1/datasets/search`;
+};
+
+export const createHeaders = (session?: ExtendedSession): Record<string, string> => {
+  let headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (session?.access_token) {
+    headers['Authorization'] = `Bearer ${decrypt(session.access_token)}`;
+  }
+
+  return headers;
+};
+
+export const DEFAULT_DATASET_SEARCH_QUERY: DatasetSearchQuery = {
+  rows: 0,
 };

@@ -2,11 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
 import {
-  convertDataToFilterItemProps,
-  FilterItemProps,
+  FilterItemProps, convertDataToFilterItemProps,
 } from "@/utils/convertDataToFilterItemProps";
+import { type Facet } from "@/services/discovery/types/packageSearch.types";
 import {
   faBook,
   faFilter,

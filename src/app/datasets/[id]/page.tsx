@@ -7,7 +7,7 @@ import Chips from "@/components/Chips";
 import PageHeading from "@/components/PageHeading";
 import PageSubHeading from "@/components/PageSubHeading";
 import Sidebar from "@/components/Sidebar";
-import { datasetGet } from "@/services/ckan";
+import { datasetGet } from "@/services/discovery";
 import AddToBasketBtn from "./AddToBasketBtn";
 import DistributionAccordion from "./DistributionAccordion";
 import { createDatasetSidebarItems } from "./sidebarItems";

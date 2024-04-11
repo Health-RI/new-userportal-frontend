@@ -5,7 +5,7 @@ import { ExtendedSession } from '@/utils/auth';
 import { Dataset } from '../../types/dataset.types';
 import { CKANPackage } from './types/package.types';
 import { decrypt } from '@/utils/encryption';
-import { DatasetSearchQuery } from './types/packageSearch.types';
+import { DatasetSearchQuery, Facet, FacetGroup, facetToLabelMapping } from './types/packageSearch.types';
 
 export const mapCKANPackageToDataset = (ckanPackage: CKANPackage): Dataset => {
   return {
@@ -145,4 +145,17 @@ export const createHeaders = (session?: ExtendedSession): Record<string, string>
 
 export const DEFAULT_DATASET_SEARCH_QUERY: DatasetSearchQuery = {
   rows: 0,
+};
+
+export const flattenFacets = (facetGroups: FacetGroup[]): Facet[] => {
+  let facets: Facet[] = [];
+
+  for (let group of facetGroups) {
+    facets = [
+      ...facets,
+      ...group.facets.map((facet) => ({ label: facetToLabelMapping[facet.label] ?? facet.label, values: facet.values })),
+    ];
+  }
+
+  return facets;
 };

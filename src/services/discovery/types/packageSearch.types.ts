@@ -30,14 +30,14 @@ export enum FacetType {
   Tags = 'tags',
   PublisherName = 'publisher_name',
   ResponseFormat = 'res_format',
-  AccessRights = 'access_rigths',
+  AccessRights = 'access_rights',
   SpatialUrl = 'spatial_uri',
 }
 
 export const facetToLabelMapping: Record<string, string> = {
   organization: 'Catalogues',
   theme: 'Themes',
-  access_rigths: 'Access Rights',
+  access_rights: 'Access Rights',
   publisher_name: 'Publishers',
   res_format: 'File Formats',
   spatial_uri: 'Spatial Coverage',

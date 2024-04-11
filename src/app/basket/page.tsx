@@ -7,7 +7,7 @@ import { useState } from "react";
 import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
 import LoadingContainer from "@/components/LoadingContainer";
-import CenteredListContainer from "@/components/CenteredListContainer";
+import ListContainer from "@/components/ListContainer";
 import DatasetList from "@/components/datasetList";
 import Alert, { AlertState } from "@/components/Alert";
 import Button from "@/components/button";
@@ -84,7 +84,7 @@ export default function Page() {
         />
       )}
       <PageHeading>{heading}</PageHeading>
-      <CenteredListContainer>
+      <ListContainer>
         <div className="flex w-full justify-between">
           {basket.length > 0 && (
             <Button
@@ -111,7 +111,7 @@ export default function Page() {
             />
           </div>
         )}
-      </CenteredListContainer>
+      </ListContainer>
     </PageContainer>
   );
 }

@@ -10,7 +10,7 @@ import ApplicationItem from "./ApplicationItem";
 import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
 import LoadingContainer from "@/components/LoadingContainer";
-import CenteredListContainer from "@/components/CenteredListContainer";
+import ListContainer from "@/components/ListContainer";
 import List from "@/components/List";
 import ListItem from "@/components/List/ListItem";
 import Button from "@/components/button";
@@ -60,7 +60,7 @@ const ApplicationsPage: React.FC = () => {
     <PageContainer>
       <PageHeading className="mb-4">Manage your Applications</PageHeading>
       <span>View and update your submited applications</span>
-      <CenteredListContainer>
+      <ListContainer>
         {response.applications?.length && response.applications.length > 0 ? (
           <List>
             {response.applications?.map((item, index) => (
@@ -85,7 +85,7 @@ const ApplicationsPage: React.FC = () => {
             />
           </div>
         )}
-      </CenteredListContainer>
+      </ListContainer>
     </PageContainer>
   );
 };

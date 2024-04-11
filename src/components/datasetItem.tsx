@@ -32,14 +32,14 @@ function DatasetItem({ dataset }: DatasetItemProps) {
 
   return (
     <>
-      <Link href={`/datasets/${dataset.id}`} className="hover:underline">
-        <div className="mb-4 flex justify-between">
+      <div className="mb-4 flex justify-between">
+        <Link href={`/datasets/${dataset.id}`} className="hover:underline">
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
-          <p className="text-sm text-info md:text-base">
-            {dataset.metadataCreated?.split("T")[0]}
-          </p>
-        </div>
-      </Link>
+        </Link>
+        <p className="text-sm text-info md:text-base">
+          {dataset.metadataCreated?.split("T")[0]}
+        </p>
+      </div>
       <p className="mb-4 text-sm text-info md:text-base">
         {dataset.organization.title}
       </p>

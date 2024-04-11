@@ -11,17 +11,12 @@ interface CenteredListContainerProps {
   className?: string;
 }
 
-function CenteredListContainer({
-  children,
-  className,
-}: CenteredListContainerProps) {
+function ListContainer({ children, className }: CenteredListContainerProps) {
   return (
-    <div
-      className={`m-auto mt-8 flex w-full flex-col items-center gap-4 lg:w-2/3 ${className}`}
-    >
+    <div className={`mt-8 flex w-full flex-col gap-4 ${className}`}>
       {children}
     </div>
   );
 }
 
-export default CenteredListContainer;
+export default ListContainer;

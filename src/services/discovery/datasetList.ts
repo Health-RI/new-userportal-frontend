@@ -10,7 +10,7 @@ import {
   DatasetsSearchResult,
 } from './types/packageSearch.types';
 import { ExtendedSession } from '@/utils/auth';
-import { createHeaders, flattenFacets } from './utils';
+import { createHeaders, mapFacetGroups } from './utils';
 
 export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession) => {
   return async (options: PackageSearchOptions): Promise<DatasetsSearchResult> => {
@@ -27,12 +27,10 @@ export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession)
         headers: createHeaders(session),
       });
 
-      const flattendFacets = flattenFacets(response.data.facetGroups);
-
       return {
         datasets: response.data.results,
         count: response.data.count,
-        facets: flattendFacets,
+        facetGroups: mapFacetGroups(response.data.facetGroups),
       };
     } catch (error) {
       throw new Error(`HTTP error! ${error}`);

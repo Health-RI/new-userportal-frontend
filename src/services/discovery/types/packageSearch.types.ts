@@ -16,7 +16,7 @@ export interface PackageSearchOptions {
 export interface DatasetsSearchResult {
   datasets: SearchedDataset[];
   count: number;
-  facets: Facet[];
+  facetGroups: FacetGroup[];
 }
 
 export enum FacetType {

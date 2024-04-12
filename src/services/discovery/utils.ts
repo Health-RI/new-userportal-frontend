@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { ExtendedSession } from '@/utils/auth';
 import { decrypt } from '@/utils/encryption';
-import { DatasetSearchQuery, Facet, FacetGroup, facetToLabelMapping } from './types/packageSearch.types';
+import { DatasetSearchQuery, FacetGroup, facetToLabelMapping } from './types/packageSearch.types';
 
 export const createHeaders = (session?: ExtendedSession): Record<string, string> => {
   let headers: Record<string, string> = {
@@ -21,19 +21,21 @@ export const DEFAULT_DATASET_SEARCH_QUERY: DatasetSearchQuery = {
   rows: 0,
 };
 
-export const flattenFacets = (facetGroups: FacetGroup[]): Facet[] => {
-  let facets: Facet[] = [];
+export const mapFacetGroups = (facetGroups: FacetGroup[]): FacetGroup[] => {
+  let mappedGroups: FacetGroup[] = [];
 
   for (let group of facetGroups) {
-    facets = [
-      ...facets,
-      ...group.facets.map((facet) => ({
+    mappedGroups.push({
+      ...group,
+      facets: group.facets.map((facet) => ({
         label: facetToLabelMapping[facet.label] ?? facet.label,
         field: facet.label,
         values: facet.values,
       })),
-    ];
+    });
   }
 
-  return facets;
+  return mappedGroups;
 };
+
+g

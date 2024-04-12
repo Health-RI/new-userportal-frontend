@@ -19,9 +19,8 @@ export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession)
       rows: options.limit ?? 10,
       query: options.query,
       sort: options.sort,
-      // facets: options.facets, todo: map to facet search query
+      facets: options.facets,
     } as DatasetSearchQuery;
-
 
     try {
       const response = await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {

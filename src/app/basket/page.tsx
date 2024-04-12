@@ -32,7 +32,9 @@ export default function Page() {
 
   const requestNow = async () => {
     try {
-      const response = await createApplication(basket.map((dataset) => dataset.id));
+      const response = await createApplication(
+        basket.map((dataset) => dataset.id),
+      );
       emptyBasket();
       window.location.href = `/applications/${response.applicationId}`;
     } catch (error) {

@@ -5,15 +5,12 @@
 import axios from 'axios';
 import { RetrievedDataset } from './types/dataset.types';
 import { ExtendedSession } from '@/utils/auth';
-import { decrypt } from '@/utils/encryption';
+import { createHeaders } from './utils';
 
-export const makeDatasetGet = (ddsUrl: string) => {
+export const makeDatasetGet = (discoveryUrl: string) => {
   return async (id: string, session?: ExtendedSession): Promise<RetrievedDataset> => {
-    const response = await axios.get<RetrievedDataset>(`${ddsUrl}/api/v1/datasets/${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${decrypt(session?.access_token ?? '')}`,
-      },
+    const response = await axios.get<RetrievedDataset>(`${discoveryUrl}/api/v1/datasets/${id}`, {
+      headers: createHeaders(session),
     });
     return response.data;
   };

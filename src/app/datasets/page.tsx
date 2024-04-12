@@ -1,4 +1,3 @@
-'use client'
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -26,7 +25,6 @@ import { AxiosError } from "axios";
 import { PackageSearchOptions, PackageSearchResult } from "@/services/discovery/types/packageSearch.types";
 import { Dataset } from "@/types/dataset.types";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
 
 function parseFacets(queryParams: URLSearchParams): Record<string, string[]> {
   const facets: Record<string, string[]> = {};

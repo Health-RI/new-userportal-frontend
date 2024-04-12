@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { type Option } from '@/components/ui/multipleSelector';
-import { Facet } from '@/services/discovery/types/packageSearch.types';
+import { Facet, ValueLabel } from '@/services/discovery/types/packageSearch.types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export type FilterItemProps = {
@@ -18,10 +18,10 @@ function convertDataToFilterItemProps(facets: Facet[], fieldToIconMap: Record<st
     return {
       field: facet.field,
       label: facet.label,
-      data: facet.values.map((v: string) => {
+      data: facet.values.map((vl: ValueLabel) => {
         return {
-          label: v,
-          value: v,
+          label: vl.label,
+          value: vl.value,
         };
       }),
       icon: fieldToIconMap[facet.field],

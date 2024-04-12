@@ -9,16 +9,17 @@ import Link from "next/link";
 import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/button";
 import Chips from "./Chips";
-import { Dataset } from "@/types/dataset.types";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import { formatDate } from "@/utils/formatDate";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 
 type DatasetItemProps = {
-  dataset: Dataset;
+  dataset: SearchedDataset;
 };
 
 function DatasetItem({ dataset }: DatasetItemProps) {
   const { width: screenWidth } = useWindowSize();
-  const truncatedDesc = truncateDescription(dataset.notes, screenWidth);
+  const truncatedDesc = truncateDescription(dataset.description, screenWidth);
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
   const isInBasket = basket.some((ds) => ds.id === dataset.id);

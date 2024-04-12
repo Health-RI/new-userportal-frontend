@@ -7,20 +7,24 @@ import {
   DatasetSearchQuery,
   DatasetsSearchResponse,
   PackageSearchOptions,
-  PackageSearchResult,
+  DatasetsSearchResult,
 } from './types/packageSearch.types';
 import { ExtendedSession } from '@/utils/auth';
-import { constructSearchUrl, createHeaders, flattenFacets } from './utils';
+import { createHeaders, flattenFacets } from './utils';
 
 export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession) => {
-  return async (options: PackageSearchOptions): Promise<PackageSearchResult> => {
+  return async (options: PackageSearchOptions): Promise<DatasetsSearchResult> => {
     const datasetSearchQuery = {
       start: options.offset ?? 0,
       rows: options.limit ?? 10,
+      query: options.query,
+      sort: options.sort,
+      // facets: options.facets, todo: map to facet search query
     } as DatasetSearchQuery;
 
+
     try {
-      const response = await axios.post<DatasetsSearchResponse>(constructSearchUrl(discoveryUrl), datasetSearchQuery, {
+      const response = await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {
         headers: createHeaders(session),
       });
 

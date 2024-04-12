@@ -22,9 +22,23 @@ export interface RetrievedDataset {
   provenance: string;
   spatial: ValueLabel;
   distributions: RetrievedDistribution[];
+  metadataCreatedAt: string;
+  keywords: ValueLabel[];
 }
 
-interface RetrievedDistribution {
+export type SearchedDataset = {
+  id: string;
+  identifier?: string;
+  title: string;
+  description: string;
+  themes?: ValueLabel[];
+  catalogue: string;
+  modifiedAt: string;
+  metadataCreatedAt: string;
+  recordsCount?: number;
+};
+
+export interface RetrievedDistribution {
   id: string;
   title: string;
   description: string;

@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { SearchedDataset } from './dataset.types';
+
 export interface PackageSearchOptions {
   facets?: Record<string, string[]>;
   offset?: number;
@@ -11,18 +13,11 @@ export interface PackageSearchOptions {
   include_private?: boolean;
 }
 
-export interface PackageSearchResult {
+export interface DatasetsSearchResult {
   datasets: SearchedDataset[];
   count: number;
   facets: Facet[];
 }
-
-// export type Facet = {
-//   field: string;
-//   label: string;
-//   values: string[];
-//   count: number;
-// };
 
 export enum FacetType {
   Organization = 'organization',
@@ -63,17 +58,6 @@ export type ValueLabel = {
   label: string;
 };
 
-export type SearchedDataset = {
-  id: string;
-  identifier?: string;
-  title: string;
-  description: string;
-  themes?: ValueLabel[];
-  catalogue: string;
-  modifiedAt: string;
-  recordsCount?: number;
-};
-
 export type DatasetsSearchResponse = {
   count: number;
   results: SearchedDataset[];
@@ -87,8 +71,12 @@ export type FacetGroup = {
 };
 
 export type Facet = {
+  field: string;
   label: string;
   values: ValueLabel[];
 };
 
-export const CkanKey = 'ckan';
+export enum DatasetSource {
+  Ckan = 'ckan',
+  Beacon = 'beacon',
+}

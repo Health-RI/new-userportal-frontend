@@ -8,11 +8,11 @@ import serverConfig from '../../config/serverConfig';
 import { makeDatasetGet } from './datasetGet';
 import { makeDatasetList } from './datasetList';
 
-const DDS_URL = serverConfig.ddsUrl;
+const discoveryUrl = serverConfig.discoveryUrl;
 
-const datasetCount = makeDatasetCount(DDS_URL);
-const datasetGet = makeDatasetGet(DDS_URL);
-const portalStatistics = makePortalStatistics(DDS_URL);
-const datasetList = makeDatasetList(DDS_URL);
+const datasetCount = makeDatasetCount(discoveryUrl);
+const datasetGet = makeDatasetGet(discoveryUrl);
+const portalStatistics = makePortalStatistics(discoveryUrl);
+const datasetList = makeDatasetList(discoveryUrl);
 
 export { datasetCount, datasetGet, datasetList, portalStatistics };

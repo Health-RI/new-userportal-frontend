@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/button";
 import FilterItem from "./FilterItem";
 
-const fieldToIconMap: Record<string, IconDefinition> = {
+const fieldToIconMap: Record<FacetType, IconDefinition> = {
   publisher_name: faUser,
   organization: faBook,
   theme: faTags,

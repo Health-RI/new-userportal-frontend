@@ -8,7 +8,7 @@ export async function POST(request: Request, params: { params: { id: string } })
   const { id } = params.params;
 
   if (!session) {
-    return NextResponse.json({ error: 'Unauthorized: no user session' }, { status: 401 });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const { forms, duosCodes } = await request.json();
@@ -17,6 +17,6 @@ export async function POST(request: Request, params: { params: { id: string } })
     saveFormAndDuos(id, forms, duosCodes, session);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: `Failed to save forms and duos: ${error}` }, { status: 500 });
+    return NextResponse.json({ error: `Failed to save forms and duos for application id ${id}` }, { status: 500 });
   }
 }

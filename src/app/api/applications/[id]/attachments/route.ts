@@ -5,10 +5,10 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request, params: { id: string }) {
   const session: ExtendedSession | null = await getServerSession(authOptions);
-  const { id } = params;
+  const { id: applicationId } = params;
 
   if (!session) {
-    return NextResponse.json({ error: 'Unauthorized: no user session' }, { status: 401 });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const formData = await request.formData();
@@ -18,9 +18,9 @@ export async function POST(request: Request, params: { id: string }) {
   }
 
   try {
-    const { id: attachmentId } = await addAttachmentToApplication(id, formData, session);
+    const { id: attachmentId } = await addAttachmentToApplication(applicationId, formData, session);
     return NextResponse.json({ success: true, body: { attachmentId } }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to add attachment to application' }, { status: 500 });
+    return NextResponse.json({ error: `Failed to add attachment to application id ${applicationId}` }, { status: 500 });
   }
 }

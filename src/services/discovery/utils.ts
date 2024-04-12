@@ -37,5 +37,3 @@ export const mapFacetGroups = (facetGroups: FacetGroup[]): FacetGroup[] => {
 
   return mappedGroups;
 };
-
-g

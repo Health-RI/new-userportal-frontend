@@ -67,6 +67,7 @@ interface Form {
 }
 interface FormField {
   id: number;
+  value: string;
   optional: boolean;
   private: boolean;
   visible: boolean;
@@ -152,6 +153,7 @@ export type {
   Member,
   RetrievedApplication,
   SaveFormAndDuos,
-  State,
   Workflow,
 };
+
+export { State };

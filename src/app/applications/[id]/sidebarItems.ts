@@ -4,23 +4,36 @@
 
 import { SidebarItem } from '@/components/sidebar';
 import { RetrievedApplication } from '@/types/application.types';
+import { formatDate } from '@/utils/formatDate';
 
 function createApplicationSidebarItems(application: RetrievedApplication): SidebarItem[] {
   const { datasets, applicant, events } = application;
+
+  function formatEventDate(date: Date) {
+    const formattedDate = formatDate(date.toString());
+    const time = new Date(date).toLocaleTimeString();
+    return `${formattedDate} at ${time}`;
+  }
+
   return [
     {
       label: 'Dataset',
-      value: ['Dataset 1', 'Dataset 2', 'Dataset 3'],
-      isLink: false,
+      value: datasets?.map((dataset) => {
+        return {
+          label: dataset.title?.[0]?.name,
+          url: `${window.location.origin}/datasets/${dataset?.url?.[0]?.name}`,
+        };
+      }),
+      isLink: true,
     },
     {
       label: 'Participant',
-      value: 'Participant 1',
+      value: applicant?.name,
       isLink: false,
     },
     {
       label: 'Events',
-      value: ['Event 1', 'Event 2', 'Event 3'],
+      value: events?.map((event) => `${event?.eventType} (${formatEventDate(event?.eventTime)})`),
       isLink: false,
     },
   ];

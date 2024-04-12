@@ -3,10 +3,9 @@ import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
+export async function POST(request: Request, params: { id: string }) {
   const session: ExtendedSession | null = await getServerSession(authOptions);
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id')!;
+  const { id } = params;
 
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized: no user session' }, { status: 401 });

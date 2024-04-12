@@ -6,9 +6,10 @@
 import Button from "@/components/button";
 import PageHeading from "@/components/pageHeading";
 import Sidebar from "@/components/sidebar";
-import { RetrievedApplication } from "@/types/application.types";
+import { RetrievedApplication, State } from "@/types/application.types";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import FormContainer from "./formContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 type ApplicationDetailsPageProps = {
@@ -18,55 +19,67 @@ type ApplicationDetailsPageProps = {
 export default function ApplicationDetailsPage({
   params,
 }: ApplicationDetailsPageProps) {
+  const { id } = params;
+
   const [application, setApplication] = useState<RetrievedApplication>(
     {} as RetrievedApplication,
   );
 
-  const { id } = params;
-
   useEffect(() => {
-    async function getApplication() {
+    async function fetchApplication() {
       const response = await fetch(`/api/applications/${id}`);
 
-      // if (!response.ok) {
-      //   return "Error fetching data";
-      // }
-      // const application = await response.json();
-      console.log(response.body);
-      // return application;
+      if (!response.ok) {
+        return;
+      }
+      const retrievedApplication = (await response.json()).body;
+      setApplication(retrievedApplication);
     }
+    fetchApplication();
+  }, [id]);
 
-    getApplication();
-    console.log(application);
-  }, [application, id]);
-
+  const events = application.events || [];
+  const lastEvent = events[events.length - 1]?.eventType || "";
   const sidebarItems = createApplicationSidebarItems(application);
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function formatState(state: State) {
+    if (!state) return "";
+
+    const s = state.split("/")?.pop() || "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function submitApplication() {
+    fetch(`/api/applications/${id}/submit`, {
+      method: "POST",
+    });
   }
 
   return (
     <div className="mx-8 mt-20 md:mx-auto md:w-3/4 xl:mx-0 xl:grid xl:w-full xl:grid-cols-12 xl:gap-x-20">
-      <form
-        onSubmit={onSubmit}
-        className="col-span-8 col-start-3 xl:col-span-6 xl:col-start-3"
-      >
+      <div className="col-span-8 col-start-3 xl:col-span-6 xl:col-start-3">
         <div className="px-3">
           <div className="sm:flex sm:justify-between">
-            <PageHeading>Application {id}</PageHeading>
+            <div className="flex items-center gap-x-4">
+              <PageHeading>Application {application.id}</PageHeading>
+              {application.id && (
+                <div className="rounded bg-warning px-2.5 py-0.5 text-center text-sm font-semibold">
+                  {formatState(application.state)}
+                </div>
+              )}
+            </div>
             <div className="mt-4 flex gap-x-3 sm:mt-0">
               <Button
                 type="primary"
                 text="Submit"
                 className="h-fit text-[10px] sm:text-xs"
                 icon={faPaperPlane}
-                disabled={[].length === 0}
-                // onClick={() => submitApplication(id))}
+                disabled={application.state !== State.SUBMITTED}
+                onClick={submitApplication}
               />
             </div>
           </div>
-          <p className="mt-5">Last Event: blablabla</p>
+          <p className="mt-5">Last Event: {lastEvent} </p>
         </div>
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80"></div>
@@ -76,11 +89,19 @@ export default function ApplicationDetailsPage({
         </div>
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
-
-        {/* {application.forms.map((form) => (
-          <FormContainer form={form} key={form.id} />
-        ))} */}
-      </form>
+        <ul>
+          {application.forms &&
+            application.forms.map((form) => (
+              <li key={form.id}>
+                <FormContainer
+                  form={form}
+                  application={application}
+                  setApplication={setApplication}
+                />
+              </li>
+            ))}
+        </ul>
+      </div>
 
       <aside className="col-span-3 col-start-9 hidden xl:block">
         <Sidebar items={sidebarItems} />

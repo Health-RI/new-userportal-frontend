@@ -17,12 +17,12 @@ function createTextItems(values: string[]) {
 function createLinkItem(link: SidebarLink) {
   return (
     <a
-      href={link.url}
+      href={link?.url}
       target="_blank"
       rel="noreferrer"
       className="hover:underline"
     >
-      {link.label}
+      {link?.label}
     </a>
   );
 }

@@ -4,45 +4,93 @@
 "use client";
 
 import { addAttachmentToApplication } from "@/services/daam/index.client";
+import { FormField, RetrievedApplication } from "@/types/application.types";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import FileUploaded from "./fileUploaded";
 
 type FieldAttachmentContainerProps = {
-  fieldName: string;
-  files: File[];
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  params: { id: string };
+  field: FormField;
+  formId: number;
+  application: RetrievedApplication;
+  setApplication: React.Dispatch<React.SetStateAction<RetrievedApplication>>;
 };
 
 function FieldAttachmentContainer({
-  fieldName,
-  files,
-  setFiles,
-  params,
+  field,
+  formId,
+  application,
+  setApplication,
 }: FieldAttachmentContainerProps) {
-  const { id } = params;
+  const [files, setFiles] = useState<File[]>([]);
+  const id = useParams()["id"] as string;
 
-  function onUploadFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function onUploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (!file) return;
+
+    setFiles((files) => [...files, file]);
 
     try {
       const data = new FormData();
       data.set("file", file);
 
-      addAttachmentToApplication(id, data);
+      const { id: attachmentId } = await addAttachmentToApplication(id, data);
+
+      setApplication((application) => {
+        return {
+          ...application,
+          attachments: [
+            ...application.attachments,
+            { id: attachmentId, filename: file.name, type: file.type },
+          ],
+          forms: application.forms.map((form) => {
+            if (!(form.id === formId)) return form;
+
+            return {
+              ...form,
+              fields: form.fields.map((field) => {
+                if (!(field.id === field.id)) return field;
+
+                return {
+                  ...field,
+                  value: files.map((file) => file.name).join(","),
+                };
+              }),
+            };
+          }),
+        };
+      });
+
+      fetch(`/api/applications/${id}/save-forms-and-duos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          forms: application.forms.map((form) => ({
+            id: form.id,
+            fields: form.fields.map((field) => ({
+              fieldId: field.id,
+              value: field.value,
+            })),
+          })),
+          duosCodes: [],
+        }),
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <div className="mt-10 rounded border-2 border-white-smoke p-6">
+    <div className="mt-10 rounded border p-6">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg text-primary sm:text-2xl">{`${fieldName} Attachment`}</h3>
+          <h3 className="text-lg text-primary sm:text-xl">{`${field.title[0].name} Attachment`}</h3>
         </div>
         <input
           type="file"
@@ -63,12 +111,7 @@ function FieldAttachmentContainer({
         {" "}
         {files.map((file: File, index) => (
           <li key={index} className="list-none">
-            <FileUploaded
-              fileId={index}
-              fileName={file.name}
-              files={files}
-              setFiles={setFiles}
-            />
+            <FileUploaded filename={file.name} />
           </li>
         ))}
       </ul>

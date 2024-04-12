@@ -44,14 +44,14 @@ describe('POST function', () => {
   test('successfully creates an application', async () => {
     const encryptedToken = encrypt('decryptedToken');
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
-    mockedAxios.post.mockResolvedValueOnce({ status: 200 });
+    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: { applicationId: 100 } });
 
     const datasetIds = ['123', '456'];
     const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ datasetIds }) });
     const response = await POST(request);
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ success: true });
+    expect(await response.json()).toEqual({ applicationId: 100 });
     expect(mockedAxios.post).toHaveBeenCalledWith(
       `${serverConfig.daamUrl}/api/v1/applications/create`,
       { datasetIds },

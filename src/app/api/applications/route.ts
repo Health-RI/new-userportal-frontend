@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     const response = await createApplication(datasetIds, session);
 
-    return NextResponse.json(response);
+    return NextResponse.json(response.data);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create application' }, { status: 500 });
   }

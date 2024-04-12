@@ -10,7 +10,7 @@ export const createApplication = async (datasetIds: string[]): Promise<CreateApp
     datasetIds: datasetIds,
   };
 
-  await axios.post('/api/applications', requestBody, {
+  return await axios.post('/api/applications', requestBody, {
     headers: {
       'Content-Type': 'application/json',
     },

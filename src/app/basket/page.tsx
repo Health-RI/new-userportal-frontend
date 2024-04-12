@@ -32,12 +32,11 @@ export default function Page() {
 
   const requestNow = async () => {
     try {
-      await createApplication(basket.map((dataset) => dataset.id));
-      setAlert({
-        message: "Application created successfully",
-        type: "success",
-      });
+      const response = await createApplication(
+        basket.map((dataset) => dataset.id),
+      );
       emptyBasket();
+      window.location.href = `/applications/${response.applicationId}`;
     } catch (error) {
       setAlert({
         message: "Something went wrong. Please try again.",

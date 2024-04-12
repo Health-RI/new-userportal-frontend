@@ -23,3 +23,7 @@ export interface ApplicationDataset {
   title: Label[];
   url: Label[];
 }
+
+export interface CreateApplicationResponse {
+  applicationId: number;
+}

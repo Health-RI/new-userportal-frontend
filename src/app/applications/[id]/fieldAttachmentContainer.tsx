@@ -81,6 +81,10 @@ function FieldAttachmentContainer({
           duosCodes: [],
         }),
       });
+
+      const response = await fetch(`/api/applications/${id}`);
+      const retrievedApplication = (await response.json()).body;
+      setApplication(retrievedApplication);
     } catch (error) {
       console.error(error);
     }

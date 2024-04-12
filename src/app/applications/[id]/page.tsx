@@ -49,6 +49,13 @@ export default function ApplicationDetailsPage({
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
+  function isApplicationComplete(application: RetrievedApplication) {
+    return application.forms
+      .map((form) => form.fields)
+      .flat()
+      .every((field) => field.value?.split(",")?.length > 0);
+  }
+
   function submitApplication() {
     fetch(`/api/applications/${id}/submit`, {
       method: "POST",
@@ -69,14 +76,17 @@ export default function ApplicationDetailsPage({
               )}
             </div>
             <div className="mt-4 flex gap-x-3 sm:mt-0">
-              <Button
-                type="primary"
-                text="Submit"
-                className="h-fit text-[10px] sm:text-xs"
-                icon={faPaperPlane}
-                disabled={application.state !== State.SUBMITTED}
-                onClick={submitApplication}
-              />
+              {(application.state === State.DRAFT ||
+                application.state === State.RETURNED) && (
+                <Button
+                  type="primary"
+                  text="Submit"
+                  className="h-fit text-[10px] sm:text-xs"
+                  icon={faPaperPlane}
+                  disabled={!isApplicationComplete(application)}
+                  onClick={submitApplication}
+                />
+              )}
             </div>
           </div>
           <p className="mt-5">Last Event: {lastEvent} </p>

@@ -22,18 +22,14 @@ export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession)
       facets: options.facets,
     } as DatasetSearchQuery;
 
-    try {
-      const response = await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {
-        headers: createHeaders(session),
-      });
+    const response = await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {
+      headers: createHeaders(session),
+    });
 
-      return {
-        datasets: response.data.results,
-        count: response.data.count,
-        facetGroups: mapFacetGroups(response.data.facetGroups),
-      };
-    } catch (error) {
-      throw new Error(`HTTP error! ${error}`);
-    }
+    return {
+      datasets: response.data.results,
+      count: response.data.count,
+      facetGroups: mapFacetGroups(response.data.facetGroups),
+    };
   };
 };

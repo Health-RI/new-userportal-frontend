@@ -9,15 +9,21 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export type FilterItemProps = {
   field: string;
   label: string;
+  groupKey: string;
   data: Option[];
   icon: IconDefinition;
 };
 
-function convertDataToFilterItemProps(facets: Facet[], fieldToIconMap: Record<string, IconDefinition>): FilterItemProps[] {
+function convertDataToFilterItemProps(
+  facets: Facet[],
+  fieldToIconMap: Record<string, IconDefinition>,
+  groupKey: string,
+): FilterItemProps[] {
   return facets.map((facet: Facet) => {
     return {
       field: facet.field,
       label: facet.label,
+      groupKey: groupKey,
       data: facet.values.map((vl: ValueLabel) => {
         return {
           label: vl.label,

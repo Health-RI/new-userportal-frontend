@@ -3,9 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  FilterItemProps, convertDataToFilterItemProps,
+  FilterItemProps,
+  convertDataToFilterItemProps,
 } from "@/utils/convertDataToFilterItemProps";
-import { type Facet } from "@/services/discovery/types/packageSearch.types";
+import {
+  FacetType,
+  type Facet,
+} from "@/services/discovery/types/packageSearch.types";
 import {
   faBook,
   faFilter,
@@ -36,18 +40,20 @@ type FilterListProps = {
   facets: Facet[];
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: URLSearchParams;
+  groupKey: string;
 };
 
 function FilterList({
   facets,
   toggleFullScreenFilter,
   queryParams,
+  groupKey,
 }: FilterListProps) {
   const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
     facets,
     fieldToIconMap,
+    groupKey,
   );
-
   function isAnyFilterApplied() {
     if (!queryParams) return false;
     return Array.from(queryParams.keys()).some(
@@ -62,6 +68,7 @@ function FilterList({
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>
+          <span className="mr-2">{groupKey.toUpperCase()}</span>
           Filters
         </h1>
         {toggleFullScreenFilter && (
@@ -80,6 +87,7 @@ function FilterList({
             label={props.label}
             data={props.data}
             icon={props.icon}
+            groupKey={props.groupKey}
           />
         </li>
       ))}

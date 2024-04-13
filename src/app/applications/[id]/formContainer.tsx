@@ -1,5 +1,5 @@
 import { Form, RetrievedApplication } from "@/types/application.types";
-import FieldAttachmentContainer from "./fieldAttachmentContainer";
+import FieldContainer from "./fieldContainer";
 
 type FormContainerProps = {
   form: Form;
@@ -21,7 +21,7 @@ function FormContainer({
       <ul>
         {form.fields.map((field) => (
           <li key={field.id}>
-            <FieldAttachmentContainer
+            <FieldContainer
               field={field}
               formId={form.id}
               application={application}

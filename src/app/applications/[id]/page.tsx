@@ -30,6 +30,7 @@ export default function ApplicationDetailsPage({
       const response = await fetch(`/api/applications/${id}`);
 
       if (!response.ok) {
+        console.error("Failed to fetch application", response.status);
         return;
       }
       const retrievedApplication = (await response.json()).body;

@@ -9,6 +9,7 @@ import { searchedDatasetFixture } from '../fixtures/datasetFixtures';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+const datasetList = makeDatasetList('https://mock-discovery-service.com');
 
 describe('datasetList', () => {
   const mockApiResponse = {
@@ -27,7 +28,6 @@ describe('datasetList', () => {
   });
 
   test('maps and asserts the full server response', async () => {
-    const datasetList = makeDatasetList('https://mock-discovery-service.com.com');
     const { datasets, count } = await datasetList({});
 
     expect(count).toEqual(1);
@@ -48,7 +48,6 @@ describe('datasetList', () => {
   });
 
   test('applies tag filters correctly', async () => {
-    const datasetList = makeDatasetList('https://mock-discovery-service.com');
     const searchOptions = {
       facets: [
         {
@@ -89,7 +88,6 @@ describe('datasetList', () => {
   });
 
   test('applies organization filters correctly', async () => {
-    const datasetList = makeDatasetList('https://mock-discovery-service.com');
     const searchOptions = {
       facets: [
         {
@@ -130,7 +128,6 @@ describe('datasetList', () => {
   });
 
   test('combines multiple filters correctly', async () => {
-    const datasetList = makeDatasetList('https://mock-discovery-service.com');
     const searchOptions = {
       facets: [
         {

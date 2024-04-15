@@ -13,7 +13,7 @@ export const makeDatasetCount = (discoveryUrl: string) => {
       `${discoveryUrl}/api/v1/datasets/search`,
       DEFAULT_DATASET_SEARCH_QUERY,
       {
-        headers: createHeaders(),
+        headers: await createHeaders(),
       },
     );
 

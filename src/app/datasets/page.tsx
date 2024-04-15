@@ -26,6 +26,7 @@ import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import { useSession } from "next-auth/react";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
   let facetsQuery: DatasetSearchQueryFacet[] = [];
@@ -64,6 +65,7 @@ export default function DatasetPage() {
   const queryParams = useSearchParams();
   const { width } = useWindowSize();
   const screenSize = pixelWidthToScreenSize(width);
+  const { data: session } = useSession();
   const [isFullScreenFilterOpen, toggleFullScreenFilter] = useState(false);
   const [response, setResponse] = useState<DatasetResponse>({
     status: "loading",
@@ -86,7 +88,7 @@ export default function DatasetPage() {
     async function fetchData() {
       try {
         setResponse({ status: "loading" });
-        const response = await datasetList(options);
+        const response = await datasetList(options); // route
         setResponse({
           datasets: response.datasets,
           datasetCount: response.count,

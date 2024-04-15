@@ -9,11 +9,11 @@ import {
   PackageSearchOptions,
   DatasetsSearchResult,
 } from './types/datasetSearch.types';
-import { ExtendedSession } from '@/utils/auth';
 import { createHeaders, mapFacetGroups } from './utils';
+import { ExtendedSession } from '@/utils/auth';
 
-export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession) => {
-  return async (options: PackageSearchOptions): Promise<DatasetsSearchResult> => {
+export const makeDatasetList = (discoveryUrl: string) => {
+  return async (options: PackageSearchOptions, session?: ExtendedSession): Promise<DatasetsSearchResult> => {
     const datasetSearchQuery = {
       start: options.offset ?? 0,
       rows: options.limit ?? 10,
@@ -23,7 +23,7 @@ export const makeDatasetList = (discoveryUrl: string, session?: ExtendedSession)
     } as DatasetSearchQuery;
 
     const response = await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {
-      headers: createHeaders(session),
+      headers: await createHeaders(session),
     });
 
     return {

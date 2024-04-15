@@ -10,11 +10,14 @@ import { createDatasetSidebarItems } from "./sidebarItems";
 import { datasetGet } from "@/services/discovery";
 import Sidebar from "@/components/Sidebar";
 import Error from "@/app/error";
+import { ExtendedSession, authOptions } from "@/utils/auth";
+import { getServerSession } from "next-auth";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   try {
-    const dataset = await datasetGet(id);
+    const session: ExtendedSession | null = await getServerSession(authOptions);
+    const dataset = await datasetGet(id, session!);
     const sidebarItems = createDatasetSidebarItems(dataset);
 
     return (

@@ -39,14 +39,16 @@ export const retrivedDatasetFixture = {
   conformsTo: [],
   provenance: 'prov',
   spatial: { label: 'spatial', value: 'spatial' },
-  distributions: [{
-    id: 'dist-id',
-    title: 'dist',
-    description: 'dist desc',
-    format: { value: 'format', label: 'format' },
-    createdAt: '12-01-2023',
-    modifiedAt: '02-02-2024',
-  }],
+  distributions: [
+    {
+      id: 'dist-id',
+      title: 'dist',
+      description: 'dist desc',
+      format: { value: 'format', label: 'format' },
+      createdAt: '12-01-2023',
+      modifiedAt: '02-02-2024',
+    },
+  ],
   keywords: [
     {
       label: 'organization',

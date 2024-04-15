@@ -9,7 +9,7 @@ import {
 import {
   FacetType,
   type Facet,
-} from "@/services/discovery/types/packageSearch.types";
+} from "@/services/discovery/types/datasetSearch.types";
 import {
   faBook,
   faFilter,

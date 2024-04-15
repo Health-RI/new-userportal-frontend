@@ -5,33 +5,76 @@
 
 import { jest } from '@jest/globals';
 import { makePortalStatistics } from '../portalStatistics';
+import axios from 'axios';
+
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('makePortalStatistics', () => {
-  const mockFetch = jest.fn<(input: string | Request | URL, init?: RequestInit | undefined) => Promise<Response>>();
-
   beforeEach(() => {
-    mockFetch.mockClear().mockImplementation((url: string | Request | URL) => {
-      if (
-        url ===
-        'http://localhost:5500/api/3/action/package_search?facet.field=["organization","theme","tags"]&rows=0&facet.limit=-1'
-      ) {
-        return Promise.resolve(
-          new Response(
-            JSON.stringify({
-              result: {
-                facets: {
-                  organization: { org1: 1 },
-                  theme: { theme1: 1, theme2: 2 },
-                  tags: { tag1: 1, tag2: 2, tag3: 3 },
-                },
+    mockedAxios.post.mockClear();
+    mockedAxios.post.mockResolvedValue({
+      data: {
+        facetGroups: [
+          {
+            key: 'ckan',
+            facets: [
+              {
+                field: 'organization',
+                label: 'organization',
+                values: [
+                  {
+                    value: 'org1',
+                    label: 'organization',
+                  },
+                ],
               },
-            }),
-          ),
-        );
-      }
-      return Promise.reject(new Error('Unknown URL'));
+              {
+                field: 'theme',
+                label: 'theme',
+                values: [
+                  {
+                    value: 'theme1',
+                    label: 'theme',
+                  },
+                  {
+                    value: 'theme2',
+                    label: 'theme',
+                  },
+                ],
+              },
+              {
+                field: 'tags',
+                label: 'tags',
+                values: [
+                  {
+                    value: 'tag1',
+                    label: 'tag',
+                  },
+                  {
+                    value: 'tag2',
+                    label: 'tag',
+                  },
+                  {
+                    value: 'tag2',
+                    label: 'tag',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            key: 'beacon',
+            facets: [
+              {
+                label: 'org-beacon',
+                value: 'orgb-1',
+              },
+            ],
+          },
+        ],
+      },
     });
-    global.fetch = mockFetch;
   });
 
   test('fetches and returns the correct counts for portal statistics', async () => {
@@ -46,14 +89,6 @@ describe('makePortalStatistics', () => {
       keywords: 3,
     });
 
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      1,
-      `${DMS_URL}/api/3/action/package_search?facet.field=["organization","theme","tags"]&rows=0&facet.limit=-1`,
-      {
-        cache: 'force-cache',
-        next: { revalidate: 3600 },
-      },
-    );
+    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
   });
 });

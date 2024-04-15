@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { type Option } from '@/components/ui/multipleSelector';
-import { Facet, ValueLabel } from '@/services/discovery/types/packageSearch.types';
+import { Facet, ValueLabel } from '@/services/discovery/types/datasetSearch.types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export type FilterItemProps = {

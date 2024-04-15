@@ -5,7 +5,7 @@
 
 import { PortalStatistics } from './types/portalStatistics.types';
 import axios from 'axios';
-import { DatasetSource, DatasetsSearchResponse, FacetType } from './types/packageSearch.types';
+import { DatasetSource, DatasetsSearchResponse, FacetType } from './types/datasetSearch.types';
 import { ExtendedSession } from '@/utils/auth';
 import { DEFAULT_DATASET_SEARCH_QUERY, createHeaders } from './utils';
 
@@ -19,8 +19,11 @@ export const makePortalStatistics = (discoveryUrl: string, session?: ExtendedSes
       },
     );
 
-    const ckanFacetGroup = response.data.facetGroups.find((x) => x.key === DatasetSource.Ckan);
-    const countFacet = (facet: FacetType) => ckanFacetGroup?.facets.find((x) => x.label === facet)?.values?.length ?? 0;
+    const ckanFacetsGroup = response.data.facetGroups.find((x) => x.key === DatasetSource.Ckan);
+    const countFacet = (facet: FacetType) => ckanFacetsGroup?.facets.find((x) => x.label === facet)?.values?.length ?? 0;
+
+    console.log(ckanFacetsGroup)
+    console.log(countFacet(FacetType.Organization))
 
     return {
       catalogues: countFacet(FacetType.Organization),

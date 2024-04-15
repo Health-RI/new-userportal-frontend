@@ -8,7 +8,7 @@ import {
   DatasetsSearchResponse,
   PackageSearchOptions,
   DatasetsSearchResult,
-} from './types/packageSearch.types';
+} from './types/datasetSearch.types';
 import { ExtendedSession } from '@/utils/auth';
 import { createHeaders, mapFacetGroups } from './utils';
 

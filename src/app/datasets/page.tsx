@@ -20,13 +20,12 @@ import {
   DatasetSearchQueryFacet,
   FacetGroup,
   PackageSearchOptions,
-} from "@/services/discovery/types/packageSearch.types";
+} from "@/services/discovery/types/datasetSearch.types";
 import { redirect } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
-import FiltersHeader from "@/components/filtersHeader";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
   let facetsQuery: DatasetSearchQueryFacet[] = [];

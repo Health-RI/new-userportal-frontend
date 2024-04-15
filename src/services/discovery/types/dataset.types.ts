@@ -22,7 +22,6 @@ export interface RetrievedDataset {
   provenance: string;
   spatial: ValueLabel;
   distributions: RetrievedDistribution[];
-  metadataCreatedAt: string;
   keywords: ValueLabel[];
 }
 
@@ -34,7 +33,7 @@ export type SearchedDataset = {
   themes?: ValueLabel[];
   catalogue: string;
   modifiedAt: string;
-  metadataCreatedAt: string;
+  createdAt: string;
   recordsCount?: number;
 };
 

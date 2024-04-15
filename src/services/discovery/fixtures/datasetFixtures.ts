@@ -70,5 +70,5 @@ export const searchedDatasetFixture = {
   ],
   catalogue: 'umcg',
   modifiedAt: '12-01-2023',
-  metadataCreatedAt: '02-02-2024',
+  createdAt: '02-02-2024',
 };

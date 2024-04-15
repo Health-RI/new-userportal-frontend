@@ -38,7 +38,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
         <p className="text-sm text-info md:text-base">
-          {formatDate(dataset.metadataCreatedAt)}
+          {formatDate(dataset.createdAt)}
         </p>
       </div>
       <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>

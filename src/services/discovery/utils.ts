@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
-import { ExtendedSession, getToken } from '@/utils/auth';
+import { ExtendedSession } from '@/utils/auth';
 import { decrypt } from '@/utils/encryption';
 import { DatasetSearchQuery, FacetGroup, facetToLabelMapping } from './types/datasetSearch.types';
 
 export const createHeaders = async (session?: ExtendedSession): Promise<Record<string, string>> => {
-  let headers: Record<string, string> = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
 
@@ -22,9 +22,9 @@ export const DEFAULT_DATASET_SEARCH_QUERY: DatasetSearchQuery = {
 };
 
 export const mapFacetGroups = (facetGroups: FacetGroup[]): FacetGroup[] => {
-  let mappedGroups: FacetGroup[] = [];
+  const mappedGroups: FacetGroup[] = [];
 
-  for (let group of facetGroups) {
+  for (const group of facetGroups) {
     mappedGroups.push({
       ...group,
       facets: group.facets.map((facet) => ({

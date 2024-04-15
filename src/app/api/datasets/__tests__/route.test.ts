@@ -61,7 +61,7 @@ describe('POST function', () => {
     };
 
     const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ options }) });
-    const response = await POST(request);
+    await POST(request);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       `${serverConfig.discoveryUrl}/api/v1/datasets/search`,

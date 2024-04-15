@@ -48,36 +48,26 @@ describe('datasetList', () => {
   });
 
   test('applies tag filters correctly', async () => {
+    const facets = [
+      {
+        facetGroup: 'ckan',
+        facet: 'tags',
+        value: 'education',
+      },
+      {
+        facetGroup: 'ckan',
+        facet: 'tags',
+        value: 'science',
+      },
+    ];
     const searchOptions = {
-      facets: [
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'education',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'science',
-        },
-      ],
+      facets: facets,
       limit: 1,
     };
     const expectedBody = {
       start: 0,
       rows: 1,
-      facets: [
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'education',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'science',
-        },
-      ],
+      facets: facets,
     };
     await datasetList(searchOptions);
 
@@ -128,76 +118,47 @@ describe('datasetList', () => {
   });
 
   test('combines multiple filters correctly', async () => {
+    const facets = [
+      {
+        facetGroup: 'ckan',
+        facet: 'tags',
+        value: 'technology',
+      },
+      {
+        facetGroup: 'ckan',
+        facet: 'tags',
+        value: 'http://example.com/other-tag',
+      },
+      {
+        facetGroup: 'beacon',
+        facet: 'organization',
+        value: 'org-2',
+      },
+      {
+        facetGroup: 'ckan',
+        facet: 'publisher_name',
+        value: 'A random publisher',
+      },
+      {
+        facetGroup: 'ckan',
+        facet: 'organization',
+        value: 'org-1',
+      },
+      {
+        facetGroup: 'beacon',
+        facet: 'theme',
+        value: 'group-1',
+      },
+    ];
+
     const searchOptions = {
-      facets: [
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'technology',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'http://example.com/other-tag',
-        },
-        {
-          facetGroup: 'beacon',
-          facet: 'organization',
-          value: 'org-2',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'publisher_name',
-          value: 'A random publisher',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'organization',
-          value: 'org-1',
-        },
-        {
-          facetGroup: 'beacon',
-          facet: 'theme',
-          value: 'group-1',
-        },
-      ],
+      facets: facets,
       limit: 2,
     };
     const expectedBody = {
       start: 0,
       rows: 2,
-      facets: [
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'technology',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'tags',
-          value: 'http://example.com/other-tag',
-        },
-        {
-          facetGroup: 'beacon',
-          facet: 'organization',
-          value: 'org-2',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'publisher_name',
-          value: 'A random publisher',
-        },
-        {
-          facetGroup: 'ckan',
-          facet: 'organization',
-          value: 'org-1',
-        },
-        {
-          facetGroup: 'beacon',
-          facet: 'theme',
-          value: 'group-1',
-        },
-      ],
+      facets: facets,
     };
 
     await datasetList(searchOptions);

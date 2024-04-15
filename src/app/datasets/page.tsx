@@ -88,7 +88,7 @@ export default function DatasetPage() {
     async function fetchData() {
       try {
         setResponse({ status: "loading" });
-        const response = await datasetList(options); // route
+        const response = await datasetList(options);
         setResponse({
           datasets: response.datasets,
           datasetCount: response.count,

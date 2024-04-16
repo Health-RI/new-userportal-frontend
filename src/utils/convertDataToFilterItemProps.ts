@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type Option } from '@/components/ui/multipleSelector';
+import { type Option } from '@/components/shadcn/multipleSelector';
 import { Facet } from '@/services/ckan/types/packageSearch.types';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 

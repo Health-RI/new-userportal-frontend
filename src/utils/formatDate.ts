@@ -4,6 +4,10 @@
 import { format } from 'date-fns';
 
 export function formatDate(inputDate: string): string {
+  if (!inputDate) {
+    return 'N/A';
+  }
+
   const date = new Date(inputDate);
 
   try {

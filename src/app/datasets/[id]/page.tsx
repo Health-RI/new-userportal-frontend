@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <PageSubHeading>Themes</PageSubHeading>
           )}
           <Chips chips={dataset.themes.map((x) => x.value) || []} />
-          {dataset.themes?.length > 0 && (
+          {dataset.keywords?.length > 0 && (
             <PageSubHeading>Keywords</PageSubHeading>
           )}
           <Chips

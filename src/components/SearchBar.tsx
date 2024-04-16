@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { datasetList } from "@/services/discovery";
+import { datasetList } from "@/services/discovery/index.client";
 
 type SearchBarProps = {
   queryParams: URLSearchParams;
@@ -43,7 +43,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
       const timeoutId = setTimeout(async () => {
         const result = await datasetList({ query, limit: 5 });
         setSuggestions(
-          result.datasets.map((dataset) => ({
+          result.data?.datasets.map((dataset) => ({
             id: dataset.id,
             title: dataset.title,
           })),

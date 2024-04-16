@@ -4,7 +4,7 @@
 
 import { jest } from '@jest/globals';
 import axios from 'axios';
-import { makeDatasetGet } from '../datasetGet';
+import { makeDatasetGet } from '../server/datasetGet';
 import { retrivedDatasetFixture } from '../fixtures/datasetFixtures';
 import { ExtendedSession } from '@/utils/auth';
 import { encrypt } from '@/utils/encryption';

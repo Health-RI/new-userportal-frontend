@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
-import { makeDatasetCount } from './datasetCount';
-import { makePortalStatistics } from './portalStatistics';
+import { makeDatasetCount } from './server/datasetCount';
+import { makePortalStatistics } from './server/portalStatistics';
 
 import serverConfig from '../../config/serverConfig';
-import { makeDatasetGet } from './datasetGet';
-import { makeDatasetList } from './datasetList';
+import { makeDatasetGet } from './server/datasetGet';
+import { makeDatasetList } from './server/datasetList';
 
 const discoveryUrl = serverConfig.discoveryUrl;
 

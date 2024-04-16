@@ -15,17 +15,17 @@ import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { datasetList } from "@/services/discovery";
 import {
   DatasetSearchQueryFacet,
   FacetGroup,
-  PackageSearchOptions,
+  DatasetSearchOptions,
 } from "@/services/discovery/types/datasetSearch.types";
 import { redirect } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import { datasetList } from "@/services/discovery/index.client";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
   const facetsQuery: DatasetSearchQueryFacet[] = [];
@@ -74,7 +74,7 @@ export default function DatasetPage() {
   }
 
   useEffect(() => {
-    const options: PackageSearchOptions = {
+    const options: DatasetSearchOptions = {
       facets: parseFacets(queryParams),
       offset: queryParams.get("page") ? Number(queryParams.get("page")) - 1 : 0,
       limit: DATASET_PER_PAGE,
@@ -88,9 +88,9 @@ export default function DatasetPage() {
         setResponse({ status: "loading" });
         const response = await datasetList(options);
         setResponse({
-          datasets: response.datasets,
-          datasetCount: response.count,
-          facetGroups: response.facetGroups,
+          datasets: response.data?.datasets,
+          datasetCount: response.data?.count,
+          facetGroups: response.data?.facetGroups,
           status: "success",
         });
       } catch (error) {

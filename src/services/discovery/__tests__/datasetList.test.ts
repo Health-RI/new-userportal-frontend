@@ -4,7 +4,7 @@
 
 import { jest } from '@jest/globals';
 import axios from 'axios';
-import { makeDatasetList } from '../datasetList';
+import { makeDatasetList } from '../server/datasetList';
 import { searchedDatasetFixture } from '../fixtures/datasetFixtures';
 
 jest.mock('axios');
@@ -28,10 +28,10 @@ describe('datasetList', () => {
   });
 
   test('maps and asserts the full server response', async () => {
-    const { datasets, count } = await datasetList({});
+    const response = await datasetList({});
 
-    expect(count).toEqual(1);
-    const dataset = datasets[0];
+    expect(response.data.count).toEqual(1);
+    const dataset = response.data.results[0];
     expect(dataset.id).toEqual('id');
     expect(dataset.title).toEqual('title');
     expect(dataset.description).toEqual('desc');

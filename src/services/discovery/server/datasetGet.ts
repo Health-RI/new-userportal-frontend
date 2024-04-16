@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import axios from 'axios';
-import { RetrievedDataset } from './types/dataset.types';
-import { createHeaders } from './utils';
+import { RetrievedDataset } from '../types/dataset.types';
+import { createHeaders } from '../utils';
 import { ExtendedSession } from '@/utils/auth';
 
 export const makeDatasetGet = (discoveryUrl: string) => {

@@ -4,7 +4,7 @@
 
 import { SearchedDataset } from './dataset.types';
 
-export interface PackageSearchOptions {
+export interface DatasetSearchOptions {
   facets?: DatasetSearchQueryFacet[];
   offset?: number;
   limit?: number;

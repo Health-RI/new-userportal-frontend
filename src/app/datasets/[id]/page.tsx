@@ -7,7 +7,7 @@ import PageSubHeading from "@/components/PageSubHeading";
 import AddToBasketBtn from "./AddToBasketBtn";
 import DistributionAccordion from "./DistributionAccordion";
 import { createDatasetSidebarItems } from "./sidebarItems";
-import { datasetGet } from "@/services/discovery";
+import { datasetGet } from "@/services/discovery/index.server";
 import Sidebar from "@/components/Sidebar";
 import Error from "@/app/error";
 

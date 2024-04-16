@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { PortalStatistics } from './types/portalStatistics.types';
+import { PortalStatistics } from '../types/portalStatistics.types';
 import axios from 'axios';
-import { DatasetSource, DatasetsSearchResponse, FacetType } from './types/datasetSearch.types';
-import { DEFAULT_DATASET_SEARCH_QUERY, createHeaders } from './utils';
+import { DatasetSource, DatasetsSearchResponse, FacetType } from '../types/datasetSearch.types';
+import { DEFAULT_DATASET_SEARCH_QUERY, createHeaders } from '../utils';
 
 export const makePortalStatistics = (discoveryUrl: string) => {
   return async (): Promise<PortalStatistics> => {

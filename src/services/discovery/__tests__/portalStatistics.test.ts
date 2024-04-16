@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { jest } from '@jest/globals';
-import { makePortalStatistics } from '../portalStatistics';
+import { makePortalStatistics } from '../server/portalStatistics';
 import axios from 'axios';
 
 jest.mock('axios');

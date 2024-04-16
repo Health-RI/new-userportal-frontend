@@ -2,29 +2,31 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-function createTextItems(values: string[]) {
+import LinkItem from "./LinkItem";
+
+function createTextItems(items: SidebarLink[] | string[]) {
   return (
     <ul>
-      {values.map((value, index) => (
-        <li key={index}>
-          <span>{value as string}</span>
-        </li>
-      ))}
+      {items.map((value, index) => {
+        if (typeof value === "object") {
+          return (
+            <li key={index}>
+              <span>{value.label}</span>
+            </li>
+          );
+        }
+        return (
+          <li key={index}>
+            <span>{value}</span>
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
 function createLinkItem(link: SidebarLink) {
-  return (
-    <a
-      href={link.url}
-      target="_blank"
-      rel="noreferrer"
-      className="hover:underline"
-    >
-      {link.label}
-    </a>
-  );
+  return <LinkItem link={link}></LinkItem>;
 }
 
 function createLinkItems(links: SidebarLink[]) {

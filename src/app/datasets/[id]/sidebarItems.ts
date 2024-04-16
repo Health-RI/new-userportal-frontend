@@ -2,21 +2,20 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { SidebarItem, SidebarLink } from '@/components/Sidebar';
-import { Dataset } from '@/types/dataset.types';
-import formatDatasetLanguage from '@/utils/formatDatasetLanguage';
+import { SidebarItem } from '@/components/Sidebar';
+import { RetrievedDataset } from '@/services/discovery/types/dataset.types';
 import { formatDate } from '@/utils/formatDate';
 
-function createDatasetSidebarItems(dataset: Dataset): SidebarItem[] {
+function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
   return [
     {
       label: 'Metadata Created',
-      value: dataset.metadataCreated && formatDate(dataset.metadataCreated),
+      value: dataset.createdAt && formatDate(dataset.createdAt),
       isLink: false,
     },
     {
       label: 'Metadata Modified',
-      value: dataset.metadataModified && formatDate(dataset.metadataModified),
+      value: dataset.modifiedAt && formatDate(dataset.modifiedAt),
       isLink: false,
     },
     {
@@ -29,14 +28,12 @@ function createDatasetSidebarItems(dataset: Dataset): SidebarItem[] {
     },
     {
       label: 'Language',
-      value: dataset.languages.map((language) => {
-        return { label: formatDatasetLanguage(language), url: language } as SidebarLink;
-      }),
+      value: dataset.languages?.map((language) => ({ label: language.label, url: language.value })),
       isLink: true,
     },
     {
       label: 'Publisher Name',
-      value: dataset.publisher.name,
+      value: dataset.publisherName,
       isLink: false,
     },
     {
@@ -50,29 +47,29 @@ function createDatasetSidebarItems(dataset: Dataset): SidebarItem[] {
     {
       label: 'Spatial URI',
       value: {
-        label: dataset.spatialUri,
-        url: dataset.spatialUri,
+        label: dataset.spatial?.label,
+        url: dataset.spatial?.value,
       },
       isLink: true,
     },
     {
       label: 'Has Version',
-      value: dataset.version.hasVersion,
+      value: dataset.hasVersions?.map((version) => ({ label: version.label, url: version.value })),
       isLink: false,
     },
     {
       label: 'Contact URI',
-      value: dataset.contact.contactUri,
+      value: dataset.contact?.value,
       isLink: false,
     },
     {
       label: 'Access rights',
-      value: dataset.accessRights,
+      value: dataset.accessRigths?.map((accessRight) => ({ label: accessRight.label, url: accessRight.value })),
       isLink: false,
     },
     {
       label: 'Conforms to',
-      value: dataset.conformsTo,
+      value: dataset.conformsTo?.map((conform) => ({ label: conform.label, url: conform.value })),
       isLink: false,
     },
     {

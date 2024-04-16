@@ -9,16 +9,17 @@ import Link from "next/link";
 import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/button";
 import Chips from "./Chips";
-import { Dataset } from "@/types/dataset.types";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import { formatDate } from "@/utils/formatDate";
 
 type DatasetItemProps = {
-  dataset: Dataset;
+  dataset: SearchedDataset;
 };
 
 function DatasetItem({ dataset }: DatasetItemProps) {
   const { width: screenWidth } = useWindowSize();
-  const truncatedDesc = truncateDescription(dataset.notes, screenWidth);
+  const truncatedDesc = truncateDescription(dataset.description, screenWidth);
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
   const isInBasket = basket.some((ds) => ds.id === dataset.id);
@@ -37,14 +38,12 @@ function DatasetItem({ dataset }: DatasetItemProps) {
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
         <p className="text-sm text-info md:text-base">
-          {dataset.metadataCreated?.split("T")[0]}
+          {formatDate(dataset.createdAt)}
         </p>
       </div>
-      <p className="mb-4 text-sm text-info md:text-base">
-        {dataset.organization.title}
-      </p>
+      <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>
       <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
-      <Chips chips={dataset.theme || []} />
+      <Chips chips={dataset.themes?.map((x) => x.value) || []} />
       <div className="mt-4 flex w-full justify-end">
         {!isLoading && (
           <Button

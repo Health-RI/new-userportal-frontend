@@ -4,7 +4,6 @@
 
 "use client";
 
-import { Dataset } from "@/types/dataset.types";
 import DatasetList from "@/components/datasetList";
 import FilterList from "./FilterList";
 import PaginationContainer from "@/components/PaginationContainer";
@@ -16,31 +15,46 @@ import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { datasetList } from "@/services/ckan";
-import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
+import {
+  DatasetSearchQueryFacet,
+  FacetGroup,
+  DatasetSearchOptions,
+} from "@/services/discovery/types/datasetSearch.types";
 import { redirect } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import { datasetList } from "@/services/discovery/index.public";
 
-function parseFacets(queryParams: URLSearchParams): Record<string, string[]> {
-  const facets: Record<string, string[]> = {};
+function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
+  const facetsQuery: DatasetSearchQueryFacet[] = [];
+
   queryParams.forEach((value, key) => {
     if (!["page", "q", "sort"].includes(key)) {
-      facets[key] = value.split(",");
+      const group = key.split("-")[0];
+      const facet = key.split("-")[1];
+      const values = value.split(",");
+
+      values.map((v) =>
+        facetsQuery.push({
+          facetGroup: group,
+          facet: facet,
+          value: v,
+        }),
+      );
     }
   });
-  return facets;
+  return facetsQuery;
 }
 
 type Status = "loading" | "error" | "success";
 
 interface DatasetResponse {
   status: Status;
-  datasets?: Dataset[];
+  datasets?: SearchedDataset[];
   datasetCount?: number;
-  facets?: Facet[];
+  facetGroups?: FacetGroup[];
   errorCode?: number;
 }
 
@@ -60,7 +74,7 @@ export default function DatasetPage() {
   }
 
   useEffect(() => {
-    const options: PackageSearchOptions = {
+    const options: DatasetSearchOptions = {
       facets: parseFacets(queryParams),
       offset: queryParams.get("page") ? Number(queryParams.get("page")) - 1 : 0,
       limit: DATASET_PER_PAGE,
@@ -74,9 +88,9 @@ export default function DatasetPage() {
         setResponse({ status: "loading" });
         const response = await datasetList(options);
         setResponse({
-          datasets: response.datasets,
-          datasetCount: response.count,
-          facets: response.facets,
+          datasets: response.data?.datasets,
+          datasetCount: response.data?.count,
+          facetGroups: response.data?.facetGroups,
           status: "success",
         });
       } catch (error) {
@@ -105,11 +119,15 @@ export default function DatasetPage() {
       <div className="grid grid-cols-12">
         {isFullScreenFilterOpen ? (
           <div className="col-start-0 col-span-12 rounded-lg border bg-white-smoke">
-            <FilterList
-              facets={response!.facets!}
-              toggleFullScreenFilter={toggleFullScreenFilter}
-              queryParams={queryParams}
-            />
+            {response.facetGroups?.map((group) => (
+              <FilterList
+                key={group.key}
+                facets={group.facets}
+                toggleFullScreenFilter={toggleFullScreenFilter}
+                queryParams={queryParams}
+                groupKey={group.key}
+              />
+            ))}
           </div>
         ) : (
           <>
@@ -126,10 +144,14 @@ export default function DatasetPage() {
               {`${response.datasetCount!} ${response.datasetCount! > 1 ? "datasets" : "dataset"} found`}
             </p>
             <div className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block">
-              <FilterList
-                facets={response!.facets!}
-                queryParams={queryParams}
-              />
+              {response.facetGroups?.map((group) => (
+                <FilterList
+                  key={group.key}
+                  facets={group.facets}
+                  queryParams={queryParams}
+                  groupKey={group.key}
+                />
+              ))}
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
               <DatasetList datasets={response.datasets!} />

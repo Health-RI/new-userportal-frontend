@@ -4,23 +4,31 @@
 
 import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
 import { convertDataToFilterItemProps } from '../convertDataToFilterItemProps';
+import { Facet } from '@/services/discovery/types/datasetSearch.types';
 
 describe('Map field details objects to filter item props', () => {
   it('should map field details to filter item props', () => {
+    const groupKey = 'ckan';
     const facets = [
       {
         field: 'publisher_name',
         label: 'Publishers',
-        values: ['adeling NKR-analyse', 'Centro Nacional de Epidemiología', 'sciensano Network of General Practitioners team'],
-        count: 3,
+        values: [
+          { label: 'publisherName', value: 'adeling NKR-analyse' },
+          { label: 'publisherName', value: 'Centro Nacional de Epidemiología' },
+          { label: 'publisherName', value: 'sciensano Network of General Practitioners team' },
+        ],
       },
       {
         field: 'organization',
         label: 'Catalogues',
-        values: ['EU', 'lumc', 'Umcg'],
-        count: 3,
+        values: [
+          { label: 'organization', value: 'EU' },
+          { label: 'organization', value: 'lumc' },
+          { label: 'organization', value: 'Umcg' },
+        ],
       },
-    ];
+    ] as Facet[];
 
     const fieldToIconMap = {
       publisher_name: faUser,
@@ -31,17 +39,18 @@ describe('Map field details objects to filter item props', () => {
       {
         field: 'publisher_name',
         label: 'Publishers',
+        groupKey: groupKey,
         data: [
           {
-            label: 'adeling NKR-analyse',
+            label: 'publisherName',
             value: 'adeling NKR-analyse',
           },
           {
-            label: 'Centro Nacional de Epidemiología',
+            label: 'publisherName',
             value: 'Centro Nacional de Epidemiología',
           },
           {
-            label: 'sciensano Network of General Practitioners team',
+            label: 'publisherName',
             value: 'sciensano Network of General Practitioners team',
           },
         ],
@@ -50,17 +59,18 @@ describe('Map field details objects to filter item props', () => {
       {
         field: 'organization',
         label: 'Catalogues',
+        groupKey: groupKey,
         data: [
           {
-            label: 'EU',
+            label: 'organization',
             value: 'EU',
           },
           {
-            label: 'lumc',
+            label: 'organization',
             value: 'lumc',
           },
           {
-            label: 'Umcg',
+            label: 'organization',
             value: 'Umcg',
           },
         ],
@@ -68,17 +78,17 @@ describe('Map field details objects to filter item props', () => {
       },
     ];
 
-    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap, groupKey);
 
     expect(result).toEqual(expected);
   });
   it('should return object with empty data for facet with empty values', () => {
+    const groupKey = 'ckan';
     const facets = [
       {
         field: 'publisher_name',
         label: 'Publishers',
         values: [],
-        count: 3,
       },
     ];
 
@@ -90,12 +100,13 @@ describe('Map field details objects to filter item props', () => {
       {
         field: 'publisher_name',
         label: 'Publishers',
+        groupKey: groupKey,
         data: [],
         icon: faUser,
       },
     ];
 
-    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap, groupKey);
 
     expect(result).toEqual(expected);
   });
@@ -106,7 +117,6 @@ describe('Map field details objects to filter item props', () => {
         field: 'publisher_name',
         label: 'Publishers',
         values: [],
-        count: 3,
       },
     ];
 
@@ -118,12 +128,13 @@ describe('Map field details objects to filter item props', () => {
       {
         field: 'publisher_name',
         label: 'Publishers',
+        groupKey: '',
         data: [],
         icon: undefined,
       },
     ];
 
-    const result = convertDataToFilterItemProps(facets, fieldToIconMap);
+    const result = convertDataToFilterItemProps(facets, fieldToIconMap, '');
 
     expect(result).toEqual(expected);
   });

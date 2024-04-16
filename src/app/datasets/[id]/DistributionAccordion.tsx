@@ -9,11 +9,11 @@ import {
   faChevronUp,
   faFile,
 } from "@fortawesome/free-solid-svg-icons";
-import { DatasetDistribution } from "@/types/dataset.types";
 import { formatDate } from "@/utils/formatDate";
+import { RetrievedDistribution } from "@/services/discovery/types/dataset.types";
 
 interface DistributionAccordionProps {
-  distributions: DatasetDistribution[];
+  distributions: RetrievedDistribution[];
 }
 
 const DistributionAccordion = ({
@@ -45,9 +45,9 @@ const DistributionAccordion = ({
           >
             <span className="flex items-center">
               <FontAwesomeIcon icon={faFile} className="text-primary" />
-              <span className="ml-2">{distribution.name}</span>
+              <span className="ml-2">{distribution.title}</span>
               <span className="ml-4 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
-                {distribution.format}
+                {distribution.format.value}
               </span>
             </span>
             <FontAwesomeIcon
@@ -75,15 +75,9 @@ const DistributionAccordion = ({
                 <span className="text-sm">{distribution.description}</span>
               </div>
               <div>
-                <strong className="block text-sm font-semibold">
-                  Compress Format:
-                </strong>
-                <span className="text-sm">{distribution.compressFormat}</span>
-              </div>
-              <div>
                 <strong className="block text-sm font-semibold">Issued:</strong>
                 <span className="text-sm">
-                  {distribution.issued && formatDate(distribution.issued)}
+                  {distribution.createdAt && formatDate(distribution.createdAt)}
                 </span>
               </div>
               <div>
@@ -91,63 +85,10 @@ const DistributionAccordion = ({
                   Last Modified:
                 </strong>
                 <span className="text-sm">
-                  {distribution.modified && formatDate(distribution.modified)}
+                  {distribution.modifiedAt &&
+                    formatDate(distribution.modifiedAt)}
                 </span>
               </div>
-              <div>
-                <strong className="block text-sm font-semibold">
-                  Language:
-                </strong>
-                <span className="text-sm">{distribution.language}</span>
-              </div>
-              <div>
-                <strong className="block text-sm font-semibold">
-                  MIME Type:
-                </strong>
-                <span className="text-sm">{distribution.mimetype}</span>
-              </div>
-              <div>
-                <strong className="block text-sm font-semibold">Rights:</strong>
-                <span className="text-sm">{distribution.rights}</span>
-              </div>
-              <div>
-                <strong className="block text-sm font-semibold">
-                  Spatial Resolution in Meters:
-                </strong>
-                <span className="text-sm">
-                  {distribution.spatialResolutionInMeters}
-                </span>
-              </div>
-              <div>
-                <strong className="block text-sm font-semibold">
-                  Temporal Resolution:
-                </strong>
-                <span className="text-sm">
-                  {distribution.temporalResolution}
-                </span>
-              </div>
-              {distribution.accessUrl && (
-                <div className="col-span-1 mt-4 flex justify-center sm:col-span-2 sm:justify-start">
-                  <a
-                    href={distribution.accessUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded bg-primary px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-secondary"
-                  >
-                    Access URL
-                  </a>
-                  {distribution.downloadUrl && (
-                    <a
-                      href={distribution.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-4 inline-flex items-center justify-center rounded bg-primary px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-secondary"
-                    >
-                      Download URL
-                    </a>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </div>

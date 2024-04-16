@@ -5,11 +5,11 @@
 
 import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/button";
-import { Dataset } from "@/types/dataset.types";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 
 type AddToBasketBtnProps = {
-  dataset: Dataset;
+  dataset: SearchedDataset;
 };
 
 function AddToBasketBtn({ dataset }: AddToBasketBtnProps) {

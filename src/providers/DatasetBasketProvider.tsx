@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 import React, {
   createContext,
   useContext,
@@ -9,12 +10,11 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { Dataset } from "@/types/dataset.types";
 
 interface DatasetBasketContextType {
-  basket: Dataset[];
-  addDatasetToBasket: (dataset: Dataset) => void;
-  removeDatasetFromBasket: (dataset: Dataset) => void;
+  basket: SearchedDataset[];
+  addDatasetToBasket: (dataset: SearchedDataset) => void;
+  removeDatasetFromBasket: (dataset: SearchedDataset) => void;
   emptyBasket: () => void;
   isLoading: boolean;
 }
@@ -28,7 +28,7 @@ export const DatasetBasketProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [basket, setBasket] = useState<Dataset[]>([]);
+  const [basket, setBasket] = useState<SearchedDataset[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,11 +45,11 @@ export const DatasetBasketProvider = ({
     }
   }, [basket, isLoading]);
 
-  const addDatasetToBasket = (dataset: Dataset) => {
+  const addDatasetToBasket = (dataset: SearchedDataset) => {
     setBasket((prevBasket) => [...prevBasket, dataset]);
   };
 
-  const removeDatasetFromBasket = (dataset: Dataset) => {
+  const removeDatasetFromBasket = (dataset: SearchedDataset) => {
     setBasket((prevBasket) => prevBasket.filter((d) => d.id !== dataset.id));
   };
 

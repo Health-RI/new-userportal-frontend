@@ -22,11 +22,15 @@ function FieldAttachmentContainer({
 }: FieldAttachmentContainerProps) {
   const { application, addAttachment } = useApplicationDetails();
 
+  const fieldTitle =
+    field.title.find((label) => label.language === "en")?.name ||
+    field.title?.[0]?.name;
+
   return (
     <div className="mt-10 rounded border p-6">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg text-primary sm:text-xl">{`${field.title[0]?.name} Attachment`}</h3>
+          <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle} Attachment`}</h3>
         </div>
         <input
           type="file"

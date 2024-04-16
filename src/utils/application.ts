@@ -4,7 +4,7 @@
 
 import { Form, RetrievedApplication, State } from '@/types/application.types';
 
-function formatState(state: State) {
+function formatApplicationState(state: State) {
   if (!state) return '';
 
   const s = state.split('/')?.pop() || '';
@@ -55,7 +55,7 @@ function deleteAttachmentIdFromFieldValue(value: string, attachmentId: number) {
 export {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
-  formatState,
+  formatApplicationState,
   isApplicationComplete,
   updateFormWithNewAttachment,
 };

@@ -4,12 +4,15 @@
 
 "use client";
 
+import Button from "@/components/Button";
 import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
-import Button from "@/components/Button";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { State } from "@/types/application.types";
-import { formatState, isApplicationComplete } from "@/utils/application";
+import {
+  formatApplicationState,
+  isApplicationComplete,
+} from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import FormContainer from "./formContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
@@ -32,7 +35,7 @@ export default function ApplicationDetailsPage() {
               <PageHeading>Application {application.id}</PageHeading>
               {application.id && (
                 <div className="rounded bg-warning px-2.5 py-0.5 text-center text-sm font-semibold">
-                  {formatState(application.state)}
+                  {formatApplicationState(application.state)}
                 </div>
               )}
             </div>

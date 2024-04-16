@@ -19,6 +19,6 @@ export async function GET(request: Request, params: { params: { id: string } }) 
     const application = await retrieveApplication(id, session);
     return NextResponse.json({ success: true, body: application }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: `Failed to retrieve the application id ${id}` }, { status: 500 });
+    return NextResponse.json({ error: `Failed to retrieve application id ${id}` }, { status: 500 });
   }
 }

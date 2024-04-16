@@ -16,9 +16,9 @@ export async function POST(request: Request, params: { params: { id: string } })
   }
 
   try {
-    await submitApplication(id, session);
+    submitApplication(id, session);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: `Failed to retrieve the application id ${id}` }, { status: 500 });
+    return NextResponse.json({ error: `Failed to submit application id ${id}` }, { status: 500 });
   }
 }

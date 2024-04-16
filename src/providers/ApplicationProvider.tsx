@@ -3,7 +3,13 @@
 import { addAttachmentToApplication } from "@/services/daam/index.client";
 import { Form, FormField } from "@/types/application.types";
 import { useParams } from "next/navigation";
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import {
   ApplicationDetailsAction,
   ApplicationDetailsState,
@@ -32,7 +38,7 @@ function updateFormWithNewAttachment(
   formId: number,
   fieldId: number,
   newAttachmentId: number,
-  action: "add" | "delete",
+  action: (fieldValue: string, attachmentId: number) => string | null,
 ) {
   return forms.map((form) =>
     form.id === formId
@@ -45,21 +51,17 @@ function updateFieldWithNewAttachment(
   form: Form,
   fieldId: number,
   newAttachmentId: number,
-  action: "add" | "delete",
+  action: (fieldValue: string, attachmentId: number) => string | null,
 ) {
-  const callback =
-    action === "add"
-      ? addAttachmentIdToFieldValue
-      : deleteAttachmentIdFromFieldValue;
   return form.fields.map((field) =>
     field.id === fieldId
-      ? { ...field, value: callback(field.value, newAttachmentId) }
+      ? { ...field, value: action(field.value, newAttachmentId) }
       : field,
   );
 }
 
 function addAttachmentIdToFieldValue(value: string, newAttachmentId: number) {
-  return value ? `${value},${newAttachmentId}` : newAttachmentId;
+  return value ? `${value},${newAttachmentId}` : newAttachmentId.toString();
 }
 
 function deleteAttachmentIdFromFieldValue(value: string, attachmentId: number) {
@@ -87,16 +89,12 @@ function reducer(
         ...state,
         application: {
           ...state.application,
-          attachments: [
-            ...state.application!.attachments!,
-            action.payload.newAttachment,
-          ],
           forms: updateFormWithNewAttachment(
             state.application!.forms,
             action.payload.formId,
             action.payload.fieldId,
-            action.payload.newAttachment.attachmentId,
-            "add",
+            action.payload.attachmentId,
+            addAttachmentIdToFieldValue,
           ),
         },
         isLoading: false,
@@ -107,15 +105,12 @@ function reducer(
         ...state,
         application: {
           ...state.application,
-          attachments: state.application!.attachments.filter(
-            (attachment) => attachment.id !== action.payload.attachmentId,
-          ),
           forms: updateFormWithNewAttachment(
             state.application!.forms,
             action.payload.formId,
             action.payload.fieldId,
             action.payload.attachmentId,
-            "delete",
+            deleteAttachmentIdFromFieldValue,
           ),
           isLoading: false,
         },
@@ -149,19 +144,20 @@ function ApplicationDetailsProvider({
   );
   const { id } = useParams<{ id: string }>();
 
-  useEffect(() => {
-    async function fetchApplication() {
-      dispatch({ type: "loading" });
-      try {
-        const response = await fetch(`/api/applications/${id}`);
-        const retrievedApplication = (await response.json()).body;
-        dispatch({ type: "application/loaded", payload: retrievedApplication });
-      } catch {
-        dispatch({ type: "rejected", payload: "Failed to fetch application" });
-      }
+  const fetchApplication = useCallback(async () => {
+    dispatch({ type: "loading" });
+    try {
+      const response = await fetch(`/api/applications/${id}`);
+      const retrievedApplication = (await response.json()).body;
+      dispatch({ type: "application/loaded", payload: retrievedApplication });
+    } catch {
+      dispatch({ type: "rejected", payload: "Failed to fetch application" });
     }
-    fetchApplication();
   }, [id]);
+
+  useEffect(() => {
+    fetchApplication();
+  }, [id, fetchApplication]);
 
   async function addAttachment(
     formId: number,
@@ -177,18 +173,15 @@ function ApplicationDetailsProvider({
     try {
       dispatch({ type: "loading", payload: true });
 
-      const { id } = await addAttachmentToApplication(application.id, formData);
-
-      const newAttachment = {
-        id,
-        filename: (formData.get("file") as File)?.name || "",
-        type: (formData.get("file") as File)?.type || "",
-      };
+      const { id: attachmentId } = await addAttachmentToApplication(
+        application.id,
+        formData,
+      );
 
       dispatch({
         type: "application/attachment/attached",
         payload: {
-          newAttachment,
+          attachmentId,
           formId,
           fieldId,
         },
@@ -200,6 +193,7 @@ function ApplicationDetailsProvider({
       });
     }
     saveFormAndDuos();
+    fetchApplication();
   }
 
   function deleteAttachment(
@@ -216,6 +210,7 @@ function ApplicationDetailsProvider({
       },
     });
     saveFormAndDuos();
+    fetchApplication();
   }
 
   function saveFormAndDuos() {
@@ -241,6 +236,7 @@ function ApplicationDetailsProvider({
     fetch(`/api/applications/${application.id}/submit`, {
       method: "POST",
     });
+    fetchApplication();
   }
   return (
     <ApplicationContext.Provider

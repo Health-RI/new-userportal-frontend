@@ -2,13 +2,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import PageContainer from "@/components/PageContainer";
 "use client";
 
 import Button from "@/components/button";
 import PageHeading from "@/components/pageHeading";
 import Sidebar from "@/components/sidebar";
-import { useApplicationDetails } from "@/providers/ApplicationProvider";
+import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { State } from "@/types/application.types";
 import { formatState, isApplicationComplete } from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -54,11 +53,11 @@ export default function ApplicationDetailsPage() {
           <p className="mt-5">Last Event: {lastEvent} </p>
         </div>
 
-          <div className="mt-5 h-[2px] bg-secondary opacity-80"></div>
+        <div className="mt-5 h-[2px] bg-secondary opacity-80"></div>
 
-          <div className="mt-10 w-full xl:hidden">
-            <Sidebar items={sidebarItems} />
-          </div>
+        <div className="mt-10 w-full xl:hidden">
+          <Sidebar items={sidebarItems} />
+        </div>
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
         <ul>
@@ -73,10 +72,9 @@ export default function ApplicationDetailsPage() {
         </ul>
       </div>
 
-        <aside className="col-span-3 col-start-9 hidden xl:block">
-          <Sidebar items={sidebarItems} />
-        </aside>
-      </div>
-    </PageContainer>
+      <aside className="col-span-3 col-start-9 hidden xl:block">
+        <Sidebar items={sidebarItems} />
+      </aside>
+    </div>
   );
 }

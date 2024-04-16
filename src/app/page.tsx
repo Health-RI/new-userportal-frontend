@@ -4,16 +4,17 @@
 
 "use client";
 
-import { DatasetCounter } from "@/components/DatasetCounter";
 import PageContainer from "@/components/PageContainer";
-import { PortalStatistics } from "@/components/PortalStatistics";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/searchBar";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import dna from "../public/dna.jpg";
 import logo from "../public/gdi-logo.png";
 import gdi_visuals from "../public/gdi-visuals.png";
+import office from "../public/office.jpg";
+import { DatasetCounter } from "./datasetCounter";
+import { PortalStatistics } from "./portalStatistics";
 
 const HomePage = () => {
   const queryParams = useSearchParams();

@@ -4,25 +4,26 @@
 
 "use client";
 
-import { Dataset } from "@/types/dataset.types";
-import DatasetList from "@/components/datasetList";
-import FilterList from "./FilterList";
-import PaginationContainer from "@/components/PaginationContainer";
-import SearchBar from "@/components/SearchBar";
-import PageContainer from "@/components/PageContainer";
-import LoadingContainer from "@/components/LoadingContainer";
-import { useWindowSize } from "@/hooks";
-import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { datasetList } from "@/services/ckan";
-import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
-import { redirect } from "next/navigation";
-import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
+import LoadingContainer from "@/components/LoadingContainer";
+import PageContainer from "@/components/PageContainer";
+import PaginationContainer from "@/components/PaginationContainer";
+import SearchBar from "@/components/searchBar";
+import { useWindowSize } from "@/hooks";
+import { datasetList } from "@/services/ckan";
+import {
+  PackageSearchOptions,
+  type Facet,
+} from "@/services/ckan/types/packageSearch.types";
+import { Dataset } from "@/types/dataset.types";
+import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
+import { redirect, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import FilterList from "./FilterList";
+import DatasetList from "./datasetList";
 
 function parseFacets(queryParams: URLSearchParams): Record<string, string[]> {
   const facets: Record<string, string[]> = {};

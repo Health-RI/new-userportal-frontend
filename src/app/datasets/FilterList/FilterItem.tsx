@@ -2,9 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MultipleSelector from "@/components/shadcn/multipleSelector";
 import { FilterItemProps } from "@/utils/convertDataToFilterItemProps";
-import MultipleSelector from "@/components/ui/multipleSelector";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function FilterItem({ field, label, data, icon }: FilterItemProps) {
   return (

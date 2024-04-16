@@ -76,14 +76,11 @@ function reducer(
   }
 }
 
-type ApplicationDetailsProviderProps = {
+type ApplicationProviderProps = {
   children: React.ReactNode;
-  pathname: string;
 };
 
-function ApplicationDetailsProvider({
-  children,
-}: ApplicationDetailsProviderProps) {
+function ApplicationProvider({ children }: ApplicationProviderProps) {
   const initialState: ApplicationDetailsState = {
     application: null,
     isLoading: false,
@@ -217,4 +214,4 @@ function useApplicationDetails() {
   return context;
 }
 
-export { ApplicationDetailsProvider, useApplicationDetails };
+export { ApplicationProvider, useApplicationDetails };

@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useApplicationDetails } from "@/providers/ApplicationProvider";
+import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { FormField } from "@/types/application.types";
 import { isApplicationComplete } from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";

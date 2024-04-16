@@ -142,10 +142,15 @@ interface AddedAttachment {
   id: number;
 }
 
+interface CreateApplicationResponse {
+  applicationId: number;
+}
+
 export type {
   AddedAttachment,
   Applicant,
   Attachment,
+  CreateApplicationResponse,
   Dataset,
   Event,
   Form,

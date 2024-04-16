@@ -1,7 +1,11 @@
 "use client";
 
 import { addAttachmentToApplication } from "@/services/daam/index.client";
-import { Form, FormField } from "@/types/application.types";
+import {
+  Form,
+  FormField,
+  RetrievedApplication,
+} from "@/types/application.types";
 import {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
@@ -16,9 +20,10 @@ import {
   useReducer,
 } from "react";
 import {
+  ApplicationAction,
+  ApplicationActionType,
   ApplicationContextState,
-  ApplicationDetailsAction,
-  ApplicationDetailsState,
+  ApplicationState,
 } from "./ApplicationProvider.types";
 
 const ApplicationContext = createContext<ApplicationContextState | undefined>(
@@ -26,50 +31,64 @@ const ApplicationContext = createContext<ApplicationContextState | undefined>(
 );
 
 function reducer(
-  state: ApplicationDetailsState,
-  action: ApplicationDetailsAction,
-) {
+  state: ApplicationState,
+  action: ApplicationAction,
+): ApplicationState {
   switch (action.type) {
-    case "loading":
+    case ApplicationActionType.LOADING:
       return { ...state, isLoading: true };
 
-    case "application/loaded":
-      return { ...state, application: action.payload, isLoading: false };
-
-    case "application/attachment/attached":
+    case ApplicationActionType.APPLICATION_LOADED:
       return {
         ...state,
-        application: {
-          ...state.application,
-          forms: updateFormWithNewAttachment(
-            state.application!.forms,
-            action.payload.formId,
-            action.payload.fieldId,
-            action.payload.attachmentId,
-            addAttachmentIdToFieldValue,
-          ),
-        },
+        application: action.payload as RetrievedApplication,
         isLoading: false,
       };
 
-    case "application/attachment/deleted":
+    case ApplicationActionType.ATTACHMENT_ATTACHED:
+      const attachPayload = action.payload as {
+        formId: number;
+        fieldId: number;
+        attachmentId: number;
+      };
       return {
         ...state,
         application: {
           ...state.application,
           forms: updateFormWithNewAttachment(
             state.application!.forms,
-            action.payload.formId,
-            action.payload.fieldId,
-            action.payload.attachmentId,
-            deleteAttachmentIdFromFieldValue,
-          ),
-          isLoading: false,
-        },
+            attachPayload.formId,
+            attachPayload.fieldId,
+            attachPayload.attachmentId,
+            addAttachmentIdToFieldValue,
+          ) as Form[],
+        } as RetrievedApplication,
+        isLoading: false,
       };
 
-    case "rejected":
-      return { ...state, error: action.payload, isLoading: false };
+    case ApplicationActionType.ATTACHMENT_DELETED:
+      const deletePayload = action.payload as {
+        formId: number;
+        fieldId: number;
+        attachmentId: number;
+      };
+      return {
+        ...state,
+        application: {
+          ...state.application,
+          forms: updateFormWithNewAttachment(
+            state.application!.forms,
+            deletePayload.formId,
+            deletePayload.fieldId,
+            deletePayload.attachmentId,
+            deleteAttachmentIdFromFieldValue,
+          ) as Form[],
+        } as RetrievedApplication,
+        isLoading: false,
+      };
+
+    case ApplicationActionType.REJECTED:
+      return { ...state, error: action.payload as string, isLoading: false };
 
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -81,7 +100,7 @@ type ApplicationProviderProps = {
 };
 
 function ApplicationProvider({ children }: ApplicationProviderProps) {
-  const initialState: ApplicationDetailsState = {
+  const initialState: ApplicationState = {
     application: null,
     isLoading: false,
     error: null,
@@ -95,13 +114,19 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
   const { id } = useParams<{ id: string }>();
 
   const fetchApplication = useCallback(async () => {
-    dispatch({ type: "loading" });
+    dispatch({ type: ApplicationActionType.LOADING });
     try {
       const response = await fetch(`/api/applications/${id}`);
       const retrievedApplication = (await response.json()).body;
-      dispatch({ type: "application/loaded", payload: retrievedApplication });
+      dispatch({
+        type: ApplicationActionType.APPLICATION_LOADED,
+        payload: retrievedApplication,
+      });
     } catch {
-      dispatch({ type: "rejected", payload: "Failed to fetch application" });
+      dispatch({
+        type: ApplicationActionType.REJECTED,
+        payload: "Failed to fetch application",
+      });
     }
   }, [id]);
 
@@ -116,20 +141,20 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
   ): Promise<void> {
     if (!formData.get("file"))
       dispatch({
-        type: "rejected",
+        type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment: no file has been provided",
       });
 
     try {
-      dispatch({ type: "loading", payload: true });
+      dispatch({ type: ApplicationActionType.LOADING });
 
       const { id: attachmentId } = await addAttachmentToApplication(
-        application.id,
+        application!.id,
         formData,
       );
 
       dispatch({
-        type: "application/attachment/attached",
+        type: ApplicationActionType.ATTACHMENT_ATTACHED,
         payload: {
           attachmentId,
           formId,
@@ -138,7 +163,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
       });
     } catch {
       dispatch({
-        type: "rejected",
+        type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment",
       });
     }
@@ -152,7 +177,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     attachmentId: number,
   ) {
     dispatch({
-      type: "application/attachment/deleted",
+      type: ApplicationActionType.ATTACHMENT_DELETED,
       payload: {
         attachmentId,
         formId,
@@ -164,13 +189,13 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
   }
 
   function saveFormAndDuos() {
-    fetch(`/api/applications/${application.id}/save-forms-and-duos`, {
+    fetch(`/api/applications/${application!.id}/save-forms-and-duos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        forms: application.forms.map((form: Form) => ({
+        forms: application!.forms.map((form: Form) => ({
           id: form.id,
           fields: form.fields.map((field: FormField) => ({
             fieldId: field.id,
@@ -183,7 +208,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
   }
 
   function submitApplication() {
-    fetch(`/api/applications/${application.id}/submit`, {
+    fetch(`/api/applications/${application!.id}/submit`, {
       method: "POST",
     });
     fetchApplication();

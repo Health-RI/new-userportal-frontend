@@ -4,7 +4,7 @@
 
 import { jest } from '@jest/globals';
 import axios from 'axios';
-import { makeDatasetList } from '../server/datasetList';
+import { makeDatasetList } from '../datasetList';
 import { searchedDatasetFixture } from '../fixtures/datasetFixtures';
 
 jest.mock('axios');

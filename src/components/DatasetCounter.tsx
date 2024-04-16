@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 "use client";
+import { datasetCount } from "@/services/discovery/index.public";
 import React, { useEffect, useState } from "react";
-import { datasetCount } from "@/services/discovery/index.server";
 
 export function DatasetCounter() {
   const [count, setCount] = useState<number | null>(null);

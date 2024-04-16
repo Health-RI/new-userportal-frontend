@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 import { jest } from '@jest/globals';
-import { makeDatasetCount } from '../server/datasetCount';
+import { makeDatasetCount } from '../public/datasetCount';
 import axios from 'axios';
 
 jest.mock('axios');

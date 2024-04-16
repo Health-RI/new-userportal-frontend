@@ -25,7 +25,7 @@ import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
 import { AxiosError } from "axios";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
-import { datasetList } from "@/services/discovery/index.client";
+import { datasetList } from "@/services/discovery/index.public";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
   const facetsQuery: DatasetSearchQueryFacet[] = [];

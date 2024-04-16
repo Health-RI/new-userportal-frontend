@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { datasetList } from '@/services/discovery/index.server';
+import { datasetList } from '@/services/discovery';
 import { mapFacetGroups } from '@/services/discovery/utils';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';

@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import axios, { AxiosResponse } from 'axios';
-import { DatasetSearchQuery, DatasetSearchOptions, DatasetsSearchResponse } from '../types/datasetSearch.types';
-import { createHeaders } from '../utils';
+import { DatasetSearchQuery, DatasetSearchOptions, DatasetsSearchResponse } from './types/datasetSearch.types';
+import { createHeaders } from './utils';
 import { ExtendedSession } from '@/utils/auth';
 
 export const makeDatasetList = (discoveryUrl: string) => {

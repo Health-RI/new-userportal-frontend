@@ -4,7 +4,7 @@
 "use client";
 
 import Button from "@/components/button";
-import Chips from "@/components/chips";
+import Chips from "@/components/Chips";
 import { useWindowSize } from "@/hooks";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { Dataset } from "@/types/dataset.types";

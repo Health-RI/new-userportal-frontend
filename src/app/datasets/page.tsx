@@ -8,7 +8,7 @@ import Error from "@/app/error";
 import LoadingContainer from "@/components/LoadingContainer";
 import PageContainer from "@/components/PageContainer";
 import PaginationContainer from "@/components/PaginationContainer";
-import SearchBar from "@/components/searchBar";
+import SearchBar from "@/components/SearchBar";
 import { useWindowSize } from "@/hooks";
 import { datasetList } from "@/services/ckan";
 import {

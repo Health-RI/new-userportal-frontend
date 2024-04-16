@@ -2,13 +2,6 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {
@@ -17,6 +10,13 @@ import {
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 

@@ -5,7 +5,7 @@
 "use client";
 
 import PageContainer from "@/components/PageContainer";
-import SearchBar from "@/components/searchBar";
+import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";

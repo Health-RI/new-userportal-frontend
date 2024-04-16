@@ -1,10 +1,12 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
+
 "use client";
 
 import { useApplicationDetails } from "@/providers/ApplicationProvider";
-import { Attachment, FormField } from "@/types/application.types";
+import { FormField } from "@/types/application.types";
+import { isApplicationComplete } from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FileUploaded from "./fileUploaded";
@@ -37,6 +39,7 @@ function FieldAttachmentContainer({
             addAttachment(formId, field.id, formData);
           }}
           className="hidden"
+          disabled={!isApplicationComplete(application!)}
         />
         <label
           htmlFor="file-upload"
@@ -48,11 +51,19 @@ function FieldAttachmentContainer({
       </div>
 
       <ul className="mt-5 grid grid-cols-2 gap-x-6">
-        {application?.attachments.map((attachment: Attachment) => (
-          <li key={attachment.id} className="list-none">
-            <FileUploaded filename={attachment.filename} />
-          </li>
-        ))}
+        {field.value &&
+          field.value.split(",").map((attachmentId: string) => {
+            const attachment = application?.attachments.find(
+              (a) => a.id === parseInt(attachmentId),
+            );
+            return (
+              attachment && (
+                <li key={attachmentId} className="list-none">
+                  <FileUploaded filename={attachment.filename} />
+                </li>
+              )
+            );
+          })}
       </ul>
     </div>
   );

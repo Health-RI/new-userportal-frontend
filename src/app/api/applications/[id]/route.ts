@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { retrieveApplication } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';

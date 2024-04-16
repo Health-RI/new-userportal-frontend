@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { Form } from "@/types/application.types";
 import FieldContainer from "./fieldContainer";
 

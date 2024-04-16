@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { SaveDUOCode, SaveForm } from '@/types/application.types';
 import { ExtendedSession } from '@/utils/auth';
 import { decrypt } from '@/utils/encryption';

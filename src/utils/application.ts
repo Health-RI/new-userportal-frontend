@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { Form, RetrievedApplication, State } from '@/types/application.types';
 
 function formatState(state: State) {

@@ -23,7 +23,7 @@ import {
   type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@/components/button";
+import Button from "@/components/Button";
 import FilterItem from "./FilterItem";
 
 const fieldToIconMap: Record<FacetType, IconDefinition> = {

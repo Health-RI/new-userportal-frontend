@@ -25,7 +25,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Button from "../button";
+import Button from "../Button";
 import ApplicationIcon from "./ApplicationIcon";
 import Avatar from "./Avatar";
 

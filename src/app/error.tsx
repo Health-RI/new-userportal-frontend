@@ -4,7 +4,7 @@
 
 "use client";
 
-import Button from "@/components/button";
+import Button from "@/components/Button";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 

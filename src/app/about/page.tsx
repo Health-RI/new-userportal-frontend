@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import PageContainer from "@/components/PageContainer";
-import PageHeading from "@/components/pageHeading";
-import PageSubHeading from "@/components/pageSubHeading";
+import PageHeading from "@/components/PageHeading";
+import PageSubHeading from "@/components/PageSubHeading";
 import React from "react";
 
 const AboutPage: React.FC = () => {

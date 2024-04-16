@@ -8,7 +8,7 @@ import Error from "@/app/error";
 import LoadingContainer from "@/components/LoadingContainer";
 import PageContainer from "@/components/PageContainer";
 import PaginationContainer from "@/components/PaginationContainer";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/Searchbar";
 import { useWindowSize } from "@/hooks";
 import { datasetList } from "@/services/discovery/index.public";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";

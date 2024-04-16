@@ -4,7 +4,7 @@
 "use client";
 
 import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/components/button";
+import Button from "@/components/Button";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 

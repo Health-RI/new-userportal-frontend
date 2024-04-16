@@ -4,9 +4,9 @@
 
 "use client";
 
-import Button from "@/components/button";
-import PageHeading from "@/components/pageHeading";
-import Sidebar from "@/components/sidebar";
+import PageHeading from "@/components/PageHeading";
+import Sidebar from "@/components/Sidebar";
+import Button from "@/components/Button";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { State } from "@/types/application.types";
 import { formatState, isApplicationComplete } from "@/utils/application";

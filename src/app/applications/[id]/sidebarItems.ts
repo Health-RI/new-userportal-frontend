@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { SidebarItem } from '@/components/sidebar';
+import { SidebarItem } from '@/components/Sidebar';
 import { RetrievedApplication } from '@/types/application.types';
 import { formatDate } from '@/utils/formatDate';
 

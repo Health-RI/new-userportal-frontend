@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
+import Alert, { AlertState } from "@/components/Alert";
+import Button from "@/components/Button";
 import ListContainer from "@/components/ListContainer";
 import LoadingContainer from "@/components/LoadingContainer";
 import PageContainer from "@/components/PageContainer";
-import Alert, { AlertState } from "@/components/alert";
-import Button from "@/components/button";
-import PageHeading from "@/components/pageHeading";
+import PageHeading from "@/components/PageHeading";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { createApplication } from "@/services/daam/index.client";
 import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";

@@ -6,62 +6,21 @@
 import Button from "@/components/button";
 import PageHeading from "@/components/pageHeading";
 import Sidebar from "@/components/sidebar";
-import { RetrievedApplication, State } from "@/types/application.types";
+import { useApplicationDetails } from "@/providers/ApplicationProvider";
+import { State } from "@/types/application.types";
+import { formatState, isApplicationComplete } from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
 import FormContainer from "./formContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
-type ApplicationDetailsPageProps = {
-  params: { id: string };
-};
+export default function ApplicationDetailsPage() {
+  const { application, submitApplication } = useApplicationDetails();
 
-export default function ApplicationDetailsPage({
-  params,
-}: ApplicationDetailsPageProps) {
-  const { id } = params;
-
-  const [application, setApplication] = useState<RetrievedApplication>(
-    {} as RetrievedApplication,
-  );
-
-  useEffect(() => {
-    async function fetchApplication() {
-      const response = await fetch(`/api/applications/${id}`);
-
-      if (!response.ok) {
-        console.error("Failed to fetch application", response.status);
-        return;
-      }
-      const retrievedApplication = (await response.json()).body;
-      setApplication(retrievedApplication);
-    }
-    fetchApplication();
-  }, [id]);
+  if (!application) return;
 
   const events = application.events || [];
   const lastEvent = events[events.length - 1]?.eventType || "";
   const sidebarItems = createApplicationSidebarItems(application);
-
-  function formatState(state: State) {
-    if (!state) return "";
-
-    const s = state.split("/")?.pop() || "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  }
-
-  function isApplicationComplete(application: RetrievedApplication) {
-    return application.forms
-      .map((form) => form.fields)
-      .flat()
-      .every((field) => field.value?.split(",")?.length > 0);
-  }
-
-  function submitApplication() {
-    fetch(`/api/applications/${id}/submit`, {
-      method: "POST",
-    });
-  }
 
   return (
     <div className="mx-8 mt-20 md:mx-auto md:w-3/4 xl:mx-0 xl:grid xl:w-full xl:grid-cols-12 xl:gap-x-20">
@@ -101,16 +60,14 @@ export default function ApplicationDetailsPage({
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
         <ul>
-          {application.forms &&
-            application.forms.map((form) => (
-              <li key={form.id}>
-                <FormContainer
-                  form={form}
-                  application={application}
-                  setApplication={setApplication}
-                />
-              </li>
-            ))}
+          {application.forms?.map(
+            (form) =>
+              form && (
+                <li key={form.id}>
+                  <FormContainer form={form} />
+                </li>
+              ),
+          )}
         </ul>
       </div>
 

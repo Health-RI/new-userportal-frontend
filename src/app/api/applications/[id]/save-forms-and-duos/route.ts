@@ -12,6 +12,7 @@ export async function POST(request: Request, params: { params: { id: string } })
   }
 
   const { forms, duosCodes } = await request.json();
+  console.log(forms, duosCodes);
 
   try {
     saveFormAndDuos(id, forms, duosCodes, session);

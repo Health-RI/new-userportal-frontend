@@ -7,7 +7,6 @@ export function makeAddAttachmentToApplication(daamUrl: string) {
     const response = await fetch(`${daamUrl}/api/v1/applications/${applicationId}/attachments`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${decrypt(session.access_token)}`,
       },
       body: attachment,

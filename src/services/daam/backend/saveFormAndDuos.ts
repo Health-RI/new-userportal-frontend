@@ -8,7 +8,7 @@ export function makeSaveFormsAndDuos(daamUrl: string) {
       forms: forms,
       duoCodes: duoCodes,
     };
-    const response = await fetch(`${daamUrl}/api/v1/applications/${applicationId}/save-forms-and-duos`, {
+    await fetch(`${daamUrl}/api/v1/applications/${applicationId}/save-forms-and-duos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,6 +16,5 @@ export function makeSaveFormsAndDuos(daamUrl: string) {
       },
       body: JSON.stringify(requestBody),
     });
-    return response.json();
   };
 }

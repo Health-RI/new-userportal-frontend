@@ -3,103 +3,39 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import { addAttachmentToApplication } from "@/services/daam/index.client";
-import { FormField, RetrievedApplication } from "@/types/application.types";
+import { useApplicationDetails } from "@/providers/ApplicationProvider";
+import { Attachment, FormField } from "@/types/application.types";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "next/navigation";
-import { useState } from "react";
 import FileUploaded from "./fileUploaded";
 
 type FieldAttachmentContainerProps = {
-  field: FormField;
   formId: number;
-  application: RetrievedApplication;
-  setApplication: React.Dispatch<React.SetStateAction<RetrievedApplication>>;
+  field: FormField;
 };
 
 function FieldAttachmentContainer({
-  field,
   formId,
-  application,
-  setApplication,
+  field,
 }: FieldAttachmentContainerProps) {
-  const [files, setFiles] = useState<File[]>([]);
-  const id = useParams()["id"] as string;
-
-  async function onUploadFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    setFiles((files) => [...files, file]);
-
-    try {
-      const data = new FormData();
-      data.set("file", file);
-
-      const { id: attachmentId } = await addAttachmentToApplication(id, data);
-
-      setApplication((application) => {
-        return {
-          ...application,
-          attachments: [
-            ...application.attachments,
-            { id: attachmentId, filename: file.name, type: file.type },
-          ],
-          forms: application.forms.map((form) => {
-            if (!(form.id === formId)) return form;
-
-            return {
-              ...form,
-              fields: form.fields.map((field) => {
-                if (!(field.id === field.id)) return field;
-
-                return {
-                  ...field,
-                  value: files.map((file) => file.name).join(","),
-                };
-              }),
-            };
-          }),
-        };
-      });
-
-      fetch(`/api/applications/${id}/save-forms-and-duos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          forms: application.forms.map((form) => ({
-            id: form.id,
-            fields: form.fields.map((field) => ({
-              fieldId: field.id,
-              value: field.value,
-            })),
-          })),
-          duosCodes: [],
-        }),
-      });
-
-      const response = await fetch(`/api/applications/${id}`);
-      const retrievedApplication = (await response.json()).body;
-      setApplication(retrievedApplication);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const { application, addAttachment } = useApplicationDetails();
 
   return (
     <div className="mt-10 rounded border p-6">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg text-primary sm:text-xl">{`${field.title[0].name} Attachment`}</h3>
+          <h3 className="text-lg text-primary sm:text-xl">{`${field.title[0]?.name} Attachment`}</h3>
         </div>
         <input
           type="file"
           id="file-upload"
-          onChange={onUploadFile}
+          onChange={(e) => {
+            const file = e.target?.files?.[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.set("file", file);
+            addAttachment(formId, field.id, formData);
+          }}
           className="hidden"
         />
         <label
@@ -112,10 +48,9 @@ function FieldAttachmentContainer({
       </div>
 
       <ul className="mt-5 grid grid-cols-2 gap-x-6">
-        {" "}
-        {files.map((file: File, index) => (
-          <li key={index} className="list-none">
-            <FileUploaded filename={file.name} />
+        {application?.attachments.map((attachment: Attachment) => (
+          <li key={attachment.id} className="list-none">
+            <FileUploaded filename={attachment.filename} />
           </li>
         ))}
       </ul>

@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { ApplicationDetailsProvider } from "@/providers/ApplicationProvider";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -31,18 +32,20 @@ export default function RootLayout({
       </head>
       <body>
         <DatasetBasketProvider>
-          <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
-            <SessionProviderWrapper>
-              <div>
-                <Header />
-              </div>
-              <div>{children}</div>
-              <div>
-                <Disclaimer />
-                <Footer />
-              </div>
-            </SessionProviderWrapper>
-          </div>
+          <ApplicationDetailsProvider>
+            <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
+              <SessionProviderWrapper>
+                <div>
+                  <Header />
+                </div>
+                <div>{children}</div>
+                <div>
+                  <Disclaimer />
+                  <Footer />
+                </div>
+              </SessionProviderWrapper>
+            </div>
+          </ApplicationDetailsProvider>
         </DatasetBasketProvider>
       </body>
     </html>

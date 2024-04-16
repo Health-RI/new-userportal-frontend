@@ -2,6 +2,11 @@
 
 import { addAttachmentToApplication } from "@/services/daam/index.client";
 import { Form, FormField } from "@/types/application.types";
+import {
+  addAttachmentIdToFieldValue,
+  deleteAttachmentIdFromFieldValue,
+  updateFormWithNewAttachment,
+} from "@/utils/application";
 import { useParams } from "next/navigation";
 import {
   createContext,
@@ -11,67 +16,14 @@ import {
   useReducer,
 } from "react";
 import {
+  ApplicationContextState,
   ApplicationDetailsAction,
   ApplicationDetailsState,
 } from "./ApplicationProvider.types";
 
-type ApplicationContextState = ApplicationDetailsState & {
-  addAttachment: (
-    formId: number,
-    fieldId: number,
-    formData: FormData,
-  ) => Promise<void>;
-  deleteAttachment: (
-    formId: number,
-    fieldId: number,
-    attachmentId: number,
-  ) => void;
-  submitApplication: () => void;
-};
-
 const ApplicationContext = createContext<ApplicationContextState | undefined>(
   undefined,
 );
-
-function updateFormWithNewAttachment(
-  forms: Form[],
-  formId: number,
-  fieldId: number,
-  newAttachmentId: number,
-  action: (fieldValue: string, attachmentId: number) => string | null,
-) {
-  return forms.map((form) =>
-    form.id === formId
-      ? updateFieldWithNewAttachment(form, fieldId, newAttachmentId, action)
-      : form,
-  );
-}
-
-function updateFieldWithNewAttachment(
-  form: Form,
-  fieldId: number,
-  newAttachmentId: number,
-  action: (fieldValue: string, attachmentId: number) => string | null,
-) {
-  return form.fields.map((field) =>
-    field.id === fieldId
-      ? { ...field, value: action(field.value, newAttachmentId) }
-      : field,
-  );
-}
-
-function addAttachmentIdToFieldValue(value: string, newAttachmentId: number) {
-  return value ? `${value},${newAttachmentId}` : newAttachmentId.toString();
-}
-
-function deleteAttachmentIdFromFieldValue(value: string, attachmentId: number) {
-  return value === attachmentId.toString()
-    ? null
-    : value
-        .split(",")
-        .filter((id) => id !== attachmentId.toString())
-        .join(",");
-}
 
 function reducer(
   state: ApplicationDetailsState,
@@ -117,7 +69,7 @@ function reducer(
       };
 
     case "rejected":
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, isLoading: false };
 
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -142,6 +94,7 @@ function ApplicationDetailsProvider({
     reducer,
     initialState,
   );
+
   const { id } = useParams<{ id: string }>();
 
   const fetchApplication = useCallback(async () => {

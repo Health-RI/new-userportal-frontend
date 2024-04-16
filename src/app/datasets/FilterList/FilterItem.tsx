@@ -6,7 +6,7 @@ import MultipleSelector from "@/components/shadcn/multipleSelector";
 import { FilterItemProps } from "@/utils/convertDataToFilterItemProps";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function FilterItem({ field, label, data, icon }: FilterItemProps) {
+function FilterItem({ field, label, data, icon, groupKey }: FilterItemProps) {
   return (
     <div>
       <div className="mb-3 flex items-center gap-x-3">
@@ -17,7 +17,7 @@ function FilterItem({ field, label, data, icon }: FilterItemProps) {
         <p className="text-bold text-info">{label}</p>
       </div>
       <MultipleSelector
-        field={field}
+        field={`${groupKey}-${field}`}
         defaultOptions={data}
         placeholder={label}
         className="text-[0.8rem]"

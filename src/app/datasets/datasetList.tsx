@@ -2,19 +2,19 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { Dataset } from "@/types/dataset.types";
 import List from "@/components/List";
 import ListItem from "@/components/List/ListItem";
 import DatasetItem from "./datasetItem";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 
 type DatasetListProps = {
-  datasets: Dataset[];
+  datasets: SearchedDataset[];
 };
 
 function DatasetList({ datasets }: DatasetListProps) {
   return (
     <List>
-      {datasets.map((dataset: Dataset) => (
+      {datasets.map((dataset: SearchedDataset) => (
         <ListItem key={dataset.id}>
           <DatasetItem dataset={dataset} />
         </ListItem>

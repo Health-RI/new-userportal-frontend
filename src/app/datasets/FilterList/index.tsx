@@ -2,11 +2,14 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
 import {
-  convertDataToFilterItemProps,
   FilterItemProps,
+  convertDataToFilterItemProps,
 } from "@/utils/convertDataToFilterItemProps";
+import {
+  FacetType,
+  type Facet,
+} from "@/services/discovery/types/datasetSearch.types";
 import {
   faBook,
   faFilter,
@@ -23,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/button";
 import FilterItem from "./FilterItem";
 
-const fieldToIconMap: Record<string, IconDefinition> = {
+const fieldToIconMap: Record<FacetType, IconDefinition> = {
   publisher_name: faUser,
   organization: faBook,
   theme: faTags,
@@ -37,18 +40,20 @@ type FilterListProps = {
   facets: Facet[];
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: URLSearchParams;
+  groupKey: string;
 };
 
 function FilterList({
   facets,
   toggleFullScreenFilter,
   queryParams,
+  groupKey,
 }: FilterListProps) {
   const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
     facets,
     fieldToIconMap,
+    groupKey,
   );
-
   function isAnyFilterApplied() {
     if (!queryParams) return false;
     return Array.from(queryParams.keys()).some(
@@ -63,6 +68,7 @@ function FilterList({
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>
+          <span className="mr-2">{groupKey.toUpperCase()}</span>
           Filters
         </h1>
         {toggleFullScreenFilter && (
@@ -81,6 +87,7 @@ function FilterList({
             label={props.label}
             data={props.data}
             icon={props.icon}
+            groupKey={props.groupKey}
           />
         </li>
       ))}

@@ -3,22 +3,23 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import Button from "@/components/button";
 import Chips from "@/components/Chips";
+import Button from "@/components/button";
 import { useWindowSize } from "@/hooks";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
-import { Dataset } from "@/types/dataset.types";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import { formatDate } from "@/utils/formatDate";
 import { truncateDescription } from "@/utils/textProcessing";
 import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 type DatasetItemProps = {
-  dataset: Dataset;
+  dataset: SearchedDataset;
 };
 
 function DatasetItem({ dataset }: DatasetItemProps) {
   const { width: screenWidth } = useWindowSize();
-  const truncatedDesc = truncateDescription(dataset.notes, screenWidth);
+  const truncatedDesc = truncateDescription(dataset.description, screenWidth);
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
   const isInBasket = basket.some((ds) => ds.id === dataset.id);
@@ -37,14 +38,12 @@ function DatasetItem({ dataset }: DatasetItemProps) {
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
         <p className="text-sm text-info md:text-base">
-          {dataset.metadataCreated?.split("T")[0]}
+          {formatDate(dataset.createdAt)}
         </p>
       </div>
-      <p className="mb-4 text-sm text-info md:text-base">
-        {dataset.organization.title}
-      </p>
+      <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>
       <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
-      <Chips chips={dataset.theme || []} />
+      <Chips chips={dataset.themes?.map((x) => x.value) || []} />
       <div className="mt-4 flex w-full justify-end">
         {!isLoading && (
           <Button

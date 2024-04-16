@@ -2,23 +2,11 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import MultipleSelector, {
-  type Option,
-} from "@/components/shadcn/multipleSelector";
-import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FilterItemProps } from "@/utils/convertDataToFilterItemProps";
+import MultipleSelector from "@/components/ui/multipleSelector";
 
-export type FilterItemProps = {
-  label: string;
-  data: Option[];
-  icon: IconDefinition;
-};
-
-function capitalizeFirstLetter(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function FilterItem({ label, data, icon }: FilterItemProps) {
+function FilterItem({ field, label, data, icon }: FilterItemProps) {
   return (
     <div>
       <div className="mb-3 flex items-center gap-x-3">
@@ -26,10 +14,10 @@ function FilterItem({ label, data, icon }: FilterItemProps) {
           icon={icon}
           className="text-xs font-extrabold text-info"
         />
-        <p className="text-bold text-info">{capitalizeFirstLetter(label)}</p>
+        <p className="text-bold text-info">{label}</p>
       </div>
       <MultipleSelector
-        label={label}
+        field={field}
         defaultOptions={data}
         placeholder={label}
         className="text-[0.8rem]"

@@ -3,15 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import Alert, { AlertState } from "@/components/alert";
+import Alert, { AlertState } from "@/components/Alert";
+import ListContainer from "@/components/ListContainer";
+import LoadingContainer from "@/components/LoadingContainer";
+import PageContainer from "@/components/PageContainer";
+import PageHeading from "@/components/PageHeading";
 import Button from "@/components/button";
-import PageHeading from "@/components/pageHeading";
+import DatasetList from "@/components/datasetList";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { createApplication } from "@/services/daam/index.client";
 import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
-import DatasetList from "../datasets/datasetList";
 
 export default function Page() {
   const { basket, isLoading, emptyBasket } = useDatasetBasket();
@@ -24,28 +27,19 @@ export default function Page() {
   }
 
   if (isLoading || status === "loading") {
-    return (
-      <div className="w-full" style={{ height: "calc(100vh - 100px)" }}>
-        <div className="flex h-full items-center justify-center">
-          <div className="text-lg font-semibold text-primary">
-            Loading your basket...
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingContainer text="Loading your basket..." />;
   }
 
   const requestNow = async () => {
     try {
-      await createApplication(basket.map((dataset) => dataset.id));
-      setAlert({
-        message: "Application created successfully",
-        type: "success",
-      });
+      const response = await createApplication(
+        basket.map((dataset) => dataset.id),
+      );
       emptyBasket();
+      window.location.href = `/applications/${response.applicationId}`;
     } catch (error) {
       setAlert({
-        message: "Somethng went wrong. Please try again.",
+        message: "Something went wrong. Please try again.",
         type: "error",
       });
     }
@@ -80,7 +74,7 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full p-10">
+    <PageContainer>
       {alert && (
         <Alert
           type={alert.type}
@@ -89,7 +83,7 @@ export default function Page() {
         />
       )}
       <PageHeading>{heading}</PageHeading>
-      <div className="m-auto flex w-full flex-col items-center gap-4 p-5 lg:w-2/3">
+      <ListContainer>
         <div className="flex w-full justify-between">
           {basket.length > 0 && (
             <Button
@@ -116,7 +110,7 @@ export default function Page() {
             />
           </div>
         )}
-      </div>
-    </div>
+      </ListContainer>
+    </PageContainer>
   );
 }

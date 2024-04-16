@@ -2,9 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-interface ListedApplication {
+export interface ListedApplication {
   id: number;
   title: string;
+  description: string;
   currentState: string;
   stateChangedAt: string;
 }

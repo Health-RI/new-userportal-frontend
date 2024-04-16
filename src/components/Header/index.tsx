@@ -4,13 +4,14 @@
 
 "use client";
 
-import Button from "@/components/button";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import logo from "@/public/egdi-logo-horizontal-full-color-rgb.svg";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faBars,
   faDatabase,
+  faFileText,
   faHome,
   faInfoCircle,
   faRightFromBracket,
@@ -24,9 +25,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../public/egdi-logo-horizontal-full-color-rgb.svg";
-import Avatar from "./avatar";
-import Notification from "./notification";
+import Button from "../button";
+import ApplicationIcon from "./ApplicationIcon";
+import Avatar from "./Avatar";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -62,7 +63,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <Notification />
+        <ApplicationIcon />
         <Avatar user={session.user as User} />
       </>
     ) : (
@@ -90,19 +91,19 @@ function Header() {
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/datasets"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
           >
             Datasets
           </Link>
           <Link
             href="/about"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm md:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
             About
           </Link>
@@ -133,7 +134,7 @@ function Header() {
           <FontAwesomeIcon icon={faBars} className="text-xl" />
         </button>
         {isMenuOpen && (
-          <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
+          <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
             <Link
               href="/"
               className="block px-4 py-2 hover:bg-primary hover:text-white"
@@ -149,6 +150,14 @@ function Header() {
             >
               <FontAwesomeIcon icon={faDatabase} className="mr-2" />
               Datasets
+            </Link>
+            <Link
+              href="/applications"
+              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              onClick={closeMenu}
+            >
+              <FontAwesomeIcon icon={faFileText} className="mr-2" />
+              Applications
             </Link>
             <Link
               href="/about"

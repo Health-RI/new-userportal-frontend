@@ -99,7 +99,9 @@ describe('datasetList', () => {
   test('applies tag filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      keywords: ['education', 'science'],
+      facets: {
+        tags: ['education', 'science'],
+      },
       limit: 1,
     };
 
@@ -111,7 +113,9 @@ describe('datasetList', () => {
   test('applies organization filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      catalogues: ['org1', 'org2'],
+      facets: {
+        organization: ['org1', 'org2'],
+      },
       limit: 1,
     };
 
@@ -123,10 +127,12 @@ describe('datasetList', () => {
   test('combines multiple filters correctly', async () => {
     const datasetList = makeDatasetList('https://mock-ckan-instance.com');
     const searchOptions = {
-      keywords: ['technology', 'http://example.com/other-tag'],
-      publishers: ['A random publisher'],
-      catalogues: ['org1'],
-      themes: ['group1'],
+      facets: {
+        tags: ['technology', 'http://example.com/other-tag'],
+        publisher_name: ['A random publisher'],
+        organization: ['org1'],
+        theme: ['group1'],
+      },
       limit: 1,
     };
 
@@ -135,10 +141,8 @@ describe('datasetList', () => {
     expect(mockedAxios.get).toHaveBeenCalledWith(
       expect.stringContaining('tags%3A(%22technology%22%20AND%20%22http%3A%2F%2Fexample.com%2Fother-tag%22)'),
     );
-    expect(mockedAxios.get).toHaveBeenCalledWith(
-      expect.stringContaining('extras_publisher_name%3A(%22A%20random%20publisher%22)'),
-    );
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('publisher_name%3A(%22A%20random%20publisher%22)'));
     expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('organization%3A(%22org1%22)'));
-    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('extras_theme%3A(%22group1%22)'));
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('theme%3A(%22group1%22)'));
   });
 });

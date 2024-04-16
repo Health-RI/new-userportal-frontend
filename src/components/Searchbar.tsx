@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { datasetList } from "@/services/ckan";
 
 type SearchBarProps = {
-  queryParams: Record<string, string | string[] | undefined>;
+  queryParams: URLSearchParams;
   size?: "regular" | "large";
 };
 
@@ -29,14 +29,14 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
     sizeClass = "h-14";
   }
 
+  const q = queryParams.get("q");
+
   useEffect(() => {
-    const initialQuery = Array.isArray(queryParams.q)
-      ? queryParams.q[0]
-      : queryParams.q;
+    const initialQuery = Array.isArray(q) ? q[0] : q;
     if (initialQuery) {
       setQuery(initialQuery);
     }
-  }, [queryParams.q]);
+  }, [q]);
 
   useEffect(() => {
     if (fetchSuggestions && query.trim()) {
@@ -62,7 +62,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
 
   function handleBlur(e: React.FocusEvent<HTMLInputElement>): void {
     if (!e.target.value) {
-      const params = new URLSearchParams(queryParams as Record<string, string>);
+      const params = new URLSearchParams(queryParams.toString());
       params.delete("q");
       router.push(`/datasets?${params}`);
     }
@@ -73,7 +73,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   function redirectToSearchResults(query: string): void {
-    const params = new URLSearchParams(queryParams as Record<string, string>);
+    const params = new URLSearchParams(queryParams.toString());
     params.set("page", "1");
     if (!query) params.delete("q");
     else params.set("q", query);
@@ -93,7 +93,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="text-sm">
+    <form onSubmit={handleSubmit} className="w-full text-sm">
       <div className="relative">
         <input
           placeholder="Search"

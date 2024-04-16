@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import PageContainer from "@/components/PageContainer";
 "use client";
 
 import Button from "@/components/button";
@@ -53,11 +54,11 @@ export default function ApplicationDetailsPage() {
           <p className="mt-5">Last Event: {lastEvent} </p>
         </div>
 
-        <div className="mt-5 h-[2px] bg-secondary opacity-80"></div>
+          <div className="mt-5 h-[2px] bg-secondary opacity-80"></div>
 
-        <div className="mt-10 w-full xl:hidden">
-          <Sidebar items={sidebarItems} />
-        </div>
+          <div className="mt-10 w-full xl:hidden">
+            <Sidebar items={sidebarItems} />
+          </div>
 
         <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
         <ul>
@@ -72,9 +73,10 @@ export default function ApplicationDetailsPage() {
         </ul>
       </div>
 
-      <aside className="col-span-3 col-start-9 hidden xl:block">
-        <Sidebar items={sidebarItems} />
-      </aside>
-    </div>
+        <aside className="col-span-3 col-start-9 hidden xl:block">
+          <Sidebar items={sidebarItems} />
+        </aside>
+      </div>
+    </PageContainer>
   );
 }

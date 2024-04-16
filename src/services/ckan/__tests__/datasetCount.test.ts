@@ -10,7 +10,7 @@ describe('makeDatasetCount', () => {
 
   beforeEach(() => {
     mockFetch.mockClear().mockImplementation((url: string | Request | URL) => {
-      if (url === 'http://localhost:5500/api/3/action/dataset_list?') {
+      if (url === 'http://localhost:5500/api/3/action/package_search?rows=0') {
         return Promise.resolve(new Response(JSON.stringify({ result: { count: 100 } })));
       }
       return Promise.reject(new Error('Unknown URL'));
@@ -25,9 +25,9 @@ describe('makeDatasetCount', () => {
     const count = await getDatasetCount();
 
     expect(count).toEqual(100);
-    expect(global.fetch).toHaveBeenCalledWith(`${DMS_URL}/api/3/action/dataset_list?`, {
+    expect(global.fetch).toHaveBeenCalledWith(`${DMS_URL}/api/3/action/package_search?rows=0`, {
       cache: 'force-cache',
-      next: { revalidate: 86400 },
+      next: { revalidate: 3600 },
     });
   });
 });

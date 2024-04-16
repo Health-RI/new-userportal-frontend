@@ -4,27 +4,26 @@
 
 "use client";
 
-import SearchBar from "@/components/searchBar";
+import { DatasetCounter } from "@/components/DatasetCounter";
+import PageContainer from "@/components/PageContainer";
+import { PortalStatistics } from "@/components/PortalStatistics";
+import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import dna from "../public/dna.jpg";
 import logo from "../public/gdi-logo.png";
 import gdi_visuals from "../public/gdi-visuals.png";
-import office from "../public/office.jpg";
-import { DatasetCounter } from "./datasetCounter";
-import { PortalStatistics } from "./portalStatistics";
 
 const HomePage = () => {
-  const initialQueryParams: Record<string, string> = {
-    q: "",
-  };
+  const queryParams = useSearchParams();
 
   return (
-    <div className="container mx-auto space-y-20 px-4 pt-20">
+    <PageContainer>
       <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
-        <div className="text-center lg:text-left">
+        <div className="text-center md:pl-4 md:pr-4 lg:text-left">
           <DatasetCounter />
-          <SearchBar queryParams={initialQueryParams} size="large" />
+          <SearchBar queryParams={queryParams} size="large" />
           <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               WELCOME TO GDI
@@ -104,25 +103,23 @@ const HomePage = () => {
           <h2 className="mb-6 text-2xl font-bold text-warning md:mb-0 md:text-3xl lg:text-4xl">
             PARTICIPATE
           </h2>
-          <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <div className="flex w-full flex-wrap justify-around text-warning">
-              <a
-                href="https://b1mg-project.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
-              >
-                Learn more about B1MG
-              </a>
-              <a
-                href="https://gdi.onemilliongenomes.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
-              >
-                Learn more about GDI
-              </a>
-            </div>
+          <div className="flex flex-wrap gap-4 text-warning">
+            <a
+              href="https://b1mg-project.eu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mr-2 rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:mr-4 md:px-6 md:py-3 lg:mr-5"
+            >
+              Learn more about B1MG
+            </a>
+            <a
+              href="https://gdi.onemilliongenomes.eu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded border border-warning px-4 py-2 transition duration-300 ease-in-out md:px-6 md:py-3"
+            >
+              Learn more about GDI
+            </a>
           </div>
         </div>
       </div>
@@ -143,7 +140,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

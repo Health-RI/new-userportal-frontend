@@ -19,9 +19,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'datasetIds are required' }, { status: 400 });
     }
 
-    await createApplication(datasetIds, session);
+    const response = await createApplication(datasetIds, session);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(response.data);
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: 'Failed to create application' }, { status: 500 });

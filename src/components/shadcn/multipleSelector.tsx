@@ -35,7 +35,7 @@ interface GroupOption {
 }
 
 interface MultipleSelectorProps {
-  label: string;
+  field: string;
   value?: Option[];
   defaultOptions?: Option[];
   /** manually controlled options */
@@ -168,7 +168,7 @@ const MultipleSelector = React.forwardRef<
 >(
   (
     {
-      label,
+      field,
       value,
       onChange,
       placeholder,
@@ -224,19 +224,20 @@ const MultipleSelector = React.forwardRef<
     const handleUnselect = React.useCallback(
       (option: Option) => {
         const newOptions = convertQueryStringToOptions(
-          params.get(label) as string,
+          params.get(field) as string,
         ).filter((o) => o.value !== option.value);
 
         if (newOptions.length === 0) {
-          params.delete(label);
+          params.delete(field);
         } else {
-          params.set(label, convertOptionsToQueryString(newOptions));
+          params.set(field, convertOptionsToQueryString(newOptions));
         }
+        params.set("page", "1");
         router.push(`${pathname}?${params}`);
 
         onChange?.(newOptions);
       },
-      [onChange, label, params, router, pathname],
+      [onChange, field, params, router, pathname],
     );
 
     const handleKeyDown = React.useCallback(
@@ -259,25 +260,31 @@ const MultipleSelector = React.forwardRef<
 
     useEffect(() => {
       if (value) {
-        params.set(label, convertOptionsToQueryString(value));
+        params.set(field, convertOptionsToQueryString(value));
+        params.set("page", "1");
         router.push(`${pathname}?${params}`);
       }
-    }, [value, label, params, router, pathname]);
+    }, [value, field, params, router, pathname]);
 
     useEffect(() => {
-      if (!params.has(label)) {
+      if (!params.has(field)) {
         setSelected([]);
         return;
       }
 
-      const values = convertQueryStringToOptions(params.get(label) as string);
+      const values = convertQueryStringToOptions(params.get(field) as string);
 
       const existingValues = values.filter((v: Option) =>
         arrayDefaultOptions.find((option: Option) => option.value === v.value),
       );
 
       setSelected(existingValues || []);
-    }, [params, label, arrayDefaultOptions]);
+    }, [params, field, arrayDefaultOptions]);
+
+    useEffect(
+      () => setOptions(transToGroupOption(arrayDefaultOptions, groupBy)),
+      [arrayDefaultOptions, groupBy],
+    );
 
     useEffect(() => {
       /** If `onSearch` is provided, do not trigger options updated. */
@@ -314,17 +321,14 @@ const MultipleSelector = React.forwardRef<
     }, [debouncedSearchTerm, open, onSearch, triggerSearchOnFocus, groupBy]);
 
     const convertQueryStringToOptions = (queryString: string): Option[] => {
-      return queryString
-        .slice(1, -1)
-        .split(",")
-        .map((v: string) => ({
-          value: v,
-          label: v,
-        }));
+      return queryString.split(",").map((v: string) => ({
+        value: v,
+        label: v,
+      }));
     };
 
     const convertOptionsToQueryString = (options: Option[]): string => {
-      return `(${options.map((option) => option.value).join(",")})`;
+      return options.map((option) => option.value).join(",");
     };
 
     const CreatableItem = () => {
@@ -539,9 +543,10 @@ const MultipleSelector = React.forwardRef<
                                 setInputValue("");
                                 const newOptions = [...selected, option];
                                 params.set(
-                                  label,
+                                  field,
                                   convertOptionsToQueryString(newOptions),
                                 );
+                                params.set("page", "1");
                                 router.push(`${pathname}?${params}`);
                                 onChange?.(newOptions);
                               }}

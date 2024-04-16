@@ -4,37 +4,89 @@
 
 "use client";
 
+import Error from "@/app/error";
+import List from "@/components/List";
+import ListItem from "@/components/List/ListItem";
+import ListContainer from "@/components/ListContainer";
+import LoadingContainer from "@/components/LoadingContainer";
+import PageContainer from "@/components/PageContainer";
+import Button from "@/components/button";
 import PageHeading from "@/components/pageHeading";
 import { listApplications } from "@/services/daam/index.client";
 import { ListedApplication } from "@/types/application.types";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import ApplicationItem from "./applicationItem";
+import ApplicationItem from "./ApplicationItem";
+
+type Status = "loading" | "error" | "success";
+
+interface ApplicationResponse {
+  status: Status;
+  applications?: ListedApplication[];
+  errorCode?: number;
+}
 
 const ApplicationsPage: React.FC = () => {
-  const [data, setData] = useState<ListedApplication[]>([]);
-  const collapseLimit = 2;
+  const [response, setResponse] = useState<ApplicationResponse>({
+    status: "loading",
+  });
 
   useEffect(() => {
-    listApplications().then((res) => setData(res.data));
+    async function fetchData() {
+      try {
+        const response = await listApplications();
+        setResponse({ applications: response.data, status: "success" });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          setResponse({ status: "error", errorCode: error.response?.status });
+          console.error(error);
+        } else {
+          setResponse({ status: "error", errorCode: 500 });
+          console.error(error);
+        }
+      }
+    }
+    fetchData();
   }, []);
 
-  const collapsable = data.length > collapseLimit;
+  if (response.status === "loading") {
+    return <LoadingContainer text="Loading your applications..." />;
+  } else if (response.status === "error") {
+    return <Error statusCode={response.errorCode} />;
+  }
 
   return (
-    <div className="container mx-auto px-5">
-      <PageHeading className="mt-8">Manage your Applications</PageHeading>
+    <PageContainer>
+      <PageHeading className="mb-4">Manage your Applications</PageHeading>
       <span>View and update your submited applications</span>
-
-      <div className="mt-5 flex grow flex-col items-center">
-        {data.map((item) => (
-          <ApplicationItem
-            key={item.id}
-            application={item}
-            collapsable={collapsable}
-          />
-        ))}
-      </div>
-    </div>
+      <ListContainer>
+        {response.applications?.length && response.applications.length > 0 ? (
+          <List>
+            {response.applications?.map((item, index) => (
+              <ListItem
+                key={item.id}
+                className="flex items-center justify-between"
+              >
+                <ApplicationItem application={item} isExpanded={index === 0} />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <div className="flex w-full flex-col items-center justify-center gap-4">
+            <p className="text-center text-lg text-primary">
+              You don&apos;t have any applications yet.
+            </p>
+            <Button
+              icon={faPlusCircle}
+              text="Add datasets"
+              href="/datasets"
+              type="primary"
+            />
+          </div>
+        )}
+      </ListContainer>
+    </PageContainer>
   );
 };
 

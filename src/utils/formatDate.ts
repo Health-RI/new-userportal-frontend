@@ -5,5 +5,13 @@ import { format } from 'date-fns';
 
 export function formatDate(inputDate: string): string {
   const date = new Date(inputDate);
-  return format(date, 'yyyy-MM-dd');
+
+  try {
+    return format(date, 'yyyy-MM-dd');
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') {
+      console.error(error);
+    }
+    return inputDate;
+  }
 }

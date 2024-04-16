@@ -15,7 +15,7 @@ module.exports = {
         secondary: "var(--color-wine-berry)",
         info: "var(--color-scampi-blue)",
         warning: "var(--color-grandis-yellow)",
-
+        "hover-color": "var(--color-wine-berry)",
         // Descriptive color names as an alternative reference or for specific use cases.
         "wine-berry": "var(--color-wine-berry)",
         claret: "var(--color-claret)",

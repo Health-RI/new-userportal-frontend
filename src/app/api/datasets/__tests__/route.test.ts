@@ -13,71 +13,42 @@ jest.mock('next-auth/next');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedGetServerSession = getServerSession as jest.MockedFunction<typeof getServerSession>;
+const options = {
+  facets: [],
+  query: undefined,
+  rows: 10,
+  sort: undefined,
+  start: 0,
+};
 
 describe('POST function', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: { count: 100 } });
   });
 
   test('returns datasets response for authenitacted user', async () => {
     const encryptedToken = encrypt('decryptedToken');
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
-    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: { count: 100 } });
-
-    const options = {
-      facets: [],
-      query: undefined,
-      rows: 10,
-      sort: undefined,
-      start: 0,
-    };
 
     const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ options }) });
     await POST(request);
 
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      `${serverConfig.discoveryUrl}/api/v1/datasets/search`,
-      {
-        facets: [],
-        query: undefined,
-        rows: 10,
-        sort: undefined,
-        start: 0,
-      },
-      { headers: { Authorization: 'Bearer decryptedToken', 'Content-Type': 'application/json' } },
-    );
+    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.discoveryUrl}/api/v1/datasets/search`, options, {
+      headers: { Authorization: 'Bearer decryptedToken', 'Content-Type': 'application/json' },
+    });
   });
 
   test('returns datasets response for unauthenitacted user', async () => {
     mockedGetServerSession.mockResolvedValueOnce(undefined);
-    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: { count: 100 } });
-
-    const options = {
-      facets: [],
-      query: undefined,
-      rows: 10,
-      sort: undefined,
-      start: 0,
-    };
-
     const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ options }) });
     await POST(request);
 
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      `${serverConfig.discoveryUrl}/api/v1/datasets/search`,
-      {
-        facets: [],
-        query: undefined,
-        rows: 10,
-        sort: undefined,
-        start: 0,
+    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.discoveryUrl}/api/v1/datasets/search`, options, {
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
+    });
   });
 
   test('returns error if Axios request fails', async () => {

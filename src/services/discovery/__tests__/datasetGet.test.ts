@@ -63,11 +63,11 @@ describe('datasetGet', () => {
   });
 
   test('fetches and maps a dataset correctly by ID when unauthenitacted', async () => {
-    const mockedSession = {access_token: encrypt('decryptedToken')} as ExtendedSession;
+    const mockedSession = { access_token: encrypt('decryptedToken') } as ExtendedSession;
     const dataset = await datasetGet('a9dc55a2-a6d8-4553-ad6a-afe9c52f89cd', mockedSession);
 
-    expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:5500/api/v1/datasets/a9dc55a2-a6d8-4553-ad6a-afe9c52f89cd', 
-      { headers: { Authorization: 'Bearer decryptedToken', 'Content-Type': 'application/json' } ,
+    expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:5500/api/v1/datasets/a9dc55a2-a6d8-4553-ad6a-afe9c52f89cd', {
+      headers: { Authorization: 'Bearer decryptedToken', 'Content-Type': 'application/json' },
     });
 
     expect(dataset.id).toEqual('a9dc55a2-a6d8-4553-ad6a-afe9c52f89cd');

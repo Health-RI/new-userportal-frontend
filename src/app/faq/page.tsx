@@ -25,7 +25,10 @@ const FAQPage: React.FC = () => {
         <p>
           Fijn dat u wilt bijdragen aan het voorspoedigen van datahergebruik!
           Neemt u alstublieft contact op met Health-RI via{" "}
-          <a href="mailto:datacatalogue@health-ri.nl">
+          <a
+            href="mailto:datacatalogue@health-ri.nl"
+            className="text-blue-500 hover:underline"
+          >
             datacatalogue&#64;health-ri.nl
           </a>{" "}
           of via de Servicedesk.
@@ -60,10 +63,20 @@ const FAQPage: React.FC = () => {
         </PageSubHeading>
         <p>
           Neemt u alstublieft contact op met Health-RI via{" "}
-          <a href="mailto:datacatalogue@health-ri.nl">
+          <a
+            href="mailto:datacatalogue@health-ri.nl"
+            className="text-blue-500 hover:underline"
+          >
             datacatalogue&#64;health-ri.nl
           </a>{" "}
-          of via de Servicedesk.
+          of via de{" "}
+          <a
+            href="https://www.health-ri.nl/health-ri-servicedesk"
+            className="text-blue-500 hover:underline"
+          >
+            Servicedesk
+          </a>
+          .
         </p>
       </div>
     </PageContainer>

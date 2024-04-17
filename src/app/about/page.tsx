@@ -10,7 +10,7 @@ import React from "react";
 const AboutPage: React.FC = () => {
   return (
     <PageContainer>
-      <p>
+      <p className="mb-8">
         <PageHeading className="mb-4">
           About Genomic Data Infrastructure (GDI)
         </PageHeading>
@@ -27,7 +27,7 @@ const AboutPage: React.FC = () => {
         </p>
       </p>
 
-      <p>
+      <p className="mb-8">
         <PageSubHeading className="my-4">User Portal</PageSubHeading>
         <p>
           The User Portal, developed by the Genomic Data Infrastructure (GDI)
@@ -40,7 +40,7 @@ const AboutPage: React.FC = () => {
         </p>
       </p>
 
-      <p>
+      <p className="mb-8">
         <PageSubHeading className="my-4">Key Objectives</PageSubHeading>
         <ul className="list-inside list-disc">
           <li>

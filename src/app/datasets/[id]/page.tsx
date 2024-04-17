@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     const sidebarItems = createDatasetSidebarItems(dataset);
 
     return (
-      <PageContainer className="flex flex-col items-start justify-start space-y-0 lg:flex-row">
+      <PageContainer className="flex flex-col items-start justify-start lg:flex-row">
         <div className="flex w-full flex-col gap-5 lg:w-2/3 lg:px-5">
           <div className="flex w-full flex-col items-start justify-between lg:flex-row lg:items-center">
             <PageHeading className="mb-4 w-2/3 lg:mb-0">

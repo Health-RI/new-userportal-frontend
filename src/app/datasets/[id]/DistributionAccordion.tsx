@@ -46,9 +46,11 @@ const DistributionAccordion = ({
             <span className="flex items-center">
               <FontAwesomeIcon icon={faFile} className="text-primary" />
               <span className="ml-2">{distribution.title}</span>
-              <span className="ml-4 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
-                {distribution.format.value}
-              </span>
+              {distribution.format && (
+                <span className="ml-4 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
+                  {distribution.format.value}
+                </span>
+              )}
             </span>
             <FontAwesomeIcon
               icon={openIndex === index ? faChevronUp : faChevronDown}

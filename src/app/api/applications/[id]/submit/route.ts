@@ -4,7 +4,7 @@
 
 import { submitApplication } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
-import { AxiosError } from 'axios';
+import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
@@ -20,8 +20,8 @@ export async function POST(request: Request, params: { params: { id: string } })
     submitApplication(id, session);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return NextResponse.json({ error: error.message }, { status: error.response?.status });
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json({ error: error.response?.data }, { status: error.response?.status });
     } else if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }

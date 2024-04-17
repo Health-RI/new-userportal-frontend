@@ -11,6 +11,7 @@ import {
   faDatabase,
   faHome,
   faInfoCircle,
+  faQuestionCircle,
   faRightFromBracket,
   faRightToBracket,
   faUser,
@@ -174,6 +175,14 @@ function Header() {
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
               Over de catalogus
+            </Link>
+            <Link
+              href="/faq"
+              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              onClick={closeMenu}
+            >
+              <FontAwesomeIcon icon={faQuestionCircle} className="mr-2" />
+              Veelgestelde vragen
             </Link>
             <Link
               href="/basket"

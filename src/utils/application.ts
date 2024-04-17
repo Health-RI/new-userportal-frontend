@@ -17,7 +17,7 @@ function isApplicationComplete(application: RetrievedApplication) {
   return application.forms
     .map((form) => form?.fields)
     .flat()
-    .every((field) => field?.value?.split(',')?.length > 0);
+    .every((field) => field?.value?.split(',')?.length > 1);
 }
 
 function updateFormWithNewAttachment(
@@ -25,18 +25,25 @@ function updateFormWithNewAttachment(
   formId: number,
   fieldId: number,
   newAttachmentId: number,
-  action: (fieldValue: string, attachmentId: number) => string | null,
+  action: (fieldValue: string, attachmentId: number) => string,
 ) {
-  return forms.map((form) => (form.id === formId ? updateFieldWithNewAttachment(form, fieldId, newAttachmentId, action) : form));
+  return forms.map((form) =>
+    form.id === formId ? updateFormFieldWithNewAttachment(form, fieldId, newAttachmentId, action) : form,
+  );
 }
 
-function updateFieldWithNewAttachment(
+function updateFormFieldWithNewAttachment(
   form: Form,
   fieldId: number,
   newAttachmentId: number,
-  action: (fieldValue: string, attachmentId: number) => string | null,
-) {
-  return form.fields.map((field) => (field.id === fieldId ? { ...field, value: action(field.value, newAttachmentId) } : field));
+  action: (fieldValue: string, attachmentId: number) => string,
+): Form {
+  return {
+    ...form,
+    fields: form.fields.map((field) =>
+      field.id === fieldId ? { ...field, value: action(field.value, newAttachmentId)! } : field,
+    ),
+  };
 }
 
 function addAttachmentIdToFieldValue(value: string, newAttachmentId: number) {
@@ -45,7 +52,7 @@ function addAttachmentIdToFieldValue(value: string, newAttachmentId: number) {
 
 function deleteAttachmentIdFromFieldValue(value: string, attachmentId: number) {
   return value === attachmentId.toString()
-    ? null
+    ? ''
     : value
         .split(',')
         .filter((id) => id !== attachmentId.toString())

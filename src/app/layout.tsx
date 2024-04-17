@@ -27,6 +27,10 @@ export default function RootLayout({
       <head>
         <title>GDI - User Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src * 'self' data: 'unsafe-inline' 'unsafe-eval' *"
+        />
         <PublicEnvScript />
       </head>
       <body>

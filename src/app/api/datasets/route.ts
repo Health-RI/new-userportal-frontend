@@ -7,6 +7,7 @@ import { mapFacetGroups } from '@/services/discovery/utils';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import axios from 'axios';
 
 export async function POST(request: Request) {
   const session: ExtendedSession | null = await getServerSession(authOptions);
@@ -23,6 +24,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json({ error: error.response?.data }, { status: error.response?.status });
+    } else if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json({ error: 'Failed to retrive datasets' }, { status: 500 });
   }
 }

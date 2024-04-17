@@ -6,6 +6,7 @@ import { Form, RetrievedApplication, State } from '@/types/application.types';
 import {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
+  formatApplicationState,
   isApplicationComplete,
   updateFormWithNewAttachment,
 } from '../application';
@@ -92,6 +93,16 @@ describe('Check if application is complete', () => {
     const isComplete = isApplicationComplete(application);
 
     expect(isComplete).toBeFalsy();
+  });
+});
+
+describe('Check if application state is correctly formatted', () => {
+  it('should format state correctly', () => {
+    const state = State.APPROVED;
+
+    const formattedState = formatApplicationState(state);
+
+    expect(formattedState).toEqual('Approved');
   });
 });
 

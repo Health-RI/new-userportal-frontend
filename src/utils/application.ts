@@ -5,15 +5,11 @@
 import { Form, RetrievedApplication, State } from '@/types/application.types';
 
 function formatApplicationState(state: State) {
-  if (!state) return '';
-
-  const s = state.split('/')?.pop() || '';
+  const s = state.split('/').pop() as string;
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function isApplicationComplete(application: RetrievedApplication) {
-  if (!application.forms) return false;
-
   return application.forms
     .map((form) => form.fields)
     .flat()

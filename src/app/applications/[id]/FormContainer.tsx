@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Form } from "@/types/application.types";
-import FieldContainer from "./fieldContainer";
+import FieldContainer from "./FieldContainer";
 
 type FormContainerProps = {
   form: Form;

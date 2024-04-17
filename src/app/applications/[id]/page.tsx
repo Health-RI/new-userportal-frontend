@@ -14,7 +14,7 @@ import {
   isApplicationComplete,
 } from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import FormContainer from "./formContainer";
+import FormContainer from "./FormContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 export default function ApplicationDetailsPage() {

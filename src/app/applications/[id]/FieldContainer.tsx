@@ -9,17 +9,14 @@ import { FormField } from "@/types/application.types";
 import { isApplicationComplete } from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FileUploaded from "./fileUploaded";
+import FileUploaded from "./FileUploaded";
 
-type FieldAttachmentContainerProps = {
+type FieldContainerProps = {
   formId: number;
   field: FormField;
 };
 
-function FieldAttachmentContainer({
-  formId,
-  field,
-}: FieldAttachmentContainerProps) {
+function FieldContainer({ formId, field }: FieldContainerProps) {
   const { application, addAttachment } = useApplicationDetails();
 
   const fieldTitle =
@@ -73,4 +70,4 @@ function FieldAttachmentContainer({
   );
 }
 
-export default FieldAttachmentContainer;
+export default FieldContainer;

@@ -47,16 +47,23 @@ function updateFormFieldWithNewAttachment(
 }
 
 function addAttachmentIdToFieldValue(value: string, newAttachmentId: number) {
+  if (isPresent(newAttachmentId, value)) return value;
   return value ? `${value},${newAttachmentId}` : newAttachmentId.toString();
 }
 
 function deleteAttachmentIdFromFieldValue(value: string, attachmentId: number) {
+  if (!isPresent(attachmentId, value)) return value;
+
   return value === attachmentId.toString()
     ? ''
     : value
         .split(',')
         .filter((id) => id !== attachmentId.toString())
         .join(',');
+}
+
+function isPresent(id: number, set: string) {
+  return set.split(',').includes(id.toString());
 }
 
 export {

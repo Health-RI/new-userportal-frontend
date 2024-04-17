@@ -26,6 +26,16 @@ describe('Update application correctly when adding an attachment', () => {
 
     expect(updatedForms[0].fields[0].value).toEqual('11');
   });
+
+  it('should not update the field value if the attachment to be added is already present in field value', () => {
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 2;
+    const newAttachmentId = 5;
+    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, newAttachmentId, addAttachmentIdToFieldValue);
+
+    expect(updatedForms[0].fields[1].value).toEqual('4,5');
+  });
 });
 
 describe('Update application correctly when removing an attachment', () => {
@@ -49,6 +59,17 @@ describe('Update application correctly when removing an attachment', () => {
     const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, deleteAttachmentIdFromFieldValue);
 
     expect(updatedForms[1].fields[0].value).toEqual('');
+  });
+
+  it('should not update the field value if the attachment id to be removed is not present in field value', () => {
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 2;
+    const attachmentId = 47;
+
+    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, deleteAttachmentIdFromFieldValue);
+
+    expect(updatedForms[0].fields[1].value).toEqual('4,5');
   });
 });
 

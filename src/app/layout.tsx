@@ -14,8 +14,6 @@ import { exposeFont, satoshiFont, tabularFont } from "../utils/fonts";
 import "./globals.css";
 config.autoAddCss = false;
 
-const trustedOrigins = `${process.env.NEXTAUTH_URL} https://api.portal.dev.gdi.lu`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,7 +29,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           httpEquiv="Content-Security-Policy"
-          content={`default-src ${trustedOrigins} 'self' data: 'unsafe-inline' 'unsafe-eval'`}
+          content={`default-src ${process.env.NEXTAUTH_URL} ${process.env.API_PORTAL_URL} 'self' data: 'unsafe-inline' 'unsafe-eval'`}
         />
         <PublicEnvScript />
       </head>

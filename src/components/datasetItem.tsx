@@ -18,8 +18,11 @@ type DatasetItemProps = {
 };
 
 function DatasetItem({ dataset }: DatasetItemProps) {
+  console.log(dataset);
   const { width: screenWidth } = useWindowSize();
-  const truncatedDesc = truncateDescription(dataset.description, screenWidth);
+  const truncatedDesc = dataset.description
+    ? truncateDescription(dataset.description, screenWidth)
+    : null;
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
   const isInBasket = basket.some((ds) => ds.id === dataset.id);
@@ -42,7 +45,9 @@ function DatasetItem({ dataset }: DatasetItemProps) {
         </p>
       </div>
       <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>
-      <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
+      {truncatedDesc && (
+        <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
+      )}
       <Chips chips={dataset.themes?.map((x) => x.value) || []} />
       <div className="mt-4 flex w-full justify-end">
         {!isLoading && (

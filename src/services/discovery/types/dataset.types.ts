@@ -29,7 +29,7 @@ export type SearchedDataset = {
   id: string;
   identifier?: string;
   title: string;
-  description: string;
+  description?: string;
   themes?: ValueLabel[];
   catalogue: string;
   modifiedAt: string;

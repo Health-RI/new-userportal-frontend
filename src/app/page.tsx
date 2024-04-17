@@ -55,7 +55,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex w-full justify-center">
+      <div className="flex w-full h-40 justify-center">
         <PortalStatistics />
       </div>
 

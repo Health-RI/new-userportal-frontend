@@ -2,8 +2,13 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { Form } from '@/types/application.types';
-import { addAttachmentIdToFieldValue, deleteAttachmentIdFromFieldValue, updateFormWithNewAttachment } from '../application';
+import { Form, RetrievedApplication, State } from '@/types/application.types';
+import {
+  addAttachmentIdToFieldValue,
+  deleteAttachmentIdFromFieldValue,
+  isApplicationComplete,
+  updateFormWithNewAttachment,
+} from '../application';
 
 describe('Update application correctly when adding an attachment', () => {
   it('should concatenate the current field value with the attachment id when field value already contains values', () => {
@@ -74,9 +79,160 @@ describe('Update application correctly when removing an attachment', () => {
 });
 
 describe('Check if application is complete', () => {
-  it('should consider application complete if every field has at least one attachment', () => {});
-  it('should consider application incomplete at least one field has no attachment ', () => {});
+  it('should consider application complete if every field has at least one attachment', () => {
+    const application = getCompleteApplication();
+
+    const isComplete = isApplicationComplete(application);
+
+    expect(isComplete).toBeTruthy();
+  });
+  it('should consider application incomplete if at least one field has no attachment ', () => {
+    const application = getInCompleteApplication();
+
+    const isComplete = isApplicationComplete(application);
+
+    expect(isComplete).toBeFalsy();
+  });
 });
+
+function getCompleteApplication(): RetrievedApplication {
+  return {
+    id: 12,
+    externalId: '12',
+    generatedExternalId: '12',
+    description: '',
+    createdAt: new Date(),
+    modifiedAt: new Date(),
+    lastActivity: new Date(),
+    permissions: [],
+    roles: [],
+    worflow: {
+      id: 12,
+      type: 'type',
+    },
+    applicant: {
+      userId: '12',
+      name: 'John Doe',
+      email: '',
+    },
+    members: [],
+    datasets: [],
+    invitedMembers: [],
+    events: [],
+    attachments: [],
+    licenses: [],
+    state: State.DRAFT,
+    forms: [
+      {
+        id: 1,
+        internalName: 'form1',
+        externalTitle: [],
+        fields: [
+          {
+            id: 1,
+            value: '10',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+          {
+            id: 2,
+            value: '21',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+        ],
+      },
+    ],
+  };
+}
+
+function getInCompleteApplication(): RetrievedApplication {
+  return {
+    id: 12,
+    externalId: '12',
+    generatedExternalId: '12',
+    description: '',
+    createdAt: new Date(),
+    modifiedAt: new Date(),
+    lastActivity: new Date(),
+    permissions: [],
+    roles: [],
+    worflow: {
+      id: 12,
+      type: 'type',
+    },
+    applicant: {
+      userId: '12',
+      name: 'John Doe',
+      email: '',
+    },
+    members: [],
+    datasets: [],
+    invitedMembers: [],
+    events: [],
+    attachments: [],
+    licenses: [],
+    state: State.DRAFT,
+    forms: [
+      {
+        id: 1,
+        internalName: 'form1',
+        externalTitle: [],
+        fields: [
+          {
+            id: 1,
+            value: '1',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+          {
+            id: 2,
+            value: '12',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+        ],
+      },
+      {
+        id: 2,
+        internalName: 'form2',
+        externalTitle: [],
+        fields: [
+          {
+            id: 1,
+            value: '198, 19',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+          {
+            id: 2,
+            value: '',
+            optional: false,
+            private: false,
+            visible: false,
+            title: [],
+            type: '',
+          },
+        ],
+      },
+    ],
+  };
+}
 
 function getForms(): Form[] {
   return [

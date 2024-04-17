@@ -15,9 +15,9 @@ function isApplicationComplete(application: RetrievedApplication) {
   if (!application.forms) return false;
 
   return application.forms
-    .map((form) => form?.fields)
+    .map((form) => form.fields)
     .flat()
-    .every((field) => field?.value?.split(',')?.length > 1);
+    .every((field) => field.value !== '');
 }
 
 function updateFormWithNewAttachment(

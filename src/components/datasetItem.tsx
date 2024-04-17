@@ -18,7 +18,6 @@ type DatasetItemProps = {
 };
 
 function DatasetItem({ dataset }: DatasetItemProps) {
-  console.log(dataset);
   const { width: screenWidth } = useWindowSize();
   const truncatedDesc = dataset.description
     ? truncateDescription(dataset.description, screenWidth)

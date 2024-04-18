@@ -16,6 +16,20 @@ const nextConfig = {
       },
     ],
   },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: process.env.CSP_HEADER.replace(/\n/g, ""),
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

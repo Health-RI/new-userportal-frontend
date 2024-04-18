@@ -33,8 +33,7 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
           type="file"
           id="file-upload"
           onChange={(e) => {
-            const file = e.target?.files?.[0];
-            if (!file) return;
+            const file = e.target.files![0];
             const formData = new FormData();
             formData.set("file", file);
             addAttachment(formId, field.id, formData);

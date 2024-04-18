@@ -18,10 +18,6 @@ export async function POST(request: Request, params: { params: { id: string } })
 
   const formData = await request.formData();
 
-  if (!formData.has('file')) {
-    return NextResponse.json({ error: 'Form data does not contain any file' }, { status: 400 });
-  }
-
   try {
     const { id } = await addAttachmentToApplication(applicationId, formData, session);
     return NextResponse.json({ success: true, id }, { status: 200 });

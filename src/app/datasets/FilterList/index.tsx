@@ -8,7 +8,7 @@ import {
 } from "@/utils/convertDataToFilterItemProps";
 import {
   FacetType,
-  type Facet,
+  FacetGroup,
 } from "@/services/discovery/types/datasetSearch.types";
 import {
   faBook,
@@ -37,22 +37,19 @@ const fieldToIconMap: Record<FacetType, IconDefinition> = {
 };
 
 type FilterListProps = {
-  facets: Facet[];
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: URLSearchParams;
-  groupKey: string;
+  facetGroup: FacetGroup;
 };
 
 function FilterList({
-  facets,
   toggleFullScreenFilter,
   queryParams,
-  groupKey,
+  facetGroup,
 }: FilterListProps) {
   const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
-    facets,
     fieldToIconMap,
-    groupKey,
+    facetGroup,
   );
   function isAnyFilterApplied() {
     if (!queryParams) return false;
@@ -68,8 +65,7 @@ function FilterList({
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>
-          <span className="mr-2">{groupKey.toUpperCase()}</span>
-          Filters
+          <span className="mr-2">{facetGroup.label.toUpperCase()}</span>
         </h1>
         {toggleFullScreenFilter && (
           <button

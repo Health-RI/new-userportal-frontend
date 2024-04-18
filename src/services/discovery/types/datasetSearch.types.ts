@@ -71,7 +71,7 @@ export type FacetGroup = {
 };
 
 export type Facet = {
-  field: string;
+  key: string;
   label: string;
   values: ValueLabel[];
 };

@@ -29,7 +29,7 @@ export const mapFacetGroups = (facetGroups: FacetGroup[]): FacetGroup[] => {
       ...group,
       facets: group.facets.map((facet) => ({
         label: facetToLabelMapping[facet.label] ?? facet.label,
-        field: facet.label,
+        key: facet.key,
         values: facet.values,
       })),
     });

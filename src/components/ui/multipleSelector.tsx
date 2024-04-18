@@ -322,7 +322,7 @@ const MultipleSelector = React.forwardRef<
     const convertQueryStringToOptions = (queryString: string): Option[] => {
       return queryString.split(",").map((v: string) => ({
         value: v,
-        label: v,
+        label: arrayDefaultOptions.find(x => x.value === v)?.label ?? v,
       }));
     };
 

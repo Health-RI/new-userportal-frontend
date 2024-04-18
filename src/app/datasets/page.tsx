@@ -109,7 +109,9 @@ export default function DatasetPage() {
   }, [queryParams, screenSize]);
 
   if (response.status === "loading") {
-    return <LoadingContainer text="Loading datasets..." />;
+    return (
+      <LoadingContainer text="Retrieving datasets. This may take a few moments as we process complex Beacon queries." />
+    );
   } else if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
   }

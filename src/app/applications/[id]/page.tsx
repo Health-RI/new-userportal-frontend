@@ -28,8 +28,8 @@ export default function ApplicationDetailsPage() {
   const sidebarItems = createApplicationSidebarItems(application);
 
   return (
-    <PageContainer className="xl:grid xl:grid-cols-12 xl:grid-rows-2 xl:gap-x-20">
-      <div className="xl:grid-span-1 xl:col-span-9">
+    <PageContainer className="xl:grid xl:grid-cols-12 xl:grid-rows-[auto-auto] xl:gap-x-20">
+      <div className="xl:col-span-9 xl:row-span-1">
         <div className="sm:flex sm:justify-between">
           <div className="flex items-center gap-x-4">
             <PageHeading>Application {application.id}</PageHeading>
@@ -53,9 +53,7 @@ export default function ApplicationDetailsPage() {
             )}
           </div>
         </div>
-        <p className="row-span-1 mt-5 xl:row-start-1">
-          Last Event: {lastEvent}
-        </p>
+        <p className="mt-5">Last Event: {lastEvent}</p>
       </div>
       <div className="xl:col-span-9 xl:row-start-2">
         <div className="h-[2px] bg-secondary opacity-80"></div>

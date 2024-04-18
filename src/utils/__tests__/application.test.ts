@@ -13,24 +13,34 @@ import {
 
 describe('Update application correctly when adding an attachment', () => {
   it('should concatenate the current field value with the attachment id when field value already contains values', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(1, 2, 193);
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 2;
+    const newAttachmentId = 193;
 
-    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, addAttachmentIdToFieldValue);
+    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, newAttachmentId, addAttachmentIdToFieldValue);
 
     expect(updatedForms[0].fields[1].value).toEqual('4,5,193');
   });
 
   it('should set the field value as attachment id when field value is empty string', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(1, 1, 11);
-    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, addAttachmentIdToFieldValue);
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 1;
+    const newAttachmentId = 11;
+
+    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, newAttachmentId, addAttachmentIdToFieldValue);
 
     expect(updatedForms[0].fields[0].value).toEqual('11');
   });
 
   it('should not update the field value if the attachment to be added is already present in field value', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(1, 2, 5);
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 2;
+    const newAttachmentId = 5;
 
-    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, addAttachmentIdToFieldValue);
+    const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, newAttachmentId, addAttachmentIdToFieldValue);
 
     expect(updatedForms[0].fields[1].value).toEqual('4,5');
   });
@@ -38,7 +48,10 @@ describe('Update application correctly when adding an attachment', () => {
 
 describe('Update application correctly when removing an attachment', () => {
   it('should remove the attachment id from field value when field value already contains values', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(2, 2, 8);
+    const forms: Form[] = getForms();
+    const formId = 2;
+    const fieldId = 2;
+    const attachmentId = 8;
 
     const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, deleteAttachmentIdFromFieldValue);
 
@@ -46,7 +59,10 @@ describe('Update application correctly when removing an attachment', () => {
   });
 
   it('should set the field value as empty string when field value equals attachment id', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(2, 1, 22);
+    const forms: Form[] = getForms();
+    const formId = 2;
+    const fieldId = 1;
+    const attachmentId = 22;
 
     const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, deleteAttachmentIdFromFieldValue);
 
@@ -54,7 +70,10 @@ describe('Update application correctly when removing an attachment', () => {
   });
 
   it('should not update the field value if the attachment id to be removed is not present in field value', () => {
-    const { forms, formId, fieldId, attachmentId } = createTestParams(1, 2, 47);
+    const forms: Form[] = getForms();
+    const formId = 1;
+    const fieldId = 2;
+    const attachmentId = 47;
 
     const updatedForms = updateFormWithNewAttachment(forms, formId, fieldId, attachmentId, deleteAttachmentIdFromFieldValue);
 
@@ -281,9 +300,4 @@ function getForms(): Form[] {
       ],
     },
   ];
-}
-
-function createTestParams(formId: number, fieldId: number, attachmentId: number) {
-  const forms: Form[] = getForms();
-  return { forms, formId, fieldId, attachmentId };
 }

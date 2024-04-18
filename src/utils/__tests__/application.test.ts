@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { Form, RetrievedApplication, State } from '@/types/application.types';
+import { Form, FormField, State } from '@/types/application.types';
 import {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
@@ -90,7 +90,7 @@ describe('Check if application is complete', () => {
     expect(isComplete).toBeTruthy();
   });
   it('should consider application incomplete if at least one field has no attachment ', () => {
-    const application = getInCompleteApplication();
+    const application = getIncompleteApplication();
 
     const isComplete = isApplicationComplete(application);
 
@@ -108,7 +108,9 @@ describe('Check if application state is correctly formatted', () => {
   });
 });
 
-function getCompleteApplication(): RetrievedApplication {
+function getCompleteApplication() {
+  const form1 = createForm(1, [createField(1, '10'), createField(2, '21')]);
+
   return {
     id: 12,
     externalId: '12',
@@ -135,37 +137,15 @@ function getCompleteApplication(): RetrievedApplication {
     attachments: [],
     licenses: [],
     state: State.DRAFT,
-    forms: [
-      {
-        id: 1,
-        internalName: 'form1',
-        externalTitle: [],
-        fields: [
-          {
-            id: 1,
-            value: '10',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-          {
-            id: 2,
-            value: '21',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-        ],
-      },
-    ],
+    forms: [form1],
   };
 }
 
-function getInCompleteApplication(): RetrievedApplication {
+function getIncompleteApplication() {
+  const form1 = createForm(1, [createField(1, '1'), createField(2, '12')]);
+
+  const form2 = createForm(2, [createField(1, '198, 19'), createField(2, '')]);
+
   return {
     id: 12,
     externalId: '12',
@@ -192,112 +172,33 @@ function getInCompleteApplication(): RetrievedApplication {
     attachments: [],
     licenses: [],
     state: State.DRAFT,
-    forms: [
-      {
-        id: 1,
-        internalName: 'form1',
-        externalTitle: [],
-        fields: [
-          {
-            id: 1,
-            value: '1',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-          {
-            id: 2,
-            value: '12',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-        ],
-      },
-      {
-        id: 2,
-        internalName: 'form2',
-        externalTitle: [],
-        fields: [
-          {
-            id: 1,
-            value: '198, 19',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-          {
-            id: 2,
-            value: '',
-            optional: false,
-            private: false,
-            visible: false,
-            title: [],
-            type: '',
-          },
-        ],
-      },
-    ],
+    forms: [form1, form2],
   };
 }
 
-function getForms(): Form[] {
-  return [
-    {
-      id: 1,
-      internalName: 'form1',
-      externalTitle: [],
-      fields: [
-        {
-          id: 1,
-          value: '',
-          optional: false,
-          private: false,
-          visible: false,
-          title: [],
-          type: '',
-        },
-        {
-          id: 2,
-          value: '4,5',
-          optional: false,
-          private: false,
-          visible: false,
-          title: [],
-          type: '',
-        },
-      ],
-    },
-    {
-      id: 2,
-      internalName: 'form2',
-      externalTitle: [],
-      fields: [
-        {
-          id: 1,
-          value: '22',
-          optional: false,
-          private: false,
-          visible: false,
-          title: [],
-          type: '',
-        },
-        {
-          id: 2,
-          value: '8,2',
-          optional: false,
-          private: false,
-          visible: false,
-          title: [],
-          type: '',
-        },
-      ],
-    },
-  ];
+function getForms() {
+  const form1 = createForm(1, [createField(1, ''), createField(2, '4,5')]);
+  const form2 = createForm(2, [createField(1, '22'), createField(2, '8,2')]);
+  return [form1, form2];
+}
+
+function createForm(id: number, fields: FormField[]) {
+  return {
+    id,
+    internalName: `Form ${id}`,
+    externalTitle: [],
+    fields,
+  };
+}
+
+function createField(id: number, value: string) {
+  return {
+    id,
+    value,
+    optional: false,
+    private: false,
+    visible: false,
+    title: [],
+    type: '',
+  };
 }

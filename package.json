@@ -14,7 +14,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --check .",
     "format:fix": "prettier --write --list-different .",
-    "validate": "next lint && jest && prettier --check ."
+    "validate": "npm run lint && npm run test && npm run type-check && npm run format"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",

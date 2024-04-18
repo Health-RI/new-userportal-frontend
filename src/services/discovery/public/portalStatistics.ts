@@ -19,7 +19,7 @@ export const makePortalStatistics = (discoveryUrl: string) => {
     );
 
     const ckanFacetsGroup = response.data.facetGroups.find((x) => x.key === DatasetSource.Ckan);
-    const countFacet = (facet: FacetType) => ckanFacetsGroup?.facets.find((x) => x.label === facet)?.values?.length ?? 0;
+    const countFacet = (facet: FacetType) => ckanFacetsGroup?.facets.find((x) => x.key === facet)?.values?.length ?? 0;
 
     return {
       catalogues: countFacet(FacetType.Organization),

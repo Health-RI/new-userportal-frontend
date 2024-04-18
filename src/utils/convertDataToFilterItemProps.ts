@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type Option } from '@/components/ui/multipleSelector';
+import { type Option } from '@/components/shadcn/multipleSelector';
 import { Facet, FacetGroup, ValueLabel } from '@/services/discovery/types/datasetSearch.types';
 
 export type FilterItemProps = {

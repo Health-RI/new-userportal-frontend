@@ -20,7 +20,7 @@ describe('makePortalStatistics', () => {
             key: 'ckan',
             facets: [
               {
-                field: 'organization',
+                key: 'organization',
                 label: 'organization',
                 values: [
                   {
@@ -30,7 +30,7 @@ describe('makePortalStatistics', () => {
                 ],
               },
               {
-                field: 'theme',
+                key: 'theme',
                 label: 'theme',
                 values: [
                   {
@@ -44,7 +44,7 @@ describe('makePortalStatistics', () => {
                 ],
               },
               {
-                field: 'tags',
+                key: 'tags',
                 label: 'tags',
                 values: [
                   {

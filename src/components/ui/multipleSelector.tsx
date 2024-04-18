@@ -220,6 +220,16 @@ const MultipleSelector = React.forwardRef<
       [selected],
     );
 
+    const convertQueryStringToOptions = React.useCallback(
+      (queryString: string) => {
+        return queryString.split(",").map((v: string) => ({
+          value: v,
+          label: arrayDefaultOptions.find((x) => x.value === v)?.label ?? v,
+        }));
+      },
+      [arrayDefaultOptions],
+    );
+
     const handleUnselect = React.useCallback(
       (option: Option) => {
         const newOptions = convertQueryStringToOptions(
@@ -236,7 +246,7 @@ const MultipleSelector = React.forwardRef<
 
         onChange?.(newOptions);
       },
-      [onChange, field, params, router, pathname],
+      [onChange, field, params, router, pathname, convertQueryStringToOptions],
     );
 
     const handleKeyDown = React.useCallback(
@@ -278,7 +288,7 @@ const MultipleSelector = React.forwardRef<
       );
 
       setSelected(existingValues || []);
-    }, [params, field, arrayDefaultOptions]);
+    }, [params, field, arrayDefaultOptions, convertQueryStringToOptions]);
 
     useEffect(
       () => setOptions(transToGroupOption(arrayDefaultOptions, groupBy)),
@@ -318,13 +328,6 @@ const MultipleSelector = React.forwardRef<
 
       void exec();
     }, [debouncedSearchTerm, open, onSearch, triggerSearchOnFocus, groupBy]);
-
-    const convertQueryStringToOptions = (queryString: string): Option[] => {
-      return queryString.split(",").map((v: string) => ({
-        value: v,
-        label: arrayDefaultOptions.find(x => x.value === v)?.label ?? v,
-      }));
-    };
 
     const convertOptionsToQueryString = (options: Option[]): string => {
       return options.map((option) => option.value).join(",");

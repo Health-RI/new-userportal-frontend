@@ -20,7 +20,7 @@ describe('Map field details objects to filter item props', () => {
         ],
       },
       {
-        field: 'organization',
+        key: 'organization',
         label: 'Catalogues',
         values: [
           { label: 'organization', value: 'EU' },

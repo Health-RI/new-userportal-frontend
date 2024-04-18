@@ -13,7 +13,8 @@
     "test": "jest",
     "type-check": "tsc --noEmit",
     "format": "prettier --check .",
-    "format:fix": "prettier --write --list-different ."
+    "format:fix": "prettier --write --list-different .",
+    "validate": "next lint && jest && prettier --check ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",

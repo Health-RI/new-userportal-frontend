@@ -6,35 +6,11 @@ import {
   FilterItemProps,
   convertDataToFilterItemProps,
 } from "@/utils/convertDataToFilterItemProps";
-import {
-  FacetType,
-  FacetGroup,
-} from "@/services/discovery/types/datasetSearch.types";
-import {
-  faBook,
-  faFilter,
-  faMagnifyingGlass,
-  faTags,
-  faUser,
-  faFile,
-  faKey,
-  faLocation,
-  faX,
-  type IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+import { FacetGroup } from "@/services/discovery/types/datasetSearch.types";
+import { faFilter, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/button";
 import FilterItem from "./FilterItem";
-
-const fieldToIconMap: Record<FacetType, IconDefinition> = {
-  publisher_name: faUser,
-  organization: faBook,
-  theme: faTags,
-  tags: faMagnifyingGlass,
-  res_format: faFile,
-  access_rights: faKey,
-  spatial_uri: faLocation,
-};
 
 type FilterListProps = {
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,15 +23,23 @@ function FilterList({
   queryParams,
   facetGroup,
 }: FilterListProps) {
-  const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
-    fieldToIconMap,
-    facetGroup,
-  );
-  function isAnyFilterApplied() {
+  const filterItemProps: FilterItemProps[] =
+    convertDataToFilterItemProps(facetGroup);
+
+  function isAnyGroupFilterApplied() {
     if (!queryParams) return false;
     return Array.from(queryParams.keys()).some(
-      (key) => key !== "page" && key !== "q" && queryParams.get(key),
+      (key) => key !== "page" && key !== "q" && key.includes(facetGroup.key),
     );
+  }
+
+  function getQueryStringWithoutGroupFilter() {
+    const filteredParamsQuery = Array.from(queryParams.keys())
+      .filter((x) => !x.includes(facetGroup.key) && x !== "page")
+      .map((x) => `&${x}=${queryParams.get(x)}`)
+      .join("");
+
+    return filteredParamsQuery;
   }
 
   return (
@@ -82,16 +66,15 @@ function FilterList({
             field={props.field}
             label={props.label}
             data={props.data}
-            icon={props.icon}
             groupKey={props.groupKey}
           />
         </li>
       ))}
-      {isAnyFilterApplied() || toggleFullScreenFilter ? (
+      {isAnyGroupFilterApplied() || toggleFullScreenFilter ? (
         <div className="mt-4 flex justify-end gap-x-4">
-          {isAnyFilterApplied() && (
+          {isAnyGroupFilterApplied() && (
             <Button
-              href={`/datasets?page=1${queryParams.get("q") ? `&q=${queryParams.get("q")}` : ""}`}
+              href={`/datasets?page=1${getQueryStringWithoutGroupFilter()}`}
               text="Clear Filters"
               type="warning"
             />

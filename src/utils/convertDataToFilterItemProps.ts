@@ -4,17 +4,15 @@
 
 import { type Option } from '@/components/ui/multipleSelector';
 import { Facet, FacetGroup, ValueLabel } from '@/services/discovery/types/datasetSearch.types';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export type FilterItemProps = {
   field: string;
   label: string;
   groupKey: string;
   data: Option[];
-  icon?: IconDefinition;
 };
 
-function convertDataToFilterItemProps(fieldToIconMap: Record<string, IconDefinition>, facetGroup: FacetGroup): FilterItemProps[] {
+function convertDataToFilterItemProps(facetGroup: FacetGroup): FilterItemProps[] {
   return facetGroup.facets.map((facet: Facet) => {
     return {
       field: facet.key,
@@ -26,7 +24,6 @@ function convertDataToFilterItemProps(fieldToIconMap: Record<string, IconDefinit
           value: vl.value,
         };
       }),
-      icon: fieldToIconMap[facet.key],
     };
   });
 }

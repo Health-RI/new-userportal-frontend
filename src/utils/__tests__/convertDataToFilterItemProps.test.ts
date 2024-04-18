@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
 import { convertDataToFilterItemProps } from '../convertDataToFilterItemProps';
 import { Facet, FacetGroup } from '@/services/discovery/types/datasetSearch.types';
 
@@ -35,11 +34,6 @@ describe('Map field details objects to filter item props', () => {
       facets: facets,
     } as FacetGroup;
 
-    const fieldToIconMap = {
-      publisher_name: faUser,
-      organization: faBook,
-    };
-
     const expected = [
       {
         field: 'publisher_name',
@@ -59,7 +53,6 @@ describe('Map field details objects to filter item props', () => {
             value: 'sciensano Network of General Practitioners team',
           },
         ],
-        icon: faUser,
       },
       {
         field: 'organization',
@@ -79,11 +72,10 @@ describe('Map field details objects to filter item props', () => {
             value: 'Umcg',
           },
         ],
-        icon: faBook,
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldToIconMap, facetGroup);
+    const result = convertDataToFilterItemProps(facetGroup);
 
     expect(result).toEqual(expected);
   });
@@ -103,21 +95,16 @@ describe('Map field details objects to filter item props', () => {
       label: '',
     } as FacetGroup;
 
-    const fieldToIconMap = {
-      publisher_name: faUser,
-    };
-
     const expected = [
       {
         field: 'publisher_name',
         label: 'Publishers',
         groupKey: groupKey,
         data: [],
-        icon: faUser,
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldToIconMap, facetGroup);
+    const result = convertDataToFilterItemProps(facetGroup);
 
     expect(result).toEqual(expected);
   });
@@ -137,21 +124,16 @@ describe('Map field details objects to filter item props', () => {
       label: '',
     } as FacetGroup;
 
-    const fieldToIconMap = {
-      organization: faBook,
-    };
-
     const expected = [
       {
         field: 'publisher_name',
         label: 'Publishers',
         groupKey: '',
         data: [],
-        icon: undefined,
       },
     ];
 
-    const result = convertDataToFilterItemProps(fieldToIconMap, facetGroup);
+    const result = convertDataToFilterItemProps(facetGroup);
 
     expect(result).toEqual(expected);
   });

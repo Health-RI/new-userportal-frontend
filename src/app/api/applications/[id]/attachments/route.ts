@@ -24,7 +24,7 @@ export async function POST(request: Request, params: { params: { id: string } })
 
   try {
     const { id } = await addAttachmentToApplication(applicationId, formData, session);
-    return NextResponse.json({ success: true, body: { id } }, { status: 200 });
+    return NextResponse.json({ success: true, id }, { status: 200 });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return NextResponse.json({ error: error.response?.data }, { status: error.response?.status });

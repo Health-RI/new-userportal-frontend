@@ -22,8 +22,8 @@ export default function ApplicationDetailsPage() {
 
   if (!application) return;
 
-  const events = application.events || [];
-  const lastEvent = events[events.length - 1]?.eventType || "";
+  const events = application.events;
+  const lastEvent = events[events.length - 1].eventType;
   const sidebarItems = createApplicationSidebarItems(application);
 
   return (

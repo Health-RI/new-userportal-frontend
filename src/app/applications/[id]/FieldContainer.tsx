@@ -21,7 +21,7 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
 
   const fieldTitle =
     field.title.find((label) => label.language === "en")?.name ||
-    field.title?.[0]?.name;
+    field.title[0].name;
 
   return (
     <div className="mt-10 rounded border p-6">

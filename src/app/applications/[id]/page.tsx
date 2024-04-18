@@ -9,10 +9,10 @@ import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
-import { State } from "@/types/application.types";
 import {
   formatApplicationState,
   isApplicationComplete,
+  isApplicationEditable,
 } from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import FormContainer from "./FormContainer";
@@ -40,8 +40,7 @@ export default function ApplicationDetailsPage() {
             )}
           </div>
           <div className="mt-4 flex gap-x-3 sm:mt-0">
-            {(application.state === State.DRAFT ||
-              application.state === State.RETURNED) && (
+            {isApplicationEditable(application) && (
               <Button
                 type="primary"
                 text="Submit"

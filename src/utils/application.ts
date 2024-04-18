@@ -16,6 +16,10 @@ function isApplicationComplete(application: RetrievedApplication) {
     .every((field) => field.value !== '');
 }
 
+function isApplicationEditable(application: RetrievedApplication) {
+  return application.state === State.DRAFT || application.state === State.RETURNED;
+}
+
 function updateFormWithNewAttachment(
   forms: Form[],
   formId: number,
@@ -67,5 +71,6 @@ export {
   deleteAttachmentIdFromFieldValue,
   formatApplicationState,
   isApplicationComplete,
+  isApplicationEditable,
   updateFormWithNewAttachment,
 };

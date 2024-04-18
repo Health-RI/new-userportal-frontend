@@ -6,7 +6,10 @@
 
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { FormField } from "@/types/application.types";
-import { isApplicationComplete } from "@/utils/application";
+import {
+  isApplicationComplete,
+  isApplicationEditable,
+} from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FileUploaded from "./FileUploaded";
@@ -29,25 +32,29 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
         <div>
           <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle} Attachment`}</h3>
         </div>
-        <input
-          type="file"
-          id="file-upload"
-          onChange={(e) => {
-            const file = e.target.files![0];
-            const formData = new FormData();
-            formData.set("file", file);
-            addAttachment(formId, field.id, formData);
-          }}
-          className="hidden"
-          disabled={!isApplicationComplete(application!)}
-        />
-        <label
-          htmlFor="file-upload"
-          className="cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs"
-        >
-          <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
-          <span>Upload File</span>
-        </label>
+        {isApplicationEditable(application!) && (
+          <>
+            <input
+              type="file"
+              id="file-upload"
+              onChange={(e) => {
+                const file = e.target.files![0];
+                const formData = new FormData();
+                formData.set("file", file);
+                addAttachment(formId, field.id, formData);
+              }}
+              className="hidden"
+              disabled={!isApplicationComplete(application!)}
+            />
+            <label
+              htmlFor="file-upload"
+              className="cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs"
+            >
+              <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
+              <span>Upload File</span>
+            </label>
+          </>
+        )}
       </div>
 
       <ul className="mt-5 grid grid-cols-2 gap-x-6">

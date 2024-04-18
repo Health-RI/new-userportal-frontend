@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+/** @type {import('next').NextConfig} */
+
 const cspHeader = `
     default-src 'self' ${process.env.NEXTAUTH_URL} ${process.env.API_PORTAL_URL};
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
@@ -24,7 +29,6 @@ const nextConfig = {
       },
     ],
   },
-
   async headers() {
     return [
       {

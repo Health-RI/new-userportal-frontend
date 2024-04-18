@@ -18,13 +18,14 @@ const nextConfig = {
   },
 
   async headers() {
+    let cspHeaderValue = process.env.CSP_HEADER || "";
     return [
       {
         source: "/(.*)",
         headers: [
           {
             key: "Content-Security-Policy",
-            value: process.env.CSP_HEADER || "".replace(/\n/g, ""),
+            value: cspHeaderValue.replace(/\n/g, ""),
           },
         ],
       },

@@ -31,12 +31,12 @@ export default async function Page({ params }: { params: { id: string } }) {
           {dataset.themes?.length > 0 && (
             <PageSubHeading>Themes</PageSubHeading>
           )}
-          <Chips chips={dataset.themes.map((x) => x.value) || []} />
+          <Chips chips={dataset.themes.map((x) => x.label) || []} />
           {dataset.keywords?.length > 0 && (
             <PageSubHeading>Keywords</PageSubHeading>
           )}
           <Chips
-            chips={dataset.keywords?.map((keyword) => keyword.value) || []}
+            chips={dataset.keywords?.map((keyword) => keyword.label) || []}
           />
           {dataset.distributions.length > 0 && (
             <PageSubHeading>Distributions</PageSubHeading>

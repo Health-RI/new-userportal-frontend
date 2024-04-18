@@ -32,7 +32,7 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
       isLink: true,
     },
     {
-      label: 'Publisher Name',
+      label: 'Publisher',
       value: dataset.publisherName,
       isLink: false,
     },

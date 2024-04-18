@@ -24,7 +24,7 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: process.env.CSP_HEADER.replace(/\n/g, ""),
+            value: process.env.CSP_HEADER || "".replace(/\n/g, ""),
           },
         ],
       },

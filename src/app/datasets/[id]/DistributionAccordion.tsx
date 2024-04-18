@@ -50,7 +50,7 @@ const DistributionAccordion = ({
               </span>
               {distribution.format && (
                 <span className="mx-2 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
-                  {distribution.format.value}
+                  {distribution.format.label}
                 </span>
               )}
             </span>

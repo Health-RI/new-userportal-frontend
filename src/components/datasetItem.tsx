@@ -47,7 +47,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
       {truncatedDesc && (
         <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
       )}
-      <Chips chips={dataset.themes?.map((x) => x.value) || []} />
+      <Chips chips={dataset.themes?.map((x) => x.label) || []} />
       <div className="mt-4 flex w-full justify-end">
         {!isLoading && (
           <Button

@@ -55,6 +55,7 @@ function reducer(
         fieldId: number;
         attachmentId: number;
       };
+
       return {
         ...state,
         application: {

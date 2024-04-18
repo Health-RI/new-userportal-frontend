@@ -63,10 +63,6 @@ TODO
 
 TODO
 
-## Disclaimer
-
-Please note that this version of GDI User Portal is the result of deliverable "MS11 - Development of the user portal deployed", which is still undergoing further feature developments and testing before its release in production. Therefore, you may witness some instabilities and broken links. Should you have any feedback, please let us know so we can take into account for the future releases accordingly. Your help in this regard is greatly appreciated!
-
 ## Further help
 
 To get more help on Next JS, go check out the [Next JS API Reference](https://nextjs.org/docs/pages/api-reference) page.

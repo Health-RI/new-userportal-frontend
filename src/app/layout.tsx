@@ -4,12 +4,10 @@
 
 import Header from "@/components/Header";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
-import { ApplicationProvider } from "@/providers/application/ApplicationProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { PublicEnvScript } from "next-runtime-env";
 import { exposeFont, satoshiFont, tabularFont } from "../utils/fonts";
-import Disclaimer from "./disclaimer";
 import Footer from "./footer";
 import "./globals.css";
 import SessionProviderWrapper from "./sessionProviderWrapper";
@@ -32,20 +30,15 @@ export default function RootLayout({
       </head>
       <body>
         <DatasetBasketProvider>
-          <ApplicationProvider>
-            <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
-              <SessionProviderWrapper>
-                <div>
-                  <Header />
-                </div>
-                <div>{children}</div>
-                <div>
-                  <Disclaimer />
-                  <Footer />
-                </div>
-              </SessionProviderWrapper>
-            </div>
-          </ApplicationProvider>
+          <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
+            <SessionProviderWrapper>
+              <div>
+                <Header />
+              </div>
+              <div>{children}</div>
+              <Footer />
+            </SessionProviderWrapper>
+          </div>
         </DatasetBasketProvider>
       </body>
     </html>

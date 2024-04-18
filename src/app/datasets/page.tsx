@@ -108,7 +108,9 @@ export default function DatasetPage() {
   }, [queryParams, screenSize]);
 
   if (response.status === "loading") {
-    return <LoadingContainer text="Loading datasets..." />;
+    return (
+      <LoadingContainer text="Retrieving datasets. This may take a few moments as we process complex Beacon queries." />
+    );
   } else if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
   }
@@ -117,16 +119,23 @@ export default function DatasetPage() {
     <PageContainer>
       <div className="grid grid-cols-12">
         {isFullScreenFilterOpen ? (
-          <div className="col-start-0 col-span-12 rounded-lg border bg-white-smoke">
-            {response.facetGroups?.map((group) => (
-              <FilterList
-                key={group.key}
-                facets={group.facets}
-                toggleFullScreenFilter={toggleFullScreenFilter}
-                queryParams={queryParams}
-                groupKey={group.key}
-              />
-            ))}
+          <div className="col-start-0 col-span-12 flex flex-col gap-4">
+            {response.facetGroups?.map((group) => {
+              if (group.facets.length > 0) {
+                return (
+                  <div
+                    className="col-start-0 col-span-12 rounded-lg border bg-white-smoke"
+                    key={group.key}
+                  >
+                    <FilterList
+                      toggleFullScreenFilter={toggleFullScreenFilter}
+                      queryParams={queryParams}
+                      facetGroup={group}
+                    />
+                  </div>
+                );
+              }
+            })}
           </div>
         ) : (
           <>
@@ -142,15 +151,22 @@ export default function DatasetPage() {
             <p className="col-start-0 col-span-12 mb-12 mt-5 text-center text-sm text-info">
               {`${response.datasetCount!} ${response.datasetCount! > 1 ? "datasets" : "dataset"} found`}
             </p>
-            <div className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block">
-              {response.facetGroups?.map((group) => (
-                <FilterList
-                  key={group.key}
-                  facets={group.facets}
-                  queryParams={queryParams}
-                  groupKey={group.key}
-                />
-              ))}
+            <div className="col-start-0 col-span-4 flex flex-col gap-4">
+              {response.facetGroups?.map((group) => {
+                if (group.facets.length > 0) {
+                  return (
+                    <div
+                      className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block"
+                      key={group.key}
+                    >
+                      <FilterList
+                        queryParams={queryParams}
+                        facetGroup={group}
+                      />
+                    </div>
+                  );
+                }
+              })}
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
               <DatasetList datasets={response.datasets!} />

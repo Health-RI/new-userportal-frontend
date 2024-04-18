@@ -45,10 +45,14 @@ const DistributionAccordion = ({
           >
             <span className="flex items-center">
               <FontAwesomeIcon icon={faFile} className="text-primary" />
-              <span className="ml-2">{distribution.title}</span>
-              <span className="ml-4 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
-                {distribution.format.value}
+              <span className="struncate ml-2 break-all">
+                {distribution.title}
               </span>
+              {distribution.format && (
+                <span className="mx-2 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
+                  {distribution.format.label}
+                </span>
+              )}
             </span>
             <FontAwesomeIcon
               icon={openIndex === index ? faChevronUp : faChevronDown}
@@ -80,15 +84,17 @@ const DistributionAccordion = ({
                   {distribution.createdAt && formatDate(distribution.createdAt)}
                 </span>
               </div>
-              <div>
-                <strong className="block text-sm font-semibold">
-                  Last Modified:
-                </strong>
-                <span className="text-sm">
-                  {distribution.modifiedAt &&
-                    formatDate(distribution.modifiedAt)}
-                </span>
-              </div>
+              {distribution.modifiedAt && (
+                <div>
+                  <strong className="block text-sm font-semibold">
+                    Last Modified:
+                  </strong>
+                  <span className="text-sm">
+                    {distribution.modifiedAt &&
+                      formatDate(distribution.modifiedAt)}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

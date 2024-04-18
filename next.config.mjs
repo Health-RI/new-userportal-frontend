@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 /** @type {import('next').NextConfig} */
 
+const trustedSources = process.env.CSP_TRUSTED_SOURCES.split(',');
+
 const cspHeader = `
-    default-src 'self' ${process.env.NEXTAUTH_URL} ${process.env.API_PORTAL_URL};
+    default-src 'self' ${trustedSources.join(' ')};
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data:;

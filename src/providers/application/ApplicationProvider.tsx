@@ -122,7 +122,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     dispatch({ type: ApplicationActionType.LOADING });
     try {
       const response = await fetch(`/api/applications/${id}`);
-      const retrievedApplication = (await response.json()).body;
+      const retrievedApplication = await response.json();
       dispatch({
         type: ApplicationActionType.APPLICATION_LOADED,
         payload: retrievedApplication,

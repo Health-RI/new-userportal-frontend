@@ -3,11 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AddedAttachment } from '@/types/application.types';
+import axios, { AxiosResponse } from 'axios';
 
-export async function addAttachmentToApplication(applicationId: number, attachment: FormData): Promise<AddedAttachment> {
-  const response = await fetch(`/api/applications/${applicationId}/attachments`, {
-    method: 'POST',
-    body: attachment,
-  });
-  return response.json();
+export async function addAttachmentToApplication(
+  applicationId: number,
+  attachment: FormData,
+): Promise<AxiosResponse<AddedAttachment>> {
+  const response = await axios.post(`/api/applications/${applicationId}/attachments`, attachment);
+  return response.data;
 }

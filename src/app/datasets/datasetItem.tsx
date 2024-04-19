@@ -48,7 +48,18 @@ function DatasetItem({ dataset }: DatasetItemProps) {
         <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
       )}
       <Chips chips={dataset.themes?.map((x) => x.label) || []} />
-      <div className="mt-4 flex w-full justify-end">
+      <div
+        className={
+          "mt-4 flex w-full " +
+          (!!dataset.recordsCount ? "justify-between" : "justify-end")
+        }
+      >
+        {!!dataset.recordsCount && (
+          <span className="mt-4 flex rounded bg-info px-2 py-1 text-xs font-bold text-white">
+            {dataset.recordsCount} record{dataset.recordsCount > 1 ? "s" : ""}{" "}
+            found
+          </span>
+        )}
         {!isLoading && (
           <Button
             text={isInBasket ? "Remove from basket" : "Add to basket"}

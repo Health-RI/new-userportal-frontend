@@ -102,11 +102,10 @@ export default function ApplicationItem({
           </div>
           <div className="md:flex-1">
             <h3 className="mb-4 text-lg font-bold text-primary">Datasets</h3>
-            {application.datasets.map((dataset) => (
-              <a
-                href={`/datasets/${dataset.externalId}`}
-                key={dataset.id}
-                className="mb-2 block items-baseline gap-2 hover:underline"
+            {application.datasets.map((dataset, index) => (
+              <span
+                className="mb-2 flex items-center gap-2"
+                key={`${dataset.id}-${index}`}
               >
                 <FontAwesomeIcon
                   icon={faDatabase}
@@ -115,7 +114,7 @@ export default function ApplicationItem({
                 <h3 className="sm:text-md text-base font-bold text-info lg:text-lg">
                   {getLabelName(dataset.title)}
                 </h3>
-              </a>
+              </span>
             ))}
           </div>
         </div>

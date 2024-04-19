@@ -14,7 +14,7 @@ import { createApplication } from "@/services/daam/index.client";
 import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
-import DatasetList from "../datasets/datasetList";
+import DatasetList from "../datasets/DatasetList";
 
 export default function Page() {
   const { basket, isLoading, emptyBasket } = useDatasetBasket();
@@ -31,10 +31,12 @@ export default function Page() {
   }
 
   const requestNow = async () => {
+    const identifiers = basket
+      .map((dataset) => dataset.identifier)
+      .filter((identifier): identifier is string => identifier !== undefined);
+
     try {
-      const response = await createApplication(
-        basket.map((dataset) => dataset.id),
-      );
+      const response = await createApplication(identifiers);
       emptyBasket();
       window.location.href = `/applications/${response.applicationId}`;
     } catch (error) {

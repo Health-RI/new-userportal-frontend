@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import Chips from "@/components/Chips";
 import Button from "@/components/Button";
+import Chips from "@/components/Chips";
 import { useWindowSize } from "@/hooks";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
@@ -32,6 +32,8 @@ function DatasetItem({ dataset }: DatasetItemProps) {
       addDatasetToBasket(dataset);
     }
   };
+  const hasIdentifier = !!dataset.identifier;
+  const buttonDisabled = isLoading || !hasIdentifier;
 
   return (
     <>
@@ -66,6 +68,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
             icon={isInBasket ? faMinusCircle : faPlusCircle}
             onClick={toggleDatasetInBasket}
             type={isInBasket ? "warning" : "primary"}
+            disabled={buttonDisabled}
           />
         )}
       </div>

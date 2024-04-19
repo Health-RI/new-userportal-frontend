@@ -153,10 +153,9 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     try {
       dispatch({ type: ApplicationActionType.LOADING });
 
-      const { id: attachmentId } = await addAttachmentToApplication(
-        application!.id,
-        formData,
-      );
+      const {
+        data: { id: attachmentId },
+      } = await addAttachmentToApplication(application!.id, formData);
 
       dispatch({
         type: ApplicationActionType.ATTACHMENT_ATTACHED,

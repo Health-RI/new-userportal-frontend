@@ -109,7 +109,10 @@ export default function DatasetPage() {
 
   if (response.status === "loading") {
     return (
-      <LoadingContainer text="Retrieving datasets. This may take a few moments as we process complex Beacon queries." />
+      <LoadingContainer
+        text="Retrieving datasets. This may take a few moments as we process complex Beacon queries."
+        className="mt-4 px-4 text-center sm:mt-8 sm:px-8"
+      />
     );
   } else if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
@@ -171,7 +174,7 @@ export default function DatasetPage() {
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
               <DatasetList datasets={response.datasets!} />
             </div>
-            <div className="col-start-0 col-span-12 mt-20 xl:col-span-8 xl:col-start-5">
+            <div className="col-start-0 col-span-12 mt-10 xl:col-span-8 xl:col-start-5 ">
               <PaginationContainer
                 datasetCount={response.datasetCount!}
                 datasetPerPage={DATASET_PER_PAGE}

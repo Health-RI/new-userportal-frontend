@@ -61,8 +61,11 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
     },
     {
       label: 'Access rights',
-      value: dataset.accessRigths?.map((accessRight) => ({ label: accessRight.label, url: accessRight.value })),
-      isLink: false,
+      value: {
+        label: dataset.accessRights?.label,
+        url: dataset.accessRights?.value,
+      },
+      isLink: true,
     },
     {
       label: 'Conforms to',

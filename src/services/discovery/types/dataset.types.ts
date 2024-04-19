@@ -17,7 +17,7 @@ export interface RetrievedDataset {
   languages: ValueLabel[];
   contact: ValueLabel;
   hasVersions: ValueLabel[];
-  accessRigths: ValueLabel[];
+  accessRights: ValueLabel;
   conformsTo: ValueLabel[];
   provenance: string;
   spatial: ValueLabel;

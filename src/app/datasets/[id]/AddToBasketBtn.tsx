@@ -16,24 +16,26 @@ function AddToBasketBtn({ dataset }: AddToBasketBtnProps) {
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
   const isInBasket = basket.some((ds) => ds.id === dataset.id);
+  const hasIdentifier = dataset.identifier != null;
   const toggleDatasetInBasket = () => {
     if (isInBasket) {
       removeDatasetFromBasket(dataset);
-    } else {
+    } else if (hasIdentifier) {
       addDatasetToBasket(dataset);
     }
   };
 
+  const buttonDisabled = isLoading || !hasIdentifier;
+
   return (
     <div className="flex lg:w-1/3 lg:justify-end">
-      {!isLoading && (
         <Button
           text={isInBasket ? "Remove from basket" : "Add to basket"}
           icon={isInBasket ? faMinusCircle : faPlusCircle}
           onClick={toggleDatasetInBasket}
           type={isInBasket ? "warning" : "primary"}
+          disabled={buttonDisabled}
         />
-      )}
     </div>
   );
 }

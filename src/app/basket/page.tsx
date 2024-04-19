@@ -31,10 +31,12 @@ export default function Page() {
   }
 
   const requestNow = async () => {
+    const identifiers = basket
+      .map((dataset) => dataset.identifier)
+      .filter((identifier): identifier is string => identifier !== undefined);
+
     try {
-      const response = await createApplication(
-        basket.map((dataset) => dataset.id),
-      );
+      const response = await createApplication(identifiers);
       emptyBasket();
       window.location.href = `/applications/${response.applicationId}`;
     } catch (error) {

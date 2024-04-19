@@ -32,6 +32,8 @@ function DatasetItem({ dataset }: DatasetItemProps) {
       addDatasetToBasket(dataset);
     }
   };
+  const hasIdentifier = !!dataset.identifier;
+  const buttonDisabled = isLoading || !hasIdentifier;
 
   return (
     <>
@@ -66,6 +68,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
             icon={isInBasket ? faMinusCircle : faPlusCircle}
             onClick={toggleDatasetInBasket}
             type={isInBasket ? "warning" : "primary"}
+            disabled={buttonDisabled}
           />
         )}
       </div>

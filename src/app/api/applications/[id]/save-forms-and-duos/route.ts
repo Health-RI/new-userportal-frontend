@@ -4,7 +4,6 @@
 
 import { saveFormAndDuos } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
-import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
@@ -22,12 +21,8 @@ export async function POST(request: Request, params: { params: { id: string } })
     saveFormAndDuos(id, forms, duosCodes, session);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return NextResponse.json({ error: error.response?.data }, { status: error.response?.status });
-    } else if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const errorMsg = error instanceof Error ? error.message : 'Something went wrong';
 
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+    return NextResponse.json({ error: errorMsg }, { status: 500 });
   }
 }

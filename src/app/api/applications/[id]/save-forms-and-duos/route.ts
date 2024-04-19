@@ -16,12 +16,12 @@ export async function POST(request: Request, params: { params: { id: string } })
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { forms, duosCodes } = await request.json();
+  const { forms, duoCodes } = await request.json();
 
   try {
-    saveFormAndDuos(id, forms, duosCodes, session);
-    return NextResponse.json({ success: true }, { status: 200 });
+    await saveFormAndDuos(id, forms, duoCodes, session);
+    return NextResponse.json({ status: 200 });
   } catch (error) {
-    handleErrorResponse(error);
+    return handleErrorResponse(error);
   }
 }

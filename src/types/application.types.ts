@@ -36,7 +36,7 @@ interface RetrievedApplication {
 
 interface SaveFormAndDuos {
   forms: SaveForm[];
-  duosCodes: SaveDUOCode[];
+  duoCodes: SaveDUOCode[];
 }
 
 interface Workflow {

@@ -206,7 +206,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
             value: field.value,
           })),
         })),
-        duosCodes: [],
+        duoCodes: [],
       }),
     });
   }

@@ -17,9 +17,9 @@ export async function POST(request: Request, params: { params: { id: string } })
   }
 
   try {
-    submitApplication(id, session);
-    return NextResponse.json({ success: true }, { status: 200 });
+    await submitApplication(id, session);
+    return NextResponse.json({ status: 200 });
   } catch (error) {
-    handleErrorResponse(error);
+    return handleErrorResponse(error);
   }
 }

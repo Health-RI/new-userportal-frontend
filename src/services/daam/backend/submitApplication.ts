@@ -12,7 +12,7 @@ export function makeSubmitApplication(daamUrl: string) {
     applicationId: string,
     session: ExtendedSession,
   ): Promise<AxiosResponse<void | ErrorResponse | ValidationWarnings>> => {
-    return await axios.post(`${daamUrl}/api/v1/applications/${applicationId}/submit`, null, {
+    return await axios.post(`${daamUrl}/api/v1/applications/${applicationId}/submit`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${decrypt(session.access_token)}`,

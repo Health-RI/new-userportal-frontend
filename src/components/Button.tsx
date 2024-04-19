@@ -41,9 +41,7 @@ const Button: React.FC<ButtonProps> = ({
     warning: "bg-warning text-black hover:bg-secondary hover:text-white",
   };
 
-  const disabledClasses = disabled
-    ? "opacity-60 cursor-not-allowed"
-    : "";
+  const disabledClasses = disabled ? "opacity-60 cursor-not-allowed" : "";
 
   return (
     <a

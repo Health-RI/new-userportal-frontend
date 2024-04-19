@@ -38,11 +38,8 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
     },
     {
       label: 'Identifier',
-      value: {
-        label: dataset.identifier,
-        url: dataset.identifier,
-      },
-      isLink: true,
+      value: dataset.identifier,
+      isLink: false,
     },
     {
       label: 'Spatial URI',

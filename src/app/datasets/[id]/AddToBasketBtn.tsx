@@ -29,13 +29,13 @@ function AddToBasketBtn({ dataset }: AddToBasketBtnProps) {
 
   return (
     <div className="flex lg:w-1/3 lg:justify-end">
-        <Button
-          text={isInBasket ? "Remove from basket" : "Add to basket"}
-          icon={isInBasket ? faMinusCircle : faPlusCircle}
-          onClick={toggleDatasetInBasket}
-          type={isInBasket ? "warning" : "primary"}
-          disabled={buttonDisabled}
-        />
+      <Button
+        text={isInBasket ? "Remove from basket" : "Add to basket"}
+        icon={isInBasket ? faMinusCircle : faPlusCircle}
+        onClick={toggleDatasetInBasket}
+        type={isInBasket ? "warning" : "primary"}
+        disabled={buttonDisabled}
+      />
     </div>
   );
 }

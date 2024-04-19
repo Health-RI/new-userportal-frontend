@@ -25,8 +25,8 @@ export async function POST(request: Request, params: { params: { id: string } })
     if (id === undefined) {
       throw new Error('Failed to add attachment to application');
     }
-    return NextResponse.json({ success: true, id }, { status: 200 });
+    return NextResponse.json({ id }, { status: 200 });
   } catch (error) {
-    handleErrorResponse(error);
+    return handleErrorResponse(error);
   }
 }

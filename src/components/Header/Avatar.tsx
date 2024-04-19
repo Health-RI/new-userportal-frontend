@@ -8,7 +8,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/shadcn/dropdown-menu";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {

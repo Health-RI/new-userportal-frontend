@@ -9,7 +9,7 @@ import {
 import { FacetGroup } from "@/services/discovery/types/datasetSearch.types";
 import { faFilter, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@/components/button";
+import Button from "@/components/Button";
 import FilterItem from "./FilterItem";
 
 type FilterListProps = {

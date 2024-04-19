@@ -2,15 +2,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import Footer from "@/components/footer";
 import Header from "@/components/Header";
-import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { PublicEnvScript } from "next-runtime-env";
 import { exposeFont, satoshiFont, tabularFont } from "../utils/fonts";
+import Footer from "./footer";
 import "./globals.css";
+import SessionProviderWrapper from "./sessionProviderWrapper";
 config.autoAddCss = false;
 
 export default function RootLayout({

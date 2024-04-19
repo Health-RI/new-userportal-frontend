@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import MultipleSelector from "@/components/shadcn/multipleSelector";
 import { FilterItemProps } from "@/utils/convertDataToFilterItemProps";
-import MultipleSelector from "@/components/ui/multipleSelector";
 
 function FilterItem({ field, label, data, groupKey }: FilterItemProps) {
   return (

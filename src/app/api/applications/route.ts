@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { authOptions, ExtendedSession } from '@/utils/auth';
+import { createApplication, listApplications } from '@/services/daam/index.server';
+import { ExtendedSession, authOptions } from '@/utils/auth';
+import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import { createApplication, listApplications } from '@/services/daam/index.server';
-import axios from 'axios';
 
 function handleErrorResponse(error: unknown) {
   if (axios.isAxiosError(error)) {

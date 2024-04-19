@@ -4,30 +4,30 @@
 
 "use client";
 
+import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+import logo from "@/public/egdi-logo-horizontal-full-color-rgb.svg";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faBars,
   faDatabase,
+  faFileText,
   faHome,
   faInfoCircle,
   faRightFromBracket,
   faRightToBracket,
-  faUser,
   faShoppingCart,
-  faFileText,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "@/public/egdi-logo-horizontal-full-color-rgb.svg";
-import Avatar from "./Avatar";
-import Button from "../button";
+import Button from "../Button";
 import ApplicationIcon from "./ApplicationIcon";
+import Avatar from "./Avatar";
 
 function Header() {
   const { data: session, status } = useSession();

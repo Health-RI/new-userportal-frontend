@@ -4,7 +4,7 @@
 
 import * as React from "react";
 
-import { ButtonProps, buttonVariants } from "@/components/ui/button";
+import { ButtonProps, buttonVariants } from "@/components/shadcn/button";
 import { cn } from "@/utils/tailwindMerge";
 import {
   faChevronLeft,

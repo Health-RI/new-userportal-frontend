@@ -4,28 +4,27 @@
 
 "use client";
 
-import DatasetList from "@/components/datasetList";
-import FilterList from "./FilterList";
-import PaginationContainer from "@/components/PaginationContainer";
-import SearchBar from "@/components/SearchBar";
-import PageContainer from "@/components/PageContainer";
+import Error from "@/app/error";
 import LoadingContainer from "@/components/LoadingContainer";
+import PageContainer from "@/components/PageContainer";
+import PaginationContainer from "@/components/PaginationContainer";
+import SearchBar from "@/components/Searchbar";
 import { useWindowSize } from "@/hooks";
-import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { datasetList } from "@/services/discovery/index.public";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
 import {
+  DatasetSearchOptions,
   DatasetSearchQueryFacet,
   FacetGroup,
-  DatasetSearchOptions,
 } from "@/services/discovery/types/datasetSearch.types";
-import { redirect } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import Error from "@/app/error";
+import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
-import { SearchedDataset } from "@/services/discovery/types/dataset.types";
-import { datasetList } from "@/services/discovery/index.public";
+import { redirect, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import FilterList from "./FilterList";
+import DatasetList from "./datasetList";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
   const facetsQuery: DatasetSearchQueryFacet[] = [];

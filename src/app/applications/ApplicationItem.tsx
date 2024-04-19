@@ -2,16 +2,16 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef, useEffect } from "react";
 import { ListedApplication } from "@/types/application.types";
+import { formatDate } from "@/utils/formatDate";
+import { getLabelName } from "@/utils/getLabelName";
 import {
   faChevronDown,
   faChevronUp,
   faDatabase,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatDate } from "@/utils/formatDate";
-import { getLabelName } from "@/utils/getLabelName";
+import { useEffect, useRef, useState } from "react";
 
 export default function ApplicationItem({
   application,
@@ -106,7 +106,7 @@ export default function ApplicationItem({
               <a
                 href={`/datasets/${dataset.externalId}`}
                 key={dataset.id}
-                className="mb-2 block flex items-baseline gap-2 hover:underline"
+                className="mb-2 block items-baseline gap-2 hover:underline"
               >
                 <FontAwesomeIcon
                   icon={faDatabase}

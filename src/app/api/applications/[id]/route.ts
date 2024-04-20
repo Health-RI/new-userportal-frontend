@@ -6,6 +6,7 @@ import { retrieveApplication } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { handleErrorResponse } from '../../errorHandling';
 
 export async function GET(request: Request, params: { params: { id: string } }) {
   const session: ExtendedSession | null = await getServerSession(authOptions);
@@ -16,11 +17,9 @@ export async function GET(request: Request, params: { params: { id: string } }) 
   }
 
   try {
-    const application = await retrieveApplication(id, session);
-    return NextResponse.json({ success: true, body: application }, { status: 200 });
+    const { data: application } = await retrieveApplication(id, session);
+    return NextResponse.json(application, { status: 200 });
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Something went wrong';
-
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }

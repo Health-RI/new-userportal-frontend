@@ -4,18 +4,9 @@
 
 import { createApplication, listApplications } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
-import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-
-function handleErrorResponse(error: unknown) {
-  if (axios.isAxiosError(error)) {
-    return NextResponse.json({ error: error.response?.data }, { status: error.response?.status });
-  } else if (error instanceof Error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-  return NextResponse.json({ error: 'Unexpected error occurred' }, { status: 500 });
-}
+import { handleErrorResponse } from '../errorHandling';
 
 export async function POST(request: Request) {
   const session: ExtendedSession | null = await getServerSession(authOptions);

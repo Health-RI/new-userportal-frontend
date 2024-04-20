@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { handleErrorResponse } from '@/app/api/errorHandling';
 import { addAttachmentToApplication } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
@@ -18,14 +19,14 @@ export async function POST(request: Request, params: { params: { id: string } })
   const formData = await request.formData();
 
   try {
-    const { id } = await addAttachmentToApplication(applicationId, formData, session);
+    const {
+      data: { id },
+    } = await addAttachmentToApplication(applicationId, formData, session);
     if (id === undefined) {
       throw new Error('Failed to add attachment to application');
     }
-    return NextResponse.json({ success: true, id }, { status: 200 });
+    return NextResponse.json({ id }, { status: 200 });
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Something went wrong';
-
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }

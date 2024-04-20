@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { handleErrorResponse } from '@/app/api/errorHandling';
 import { saveFormAndDuos } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
@@ -15,14 +16,12 @@ export async function POST(request: Request, params: { params: { id: string } })
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { forms, duosCodes } = await request.json();
+  const { forms, duoCodes } = await request.json();
 
   try {
-    saveFormAndDuos(id, forms, duosCodes, session);
-    return NextResponse.json({ success: true }, { status: 200 });
+    await saveFormAndDuos(id, forms, duoCodes, session);
+    return NextResponse.json({ status: 200 });
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Something went wrong';
-
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }

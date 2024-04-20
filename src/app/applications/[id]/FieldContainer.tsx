@@ -6,10 +6,7 @@
 
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { FormField } from "@/types/application.types";
-import {
-  isApplicationComplete,
-  isApplicationEditable,
-} from "@/utils/application";
+import { isApplicationEditable } from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FileUploaded from "./FileUploaded";
@@ -30,7 +27,7 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
     <div className="mt-10 rounded border p-6">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle} Attachment`}</h3>
+          <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle}`}</h3>
         </div>
         {isApplicationEditable(application!) && (
           <>
@@ -44,7 +41,6 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
                 addAttachment(formId, field.id, formData);
               }}
               className="hidden"
-              disabled={!isApplicationComplete(application!)}
             />
             <label
               htmlFor="file-upload"

@@ -144,12 +144,6 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     fieldId: number,
     formData: FormData,
   ): Promise<void> {
-    if (!formData.get("file"))
-      dispatch({
-        type: ApplicationActionType.REJECTED,
-        payload: "Failed to add attachment: no file has been provided",
-      });
-
     try {
       dispatch({ type: ApplicationActionType.LOADING });
 
@@ -157,22 +151,31 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         data: { id: attachmentId },
       } = await addAttachmentToApplication(application!.id, formData);
 
-      dispatch({
+      const action = {
         type: ApplicationActionType.ATTACHMENT_ATTACHED,
         payload: {
           attachmentId,
           formId,
           fieldId,
         },
-      });
+      };
+
+      dispatch(action);
+
+      const { forms: updatedForms } = reducer(
+        { application, isLoading, error },
+        action,
+      ).application as RetrievedApplication;
+
+      console.log(updatedForms);
+
+      saveFormAndDuos(updatedForms);
     } catch {
       dispatch({
         type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment",
       });
     }
-    saveFormAndDuos();
-    fetchApplication();
   }
 
   function deleteAttachment(
@@ -188,18 +191,18 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         fieldId,
       },
     });
-    saveFormAndDuos();
+    // saveFormAndDuos();
     fetchApplication();
   }
 
-  function saveFormAndDuos() {
+  function saveFormAndDuos(forms: Form[]) {
     fetch(`/api/applications/${application!.id}/save-forms-and-duos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        forms: application!.forms.map((form: Form) => ({
+        forms: forms.map((form: Form) => ({
           id: form.id,
           fields: form.fields.map((field: FormField) => ({
             fieldId: field.id,

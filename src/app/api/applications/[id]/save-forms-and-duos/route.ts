@@ -19,7 +19,7 @@ export async function POST(request: Request, params: { params: { id: string } })
   const { forms, duoCodes } = await request.json();
 
   try {
-    await saveFormAndDuos(id, forms, duoCodes, session);
+    saveFormAndDuos(id, forms, duoCodes, session);
     return NextResponse.json({ status: 200 });
   } catch (error) {
     return handleErrorResponse(error);

@@ -71,7 +71,7 @@ interface SidebarProps {
 
 function Sidebar({ items }: SidebarProps) {
   return (
-    <div className="border-gray flex flex-col gap-3 rounded-sm border-2 bg-white-smoke p-5 text-black">
+    <div className="border-gray flex flex-col gap-3 break-all rounded-sm border-2 bg-white-smoke p-5 text-black">
       {items.map((item) => (
         <div className="mb-3" key={item.label}>
           <h3 className="text-base text-primary sm:text-lg lg:text-xl">

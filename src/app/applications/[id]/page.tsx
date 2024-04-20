@@ -10,8 +10,7 @@ import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import {
-  formatApplicationState,
-  isApplicationComplete,
+  formatApplicationProp,
   isApplicationEditable,
 } from "@/utils/application";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +34,7 @@ export default function ApplicationDetailsPage() {
             <PageHeading>Application {application.id}</PageHeading>
             {application.id && (
               <div className="rounded bg-warning px-2.5 py-0.5 text-center text-sm font-semibold">
-                {formatApplicationState(application.state)}
+                {formatApplicationProp(application.state)}
               </div>
             )}
           </div>
@@ -46,18 +45,17 @@ export default function ApplicationDetailsPage() {
                 text="Submit"
                 className="h-fit text-[10px] sm:text-xs"
                 icon={faPaperPlane}
-                disabled={!isApplicationComplete(application)}
                 onClick={submitApplication}
               />
             )}
           </div>
         </div>
-        <p className="mt-5">Last Event: {lastEvent}</p>
+        <p className="mt-5">Last Event: {formatApplicationProp(lastEvent)}</p>
       </div>
-      <div className="xl:col-span-9 xl:row-start-2">
+      <div className="mt-5 xl:col-span-9 xl:row-start-2">
         <div className="h-[2px] bg-secondary opacity-80"></div>
 
-        <div className="mt-10 w-full xl:hidden">
+        <div className="my-10 w-full xl:hidden">
           <Sidebar items={sidebarItems} />
         </div>
 

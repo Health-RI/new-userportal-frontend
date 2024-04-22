@@ -19,6 +19,14 @@ type FieldContainerProps = {
 function FieldContainer({ formId, field }: FieldContainerProps) {
   const { application, isLoading, addAttachment } = useApplicationDetails();
 
+  function onFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files![0];
+    const formData = new FormData();
+    formData.set("file", file);
+    addAttachment(formId, field.id, formData);
+    e.target.value = "";
+  }
+
   const fieldTitle =
     field.title.find((label) => label.language === "en")?.name ||
     field.title[0].name;
@@ -35,13 +43,7 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
               type="file"
               id="file-upload"
               disabled={isLoading}
-              onChange={(e) => {
-                const file = e.target.files![0];
-                const formData = new FormData();
-                formData.set("file", file);
-                addAttachment(formId, field.id, formData);
-                e.target.value = "";
-              }}
+              onChange={onFileUpload}
               className="hidden"
             />
             <label

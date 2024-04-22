@@ -6,7 +6,7 @@ import { RetrievedApplication } from '@/types/application.types';
 
 export type ApplicationAction = {
   type: ApplicationActionType;
-  payload?: RetrievedApplication | { fieldId: number; formId: number; attachmentId: number } | string | boolean;
+  payload?: RetrievedApplication | { fieldId: number; formId: number; attachmentId: number } | string;
 };
 
 export enum ApplicationActionType {

@@ -20,7 +20,6 @@ export async function POST(request: Request, params: { params: { id: string } })
     await submitApplication(id, session);
     return NextResponse.json({ status: 200 });
   } catch (error) {
-    console.log('error', error);
     return handleErrorResponse(error);
   }
 }

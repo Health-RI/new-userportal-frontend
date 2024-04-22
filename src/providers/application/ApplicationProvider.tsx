@@ -92,6 +92,9 @@ function reducer(
         isLoading: false,
       };
 
+    case ApplicationActionType.FORM_SAVED:
+      return { ...state, isLoading: false };
+
     case ApplicationActionType.REJECTED:
       return { ...state, error: action.payload as string, isLoading: false };
 
@@ -166,11 +169,9 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         { application, isLoading, error },
         action,
       ).application as RetrievedApplication;
-
-      saveFormAndDuos(updatedForms);
-      fetchApplication();
+      const response = await saveFormAndDuos(updatedForms);
+      if (response.ok) fetchApplication();
     } catch (error) {
-      console.log("Failed to add attachment", error);
       dispatch({
         type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment",
@@ -178,47 +179,62 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     }
   }
 
-  function deleteAttachment(
+  async function deleteAttachment(
     formId: number,
     fieldId: number,
     attachmentId: number,
   ) {
-    const action = {
-      type: ApplicationActionType.ATTACHMENT_DELETED,
-      payload: {
-        attachmentId,
-        formId,
-        fieldId,
-      },
-    };
-    dispatch(action);
+    try {
+      dispatch({ type: ApplicationActionType.LOADING });
 
-    const { forms: updatedForms } = reducer(
-      { application, isLoading, error },
-      action,
-    ).application as RetrievedApplication;
+      const action = {
+        type: ApplicationActionType.ATTACHMENT_DELETED,
+        payload: {
+          attachmentId,
+          formId,
+          fieldId,
+        },
+      };
+      dispatch(action);
 
-    saveFormAndDuos(updatedForms);
-    fetchApplication();
+      const { forms: updatedForms } = reducer(
+        { application, isLoading, error },
+        action,
+      ).application as RetrievedApplication;
+
+      const response = await saveFormAndDuos(updatedForms);
+      if (response.ok) fetchApplication();
+    } catch (error) {
+      dispatch({
+        type: ApplicationActionType.REJECTED,
+        payload: "Failed to delete attachment",
+      });
+    }
   }
 
-  function saveFormAndDuos(forms: Form[]) {
-    fetch(`/api/applications/${application!.id}/save-forms-and-duos`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        forms: forms.map((form: Form) => ({
-          formId: form.id,
-          fields: form.fields.map((field: FormField) => ({
-            fieldId: field.id,
-            value: field.value,
+  async function saveFormAndDuos(forms: Form[]) {
+    dispatch({ type: ApplicationActionType.LOADING });
+    const response = await fetch(
+      `/api/applications/${application!.id}/save-forms-and-duos`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          forms: forms.map((form: Form) => ({
+            formId: form.id,
+            fields: form.fields.map((field: FormField) => ({
+              fieldId: field.id,
+              value: field.value,
+            })),
           })),
-        })),
-        duoCodes: [],
-      }),
-    });
+          duoCodes: [],
+        }),
+      },
+    );
+    dispatch({ type: ApplicationActionType.FORM_SAVED });
+    return response;
   }
 
   function submitApplication() {

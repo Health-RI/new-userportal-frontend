@@ -15,7 +15,7 @@ type FileUploadedProps = {
 };
 
 function FileUploaded({ attachment, formId, fieldId }: FileUploadedProps) {
-  const { application, deleteAttachment } = useApplicationDetails();
+  const { application, isLoading, deleteAttachment } = useApplicationDetails();
   return (
     <div className="relative mt-5 flex items-center justify-between gap-x-1 rounded border-2 bg-white-smoke px-3 py-1.5 sm:gap-x-3">
       <div className="flex items-center gap-x-2 sm:gap-x-4">
@@ -28,7 +28,7 @@ function FileUploaded({ attachment, formId, fieldId }: FileUploadedProps) {
       {isApplicationEditable(application!) && (
         <FontAwesomeIcon
           icon={faClose}
-          className="border-1 text-sm text-info"
+          className={`border-1 cursor-pointer rounded-full p-1.5 text-sm text-info transition-colors duration-200 hover:text-primary ${isLoading ? "opacity-10" : ""}`}
           onClick={() => deleteAttachment(formId, fieldId, attachment.id)}
         />
       )}

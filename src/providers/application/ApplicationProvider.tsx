@@ -237,11 +237,14 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     return response;
   }
 
-  function submitApplication() {
-    fetch(`/api/applications/${application!.id}/submit`, {
-      method: "POST",
-    });
-    fetchApplication();
+  async function submitApplication() {
+    const response = await fetch(
+      `/api/applications/${application!.id}/submit`,
+      {
+        method: "POST",
+      },
+    );
+    if (response.ok) fetchApplication();
   }
   return (
     <ApplicationContext.Provider

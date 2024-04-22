@@ -19,6 +19,14 @@ type FieldContainerProps = {
 function FieldContainer({ formId, field }: FieldContainerProps) {
   const { application, isLoading, addAttachment } = useApplicationDetails();
 
+  function onFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files![0];
+    const formData = new FormData();
+    formData.set("file", file);
+    addAttachment(formId, field.id, formData);
+    e.target.value = "";
+  }
+
   const fieldTitle =
     field.title.find((label) => label.language === "en")?.name ||
     field.title[0].name;
@@ -33,19 +41,14 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
           <>
             <input
               type="file"
-              id="file-upload"
+              id={`input-file-${field.id}`}
               disabled={isLoading}
-              onChange={(e) => {
-                const file = e.target.files![0];
-                const formData = new FormData();
-                formData.set("file", file);
-                addAttachment(formId, field.id, formData);
-              }}
+              onChange={onFileUpload}
               className="hidden"
             />
             <label
-              htmlFor="file-upload"
-              className={`cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs ${isLoading ? "opacity-10" : ""}`}
+              htmlFor={`input-file-${field.id}`}
+              className={`cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs ${isLoading ? "cursor-not-allowed opacity-10" : ""}`}
             >
               <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
               <span>Upload File</span>

@@ -18,11 +18,11 @@ function FormContainer({ form }: FormContainerProps) {
     <div className="mt-10 rounded">
       <h3 className="text-2xl text-primary">{formTitle}</h3>
       <ul>
-        {form.fields?.map(
+        {form.fields.map(
           (field) =>
             field && (
               <li key={field.id}>
-                <FieldContainer field={field} formId={form.id} />
+                <FieldContainer formId={form.id} field={field} />
               </li>
             ),
         )}

@@ -143,7 +143,9 @@ interface AddedAttachment {
 }
 
 interface CreateApplicationResponse {
-  applicationId: number;
+  data: {
+    applicationId: number;
+  };
 }
 
 export type {

@@ -38,7 +38,7 @@ export default function Page() {
     try {
       const response = await createApplication(identifiers);
       emptyBasket();
-      window.location.href = `/applications/${response.applicationId}`;
+      window.location.href = `/applications/${response.data.applicationId}`;
     } catch (error) {
       setAlert({
         message: "Something went wrong. Please try again.",

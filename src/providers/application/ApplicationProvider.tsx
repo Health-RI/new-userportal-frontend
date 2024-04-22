@@ -137,7 +137,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
 
   useEffect(() => {
     fetchApplication();
-  }, [id, fetchApplication]);
+  }, [fetchApplication]);
 
   async function addAttachment(
     formId: number,

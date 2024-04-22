@@ -62,7 +62,11 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
             return (
               attachment && (
                 <li key={attachmentId} className="list-none">
-                  <FileUploaded filename={attachment.filename} />
+                  <FileUploaded
+                    attachment={attachment}
+                    formId={formId}
+                    fieldId={field.id}
+                  />
                 </li>
               )
             );

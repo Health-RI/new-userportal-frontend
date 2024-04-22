@@ -13,6 +13,7 @@ import {
   formatApplicationProp,
   isApplicationEditable,
 } from "@/utils/application";
+import { formatDateTime } from "@/utils/formatDate";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import FormContainer from "./FormContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
@@ -23,7 +24,7 @@ export default function ApplicationDetailsPage() {
   if (!application) return;
 
   const events = application.events;
-  const lastEvent = events[events.length - 1].eventType;
+  const lastEvent = events[events.length - 1];
   const sidebarItems = createApplicationSidebarItems(application);
 
   return (
@@ -50,7 +51,7 @@ export default function ApplicationDetailsPage() {
             )}
           </div>
         </div>
-        <p className="mt-5">Last Event: {formatApplicationProp(lastEvent)}</p>
+        <p className="mt-5">{`Last Event: ${formatApplicationProp(lastEvent.eventType)} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
       </div>
       <div className="mt-5 xl:col-span-9 xl:row-start-2">
         <div className="h-[2px] bg-secondary opacity-80"></div>

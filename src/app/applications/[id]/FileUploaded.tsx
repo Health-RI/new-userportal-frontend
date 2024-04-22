@@ -2,15 +2,20 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
+import { Attachment } from "@/types/application.types";
+import { isApplicationEditable } from "@/utils/application";
 import { faClose, faFileCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type FileUploadedProps = {
-  filename: string;
+  attachment: Attachment;
+  formId: number;
+  fieldId: number;
 };
 
-function FileUploaded({ filename }: FileUploadedProps) {
-  // const { deleteAttachment } = useApplicationDetails();
+function FileUploaded({ attachment, formId, fieldId }: FileUploadedProps) {
+  const { application, deleteAttachment } = useApplicationDetails();
   return (
     <div className="relative mt-5 flex items-center justify-between gap-x-1 rounded border-2 bg-white-smoke px-3 py-1.5 sm:gap-x-3">
       <div className="flex items-center gap-x-2 sm:gap-x-4">
@@ -18,13 +23,15 @@ function FileUploaded({ filename }: FileUploadedProps) {
           icon={faFileCircleCheck}
           className="text-base text-info"
         />
-        <h3 className="text-sm text-info">{filename}</h3>
+        <h3 className="text-sm text-info">{attachment.filename}</h3>
       </div>
-      <FontAwesomeIcon
-        icon={faClose}
-        className="border-1 text-sm text-info"
-        // onClick={() => deleteAttachment(form.id, field.id)}
-      />
+      {isApplicationEditable(application!) && (
+        <FontAwesomeIcon
+          icon={faClose}
+          className="border-1 text-sm text-info"
+          onClick={() => deleteAttachment(formId, fieldId, attachment.id)}
+        />
+      )}
     </div>
   );
 }

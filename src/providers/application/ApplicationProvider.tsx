@@ -167,10 +167,10 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         action,
       ).application as RetrievedApplication;
 
-      console.log(updatedForms);
-
       saveFormAndDuos(updatedForms);
-    } catch {
+      fetchApplication();
+    } catch (error) {
+      console.log("Failed to add attachment", error);
       dispatch({
         type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment",
@@ -183,15 +183,22 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     fieldId: number,
     attachmentId: number,
   ) {
-    dispatch({
+    const action = {
       type: ApplicationActionType.ATTACHMENT_DELETED,
       payload: {
         attachmentId,
         formId,
         fieldId,
       },
-    });
-    // saveFormAndDuos();
+    };
+    dispatch(action);
+
+    const { forms: updatedForms } = reducer(
+      { application, isLoading, error },
+      action,
+    ).application as RetrievedApplication;
+
+    saveFormAndDuos(updatedForms);
     fetchApplication();
   }
 
@@ -203,7 +210,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
       },
       body: JSON.stringify({
         forms: forms.map((form: Form) => ({
-          id: form.id,
+          formId: form.id,
           fields: form.fields.map((field: FormField) => ({
             fieldId: field.id,
             value: field.value,

@@ -10,7 +10,7 @@ type FileUploadedProps = {
 };
 
 function FileUploaded({ filename }: FileUploadedProps) {
-  function onDeleteAttachment() {}
+  // const { deleteAttachment } = useApplicationDetails();
   return (
     <div className="relative mt-5 flex items-center justify-between gap-x-1 rounded border-2 bg-white-smoke px-3 py-1.5 sm:gap-x-3">
       <div className="flex items-center gap-x-2 sm:gap-x-4">
@@ -23,7 +23,7 @@ function FileUploaded({ filename }: FileUploadedProps) {
       <FontAwesomeIcon
         icon={faClose}
         className="border-1 text-sm text-info"
-        onClick={onDeleteAttachment}
+        // onClick={() => deleteAttachment(form.id, field.id)}
       />
     </div>
   );

@@ -19,3 +19,20 @@ export function formatDate(inputDate: string): string {
     return inputDate;
   }
 }
+
+export function formatDateTime(date: string) {
+  if (!date) {
+    return 'N/A';
+  }
+
+  const dateObj = new Date(date);
+
+  try {
+    return format(dateObj, 'yyyy-MM-dd HH:mm:ss');
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') {
+      console.error(error);
+    }
+    return date;
+  }
+}

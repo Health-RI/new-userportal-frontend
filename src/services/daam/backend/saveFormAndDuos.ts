@@ -18,7 +18,7 @@ export function makeSaveFormsAndDuos(daamUrl: string) {
       forms: forms,
       duoCodes: duoCodes,
     };
-    return axios.post(`${daamUrl}/api/v1/applications/${applicationId}/save-forms-and-duos`, requestBody, {
+    return await axios.post(`${daamUrl}/api/v1/applications/${applicationId}/save-forms-and-duos`, requestBody, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${decrypt(session.access_token)}`,

@@ -28,7 +28,7 @@ function FileUploaded({ attachment, formId, fieldId }: FileUploadedProps) {
       {isApplicationEditable(application!) && (
         <FontAwesomeIcon
           icon={faClose}
-          className={`border-1 cursor-pointer rounded-full p-1.5 text-sm text-info transition-colors duration-200 hover:text-primary ${isLoading ? "opacity-10" : ""}`}
+          className={`border-1 cursor-pointer rounded-full p-1.5 text-sm text-info transition-colors duration-200 hover:text-primary ${isLoading ? "pointer-events-none opacity-10" : ""}`}
           onClick={() => deleteAttachment(formId, fieldId, attachment.id)}
         />
       )}

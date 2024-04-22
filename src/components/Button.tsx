@@ -43,11 +43,17 @@ const Button: React.FC<ButtonProps> = ({
 
   const disabledClasses = disabled ? "opacity-60 cursor-not-allowed" : "";
 
+  const handleClick = () => {
+    if (!disabled && onClick) {
+      onClick();
+    }
+  };
+
   return (
     <a
       href={href}
       className={cn(classes[type!] || "", common, className, disabledClasses)}
-      onClick={onClick}
+      onClick={handleClick}
       aria-disabled={disabled}
       {...props}
     >

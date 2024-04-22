@@ -5,22 +5,22 @@
 "use client";
 
 import { User } from "@/types/user.types";
-import { keycloackSessionLogOut } from "@/utils/auth";
+// import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faBars,
   faDatabase,
   faHome,
   faInfoCircle,
   faQuestionCircle,
-  faRightFromBracket,
-  faRightToBracket,
+  // faRightFromBracket,
+  // faRightToBracket,
   faUser,
   faShoppingCart,
   faFileText,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,9 +36,9 @@ function Header() {
   const activeTab = usePathname();
   const { basket, isLoading } = useDatasetBasket();
 
-  function handleSignOut() {
-    keycloackSessionLogOut().then(() => signOut({ callbackUrl: "/" }));
-  }
+  // function handleSignOut() {
+  //   keycloackSessionLogOut().then(() => signOut({ callbackUrl: "/" }));
+  // }
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -76,6 +76,7 @@ function Header() {
       />
     );
   }
+  loginBtn = <div></div>;
 
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
@@ -198,7 +199,7 @@ function Header() {
                 {session?.user?.name}
               </div>
             )}
-            {!session && (
+            {/* {!session && (
               <button
                 onClick={() => signIn("keycloak")}
                 className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
@@ -215,7 +216,7 @@ function Header() {
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
                 Log uit
               </button>
-            )}
+            )} */}
           </div>
         )}
       </div>

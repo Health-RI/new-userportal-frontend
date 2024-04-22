@@ -122,7 +122,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     dispatch({ type: ApplicationActionType.LOADING });
     try {
       const response = await fetch(`/api/applications/${id}`);
-      const retrievedApplication = (await response.json()).body;
+      const retrievedApplication = await response.json();
       dispatch({
         type: ApplicationActionType.APPLICATION_LOADED,
         payload: retrievedApplication,
@@ -153,10 +153,9 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     try {
       dispatch({ type: ApplicationActionType.LOADING });
 
-      const { id: attachmentId } = await addAttachmentToApplication(
-        application!.id,
-        formData,
-      );
+      const {
+        data: { id: attachmentId },
+      } = await addAttachmentToApplication(application!.id, formData);
 
       dispatch({
         type: ApplicationActionType.ATTACHMENT_ATTACHED,
@@ -207,7 +206,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
             value: field.value,
           })),
         })),
-        duosCodes: [],
+        duoCodes: [],
       }),
     });
   }

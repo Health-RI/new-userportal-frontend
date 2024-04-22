@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { handleErrorResponse } from '@/app/api/errorHandling';
 import { submitApplication } from '@/services/daam/index.server';
 import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
@@ -16,11 +17,9 @@ export async function POST(request: Request, params: { params: { id: string } })
   }
 
   try {
-    submitApplication(id, session);
-    return NextResponse.json({ success: true }, { status: 200 });
+    await submitApplication(id, session);
+    return NextResponse.json({ status: 200 });
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Something went wrong';
-
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }

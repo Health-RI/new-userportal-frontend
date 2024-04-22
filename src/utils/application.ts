@@ -4,16 +4,8 @@
 
 import { Form, RetrievedApplication, State } from '@/types/application.types';
 
-function formatApplicationState(state: State) {
-  const s = state.split('/').pop() as string;
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function isApplicationComplete(application: RetrievedApplication) {
-  return application.forms
-    .map((form) => form.fields)
-    .flat()
-    .every((field) => field.value !== '');
+function formatApplicationProp(prop: string) {
+  return prop.split('/').pop();
 }
 
 function isApplicationEditable(application: RetrievedApplication) {
@@ -69,8 +61,7 @@ function isPresent(id: number, set: string) {
 export {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
-  formatApplicationState,
-  isApplicationComplete,
+  formatApplicationProp,
   isApplicationEditable,
   updateFormWithNewAttachment,
 };

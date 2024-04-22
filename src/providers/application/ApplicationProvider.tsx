@@ -92,6 +92,9 @@ function reducer(
         isLoading: false,
       };
 
+    case ApplicationActionType.FORM_SAVED:
+      return { ...state, isLoading: false };
+
     case ApplicationActionType.REJECTED:
       return { ...state, error: action.payload as string, isLoading: false };
 
@@ -137,19 +140,13 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
 
   useEffect(() => {
     fetchApplication();
-  }, [id, fetchApplication]);
+  }, [fetchApplication]);
 
   async function addAttachment(
     formId: number,
     fieldId: number,
     formData: FormData,
   ): Promise<void> {
-    if (!formData.get("file"))
-      dispatch({
-        type: ApplicationActionType.REJECTED,
-        payload: "Failed to add attachment: no file has been provided",
-      });
-
     try {
       dispatch({ type: ApplicationActionType.LOADING });
 
@@ -157,58 +154,87 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         data: { id: attachmentId },
       } = await addAttachmentToApplication(application!.id, formData);
 
-      dispatch({
+      const action = {
         type: ApplicationActionType.ATTACHMENT_ATTACHED,
         payload: {
           attachmentId,
           formId,
           fieldId,
         },
-      });
-    } catch {
+      };
+
+      dispatch(action);
+
+      const { forms: updatedForms } = reducer(
+        { application, isLoading, error },
+        action,
+      ).application as RetrievedApplication;
+      const response = await saveFormAndDuos(updatedForms);
+      if (response.ok) fetchApplication();
+    } catch (error) {
       dispatch({
         type: ApplicationActionType.REJECTED,
         payload: "Failed to add attachment",
       });
     }
-    saveFormAndDuos();
-    fetchApplication();
   }
 
-  function deleteAttachment(
+  async function deleteAttachment(
     formId: number,
     fieldId: number,
     attachmentId: number,
   ) {
-    dispatch({
-      type: ApplicationActionType.ATTACHMENT_DELETED,
-      payload: {
-        attachmentId,
-        formId,
-        fieldId,
-      },
-    });
-    saveFormAndDuos();
-    fetchApplication();
+    try {
+      dispatch({ type: ApplicationActionType.LOADING });
+
+      const action = {
+        type: ApplicationActionType.ATTACHMENT_DELETED,
+        payload: {
+          attachmentId,
+          formId,
+          fieldId,
+        },
+      };
+      dispatch(action);
+
+      const { forms: updatedForms } = reducer(
+        { application, isLoading, error },
+        action,
+      ).application as RetrievedApplication;
+
+      const response = await saveFormAndDuos(updatedForms);
+      if (response.ok) fetchApplication();
+    } catch (error) {
+      dispatch({
+        type: ApplicationActionType.REJECTED,
+        payload: "Failed to delete attachment",
+      });
+    }
   }
 
-  function saveFormAndDuos() {
-    fetch(`/api/applications/${application!.id}/save-forms-and-duos`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        forms: application!.forms.map((form: Form) => ({
-          id: form.id,
-          fields: form.fields.map((field: FormField) => ({
-            fieldId: field.id,
-            value: field.value,
+  async function saveFormAndDuos(forms: Form[]) {
+    dispatch({ type: ApplicationActionType.LOADING });
+    const response = await fetch(
+      `/api/applications/${application!.id}/save-forms-and-duos`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          forms: forms.map((form: Form) => ({
+            formId: form.id,
+            fields: form.fields.map((field: FormField) => ({
+              fieldId: field.id,
+              value: field.value,
+            })),
           })),
-        })),
-        duoCodes: [],
-      }),
-    });
+          duoCodes: [],
+        }),
+      },
+    );
+    dispatch({ type: ApplicationActionType.FORM_SAVED });
+    return response;
   }
 
   function submitApplication() {

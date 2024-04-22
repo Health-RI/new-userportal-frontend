@@ -14,6 +14,7 @@ export enum ApplicationActionType {
   APPLICATION_LOADED = 'application/loaded',
   ATTACHMENT_ATTACHED = 'application/attachment/attached',
   ATTACHMENT_DELETED = 'application/attachment/deleted',
+  FORM_SAVED = 'application/form/saved',
   REJECTED = 'rejected',
 }
 

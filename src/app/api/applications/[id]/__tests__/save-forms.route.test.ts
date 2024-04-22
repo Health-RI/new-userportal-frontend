@@ -41,7 +41,7 @@ describe('Save forms and duos of an application', () => {
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
     mockedAxios.post.mockResolvedValueOnce({ status: 200 });
     const requestBody = {
-      forms: [{ id: 1, fields: [{ fieldId: 1, value: '4,5,12' }] }],
+      forms: [{ formId: 1, fields: [{ fieldId: 1, value: '4,5,12' }] }],
       duoCodes: [],
     };
     const request = new Request('http://localhost', {

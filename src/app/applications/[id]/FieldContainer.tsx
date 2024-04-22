@@ -6,10 +6,7 @@
 
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { FormField } from "@/types/application.types";
-import {
-  isApplicationComplete,
-  isApplicationEditable,
-} from "@/utils/application";
+import { isApplicationEditable } from "@/utils/application";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FileUploaded from "./FileUploaded";
@@ -20,7 +17,7 @@ type FieldContainerProps = {
 };
 
 function FieldContainer({ formId, field }: FieldContainerProps) {
-  const { application, addAttachment } = useApplicationDetails();
+  const { application, isLoading, addAttachment } = useApplicationDetails();
 
   const fieldTitle =
     field.title.find((label) => label.language === "en")?.name ||
@@ -30,13 +27,14 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
     <div className="mt-10 rounded border p-6">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle} Attachment`}</h3>
+          <h3 className="text-lg text-primary sm:text-xl">{`${fieldTitle}`}</h3>
         </div>
         {isApplicationEditable(application!) && (
           <>
             <input
               type="file"
               id="file-upload"
+              disabled={isLoading}
               onChange={(e) => {
                 const file = e.target.files![0];
                 const formData = new FormData();
@@ -44,11 +42,10 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
                 addAttachment(formId, field.id, formData);
               }}
               className="hidden"
-              disabled={!isApplicationComplete(application!)}
             />
             <label
               htmlFor="file-upload"
-              className="cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs"
+              className={`cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs ${isLoading ? "opacity-10" : ""}`}
             >
               <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
               <span>Upload File</span>
@@ -66,7 +63,11 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
             return (
               attachment && (
                 <li key={attachmentId} className="list-none">
-                  <FileUploaded filename={attachment.filename} />
+                  <FileUploaded
+                    attachment={attachment}
+                    formId={formId}
+                    fieldId={field.id}
+                  />
                 </li>
               )
             );

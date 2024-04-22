@@ -42,7 +42,7 @@ describe('Submit an application', () => {
     const response = await POST(request, { params: { id: '5' } });
 
     expect(response.status).toBe(200);
-    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.daamUrl}/api/v1/applications/5/submit`, {
+    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.daamUrl}/api/v1/applications/5/submit`, null, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer decryptedToken`,

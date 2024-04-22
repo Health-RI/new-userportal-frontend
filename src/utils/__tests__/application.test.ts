@@ -6,8 +6,7 @@ import { Form, FormField, State } from '@/types/application.types';
 import {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
-  formatApplicationState,
-  isApplicationComplete,
+  formatApplicationProp,
   updateFormWithNewAttachment,
 } from '../application';
 
@@ -81,100 +80,15 @@ describe('Update application correctly when removing an attachment', () => {
   });
 });
 
-describe('Check if application is complete', () => {
-  it('should consider application complete if every field has at least one attachment', () => {
-    const application = getCompleteApplication();
-
-    const isComplete = isApplicationComplete(application);
-
-    expect(isComplete).toBeTruthy();
-  });
-  it('should consider application incomplete if at least one field has no attachment ', () => {
-    const application = getIncompleteApplication();
-
-    const isComplete = isApplicationComplete(application);
-
-    expect(isComplete).toBeFalsy();
-  });
-});
-
 describe('Check if application state is correctly formatted', () => {
   it('should format state correctly', () => {
     const state = State.APPROVED;
 
-    const formattedState = formatApplicationState(state);
+    const formattedState = formatApplicationProp(state);
 
-    expect(formattedState).toEqual('Approved');
+    expect(formattedState).toEqual('approved');
   });
 });
-
-function getCompleteApplication() {
-  const form1 = createForm(1, [createField(1, '10'), createField(2, '21')]);
-
-  return {
-    id: 12,
-    externalId: '12',
-    generatedExternalId: '12',
-    description: '',
-    createdAt: new Date(),
-    modifiedAt: new Date(),
-    lastActivity: new Date(),
-    permissions: [],
-    roles: [],
-    worflow: {
-      id: 12,
-      type: 'type',
-    },
-    applicant: {
-      userId: '12',
-      name: 'John Doe',
-      email: '',
-    },
-    members: [],
-    datasets: [],
-    invitedMembers: [],
-    events: [],
-    attachments: [],
-    licenses: [],
-    state: State.DRAFT,
-    forms: [form1],
-  };
-}
-
-function getIncompleteApplication() {
-  const form1 = createForm(1, [createField(1, '1'), createField(2, '12')]);
-
-  const form2 = createForm(2, [createField(1, '198, 19'), createField(2, '')]);
-
-  return {
-    id: 12,
-    externalId: '12',
-    generatedExternalId: '12',
-    description: '',
-    createdAt: new Date(),
-    modifiedAt: new Date(),
-    lastActivity: new Date(),
-    permissions: [],
-    roles: [],
-    worflow: {
-      id: 12,
-      type: 'type',
-    },
-    applicant: {
-      userId: '12',
-      name: 'John Doe',
-      email: '',
-    },
-    members: [],
-    datasets: [],
-    invitedMembers: [],
-    events: [],
-    attachments: [],
-    licenses: [],
-    state: State.DRAFT,
-    forms: [form1, form2],
-  };
-}
 
 function getForms() {
   const form1 = createForm(1, [createField(1, ''), createField(2, '4,5')]);

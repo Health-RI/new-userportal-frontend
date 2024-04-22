@@ -9,6 +9,5 @@ export async function addAttachmentToApplication(
   applicationId: number,
   attachment: FormData,
 ): Promise<AxiosResponse<AddedAttachment>> {
-  const response = await axios.post(`/api/applications/${applicationId}/attachments`, attachment);
-  return response.data;
+  return await axios.post(`/api/applications/${applicationId}/attachments`, attachment);
 }

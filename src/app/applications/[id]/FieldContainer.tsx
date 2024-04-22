@@ -40,6 +40,7 @@ function FieldContainer({ formId, field }: FieldContainerProps) {
                 const formData = new FormData();
                 formData.set("file", file);
                 addAttachment(formId, field.id, formData);
+                e.target.value = "";
               }}
               className="hidden"
             />

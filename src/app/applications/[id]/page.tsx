@@ -53,7 +53,7 @@ export default function ApplicationDetailsPage() {
         </div>
         <p className="mt-5">{`Last Event: ${formatApplicationProp(lastEvent.eventType)} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
       </div>
-      <div className="mt-5 xl:col-span-9 xl:row-start-2 xl:mt-0">
+      <div className="mt-5 xl:col-span-9 xl:row-start-2">
         <div className="h-[2px] bg-secondary opacity-80"></div>
 
         <div className="my-10 w-full xl:hidden">
@@ -73,7 +73,7 @@ export default function ApplicationDetailsPage() {
         </ul>
       </div>
 
-      <aside className="col-span-3 col-start-10 hidden xl:row-start-2 xl:block">
+      <aside className="col-span-3 col-start-10 mt-5 hidden xl:row-start-2 xl:block">
         <Sidebar items={sidebarItems} />
       </aside>
     </PageContainer>

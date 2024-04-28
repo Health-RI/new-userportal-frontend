@@ -33,6 +33,7 @@ const Alert = ({ type, message, onClose }: AlertProps) => {
     <div
       className={`flex w-full items-center justify-between border-l-8 ${leftBorderStyle} p-4 ${alertStyle} z-50 mb-4`}
       role="alert"
+      style={{ whiteSpace: "pre-line" }}
     >
       <p className="text-sm lg:text-base">{message}</p>
       <FontAwesomeIcon

@@ -6,6 +6,7 @@
 
 import Button from "@/components/Button";
 import PageContainer from "@/components/PageContainer";
+import Alert from "@/components/Alert";
 import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
@@ -19,7 +20,8 @@ import FormContainer from "./FormContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 export default function ApplicationDetailsPage() {
-  const { application, submitApplication } = useApplicationDetails();
+  const { application, error, submitApplication, clearError } =
+    useApplicationDetails();
 
   if (!application) return;
 
@@ -52,7 +54,15 @@ export default function ApplicationDetailsPage() {
           </div>
         </div>
         <p className="mt-5">{`Last Event: ${formatApplicationProp(lastEvent.eventType)} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
+        
+        {/* Alert Component */}
+        {error && (
+          <div className="mt-5">
+            <Alert type="error" message={error} onClose={clearError} />
+          </div>
+        )}
       </div>
+
       <div className="mt-5 xl:col-span-9 xl:row-start-2">
         <div className="h-[2px] bg-secondary opacity-80"></div>
 

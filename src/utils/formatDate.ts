@@ -5,6 +5,10 @@
 import { enGB } from 'date-fns/locale/en-GB';
 import { formatInTimeZone } from 'date-fns-tz';
 
+function isClient() {
+  return typeof window !== 'undefined';
+}
+
 export function formatDate(inputDate: string): string {
   return _formatDate(inputDate, 'd MMMM yyyy');
 }
@@ -14,6 +18,10 @@ export function formatDateTime(inputDate: string) {
 }
 
 function getUserTimezone() {
+  if (!isClient()) {
+    throw new Error('getUserTimezone must be called on the client side');
+  }
+
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 

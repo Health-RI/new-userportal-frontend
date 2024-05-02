@@ -63,7 +63,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <ApplicationIcon />
+        <ApplicationIcon isActive={activeTab.includes("applications")} />
         <Avatar user={session.user as User} />
       </>
     ) : (
@@ -91,19 +91,19 @@ function Header() {
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-hover-color lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/datasets"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-hover-color lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
           >
             Datasets
           </Link>
           <Link
             href="/about"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
+            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-hover-color lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
             About
           </Link>
@@ -113,7 +113,7 @@ function Header() {
         {!isLoading && (
           <Link
             href="/basket"
-            className="relative flex items-center text-info hover:text-primary"
+            className={`relative flex items-center text-info hover:text-hover-color ${activeTab.includes("basket") ? "text-primary" : ""}`}
           >
             <FontAwesomeIcon icon={faShoppingCart} size="lg" />
             {basket.length > 0 && (
@@ -137,7 +137,7 @@ function Header() {
           <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
             <Link
               href="/"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faHome} className="mr-2" />
@@ -145,7 +145,7 @@ function Header() {
             </Link>
             <Link
               href="/datasets"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faDatabase} className="mr-2" />
@@ -153,7 +153,7 @@ function Header() {
             </Link>
             <Link
               href="/applications"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faFileText} className="mr-2" />
@@ -161,7 +161,7 @@ function Header() {
             </Link>
             <Link
               href="/about"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
@@ -169,7 +169,7 @@ function Header() {
             </Link>
             <Link
               href="/basket"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
@@ -184,7 +184,7 @@ function Header() {
             {!session && (
               <button
                 onClick={() => signIn("keycloak")}
-                className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
+                className="block w-full px-4 py-2 text-left hover:bg-hover-color hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightToBracket} className="mr-2" />
                 Login
@@ -193,7 +193,7 @@ function Header() {
             {session && (
               <button
                 onClick={handleSignOut}
-                className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
+                className="block w-full px-4 py-2 text-left hover:bg-hover-color hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
                 Logout

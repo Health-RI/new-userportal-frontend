@@ -10,7 +10,7 @@ export function formatDate(inputDate: string): string {
 }
 
 export function formatDateTime(inputDate: string) {
-  return _formatDate(inputDate, 'd MMMM yyyy, HH:mm (zzz)');
+  return _formatDate(inputDate, 'd MMMM yyyy, HH.mm (zzz)');
 }
 
 function _formatDate(inputDate: string, targetFormat: string) {

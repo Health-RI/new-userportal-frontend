@@ -20,7 +20,7 @@ describe('formatDate', () => {
 describe('formatDateTime', () => {
   it('formats the date correctly from ISO string', () => {
     const input = '2024-02-09T10:27:47.585Z';
-    const expected = '9 February 2024, 11:27 (CET)';
+    const expected = '9 February 2024, 11.27 (CET)';
     expect(formatDateTime(input)).toEqual(expected);
   });
 

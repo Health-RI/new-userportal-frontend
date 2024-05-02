@@ -3,15 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ListedApplication } from "@/types/application.types";
-import { formatDate } from "@/utils/formatDate";
-import { getLabelName } from "@/utils/getLabelName";
-import {
-  faChevronDown,
-  faChevronUp,
-  faDatabase,
-} from "@fortawesome/free-solid-svg-icons";
+import { formatDateTime } from "@/utils/formatDate";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
+import DatasetList from "./DatasetList";
 
 export default function ApplicationItem({
   application,
@@ -89,33 +85,22 @@ export default function ApplicationItem({
               <h3 className="mb-1 text-lg font-semibold text-primary">
                 Created At
               </h3>
-              <p className="text-md">{formatDate(application.createdAt)}</p>
+              <p className="text-md font-date">
+                {formatDateTime(application.createdAt)}
+              </p>
             </div>
             <div>
               <h3 className="mb-1 text-lg font-semibold text-primary">
                 State Modified At
               </h3>
-              <p className="text-md">
-                {formatDate(application.stateChangedAt)}
+              <p className="text-md font-date">
+                {formatDateTime(application.stateChangedAt)}
               </p>
             </div>
           </div>
           <div className="md:flex-1">
             <h3 className="mb-4 text-lg font-bold text-primary">Datasets</h3>
-            {application.datasets.map((dataset, index) => (
-              <span
-                className="mb-2 flex items-center gap-2"
-                key={`${dataset.id}-${index}`}
-              >
-                <FontAwesomeIcon
-                  icon={faDatabase}
-                  className="text-md text-info"
-                />
-                <h3 className="sm:text-md text-base font-bold text-info lg:text-lg">
-                  {getLabelName(dataset.title)}
-                </h3>
-              </span>
-            ))}
+            <DatasetList datasets={application.datasets} />
           </div>
         </div>
       </div>

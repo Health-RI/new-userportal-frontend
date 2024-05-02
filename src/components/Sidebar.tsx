@@ -2,21 +2,19 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { ReactNode } from "react";
 import LinkItem from "./LinkItem";
 
-function createTextItems(items: SidebarLink[] | string[]) {
+export function createTextItem(item: string) {
+  return <span className="break-all">{item}</span>;
+}
+
+export function createTextItems(items: string[]) {
   return (
     <ul>
       {items.map((value, index) => {
-        if (typeof value === "object") {
-          return (
-            <li key={index}>
-              <span>{value.label}</span>
-            </li>
-          );
-        }
         return (
-          <li key={index}>
+          <li key={index} className="break-all">
             <span>{value}</span>
           </li>
         );
@@ -25,11 +23,11 @@ function createTextItems(items: SidebarLink[] | string[]) {
   );
 }
 
-function createLinkItem(link: SidebarLink) {
+export function createLinkItem(link: SidebarLink) {
   return <LinkItem link={link}></LinkItem>;
 }
 
-function createLinkItems(links: SidebarLink[]) {
+export function createLinkItems(links: SidebarLink[]) {
   return (
     <ul>
       {links.map((link, index) => (
@@ -41,19 +39,6 @@ function createLinkItems(links: SidebarLink[]) {
   );
 }
 
-function renderItemValue(
-  item: SidebarItem,
-): string | string[] | JSX.Element | JSX.Element[] {
-  if (Array.isArray(item.value) && item.isLink) {
-    return createLinkItems(item.value as SidebarLink[]);
-  } else if (Array.isArray(item.value)) {
-    return createTextItems(item.value as string[]);
-  } else if (item.isLink) {
-    return createLinkItem(item.value as SidebarLink);
-  }
-  return item.value as string;
-}
-
 type SidebarLink = {
   label: string;
   url: string;
@@ -61,8 +46,7 @@ type SidebarLink = {
 
 type SidebarItem = {
   label: string;
-  value: string | string[] | SidebarLink | SidebarLink[];
-  isLink: boolean;
+  value: ReactNode;
 };
 
 interface SidebarProps {
@@ -77,9 +61,7 @@ function Sidebar({ items }: SidebarProps) {
           <h3 className="text-base text-primary sm:text-lg lg:text-xl">
             {item.label}
           </h3>
-          <span className="text-sm sm:text-base lg:text-lg">
-            {renderItemValue(item)}
-          </span>
+          <span className="text-sm sm:text-base lg:text-lg">{item.value}</span>
         </div>
       ))}
     </div>

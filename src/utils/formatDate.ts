@@ -13,15 +13,20 @@ export function formatDateTime(inputDate: string) {
   return _formatDate(inputDate, 'd MMMM yyyy, HH.mm (zzz)');
 }
 
+function getUserTimezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
 function _formatDate(inputDate: string, targetFormat: string) {
   if (!inputDate) {
     return 'N/A';
   }
 
   const date = new Date(inputDate);
+  const userTimeZone = getUserTimezone();
 
   try {
-    return formatInTimeZone(date, 'Europe/Luxembourg', targetFormat, { locale: enGB });
+    return formatInTimeZone(date, userTimeZone, targetFormat, { locale: enGB });
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
       console.error(error);

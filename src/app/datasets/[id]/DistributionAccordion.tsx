@@ -80,7 +80,7 @@ const DistributionAccordion = ({
               </div>
               <div>
                 <strong className="block text-sm font-semibold">Issued:</strong>
-                <span className="text-sm">
+                <span className="font-date text-sm">
                   {distribution.createdAt && formatDate(distribution.createdAt)}
                 </span>
               </div>
@@ -89,7 +89,7 @@ const DistributionAccordion = ({
                   <strong className="block text-sm font-semibold">
                     Last Modified:
                   </strong>
-                  <span className="text-sm">
+                  <span className="font-date text-sm">
                     {distribution.modifiedAt &&
                       formatDate(distribution.modifiedAt)}
                   </span>

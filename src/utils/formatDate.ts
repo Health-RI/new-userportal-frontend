@@ -5,11 +5,11 @@
 import { format } from 'date-fns';
 
 export function formatDate(inputDate: string): string {
-  return _formatDate(inputDate, 'yyyy-MM-dd');
+  return _formatDate(inputDate, 'd MMMM yyyy');
 }
 
 export function formatDateTime(inputDate: string) {
-  return _formatDate(inputDate, 'yyyy-MM-dd HH:mm:ss');
+  return _formatDate(inputDate, 'd MMMM yyyy HH:mm zzz');
 }
 
 function _formatDate(inputDate: string, targetFormat: string) {

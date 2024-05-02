@@ -13,7 +13,7 @@ function LinkItem({ link }: LinkItemProps) {
       href={link.url}
       target="_blank"
       rel="noreferrer"
-      className="hover:underline"
+      className="break-all text-info hover:underline"
     >
       {link.label}
     </a>

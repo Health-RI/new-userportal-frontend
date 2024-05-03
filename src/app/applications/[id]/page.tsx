@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import Alert, { AlertState } from "@/components/Alert";
 import Button from "@/components/Button";
 import PageContainer from "@/components/PageContainer";
-import Alert from "@/components/Alert";
 import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
 import Chip from "@/components/Chip";
@@ -28,7 +27,11 @@ export default function ApplicationDetailsPage() {
     setAlert(null);
   };
 
-  const { application, submitApplication, error } = useApplicationDetails();
+  const { application, error, submitApplication, clearError} = useApplicationDetails();
+  const handleSubmission = () => {
+    clearError();
+    submitApplication();
+  }
 
   useEffect(() => {
     if (error) {
@@ -51,7 +54,10 @@ export default function ApplicationDetailsPage() {
         <Alert
           type={alert.type}
           message={alert.message}
-          onClose={onCloseAlert}
+          onClose={() => {
+            onCloseAlert();
+            clearError();
+          }}
           className="mb-8"
         />
       )}
@@ -70,7 +76,7 @@ export default function ApplicationDetailsPage() {
                   type="primary"
                   text="Submit"
                   icon={faPaperPlane}
-                  onClick={submitApplication}
+                  onClick={handleSubmission}
                 />
               )}
             </div>

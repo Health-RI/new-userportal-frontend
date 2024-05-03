@@ -103,9 +103,11 @@ export default function DatasetPage() {
       }
     }
     fetchData();
+  }, [queryParams]);
 
+  useEffect(() => {
     if (screenSize === SCREEN_SIZE.XL) toggleFullScreenFilter(false);
-  }, [queryParams, screenSize]);
+  }, [screenSize]);
 
   if (response.status === "loading") {
     return (

@@ -40,7 +40,7 @@ function reducer(
 ): ApplicationState {
   switch (action.type) {
     case ApplicationActionType.LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, error: null };
 
     case ApplicationActionType.APPLICATION_LOADED:
       return {
@@ -238,13 +238,24 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
   }
 
   async function submitApplication() {
+    dispatch({ type: ApplicationActionType.LOADING });
     const response = await fetch(
       `/api/applications/${application!.id}/submit`,
       {
         method: "POST",
       },
     );
-    if (response.ok) fetchApplication();
+    if (response.ok) {
+      fetchApplication();
+    } else {
+      const responseJson = await response.json();
+      const message = responseJson.detail || "Failed to submit application";
+
+      dispatch({
+        type: ApplicationActionType.REJECTED,
+        payload: message,
+      });
+    }
   }
   return (
     <ApplicationContext.Provider

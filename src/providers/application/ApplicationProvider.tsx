@@ -249,7 +249,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
       fetchApplication();
     } else {
       const responseJson = await response.json();
-      const message = responseJson.title || "Failed to submit application";
+      const message = responseJson.detail || "Failed to submit application";
 
       dispatch({
         type: ApplicationActionType.REJECTED,

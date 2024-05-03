@@ -27,11 +27,12 @@ export default function ApplicationDetailsPage() {
     setAlert(null);
   };
 
-  const { application, error, submitApplication, clearError} = useApplicationDetails();
+  const { application, error, submitApplication, clearError } =
+    useApplicationDetails();
   const handleSubmission = () => {
     clearError();
     submitApplication();
-  }
+  };
 
   useEffect(() => {
     if (error) {

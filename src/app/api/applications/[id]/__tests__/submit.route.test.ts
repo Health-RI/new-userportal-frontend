@@ -47,7 +47,7 @@ describe('Submit an application', () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer decryptedToken`,
       },
-      validateStatus: expect.any(Function) 
+      validateStatus: expect.any(Function),
     });
   });
 
@@ -98,18 +98,15 @@ describe('Submit an application', () => {
       status: 400,
       data: {
         detail: 'Application could not be submitted.',
-        errorMessages: [
-          'fld1 t.form.validation/required',
-          'fld2 t.form.validation/format_error',
-        ],
+        errorMessages: ['fld1 t.form.validation/required', 'fld2 t.form.validation/format_error'],
       },
     });
-  
+
     const request = new Request('http://localhost', {
       method: 'POST',
     });
     const response = await POST(request, { params: { id: '10' } });
-  
+
     expect(response.status).toBe(400);
     const json = await response.json();
     expect(json.error).toContain('Field fld1 is required.');

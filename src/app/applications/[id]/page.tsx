@@ -4,11 +4,14 @@
 
 "use client";
 
+import { useState, useEffect } from "react";
+import Alert, { AlertState } from "@/components/Alert";
 import Button from "@/components/Button";
 import PageContainer from "@/components/PageContainer";
 import Alert from "@/components/Alert";
 import PageHeading from "@/components/PageHeading";
 import Sidebar from "@/components/Sidebar";
+import Chip from "@/components/Chip";
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import {
   formatApplicationProp,
@@ -20,8 +23,21 @@ import FormContainer from "./FormContainer";
 import { createApplicationSidebarItems } from "./sidebarItems";
 
 export default function ApplicationDetailsPage() {
-  const { application, error, submitApplication, clearError } =
-    useApplicationDetails();
+  const [alert, setAlert] = useState<AlertState | null>(null);
+  const onCloseAlert = () => {
+    setAlert(null);
+  };
+
+  const { application, submitApplication, error } = useApplicationDetails();
+
+  useEffect(() => {
+    if (error) {
+      setAlert({
+        message: error,
+        type: "error",
+      });
+    }
+  }, [error]);
 
   if (!application) return;
 
@@ -30,62 +46,61 @@ export default function ApplicationDetailsPage() {
   const sidebarItems = createApplicationSidebarItems(application);
 
   return (
-    <PageContainer className="xl:grid xl:grid-cols-12 xl:grid-rows-[auto-auto] xl:gap-x-20">
-      <div className="xl:col-span-9 xl:row-span-1">
-        <div className="sm:flex sm:justify-between">
-          <div className="flex items-center gap-x-4">
-            <PageHeading>Application {application.id}</PageHeading>
-            {application.id && (
-              <div className="rounded bg-warning px-2.5 py-0.5 text-center text-sm font-semibold">
-                {formatApplicationProp(application.state)}
-              </div>
-            )}
+    <PageContainer>
+      {alert && (
+        <Alert
+          type={alert.type}
+          message={alert.message}
+          onClose={onCloseAlert}
+          className="mb-8"
+        />
+      )}
+      <div className="flex flex-col items-start justify-start lg:flex-row">
+        <div className="flex w-full flex-col gap-5 lg:w-2/3 lg:px-5">
+          <div className="sm:flex sm:justify-between">
+            <div className="flex items-center gap-x-4">
+              <PageHeading>Application {application.externalId}</PageHeading>
+              {application.id && (
+                <Chip chip={formatApplicationProp(application.state)!} />
+              )}
+            </div>
+            <div className="mt-4 flex gap-x-3 sm:mt-0">
+              {isApplicationEditable(application) && (
+                <Button
+                  type="primary"
+                  text="Submit"
+                  icon={faPaperPlane}
+                  onClick={submitApplication}
+                />
+              )}
+            </div>
           </div>
-          <div className="mt-4 flex gap-x-3 sm:mt-0">
-            {isApplicationEditable(application) && (
-              <Button
-                type="primary"
-                text="Submit"
-                className="h-fit text-[10px] sm:text-xs"
-                icon={faPaperPlane}
-                onClick={submitApplication}
-              />
-            )}
+          <p>{`Last Event: ${formatApplicationProp(lastEvent.eventType)} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
+          <div>
+            <div className="h-[2px] bg-secondary opacity-80"></div>
+
+            <div className="my-8 w-full lg:hidden">
+              <Sidebar items={sidebarItems} />
+            </div>
+
+            <div className="mt-5 h-[2px] bg-secondary opacity-80 lg:hidden"></div>
+            <ul>
+              {application.forms.map(
+                (form) =>
+                  form && (
+                    <li key={form.id}>
+                      <FormContainer form={form} />
+                    </li>
+                  ),
+              )}
+            </ul>
           </div>
         </div>
-        <p className="mt-5">{`Last Event: ${formatApplicationProp(lastEvent.eventType)} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
-        
-        {/* Alert Component */}
-        {error && (
-          <div className="mt-5">
-            <Alert type="error" message={error} onClose={clearError} />
-          </div>
-        )}
-      </div>
 
-      <div className="mt-5 xl:col-span-9 xl:row-start-2">
-        <div className="h-[2px] bg-secondary opacity-80"></div>
-
-        <div className="my-10 w-full xl:hidden">
+        <aside className="hidden w-full lg:block lg:w-1/3">
           <Sidebar items={sidebarItems} />
-        </div>
-
-        <div className="mt-5 h-[2px] bg-secondary opacity-80 xl:hidden"></div>
-        <ul>
-          {application.forms.map(
-            (form) =>
-              form && (
-                <li key={form.id}>
-                  <FormContainer form={form} />
-                </li>
-              ),
-          )}
-        </ul>
+        </aside>
       </div>
-
-      <aside className="col-span-3 col-start-10 mt-5 hidden xl:row-start-2 xl:block">
-        <Sidebar items={sidebarItems} />
-      </aside>
     </PageContainer>
   );
 }

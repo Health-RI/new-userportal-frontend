@@ -41,7 +41,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
         <Link href={`/datasets/${dataset.id}`} className="hover:underline">
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
-        <p className="text-sm text-info md:text-base">
+        <p className="font-date text-sm text-info md:text-base">
           {formatDate(dataset.createdAt)}
         </p>
       </div>

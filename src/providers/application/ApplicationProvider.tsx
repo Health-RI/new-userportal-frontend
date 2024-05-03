@@ -40,7 +40,7 @@ function reducer(
 ): ApplicationState {
   switch (action.type) {
     case ApplicationActionType.LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, error: null };
 
     case ApplicationActionType.APPLICATION_LOADED:
       return {

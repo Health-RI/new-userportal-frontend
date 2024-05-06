@@ -4,9 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: Weekly Security Check
+
 on:
   schedule:
-    - cron: "0 13 * * 1" # It will work at 13:00 on every Monday
+    - cron: '0 13 * * 1'  # It will work at 13:00 on every Monday
   workflow_dispatch:
 
 jobs:
@@ -23,11 +24,19 @@ jobs:
   trivy:
     runs-on: ubuntu-latest
     steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Find Docker images
+        id: docker-images
+        run: |
+          echo "::set-output name=images::$(docker images --format '{{.Repository}}:{{.Tag}}')"
+
+      - name: Run Trivy vulnerability scanner on each Docker image
+        run: |
+          for image in ${{ steps.docker-images.outputs.images }}
+          do
+            echo "Scanning image: $image"
+            docker pull $image
+            trivy image --format table --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH $image
+          done

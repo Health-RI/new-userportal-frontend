@@ -1,7 +1,7 @@
 name: Weekly Security Check
 on:
   schedule:
-    - cron: '0 13 * * 1'  # It will work at 13:00 on every Monday
+    - cron: "0 13 * * 1" # It will work at 13:00 on every Monday
   workflow_dispatch:
 
 jobs:
@@ -18,11 +18,11 @@ jobs:
   trivy:
     runs-on: ubuntu-latest
     steps:
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        format: "table"
-        exit-code: "1"
-        ignore-unfixed: true
-        vuln-type: "os,library"
-        severity: "CRITICAL,HIGH"
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"

@@ -7,7 +7,7 @@ name: Weekly Security Check
 
 on:
   schedule:
-    - cron: '0 13 * * 1'  # It will work at 13:00 on every Monday
+    - cron: "0 13 * * 1" # It will work at 13:00 on every Monday
   workflow_dispatch:
 
 jobs:

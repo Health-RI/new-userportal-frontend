@@ -1,22 +1,20 @@
 // SPDX-FileCopyrightText: 2024 PNED G.I.E.
 //
 // SPDX-License-Identifier: Apache-2.0
+import Error from "@/app/error";
 import Chips from "@/components/Chips";
 import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
 import PageSubHeading from "@/components/PageSubHeading";
-import AddToBasketBtn from "./AddToBasketBtn";
-import DistributionAccordion from "./DistributionAccordion";
-import { createDatasetSidebarItems } from "./sidebarItems";
 import { datasetGet } from "@/services/discovery";
-import Sidebar from "@/components/Sidebar";
-import Error from "@/app/error";
+import AddToBasketBtn from "./AddToBasketBtn";
+import ClientSidebar from "./ClientSidebar";
+import DistributionAccordion from "./DistributionAccordion";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   try {
     const dataset = await datasetGet(id);
-    const sidebarItems = createDatasetSidebarItems(dataset);
 
     return (
       <PageContainer className="flex flex-col items-start justify-start lg:flex-row">
@@ -43,9 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           )}
           <DistributionAccordion distributions={dataset.distributions || []} />
         </div>
-        <aside className="w-full lg:w-1/3">
-          <Sidebar items={sidebarItems} />
-        </aside>
+        <ClientSidebar dataset={dataset} />
       </PageContainer>
     );
   } catch (error) {

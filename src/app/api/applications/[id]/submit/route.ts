@@ -31,7 +31,7 @@ export async function POST(request: Request, params: { params: { id: string } })
       if (response.data.errorMessages && response.data.errorMessages.length > 0) {
         errorMessage += '\n' + response.data.errorMessages.join('\n');
       }
-      return NextResponse.json({ error: errorMessage}, {status:response.status});
+      return NextResponse.json({ error: errorMessage }, { status: response.status });
     }
     return NextResponse.json({ status: 200 });
   } catch (error) {

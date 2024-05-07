@@ -24,12 +24,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Find Docker images
         id: docker-images
         run: |
           echo "::set-output name=images::$(docker images --format '{{.Repository}}:{{.Tag}}')"
-        
+
       - name: Run Trivy vulnerability scanner on each Docker image
         run: |
           for image in ${{ steps.docker-images.outputs.images }}
@@ -38,8 +38,8 @@ jobs:
             docker pull $image
             trivy image --format template --template "@contrib/sarif.tpl" --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH $image > trivy-results.sarif
           done
-        
+
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
-        sarif_file: 'trivy-results.sarif'
+        sarif_file: "trivy-results.sarif"

@@ -97,8 +97,8 @@ describe('Submit an application', () => {
     mockedAxios.post.mockResolvedValueOnce({
       status: 400,
       data: {
-        detail: 'Application could not be submitted.',
-        errorMessages: ['fld1 t.form.validation/required', 'fld2 t.form.validation/format_error'],
+        detail: 'Application 93 could not be submitted due to the following errors:',
+        errorMessages: ['Field fld1 is required.', 'Field fld2 has invalid format.'],
       },
     });
 
@@ -109,7 +109,10 @@ describe('Submit an application', () => {
 
     expect(response.status).toBe(400);
     const json = await response.json();
-    expect(json.error).toContain('Field fld1 is required.');
-    expect(json.error).toContain('Field fld2 had invalid format.');
+    expect(json.error).toBe(
+      'Application 93 could not be submitted due to the following errors:\n' +
+        'Field fld1 is required.\n' +
+        'Field fld2 has invalid format.',
+    );
   });
 });

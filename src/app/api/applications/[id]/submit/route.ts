@@ -14,26 +14,6 @@ interface BackendErrorResponse {
   errorMessages: string[];
 }
 
-function formatBackendErrors({ detail, errorMessages }: BackendErrorResponse): string {
-  const formattedErrors = errorMessages.map((errorMsg) => {
-    const [fieldId, validationKey] = errorMsg.split(' ');
-    let errorMessage = `- Field ${fieldId}`;
-    switch (validationKey) {
-      case 't.form.validation/required':
-        errorMessage += ' is required.';
-        break;
-      case 't.form.validation/format_error':
-        errorMessage += ' had invalid format.';
-        break;
-      default:
-        errorMessage += ' has unknown error.';
-        break;
-    }
-    return errorMessage;
-  });
-  return `${detail}\n${formattedErrors.join('\n')}`;
-}
-
 export async function POST(request: Request, params: { params: { id: string } }): Promise<Response> {
   const session: ExtendedSession | null = await getServerSession(authOptions);
   const { id } = params.params;
@@ -45,8 +25,13 @@ export async function POST(request: Request, params: { params: { id: string } })
   try {
     const response = (await submitApplication(id, session)) as AxiosResponse<BackendErrorResponse>;
     if (response.status !== 200 && response.data) {
-      const combinedErrorMessage = formatBackendErrors(response.data);
-      return NextResponse.json({ error: combinedErrorMessage }, { status: response.status });
+      const errorDetail = response.data.detail;
+      let errorMessage = errorDetail;
+
+      if (response.data.errorMessages && response.data.errorMessages.length > 0) {
+        errorMessage += '\n' + response.data.errorMessages.join('\n');
+      }
+      return NextResponse.json({ error: errorMessage }, { status: response.status });
     }
     return NextResponse.json({ status: 200 });
   } catch (error) {

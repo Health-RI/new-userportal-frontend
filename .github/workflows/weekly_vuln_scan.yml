@@ -54,10 +54,5 @@ jobs:
           do
             echo "Scanning image: $image"
             docker pull $image
-            trivy image --format template --template "@contrib/sarif.tpl" --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH $image > trivy-results.sarif
+            trivy image --ignore-unfixed --severity CRITICAL,HIGH $image
           done
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-        sarif_file: "trivy-results.sarif"

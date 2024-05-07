@@ -5,7 +5,7 @@ name: Weekly Security Check
 
 on:
   schedule:
-    - cron: "0 13 * * 1" # It will work at 13:00 on every Monday
+    - cron: "0 14 * * 1" # It will work at 14:00 on every Monday
   workflow_dispatch:
 
 jobs:
@@ -25,6 +25,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Check if Trivy is installed
+        id: check_trivy
+        run: |
+          if command -v trivy &> /dev/null
+          then
+            echo "Trivy is installed"
+            echo "::set-output name=TRIVY_INSTALLED::true"
+          else
+            echo "Trivy is not installed"
+            echo "::set-output name=TRIVY_INSTALLED::false"
+          fi
+
+      - name: Install Trivy
+        if: steps.check_trivy.outputs.TRIVY_INSTALLED == 'false'
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          trivy --version
+
       - name: Find Docker images
         id: docker-images
         run: |
@@ -41,3 +59,5 @@ jobs:
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
+        with:
+        sarif_file: "trivy-results.sarif"

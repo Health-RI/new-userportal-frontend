@@ -25,34 +25,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check if Trivy is installed
-        id: check_trivy
-        run: |
-          if command -v trivy &> /dev/null
-          then
-            echo "Trivy is installed"
-            echo "::set-output name=TRIVY_INSTALLED::true"
-          else
-            echo "Trivy is not installed"
-            echo "::set-output name=TRIVY_INSTALLED::false"
-          fi
-
-      - name: Install Trivy
-        if: steps.check_trivy.outputs.TRIVY_INSTALLED == 'false'
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-          trivy --version
-
-      - name: Find Docker images
-        id: docker-images
-        run: |
-          echo "::set-output name=images::$(docker images --format '{{.Repository}}:{{.Tag}}')"
-
-      - name: Run Trivy vulnerability scanner on each Docker image
-        run: |
-          for image in ${{ steps.docker-images.outputs.images }}
-          do
-            echo "Scanning image: $image"
-            docker pull $image
-            trivy image --ignore-unfixed --severity CRITICAL,HIGH $image
-          done
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "image"
+          image-ref: "docker.io/library/python:3.4-alpine"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results.sarif"
+          exit-code: "1"
+          ignore-unfixed: "true"

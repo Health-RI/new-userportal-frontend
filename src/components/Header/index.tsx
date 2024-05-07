@@ -4,6 +4,8 @@
 
 "use client";
 
+import { useWindowSize } from "@/hooks";
+import { SCREEN_SIZE } from "@/hooks/useWindowSize";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import logo from "@/public/egdi-logo-horizontal-full-color-rgb.svg";
 import { User } from "@/types/user.types";
@@ -11,7 +13,7 @@ import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faBars,
   faDatabase,
-  faFileText,
+  faFolderOpen,
   faHome,
   faInfoCircle,
   faRightFromBracket,
@@ -26,14 +28,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "../Button";
-import ApplicationIcon from "./ApplicationIcon";
 import Avatar from "./Avatar";
+import RequestIcon from "./RequestIcon";
 
 function Header() {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const activeTab = usePathname();
   const { basket, isLoading } = useDatasetBasket();
+  const screenSize = useWindowSize();
 
   function handleSignOut() {
     keycloackSessionLogOut().then(() => signOut({ callbackUrl: "/" }));
@@ -63,7 +66,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <ApplicationIcon isActive={activeTab.includes("applications")} />
+        <RequestIcon isActive={activeTab.includes("requests")} />
         <Avatar user={session.user as User} />
       </>
     ) : (
@@ -78,17 +81,17 @@ function Header() {
 
   return (
     <div className="flex w-full items-center justify-between bg-white-smoke px-4">
-      <div className="flex justify-between gap-x-12 lg:gap-x-24">
+      <div className="flex justify-between gap-x-8 md:gap-x-12 lg:gap-x-24">
         <Link href="/">
           <Image
             src={logo}
             alt="Logo"
             className="mb-4 mt-4"
-            width="190"
-            height="69"
+            width={`${screenSize === SCREEN_SIZE.SM || screenSize === SCREEN_SIZE.MD ? "158" : "190"}`}
+            height={`${screenSize === SCREEN_SIZE.SM || screenSize === SCREEN_SIZE.MD ? "57" : "69"}`}
           />
         </Link>
-        <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
+        <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex lg:text-lg">
           <Link
             href="/"
             className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-hover-color lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
@@ -115,7 +118,10 @@ function Header() {
             href="/basket"
             className={`relative flex items-center text-info hover:text-hover-color ${activeTab.includes("basket") ? "text-primary" : ""}`}
           >
-            <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+            <FontAwesomeIcon
+              icon={faShoppingCart}
+              className="text-xl lg:text-2xl"
+            />
             {basket.length > 0 && (
               <span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-primary px-2 py-1 text-xs font-bold leading-none text-red-100">
                 {basket.length}
@@ -135,6 +141,12 @@ function Header() {
         </button>
         {isMenuOpen && (
           <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
+            {session && (
+              <div className="border-b-[1.5px] border-white-smoke px-4 py-2">
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
+                {session?.user?.name}
+              </div>
+            )}
             <Link
               href="/"
               className="block px-4 py-2 hover:bg-hover-color hover:text-white"
@@ -152,35 +164,29 @@ function Header() {
               Datasets
             </Link>
             <Link
-              href="/applications"
-              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
-              onClick={closeMenu}
-            >
-              <FontAwesomeIcon icon={faFileText} className="mr-2" />
-              Applications
-            </Link>
-            <Link
               href="/about"
-              className="block px-4 py-2 hover:bg-hover-color hover:text-white"
+              className="block border-b-[2px] border-white-smoke px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
               About
             </Link>
             <Link
-              href="/basket"
+              href="/requests"
               className="block px-4 py-2 hover:bg-hover-color hover:text-white"
+              onClick={closeMenu}
+            >
+              <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
+              Requests
+            </Link>
+            <Link
+              href="/basket"
+              className="block border-b-[2px] border-white-smoke px-4 py-2 hover:bg-hover-color hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
               {isLoading ? "Basket" : `Basket (${basket.length})`}
             </Link>
-            {session && (
-              <div className="border-b border-gray-200 px-4 py-2">
-                <FontAwesomeIcon icon={faUser} className="mr-2" />
-                {session?.user?.name}
-              </div>
-            )}
             {!session && (
               <button
                 onClick={() => signIn("keycloak")}

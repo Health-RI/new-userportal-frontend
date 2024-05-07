@@ -5,12 +5,11 @@
 "use client";
 
 import Error from "@/app/error";
+import Button from "@/components/Button";
 import List from "@/components/List";
 import ListItem from "@/components/List/ListItem";
 import ListContainer from "@/components/ListContainer";
-import LoadingContainer from "@/components/LoadingContainer";
 import PageContainer from "@/components/PageContainer";
-import Button from "@/components/Button";
 import PageHeading from "@/components/PageHeading";
 import { listApplications } from "@/services/daam/index.client";
 import { ListedApplication } from "@/types/application.types";
@@ -50,14 +49,12 @@ const ApplicationsPage: React.FC = () => {
     fetchData();
   }, []);
 
-  if (response.status === "loading") {
-    return <LoadingContainer text="Loading your applications..." />;
-  } else if (response.status === "error") {
+  if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
   }
 
   return (
-    <PageContainer>
+    <PageContainer className="pt-5 md:pt-10">
       <PageHeading className="mb-4">Manage your Applications</PageHeading>
       <span>View and update your submited applications</span>
       <ListContainer>
@@ -74,7 +71,7 @@ const ApplicationsPage: React.FC = () => {
           </List>
         ) : (
           <div className="flex w-full flex-col items-center justify-center gap-4">
-            <p className="text-center text-lg text-primary">
+            <p className="text-md text-center text-primary">
               You don&apos;t have any applications yet.
             </p>
             <Button
@@ -82,6 +79,7 @@ const ApplicationsPage: React.FC = () => {
               text="Add datasets"
               href="/datasets"
               type="primary"
+              className="text-xs"
             />
           </div>
         )}

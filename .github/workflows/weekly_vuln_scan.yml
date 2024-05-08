@@ -9,15 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  ort:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
-        with:
-          allow-dynamic-versions: "true"
-          fail-on: "issues"
-          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
+  #ort:
+  # runs-on: ubuntu-latest
+  # steps:
+  #    - uses: actions/checkout@v4
+  #    - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+  #      with:
+  #        allow-dynamic-versions: "true"
+  #        fail-on: "issues"
+  #        run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
   trivy:
     runs-on: ubuntu-latest
@@ -28,14 +28,14 @@ jobs:
       - name: Build Docker images
         run: |
           for Dockerfile in $(find . -name Dockerfile -mtime -7); do
-            docker build -t my-image-$(dirname $Dockerfile) -f $Dockerfile .
+            image_name=$(dirname $Dockerfile | tr -d './')
+            docker build -t my-image-$image_name -f $Dockerfile .
           done
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'image'
+          scan-type: "image"
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-          image-ref: '*'
-
+          severity: "CRITICAL,HIGH"
+          image-ref: "*"

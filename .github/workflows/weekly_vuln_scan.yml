@@ -1,4 +1,4 @@
-name: Vulnerability_Scan_Latest
+name: Weekly Vulnerability Scan
 
 on:
   schedule:
@@ -6,52 +6,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      latest_tags: ${{ steps.set_output.outputs.latest_tags }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Fetch Tags
-        id: fetch_tags
-        run: |
-          echo "Fetching tags from Docker Hub..."
-          # Example command, replace with actual command to fetch tags
-          echo "::set-output name=tags::v2.0.0,v1.1.2,v1.1.1,v1.1.0,v1.0.1,v1.0.0"
-
-      - name: Determine Latest Tags
-        id: set_output
-        run: |
-          TAGS="${{ steps.fetch_tags.outputs.tags }}"
-          IFS=',' read -r -a tag_array <<< "$TAGS"
-          declare -A latest_versions
-
-          for tag in "${tag_array[@]}"; do
-            version="${tag//v/}"
-            major=$(echo "$version" | cut -d'.' -f1)
-            minor=$(echo "$version" | cut -d'.' -f2)
-            key="${major}.${minor}"
-            
-            if [[ -z "${latest_versions[$key]}" ]] || [[ "${tag//v/}" > "${latest_versions[$key]//v/}" ]]; then
-              latest_versions[$key]="$tag"
-            fi
-          done
-
-          latest_tags=$(IFS=,; echo "${latest_versions[*]}")
-          echo "::set-output name=latest_tags::$latest_tags"
-
-  scan:
-    needs: prepare
+  fetch-and-scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Docker
+        run: |
+          sudo service docker start
+
+      - name: List Docker Image Tags
+        id: list-tags
+        run: |
+          IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend"
+          TAGS=$(docker run --rm leonyork/docker-tags $IMAGE)
+          echo "Tags fetched: $TAGS"
+          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | paste -sd ',' -)
+          echo "Latest patches: $LATEST_PATCHES"
+          echo "LATEST_PATCHES=$LATEST_PATCHES" >> $GITHUB_ENV
+
       - name: Scan Docker Images with Trivy
         run: |
-          LATEST_TAGS="${{ needs.prepare.outputs.latest_tags }}"
-          IFS=',' read -r -a tags <<< "$LATEST_TAGS"
-          for tag in "${tags[@]}"; do
-            IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$tag"
+          IFS=',' read -ra TAGS <<< "${{ env.LATEST_PATCHES }}"
+          for TAG in "${TAGS[@]}"
+          do
+            IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$TAG"
             echo "Scanning $IMAGE"
+            docker pull $IMAGE
             docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE"
           done
+
+      # Uncomment the following lines to enable the ORT job when needed
+      # - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+      #   with:
+      #     allow-dynamic-versions: "true"
+      #     fail-on: "issues"
+      #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"

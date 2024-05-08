@@ -3,7 +3,7 @@ name: Weekly Vulnerability Scan for Recent Images
 on:
   schedule:
     - cron: "0 14 * * 1" # Her Pazartesi 14:00 UTC'de çalıştır
-
+  workflow_dispatch:
 jobs:
   vulnerability-scan:
     runs-on: ubuntu-latest

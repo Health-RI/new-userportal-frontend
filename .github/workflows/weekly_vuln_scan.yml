@@ -25,10 +25,11 @@ jobs:
       #     fail-on: "issues"
       #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-      - name: Scan with Trivy Action
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ env.recent_images }}
-          format: "table"
-          ignore-unfixed: true
-          severity: "CRITICAL,HIGH"
+      - name: Scan each image with Trivy
+        run: |
+          IFS=',' read -ra IMAGES <<< "${{ env.recent_images }}"
+          for IMAGE in "${IMAGES[@]}"
+          do
+            echo "Scanning $IMAGE"
+            docker run --rm aquasec/trivy:latest image --ignore-unfixed --severity CRITICAL,HIGH "$IMAGE"
+          done

@@ -2,10 +2,11 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { authOptions, ExtendedSession } from '@/utils/auth';
+import { createApplication, listApplications } from '@/services/daam/index.server';
+import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import { createApplication, listApplications } from '@/services/daam/index.server';
+import { handleErrorResponse } from '../errorHandling';
 
 export async function POST(request: Request) {
   const session: ExtendedSession | null = await getServerSession(authOptions);
@@ -19,11 +20,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'datasetIds are required' }, { status: 400 });
     }
 
-    await createApplication(datasetIds, session);
+    const response = await createApplication(datasetIds, session);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(response.data);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create application' }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }
 
@@ -37,6 +38,6 @@ export async function GET() {
     const response = await listApplications(session);
     return NextResponse.json(response.data);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to list applications' }, { status: 500 });
+    return handleErrorResponse(error);
   }
 }

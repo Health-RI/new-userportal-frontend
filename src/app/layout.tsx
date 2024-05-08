@@ -2,14 +2,14 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import Disclaimer from "@/components/disclaimer";
-import Footer from "@/components/footer";
 import Header from "@/components/Header";
-import SessionProviderWrapper from "@/components/utils/sessionProviderWrapper";
 import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { latoFont } from "../utils/fonts";
+import {} from "../utils/fonts";
+import Footer from "./Footer";
+import SessionProviderWrapper from "./SessionProviderWrapper";
 import "./globals.css";
 import { PublicEnvScript } from "next-runtime-env";
 config.autoAddCss = false;
@@ -34,10 +34,7 @@ export default function RootLayout({
                 <Header />
               </div>
               <div>{children}</div>
-              <div>
-                <Disclaimer />
-                <Footer />
-              </div>
+              <Footer />
             </SessionProviderWrapper>
           </div>
         </DatasetBasketProvider>

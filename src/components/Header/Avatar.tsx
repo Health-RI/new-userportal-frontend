@@ -8,14 +8,10 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/shadcn/dropdown-menu";
 import { User } from "@/types/user.types";
 import { keycloackSessionLogOut } from "@/utils/auth";
-import {
-  faDatabase,
-  faGear,
-  faSignOut,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -42,7 +38,7 @@ function Avatar({ user }: AvatarProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-info p-[8px] text-xs text-white shadow-sm transition-all duration-300 hover:opacity-90 md:h-9 md:w-9 md:p-[10px] md:text-[13px]">
+        <div className="hover:bg-hover-color flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-info p-[8px] text-xs text-white shadow-sm transition-all duration-300 md:p-[10px] md:text-[13px] lg:h-9 lg:w-9">
           {user?.image ? (
             <Image src={user.image} alt="avatar" className="rounded-full" />
           ) : (
@@ -54,16 +50,8 @@ function Avatar({ user }: AvatarProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
         <DropdownMenuGroup>
-          <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
-            <FontAwesomeIcon icon={faDatabase} className="text-sm" />
-            <span>Datasets</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white">
-            <FontAwesomeIcon icon={faGear} className="text-sm" />
-            <span>Settings</span>
-          </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-primary hover:text-white"
+            className="hover:bg-hover-color cursor-pointer gap-x-3 transition-all duration-300 hover:text-white"
             onClick={handleSignOut}
           >
             <FontAwesomeIcon icon={faSignOut} className="text-sm" />

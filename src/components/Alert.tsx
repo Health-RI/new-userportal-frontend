@@ -16,9 +16,10 @@ interface AlertProps {
   type: "success" | "error";
   message: string;
   onClose: () => void;
+  className?: string;
 }
 
-const Alert = ({ type, message, onClose }: AlertProps) => {
+const Alert = ({ type, message, onClose, className }: AlertProps) => {
   const alertStyle =
     type === "success" ? "bg-primary text-white" : "bg-warning text-black";
 
@@ -31,8 +32,9 @@ const Alert = ({ type, message, onClose }: AlertProps) => {
 
   return (
     <div
-      className={`flex w-full items-center justify-between border-l-8 ${leftBorderStyle} p-4 ${alertStyle} z-50 mb-4`}
+      className={`flex w-full items-center justify-between border-l-8 ${leftBorderStyle} p-4 ${alertStyle} z-50 mb-4 ${className}`}
       role="alert"
+      style={{ whiteSpace: "pre-line" }}
     >
       <p className="text-sm lg:text-base">{message}</p>
       <FontAwesomeIcon

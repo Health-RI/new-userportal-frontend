@@ -4,43 +4,56 @@
 
 "use client";
 
-import { Dataset } from "@/types/dataset.types";
-import DatasetList from "@/components/datasetList";
-import FilterList from "./FilterList";
-import PaginationContainer from "@/components/PaginationContainer";
-import SearchBar from "@/components/SearchBar";
-import PageContainer from "@/components/PageContainer";
-import LoadingContainer from "@/components/LoadingContainer";
-import { useWindowSize } from "@/hooks";
-import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { datasetList } from "@/services/ckan";
-import { PackageSearchOptions } from "@/services/ckan/types/packageSearch.types";
-import { redirect } from "next/navigation";
-import { useSearchParams } from "next/navigation";
 import Error from "@/app/error";
+import LoadingContainer from "@/components/LoadingContainer";
+import PageContainer from "@/components/PageContainer";
+import PaginationContainer from "@/components/PaginationContainer";
+import SearchBar from "@/components/Searchbar";
+import { useWindowSize } from "@/hooks";
+import { datasetList } from "@/services/discovery/index.public";
+import { SearchedDataset } from "@/services/discovery/types/dataset.types";
+import {
+  DatasetSearchOptions,
+  DatasetSearchQueryFacet,
+  FacetGroup,
+} from "@/services/discovery/types/datasetSearch.types";
+import { SCREEN_SIZE } from "@/utils/windowSize";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
+import { redirect, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import DatasetList from "./DatasetList";
+import FilterList from "./FilterList";
 
-function parseFacets(queryParams: URLSearchParams): Record<string, string[]> {
-  const facets: Record<string, string[]> = {};
+function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
+  const facetsQuery: DatasetSearchQueryFacet[] = [];
+
   queryParams.forEach((value, key) => {
     if (!["page", "q", "sort"].includes(key)) {
-      facets[key] = value.split(",");
+      const group = key.split("-")[0];
+      const facet = key.split("-")[1];
+      const values = value.split(",");
+
+      values.map((v) =>
+        facetsQuery.push({
+          facetGroup: group,
+          facet: facet,
+          value: v,
+        }),
+      );
     }
   });
-  return facets;
+  return facetsQuery;
 }
 
 type Status = "loading" | "error" | "success";
 
 interface DatasetResponse {
   status: Status;
-  datasets?: Dataset[];
+  datasets?: SearchedDataset[];
   datasetCount?: number;
-  facets?: Facet[];
+  facetGroups?: FacetGroup[];
   errorCode?: number;
 }
 
@@ -48,8 +61,7 @@ const DATASET_PER_PAGE = 12;
 
 export default function DatasetPage() {
   const queryParams = useSearchParams();
-  const { width } = useWindowSize();
-  const screenSize = pixelWidthToScreenSize(width);
+  const screenSize = useWindowSize();
   const [isFullScreenFilterOpen, toggleFullScreenFilter] = useState(false);
   const [response, setResponse] = useState<DatasetResponse>({
     status: "loading",
@@ -60,7 +72,7 @@ export default function DatasetPage() {
   }
 
   useEffect(() => {
-    const options: PackageSearchOptions = {
+    const options: DatasetSearchOptions = {
       facets: parseFacets(queryParams),
       offset: queryParams.get("page") ? Number(queryParams.get("page")) - 1 : 0,
       limit: DATASET_PER_PAGE,
@@ -74,9 +86,9 @@ export default function DatasetPage() {
         setResponse({ status: "loading" });
         const response = await datasetList(options);
         setResponse({
-          datasets: response.datasets,
-          datasetCount: response.count,
-          facets: response.facets,
+          datasets: response.data?.datasets,
+          datasetCount: response.data?.count,
+          facetGroups: response.data?.facetGroups,
           status: "success",
         });
       } catch (error) {
@@ -90,12 +102,19 @@ export default function DatasetPage() {
       }
     }
     fetchData();
+  }, [queryParams]);
 
+  useEffect(() => {
     if (screenSize === SCREEN_SIZE.XL) toggleFullScreenFilter(false);
-  }, [queryParams, screenSize]);
+  }, [screenSize]);
 
   if (response.status === "loading") {
-    return <LoadingContainer text="Loading datasets..." />;
+    return (
+      <LoadingContainer
+        text="Retrieving datasets. This may take a few moments as we process complex Beacon queries."
+        className="mt-4 px-4 text-center sm:mt-8 sm:px-8"
+      />
+    );
   } else if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
   }
@@ -104,12 +123,23 @@ export default function DatasetPage() {
     <PageContainer>
       <div className="grid grid-cols-12">
         {isFullScreenFilterOpen ? (
-          <div className="col-start-0 col-span-12 rounded-lg border bg-white-smoke">
-            <FilterList
-              facets={response!.facets!}
-              toggleFullScreenFilter={toggleFullScreenFilter}
-              queryParams={queryParams}
-            />
+          <div className="col-start-0 col-span-12 flex flex-col gap-4">
+            {response.facetGroups?.map((group) => {
+              if (group.facets.length > 0) {
+                return (
+                  <div
+                    className="col-start-0 col-span-12 rounded-lg border bg-white-smoke"
+                    key={group.key}
+                  >
+                    <FilterList
+                      toggleFullScreenFilter={toggleFullScreenFilter}
+                      queryParams={queryParams}
+                      facetGroup={group}
+                    />
+                  </div>
+                );
+              }
+            })}
           </div>
         ) : (
           <>
@@ -125,16 +155,27 @@ export default function DatasetPage() {
             <p className="col-start-0 col-span-12 mb-12 mt-5 text-center text-sm text-info">
               {`${response.datasetCount!} ${response.datasetCount! > 1 ? "datasets" : "dataset"} found`}
             </p>
-            <div className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block">
-              <FilterList
-                facets={response!.facets!}
-                queryParams={queryParams}
-              />
+            <div className="col-start-0 col-span-4 flex flex-col gap-4">
+              {response.facetGroups?.map((group) => {
+                if (group.facets.length > 0) {
+                  return (
+                    <div
+                      className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block"
+                      key={group.key}
+                    >
+                      <FilterList
+                        queryParams={queryParams}
+                        facetGroup={group}
+                      />
+                    </div>
+                  );
+                }
+              })}
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
               <DatasetList datasets={response.datasets!} />
             </div>
-            <div className="col-start-0 col-span-12 mt-20 xl:col-span-8 xl:col-start-5">
+            <div className="col-start-0 col-span-12 mt-10 xl:col-span-8 xl:col-start-5 ">
               <PaginationContainer
                 datasetCount={response.datasetCount!}
                 datasetPerPage={DATASET_PER_PAGE}

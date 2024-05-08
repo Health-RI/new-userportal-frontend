@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
       clientId: `${process.env.KEYCLOAK_CLIENT_ID}`,
       clientSecret: `${process.env.KEYCLOAK_CLIENT_SECRET}`,
       issuer: process.env.KEYCLOAK_ISSUER_URL,
-      authorization: { params: { scope: 'openid profile email' } },
+      authorization: { params: { scope: 'openid profile email elixir_id' } },
     }),
   ],
   callbacks: {
@@ -88,6 +88,7 @@ export async function refreshAccessToken(token: JWT) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
       client_id: `${process.env.KEYCLOAK_CLIENT_ID}`,
+      client_secret: `${process.env.KEYCLOAK_CLIENT_SECRET}`,
       grant_type: 'refresh_token',
       refresh_token: token.refresh_token as string,
     }),

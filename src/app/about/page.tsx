@@ -10,23 +10,46 @@ const AboutPage: React.FC = () => {
   return (
     <div className="container mx-auto  px-4 sm:px-2 lg:px-0">
       <div className="mb-8 text-center"></div>
-      <PageHeading className="mb-4">Over Health-RI</PageHeading>
-      <p>
-        De missie van Health-RI is een betere gezondheid voor burgers en
-        patiënten door hergebruik van gezondheids-data met een geïntegreerde
-        gezondheidsdata-infrastructuur voor onderzoek, beleid en innovatie.
-      </p>
 
-      <PageSubHeading className="my-4">
-        Nationale Gezondheidsdatacatalogus
-      </PageSubHeading>
-      <p>
-        De nationale gezondheidsdatacatalogus is een belangrijk hulpmiddel voor
-        het verzamelen, organiseren en delen van gezondheidsgerelateerde data op
-        nationaal niveau. Het doel van deze catalogus is om een overzichtelijke
-        en toegankelijke bron van informatie te creëren voor zorgprofessionals,
-        onderzoekers, beleidsmakers en andere belanghebbenden.
+        <PageHeading className="mb-4">Over Health-RI</PageHeading>
+        <p>
+          De missie van Health-RI is een betere gezondheid voor burgers en
+          patiënten door hergebruik van gezondheids-data met een geïntegreerde
+          gezondheidsdata-infrastructuur voor onderzoek, beleid en innovatie.
+        </p>
+
+        <PageSubHeading className="my-4">
+          Nationale Gezondheidsdatacatalogus
+        </PageSubHeading>
+        <p>
+          De nationale gezondheidsdatacatalogus is een belangrijk hulpmiddel
+          voor het verzamelen, organiseren en delen van gezondheidsgerelateerde
+          data op nationaal niveau. Het doel van deze catalogus is om een
+          overzichtelijke en toegankelijke bron van informatie te creëren voor
+          zorgprofessionals, onderzoekers, beleidsmakers en andere
+          belanghebbenden.
+        </p>
+        <p className="mt-20">
+        Voor meer informatie, bezoek de{" "}
+        <a
+          href="https://www.health-ri.nl/"
+          className="text-blue-500 hover:underline"
+        >
+          Health-RI Website
+        </a>
+        .
       </p>
+      <p className="mt-4">
+        Rapporteer problemen op{" "}
+        <a
+          href="https://github.com/Health-RI/new-userportal-frontend/issues"
+          className="text-blue-500 hover:underline"
+        >
+          GitHub Issues
+        </a>
+        .
+
+      
 
       {/* <PageSubHeading className="my-4">Key Objectives</PageSubHeading>
       <ul className="list-inside list-disc">
@@ -53,25 +76,7 @@ const AboutPage: React.FC = () => {
         </li>
       </ul> */}
 
-      <p className="mt-20">
-        Voor meer informatie, bezoek de{" "}
-        <a
-          href="https://www.health-ri.nl/"
-          className="text-blue-500 hover:underline"
-        >
-          Health-RI Website
-        </a>
-        .
-      </p>
-      <p className="mt-4">
-        Rapporteer problemen op{" "}
-        <a
-          href="https://github.com/Health-RI/new-userportal-frontend/issues"
-          className="text-blue-500 hover:underline"
-        >
-          GitHub Issues
-        </a>
-        .
+    
       </p>
       <PageSubHeading className="my-4">Ontwikkeling</PageSubHeading>
       <p>

@@ -4,21 +4,20 @@
 
 "use client";
 
+import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
+
 import { User } from "@/types/user.types";
 // import { keycloackSessionLogOut } from "@/utils/auth";
 import {
   faBars,
   faDatabase,
+  faFolderOpen,
   faHome,
   faInfoCircle,
   faQuestionCircle,
-  // faRightFromBracket,
-  // faRightToBracket,
-  faUser,
   faShoppingCart,
-  faFileText,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -26,9 +25,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import logo from "../../public/healthri_logo.svg";
+
+import Button from "../Button";
+
 import Avatar from "./Avatar";
-import Button from "../button";
-import ApplicationIcon from "./ApplicationIcon";
+import RequestIcon from "./RequestIcon";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -64,7 +65,7 @@ function Header() {
   if (status !== "loading") {
     loginBtn = session ? (
       <>
-        <ApplicationIcon />
+        <RequestIcon isActive={activeTab.includes("requests")} />
         <Avatar user={session.user as User} />
       </>
     ) : (
@@ -95,19 +96,19 @@ function Header() {
         <div className="hidden items-center gap-x-3 text-base font-semibold text-primary sm:flex md:text-lg">
           <Link
             href="/"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
+            className={`hover:border-hover-color rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 lg:px-7 ${activeTab === "/" ? "bg-primary text-white" : ""}`}
           >
             Home
           </Link>
           <Link
             href="/datasets"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
+            className={`hover:border-hover-color rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 lg:px-7 ${activeTab.includes("datasets") ? "bg-primary text-white" : ""}`}
           >
             Datasets
           </Link>
           <Link
             href="/about"
-            className={`rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 hover:border-primary hover:shadow-sm lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
+            className={`hover:border-hover-color rounded-lg border-[1.5px] border-white-smoke px-3 py-1 transition-colors duration-300 lg:px-7 ${activeTab === "/about" ? "bg-primary text-white" : ""}`}
           >
             Over de catalogus
           </Link>
@@ -123,9 +124,12 @@ function Header() {
         {!isLoading && (
           <Link
             href="/basket"
-            className="relative flex items-center text-info hover:text-primary"
+            className={`hover:text-hover-color relative flex items-center text-info ${activeTab.includes("basket") ? "text-primary" : ""}`}
           >
-            <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+            <FontAwesomeIcon
+              icon={faShoppingCart}
+              className="text-xl lg:text-2xl"
+            />
             {basket.length > 0 && (
               <span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-primary px-2 py-1 text-xs font-bold leading-none text-red-100">
                 {basket.length}
@@ -145,9 +149,15 @@ function Header() {
         </button>
         {isMenuOpen && (
           <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
+            {session && (
+              <div className="border-b-[1.5px] border-white-smoke px-4 py-2">
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
+                {session?.user?.name}
+              </div>
+            )}
             <Link
               href="/"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="hover:bg-hover-color block px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faHome} className="mr-2" />
@@ -155,23 +165,15 @@ function Header() {
             </Link>
             <Link
               href="/datasets"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="hover:bg-hover-color block px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faDatabase} className="mr-2" />
               Datasets
             </Link>
             <Link
-              href="/applications"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
-              onClick={closeMenu}
-            >
-              <FontAwesomeIcon icon={faFileText} className="mr-2" />
-              Applications
-            </Link>
-            <Link
               href="/about"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="hover:bg-hover-color block border-b-[2px] border-white-smoke px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
@@ -186,8 +188,16 @@ function Header() {
               Veelgestelde vragen
             </Link>
             <Link
+              href="/requests"
+              className="hover:bg-hover-color block px-4 py-2 hover:text-white"
+              onClick={closeMenu}
+            >
+              <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
+              Requests
+            </Link>
+            <Link
               href="/basket"
-              className="block px-4 py-2 hover:bg-primary hover:text-white"
+              className="hover:bg-hover-color block border-b-[2px] border-white-smoke px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
@@ -200,9 +210,11 @@ function Header() {
               </div>
             )}
             {/* {!session && (
+            {!session && (
+
               <button
                 onClick={() => signIn("keycloak")}
-                className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
+                className="block w-full px-4 py-2 text-left hover:bg-hover-color hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightToBracket} className="mr-2" />
                 Login
@@ -211,7 +223,7 @@ function Header() {
             {session && (
               <button
                 onClick={handleSignOut}
-                className="block w-full px-4 py-2 text-left hover:bg-primary hover:text-white"
+                className="block w-full px-4 py-2 text-left hover:bg-hover-color hover:text-white"
               >
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
                 Log uit

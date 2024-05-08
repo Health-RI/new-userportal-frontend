@@ -4,23 +4,23 @@
 
 "use client";
 
-import { DatasetCounter } from "@/components/DatasetCounter";
-import { PortalStatistics } from "@/components/PortalStatistics";
 import PageContainer from "@/components/PageContainer";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/Searchbar";
 import Image from "next/image";
-import office from "../public/office.jpg";
-import dna from "../public/dna.jpg";
 import hri_banner from "../public/HRI_banner.jpg";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import dna from "../public/dna.jpg";
+import office from "../public/office.jpg";
+import { DatasetCounter } from "./DatasetCounter";
+import { PortalStatistics } from "./PortalStatistics";
 
 const HomePage = () => {
   const queryParams = useSearchParams();
 
   return (
-    <PageContainer>
-      <div className="mb-20 grid gap-10 md:grid-cols-[2fr,1fr]">
+    <PageContainer className="container mx-auto px-4 pt-5">
+      <div className="grid gap-14 md:grid-cols-[2fr,1fr]">
         <div className="text-center md:pl-4 md:pr-4 lg:text-left">
           <DatasetCounter />
           <SearchBar queryParams={queryParams} size="large" />
@@ -56,7 +56,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex w-full justify-center">
+      <div className="flex h-40 w-full justify-center">
         <PortalStatistics />
       </div>
 

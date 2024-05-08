@@ -2,22 +2,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MultipleSelector from "@/components/shadcn/multipleSelector";
 import { FilterItemProps } from "@/utils/convertDataToFilterItemProps";
-import MultipleSelector from "@/components/ui/multipleSelector";
 
-function FilterItem({ field, label, data, icon }: FilterItemProps) {
+function FilterItem({ field, label, data, groupKey }: FilterItemProps) {
   return (
     <div>
       <div className="mb-3 flex items-center gap-x-3">
-        <FontAwesomeIcon
-          icon={icon}
-          className="text-xs font-extrabold text-info"
-        />
         <p className="text-bold text-info">{label}</p>
       </div>
       <MultipleSelector
-        field={field}
+        field={`${groupKey}-${field}`}
         defaultOptions={data}
         placeholder={label}
         className="text-[0.8rem]"

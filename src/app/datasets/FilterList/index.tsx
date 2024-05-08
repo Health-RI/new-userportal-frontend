@@ -2,58 +2,44 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { type Facet } from "@/services/ckan/types/packageSearch.types";
 import {
-  convertDataToFilterItemProps,
   FilterItemProps,
+  convertDataToFilterItemProps,
 } from "@/utils/convertDataToFilterItemProps";
-import {
-  faBook,
-  faFilter,
-  faMagnifyingGlass,
-  faTags,
-  faUser,
-  faFile,
-  faKey,
-  faLocation,
-  faX,
-  type IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+import { FacetGroup } from "@/services/discovery/types/datasetSearch.types";
+import { faFilter, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@/components/button";
+import Button from "@/components/Button";
 import FilterItem from "./FilterItem";
 
-const fieldToIconMap: Record<string, IconDefinition> = {
-  publisher_name: faUser,
-  organization: faBook,
-  theme: faTags,
-  tags: faMagnifyingGlass,
-  res_format: faFile,
-  access_rights: faKey,
-  spatial_uri: faLocation,
-};
-
 type FilterListProps = {
-  facets: Facet[];
   toggleFullScreenFilter?: React.Dispatch<React.SetStateAction<boolean>>;
   queryParams: URLSearchParams;
+  facetGroup: FacetGroup;
 };
 
 function FilterList({
-  facets,
   toggleFullScreenFilter,
   queryParams,
+  facetGroup,
 }: FilterListProps) {
-  const filterItemProps: FilterItemProps[] = convertDataToFilterItemProps(
-    facets,
-    fieldToIconMap,
-  );
+  const filterItemProps: FilterItemProps[] =
+    convertDataToFilterItemProps(facetGroup);
 
-  function isAnyFilterApplied() {
+  function isAnyGroupFilterApplied() {
     if (!queryParams) return false;
     return Array.from(queryParams.keys()).some(
-      (key) => key !== "page" && key !== "q" && queryParams.get(key),
+      (key) => key !== "page" && key !== "q" && key.includes(facetGroup.key),
     );
+  }
+
+  function getQueryStringWithoutGroupFilter() {
+    const filteredParamsQuery = Array.from(queryParams.keys())
+      .filter((x) => !x.includes(facetGroup.key) && x !== "page")
+      .map((x) => `&${x}=${queryParams.get(x)}`)
+      .join("");
+
+    return filteredParamsQuery;
   }
 
   return (
@@ -63,7 +49,7 @@ function FilterList({
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>
-          Filters
+          <span className="mr-2">{facetGroup.label.toUpperCase()}</span>
         </h1>
         {toggleFullScreenFilter && (
           <button
@@ -80,15 +66,15 @@ function FilterList({
             field={props.field}
             label={props.label}
             data={props.data}
-            icon={props.icon}
+            groupKey={props.groupKey}
           />
         </li>
       ))}
-      {isAnyFilterApplied() || toggleFullScreenFilter ? (
+      {isAnyGroupFilterApplied() || toggleFullScreenFilter ? (
         <div className="mt-4 flex justify-end gap-x-4">
-          {isAnyFilterApplied() && (
+          {isAnyGroupFilterApplied() && (
             <Button
-              href={`/datasets?page=1${queryParams.get("q") ? `&q=${queryParams.get("q")}` : ""}`}
+              href={`/datasets?page=1${getQueryStringWithoutGroupFilter()}`}
               text="Clear Filters"
               type="warning"
             />

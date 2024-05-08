@@ -3,18 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 "use client";
 
-import { useState } from "react";
+import Alert, { AlertState } from "@/components/Alert";
+import Button from "@/components/Button";
+import ListContainer from "@/components/ListContainer";
+import LoadingContainer from "@/components/LoadingContainer";
 import PageContainer from "@/components/PageContainer";
 import PageHeading from "@/components/PageHeading";
-import LoadingContainer from "@/components/LoadingContainer";
-import CenteredListContainer from "@/components/CenteredListContainer";
-import DatasetList from "@/components/datasetList";
-import Alert, { AlertState } from "@/components/Alert";
-import Button from "@/components/button";
-import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDatasetBasket } from "@/providers/DatasetBasketProvider";
 import { createApplication } from "@/services/daam/index.client";
-import { useSession, signIn } from "next-auth/react";
+import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import DatasetList from "../datasets/DatasetList";
 
 export default function Page() {
   const { basket, isLoading, emptyBasket } = useDatasetBasket();
@@ -31,13 +31,14 @@ export default function Page() {
   }
 
   const requestNow = async () => {
+    const identifiers = basket
+      .map((dataset) => dataset.identifier)
+      .filter((identifier): identifier is string => identifier !== undefined);
+
     try {
-      await createApplication(basket.map((dataset) => dataset.id));
-      setAlert({
-        message: "Application created successfully",
-        type: "success",
-      });
+      const response = await createApplication(identifiers);
       emptyBasket();
+      window.location.href = `/applications/${response.data.applicationId}`;
     } catch (error) {
       setAlert({
         message: "Something went wrong. Please try again.",
@@ -84,7 +85,7 @@ export default function Page() {
         />
       )}
       <PageHeading>{heading}</PageHeading>
-      <CenteredListContainer>
+      <ListContainer>
         <div className="flex w-full justify-between">
           {basket.length > 0 && (
             <Button
@@ -111,7 +112,7 @@ export default function Page() {
             />
           </div>
         )}
-      </CenteredListContainer>
+      </ListContainer>
     </PageContainer>
   );
 }

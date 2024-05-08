@@ -2,7 +2,7 @@ name: Weekly Vulnerability Scan for Recent Images
 
 on:
   schedule:
-    - cron: "0 14 * * 1" # Runs on 14:00 for each monday-UTC
+    - cron: "0 14 * * 1" # Her Pazartesi 14:00 UTC'de çalıştır
   workflow_dispatch:
 
 jobs:
@@ -25,11 +25,10 @@ jobs:
       #     fail-on: "issues"
       #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-      - name: Scan with Trivy
-        run: |
-          IFS=',' read -ra IMAGES <<< "${{ env.recent_images }}"
-          for IMAGE in "${IMAGES[@]}"
-          do
-            echo "Scanning $IMAGE"
-            trivy image --ignore-unfixed --severity CRITICAL,HIGH "$IMAGE"
-          done
+      - name: Scan with Trivy Action
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.recent_images }}
+          format: "table"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"

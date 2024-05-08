@@ -3,6 +3,7 @@ name: Weekly Vulnerability Scan for Recent Images
 on:
   schedule:
     - cron: "0 14 * * 1" # Runs on 14:00 for each monday-UTC
+  workflow_dispatch:
 
 jobs:
   vulnerability-scan:

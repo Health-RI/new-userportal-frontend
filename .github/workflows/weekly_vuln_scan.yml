@@ -1,8 +1,8 @@
-name: Weekly Vulnerability Scan for Recent Images
+name: Scan Main Tag of Docker Image
 
 on:
   schedule:
-    - cron: "0 14 * * 1" # Her Pazartesi 14:00 UTC'de çalıştır
+    - cron: "0 14 * * 1" # Works on each Monday 14:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -12,25 +12,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Find Recent Docker Images
-        run: |
-          FROM_DATE=$(date -d '7 days ago' '+%Y-%m-%d')
-          RECENT_IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}} {{.CreatedSince}}' | awk -v FROM_DATE="$FROM_DATE" '$2 >= FROM_DATE {print $1}' | tr '\n' ',' | sed 's/,$//')
-          echo "recent_images=$RECENT_IMAGES" >> $GITHUB_ENV
+      # Uncomment the following lines to enable the ORT job when needed
+      # - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+      #   with:
+      #     allow-dynamic-versions: "true"
+      #     fail-on: "issues"
+      #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
-        with:
-          allow-dynamic-versions: "true"
-          fail-on: "issues"
-          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
-
-      - name: Scan each image with Trivy
+      - name: Pull the Docker Image
         run: |
-          IFS=',' read -ra IMAGES <<< "${{ env.recent_images }}"
-          EXIT_CODE=0
-          for IMAGE in "${IMAGES[@]}"
-          do
-            echo "Scanning $IMAGE"
-            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE" || EXIT_CODE=$?
-          done
-          exit $EXIT_CODE
+          IMAGE_NAME="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main"
+          docker pull $IMAGE_NAME
+          echo "Docker image pulled: $IMAGE_NAME"
+
+      - name: Scan the Docker Image with Trivy
+        run: |
+          IMAGE_NAME="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:main"
+          docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_NAME"

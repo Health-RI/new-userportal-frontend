@@ -28,7 +28,7 @@ const AboutPage: React.FC = () => {
         en toegankelijke bron van informatie te creëren voor zorgprofessionals,
         onderzoekers, beleidsmakers en andere belanghebbenden.
       </p>
-      <p className="mt-20">
+      <p className="mt-4">
         Voor meer informatie, bezoek de{" "}
         <a
           href="https://www.health-ri.nl/"
@@ -87,7 +87,7 @@ const AboutPage: React.FC = () => {
           Github
         </a>
       </p>
-      <p className="mt-20">
+      <p className="mt-4">
         GDI project receives funding from the European Union&lsquo;s Digital
         Europe Programme under grant agreement number 101081813.
       </p>

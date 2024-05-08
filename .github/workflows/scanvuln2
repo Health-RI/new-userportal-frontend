@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Weekly Security Check
+
+on:
+  schedule:
+    - cron: "0 14 * * 1" # It will work at 14:00 on every Monday
+  workflow_dispatch:
+
+jobs:
+  ort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+        with:
+          allow-dynamic-versions: "true"
+          fail-on: "issues"
+          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
+
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if Trivy is installed
+        id: check_trivy
+        run: |
+          if command -v trivy &> /dev/null
+          then
+            echo "Trivy is installed"
+            echo "::set-output name=TRIVY_INSTALLED::true"
+          else
+            echo "Trivy is not installed"
+            echo "::set-output name=TRIVY_INSTALLED::false"
+          fi
+
+      - name: Install Trivy
+        if: steps.check_trivy.outputs.TRIVY_INSTALLED == 'false'
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          trivy --version
+
+      - name: Find Docker images
+        id: docker-images
+        run: |
+          echo "::set-output name=images::$(docker images --format '{{.Repository}}:{{.Tag}}')"
+
+      - name: Run Trivy vulnerability scanner on each Docker image
+        run: |
+          for image in ${{ steps.docker-images.outputs.images }}
+          do
+            echo "Scanning image: $image"
+            docker pull $image
+            trivy image --ignore-unfixed --severity CRITICAL,HIGH $image
+          done

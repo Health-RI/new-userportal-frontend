@@ -25,17 +25,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker images
-        run: |
-          for Dockerfile in $(find . -name Dockerfile -mtime -7); do
-            docker build -t my-image-$(dirname $Dockerfile) -f $Dockerfile .
-          done
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'image'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-          image-ref: '*'
-
+          scan-type: "image"
+          image-ref: "docker.io/library/python:3.4-alpine"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results.sarif"
+          ignore-unfixed: "true"
+  
+      - name: Check for vulnerabilities
+        run: |
+          if grep -q "vulnerability" trivy-results.sarif; then
+            exit 1
+          fi
+  

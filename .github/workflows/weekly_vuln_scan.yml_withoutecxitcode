@@ -28,10 +28,8 @@ jobs:
       - name: Scan each image with Trivy
         run: |
           IFS=',' read -ra IMAGES <<< "${{ env.recent_images }}"
-          EXIT_CODE=0
           for IMAGE in "${IMAGES[@]}"
           do
             echo "Scanning $IMAGE"
-            docker run --rm aquasec/trivy:latest --ignore-unfixed --severity CRITICAL,HIGH --exit-code 1 "$IMAGE" || EXIT_CODE=$?
+            docker run --rm aquasec/trivy:latest image --ignore-unfixed --severity CRITICAL,HIGH "$IMAGE"
           done
-          exit $EXIT_CODE

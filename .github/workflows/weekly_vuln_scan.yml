@@ -2,8 +2,8 @@ name: Weekly Vulnerability Scan for Recent Images
 
 on:
   schedule:
-    - cron: "0 14 * * 1" # Her Pazartesi 14:00 UTC'de çalıştır
-  workflow_dispatch:
+    - cron: "0 14 * * 1" # Runs on 14:00 for each monday-UTC
+
 jobs:
   vulnerability-scan:
     runs-on: ubuntu-latest
@@ -11,25 +11,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Uncomment below to enable ORT job when needed
+      - name: Find Recent Docker Images
+        run: |
+          FROM_DATE=$(date -d '7 days ago' '+%Y-%m-%d')
+          RECENT_IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}} {{.CreatedSince}}' | awk -v FROM_DATE="$FROM_DATE" '$2 >= FROM_DATE {print $1}' | tr '\n' ',' | sed 's/,$//')
+          echo "recent_images=$RECENT_IMAGES" >> $GITHUB_ENV
+
+      # Uncomment the following lines to enable the ORT job when needed
       # - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
       #   with:
       #     allow-dynamic-versions: "true"
       #     fail-on: "issues"
       #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
 
-      - name: Find Recent Docker Images
-        id: recent-images
-        run: |
-          FROM_DATE=$(date -d '7 days ago' '+%Y-%m-%d')
-          RECENT_IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}} {{.CreatedSince}}' | awk -v FROM_DATE="$FROM_DATE" '$2 >= FROM_DATE {print $1}')
-          echo "recent_images=$RECENT_IMAGES" >> $GITHUB_ENV
-          echo "::set-output name=images::$RECENT_IMAGES"
-
       - name: Scan with Trivy
         run: |
-          for IMAGE in ${{ env.recent_images }}
+          IFS=',' read -ra IMAGES <<< "${{ env.recent_images }}"
+          for IMAGE in "${IMAGES[@]}"
           do
             echo "Scanning $IMAGE"
-            trivy image --ignore-unfixed --severity CRITICAL,HIGH $IMAGE
+            trivy image --ignore-unfixed --severity CRITICAL,HIGH "$IMAGE"
           done

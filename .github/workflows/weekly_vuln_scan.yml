@@ -32,6 +32,6 @@ jobs:
           for IMAGE in "${IMAGES[@]}"
           do
             echo "Scanning $IMAGE"
-            docker run --rm aquasec/trivy:latest --ignore-unfixed --severity CRITICAL,HIGH --exit-code 1 "$IMAGE" || EXIT_CODE=$?
+            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE" || EXIT_CODE=$?
           done
           exit $EXIT_CODE

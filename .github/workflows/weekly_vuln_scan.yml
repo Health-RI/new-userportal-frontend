@@ -1,41 +1,35 @@
-# SPDX-FileCopyrightText: 2024 PNED G.I.E.
-# SPDX-License-Identifier: Apache-2.0
-
-name: Weekly Security Check
+name: Weekly Vulnerability Scan for Recent Images
 
 on:
   schedule:
-    - cron: "0 14 * * 1" # It will work at 14:00 on every Monday
-  workflow_dispatch:
+    - cron: "0 14 * * 1" # Her Pazartesi 14:00 UTC'de çalıştır
 
 jobs:
-  #ort:
-  # runs-on: ubuntu-latest
-  # steps:
-  #    - uses: actions/checkout@v4
-  #    - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
-  #      with:
-  #        allow-dynamic-versions: "true"
-  #        fail-on: "issues"
-  #        run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
-
-  trivy:
+  vulnerability-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Build Docker images
+      # Uncomment below to enable ORT job when needed
+      # - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+      #   with:
+      #     allow-dynamic-versions: "true"
+      #     fail-on: "issues"
+      #     run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
+
+      - name: Find Recent Docker Images
+        id: recent-images
         run: |
-          for Dockerfile in $(find . -name Dockerfile -mtime -7); do
-            image_name=$(dirname $Dockerfile | tr -d './')
-            docker build -t my-image-$image_name -f $Dockerfile .
-          done
+          FROM_DATE=$(date -d '7 days ago' '+%Y-%m-%d')
+          RECENT_IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}} {{.CreatedSince}}' | awk -v FROM_DATE="$FROM_DATE" '$2 >= FROM_DATE {print $1}')
+          echo "recent_images=$RECENT_IMAGES" >> $GITHUB_ENV
+          echo "::set-output name=images::$RECENT_IMAGES"
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "image"
-          ignore-unfixed: true
-          severity: "CRITICAL,HIGH"
-          image-ref: "*"
+      - name: Scan with Trivy
+        run: |
+          for IMAGE in ${{ env.recent_images }}
+          do
+            echo "Scanning $IMAGE"
+            trivy image --ignore-unfixed --severity CRITICAL,HIGH $IMAGE
+          done

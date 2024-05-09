@@ -1,0 +1,32 @@
+name: Vulnerability Scan For Latest Two Tag
+
+on:
+  schedule:
+    - cron: "0 14 * * 1" # Works on each Monday 14:00 UTC
+  workflow_dispatch:
+
+jobs:
+  fetch-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker
+        run: |
+          sudo service docker start
+
+      - name: List Docker Image Tags
+        run: |
+          IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend"
+          TAGS=$(curl -s "https://ghcr.io/v2/${IMAGE}/tags/list" | jq -r '.tags[]' | sort -Vr | head -n 2)
+          echo "Latest two tags fetched: $TAGS"
+          echo "LATEST_TAGS=$TAGS" >> $GITHUB_ENV
+
+      - name: Scan Docker Images with Trivy
+        run: |
+          IFS=' ' read -ra TAGS <<< "${{ env.LATEST_TAGS }}"
+          for TAG in "${TAGS[@]}"
+          do
+            IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$TAG"
+            echo "Scanning $IMAGE"
+            docker pull $IMAGE
+            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE"
+          done

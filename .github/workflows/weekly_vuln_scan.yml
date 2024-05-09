@@ -1,4 +1,4 @@
-name: Weekly Vulnerability Scan
+name: Scan Latest Two Patch Versions
 
 on:
   schedule:
@@ -14,22 +14,21 @@ jobs:
           sudo service docker start
 
       - name: List Docker Image Tags
-        id: list-tags
         run: |
-          IMAGE="alpine"
-          TAGS=$(./docker-tags.sh $IMAGE)
+          IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend"
+          TAGS=$(curl -s "https://ghcr.io/v2/${IMAGE}/tags/list" | jq -r '.tags[]' | sort -Vr)
           echo "Tags fetched: $TAGS"
-          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | paste -sd ',' -)
-          echo "Latest patches: $LATEST_PATCHES"
+          # Filtering for the last patch of each of the latest two minor versions
+          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -Vr | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | head -n 2)
+          echo "Latest two patches: $LATEST_PATCHES"
           echo "LATEST_PATCHES=$LATEST_PATCHES" >> $GITHUB_ENV
 
       - name: Scan Docker Images with Trivy
         run: |
-          IFS=',' read -ra TAGS <<< "${{ env.LATEST_PATCHES }}"
+          IFS=' ' read -ra TAGS <<< "${{ env.LATEST_PATCHES }}"
           for TAG in "${TAGS[@]}"
           do
-            IMAGE="alpine:$TAG"
+            IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$TAG"
             echo "Scanning $IMAGE"
             docker pull $IMAGE
             docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE"
-          done

@@ -2,9 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { ExtendedSession } from '@/app/api/auth/auth.types';
+import { authOptions } from '@/app/api/auth/config';
 import { handleErrorResponse } from '@/app/api/errorHandling';
 import { saveFormAndDuos } from '@/services/daam/index.server';
-import { ExtendedSession, authOptions } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 

@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend
+  IMAGE_NAME: ghcr.io/health-ri/new-userportal-frontend
   LATEST_PATCHES: ""
 
 jobs:

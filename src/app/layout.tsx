@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import SessionProviderWrapper from "./SessionProviderWrapper";
 import "./globals.css";
 import { PublicEnvScript } from "next-runtime-env";
+import Disclaimer from "./Disclaimer";
 config.autoAddCss = false;
 
 export default function RootLayout({
@@ -34,7 +35,10 @@ export default function RootLayout({
                 <Header />
               </div>
               <div>{children}</div>
-              <Footer />
+              <div>
+                <Disclaimer />
+                <Footer />
+              </div>
             </SessionProviderWrapper>
           </div>
         </DatasetBasketProvider>

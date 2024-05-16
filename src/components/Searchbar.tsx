@@ -88,8 +88,17 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
+    setFetchSuggestions(false);
     setSuggestions([]);
     redirectToSearchResults(query);
+  }
+
+  function handleEnter(e: React.KeyboardEvent<HTMLInputElement>): void {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setSuggestions([]);
+      redirectToSearchResults(query);
+    }
   }
 
   return (
@@ -101,6 +110,7 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           value={query}
           onChange={handleQueryChange}
           onBlur={handleBlur}
+          onKeyDown={handleEnter}
         ></input>
         {suggestions.length > 0 && (
           <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">

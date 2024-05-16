@@ -1,33 +1,56 @@
 # SPDX-FileCopyrightText: 2024 PNED G.I.E.
-# SPDX-FileContributor: Stichting Health-RI
-#
 # SPDX-License-Identifier: Apache-2.0
 
-name: Weekly Security Check
+name: Scan Latest Two Semantically Versioned Docker Image Tags with ORT
+
 on:
   schedule:
-    - cron: "0 13 * * 1" # It will work at 13:00 on every Monday
+    - cron: "0 14 * * 1" # Works on Every Monday at 14:00 UTC
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend
+  LATEST_PATCHES: ""
+
 jobs:
-  ort:
+  fetch-and-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Setup Docker
+        run: |
+          sudo service docker start
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: List Docker Image Tags and Fetch Latest Two
+        run: |
+          TAGS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/${IMAGE_NAME}/tags/list" | jq -r '.tags[]' | sort -Vr)
+          echo "Tags fetched: $TAGS"
+          # Filtering for the last patch of each of the latest two minor versions
+          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -Vr | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | head -n 2)
+          echo "Latest two patches: $LATEST_PATCHES"
+          echo "LATEST_PATCHES=$LATEST_PATCHES" >> $GITHUB_ENV
+
+      - name: Pull and Scan Docker Images with Trivy
+        run: |
+          IFS=' ' read -ra TAGS <<< "${{ env.LATEST_PATCHES }}"
+          for TAG in "${TAGS[@]}"
+          do
+            IMAGE_TAG="$IMAGE_NAME:$TAG"
+            echo "Pulling and scanning $IMAGE_TAG"
+            docker pull $IMAGE_TAG
+            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG"
+          done
+
+      - name: OSS Review Toolkit (ORT) Analysis
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+
       - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
         with:
           allow-dynamic-versions: "true"
           fail-on: "issues"
           run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"
-
-  trivy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"

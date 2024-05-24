@@ -130,14 +130,15 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
 
   const fetchApplication = useCallback(async () => {
     dispatch({ type: ApplicationActionType.LOADING });
-    try {
-      const response = await fetch(`/api/applications/${id}`);
+    const response = await fetch(`/api/applications/${id}`);
+
+    if (response.ok) {
       const retrievedApplication = await response.json();
       dispatch({
         type: ApplicationActionType.APPLICATION_LOADED,
         payload: retrievedApplication,
       });
-    } catch {
+    } else {
       dispatch({
         type: ApplicationActionType.REJECTED,
         payload: "Failed to fetch application",

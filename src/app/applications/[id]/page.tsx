@@ -44,7 +44,23 @@ export default function ApplicationDetailsPage() {
     }
   }, [error]);
 
-  if (!application) return;
+  if (!application) {
+    return (
+      <PageContainer>
+        {alert && (
+          <Alert
+            type={alert.type}
+            message={alert.message}
+            onClose={() => {
+              onCloseAlert();
+              clearError();
+            }}
+            className="mb-8"
+          />
+        )}
+      </PageContainer>
+    );
+  }
 
   const events = application.events;
   const lastEvent = events[0];

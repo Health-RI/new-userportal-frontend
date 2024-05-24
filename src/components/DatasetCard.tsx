@@ -13,18 +13,22 @@ import { truncateDescription } from "@/utils/textProcessing";
 import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-type DatasetItemProps = {
+type DatasetCardProps = {
   dataset: SearchedDataset;
+  showBasket: boolean;
 };
 
-function DatasetItem({ dataset }: DatasetItemProps) {
+function DatasetCard({ dataset, showBasket }: DatasetCardProps) {
   const screenSize = useWindowSize();
   const truncatedDesc = dataset.description
     ? truncateDescription(dataset.description, screenSize)
     : null;
+
   const { basket, addDatasetToBasket, removeDatasetFromBasket, isLoading } =
     useDatasetBasket();
+
   const isInBasket = basket.some((ds) => ds.id === dataset.id);
+
   const toggleDatasetInBasket = () => {
     if (isInBasket) {
       removeDatasetFromBasket(dataset);
@@ -32,6 +36,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
       addDatasetToBasket(dataset);
     }
   };
+
   const hasIdentifier = !!dataset.identifier;
   const buttonDisabled = isLoading || !hasIdentifier;
 
@@ -62,7 +67,7 @@ function DatasetItem({ dataset }: DatasetItemProps) {
             found
           </span>
         )}
-        {!isLoading && (
+        {!isLoading && showBasket && (
           <Button
             text={isInBasket ? "Remove from basket" : "Add to basket"}
             icon={isInBasket ? faMinusCircle : faPlusCircle}
@@ -76,4 +81,4 @@ function DatasetItem({ dataset }: DatasetItemProps) {
   );
 }
 
-export default DatasetItem;
+export default DatasetCard;

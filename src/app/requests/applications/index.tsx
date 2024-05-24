@@ -17,8 +17,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import ApplicationItem from "./ApplicationItem";
-
-type Status = "loading" | "error" | "success";
+import { Status } from "@/utils/pageStatus.types";
 
 interface ApplicationResponse {
   status: Status;

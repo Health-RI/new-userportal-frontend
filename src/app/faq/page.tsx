@@ -30,7 +30,7 @@ const FAQPage: React.FC = () => {
             href="https://health-ri.atlassian.net/wiki/x/AYCjE"
             className="text-blue-500 hover:underline"
           >
-            https://health-ri.atlassian.net/wiki/x/AYCjE
+            Metadata onboarding on the National Catalogue
           </a>
         </p>
 

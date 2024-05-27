@@ -6,60 +6,70 @@ import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { encrypt } from '@/utils/encryption';
 import serverConfig from '@/config/serverConfig';
-import { POST } from '../route';
+import { GET } from '../route';
+import { Entitlement } from '@/types/entitlements.types';
 
 jest.mock('axios');
 jest.mock('next-auth/next');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedGetServerSession = getServerSession as jest.MockedFunction<typeof getServerSession>;
-const options = {
-  facets: [],
-  query: undefined,
-  rows: 10,
-  sort: undefined,
-  start: 0,
-};
 
-describe('POST function', () => {
+describe('GET function', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: { count: 100 } });
   });
 
-  test('returns datasets response for authenitacted user', async () => {
-    const encryptedToken = encrypt('decryptedToken');
-    mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
+  test('returns unauthorized if session is not available', async () => {
+    mockedGetServerSession.mockResolvedValueOnce(null);
 
-    const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ options }) });
-    await POST(request);
+    const response = await GET();
 
-    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.discoveryUrl}/api/v1/datasets/search`, options, {
-      headers: { Authorization: 'Bearer decryptedToken', 'Content-Type': 'application/json' },
-    });
-  });
-
-  test('returns datasets response for unauthenitacted user', async () => {
-    mockedGetServerSession.mockResolvedValueOnce(undefined);
-    const request = new Request('http://localhost', { method: 'POST', body: JSON.stringify({ options }) });
-    await POST(request);
-
-    expect(mockedAxios.post).toHaveBeenCalledWith(`${serverConfig.discoveryUrl}/api/v1/datasets/search`, options, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    expect(response.status).toBe(401);
+    expect(await response.json()).toEqual({ error: 'Unauthorized' });
   });
 
   test('returns error if Axios request fails', async () => {
     const encryptedToken = encrypt('decryptedToken');
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
-    mockedAxios.post.mockRejectedValueOnce(new Error('Axios error'));
+    mockedAxios.get.mockRejectedValueOnce(new Error('Server error'));
 
-    const request = new Request('http://localhost', { method: 'POST' });
-    const response = await POST(request);
+    const response = await GET();
 
     expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({ error: 'Failed to retrive datasets' });
+    expect(await response.json()).toEqual({ error: 'Server error' });
+  });
+
+  test('successfully gets entitlements', async () => {
+    const encryptedToken = encrypt('decryptedToken');
+    const mockApiResponse = {
+      data: [
+        {
+          identifier: 'identifier 1',
+          start: '12-01-2024',
+          end: '12-12-2024',
+        },
+        {
+          identifier: 'identifier 1',
+          start: '12-01-2024',
+          end: '12-12-2024',
+        },
+      ] as Entitlement[],
+    };
+
+    mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
+    mockedAxios.get.mockResolvedValue(mockApiResponse);
+
+    const response = await GET();
+    const responseJson = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(responseJson.length).toEqual(2);
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${serverConfig.daamUrl}/api/v1/entitlements`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer decryptedToken`,
+      },
+    });
   });
 });

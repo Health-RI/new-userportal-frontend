@@ -36,7 +36,8 @@ function GrantedDatasetsPage() {
 
         const grantedDatasets = datasets.data.datasets.filter(
           (d) =>
-            entitlements.data.findIndex((e) => e.id === d.identifier) != -1,
+            entitlements.data.findIndex((e) => e.identifier === d.identifier) !=
+            -1,
         );
 
         setResponse({ grantedDatasets: grantedDatasets, status: "success" });

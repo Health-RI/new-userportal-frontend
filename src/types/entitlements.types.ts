@@ -1,5 +1,5 @@
 export interface Entitlement {
-  id: string;
+  identifier: string;
   start: string;
   end: string;
 }

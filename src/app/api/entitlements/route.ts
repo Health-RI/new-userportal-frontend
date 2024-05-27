@@ -9,7 +9,7 @@ import { ExtendedSession } from '../auth/auth.types';
 import { authOptions } from '../auth/config';
 import { retrieveEntitlements } from '@/services/daam/index.server';
 
-export async function POST(request: Request) {
+export async function GET() {
   const session: ExtendedSession | null = await getServerSession(authOptions);
 
   try {

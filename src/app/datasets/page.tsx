@@ -23,7 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
 import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import DatasetList from "./DatasetList";
+import DatasetList from "../../components/DatasetList";
 import FilterList from "./FilterList";
 
 function parseFacets(queryParams: URLSearchParams): DatasetSearchQueryFacet[] {
@@ -173,7 +173,7 @@ export default function DatasetPage() {
               })}
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
-              <DatasetList datasets={response.datasets!} />
+              <DatasetList datasets={response.datasets!} showBasket={true} />
             </div>
             <div className="col-start-0 col-span-12 mt-10 xl:col-span-8 xl:col-start-5 ">
               <PaginationContainer

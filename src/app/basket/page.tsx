@@ -14,7 +14,7 @@ import { createApplication } from "@/services/daam/index.client";
 import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
-import DatasetList from "../datasets/DatasetList";
+import DatasetList from "../../components/DatasetList";
 
 export default function Page() {
   const { basket, isLoading, emptyBasket } = useDatasetBasket();
@@ -98,7 +98,7 @@ export default function Page() {
           {actionBtn}
         </div>
         {basket.length > 0 ? (
-          <DatasetList datasets={basket} />
+          <DatasetList datasets={basket} showBasket={true} />
         ) : (
           <div className="flex w-full flex-col items-center justify-center gap-4">
             <p className="text-center text-lg text-primary">

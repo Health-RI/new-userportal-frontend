@@ -9,14 +9,15 @@ import DatasetCard from "@/components/DatasetCard";
 
 type DatasetListProps = {
   datasets: SearchedDataset[];
+  showBasket: boolean;
 };
 
-function DatasetList({ datasets }: DatasetListProps) {
+function DatasetList({ datasets, showBasket }: DatasetListProps) {
   return (
     <List>
       {datasets.map((dataset: SearchedDataset) => (
         <ListItem key={dataset.id}>
-          <DatasetCard dataset={dataset} showBasket={true} />
+          <DatasetCard dataset={dataset} showBasket={showBasket} />
         </ListItem>
       ))}
     </List>

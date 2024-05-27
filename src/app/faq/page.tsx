@@ -23,15 +23,15 @@ const FAQPage: React.FC = () => {
           Gezondheidsdatacatalogus?
         </PageSubHeading>
         <p>
-          Fijn dat u wilt bijdragen aan het voorspoedigen van datahergebruik!
-          Neemt u alstublieft contact op met Health-RI via{" "}
+          Fijn dat u wilt bijdragen aan het bevorderen van datahergebruik!
+          <br />
+          Zie deze informatie voor hoe u kunt aansluiten:{" "}
           <a
-            href="mailto:datacatalogue@health-ri.nl"
+            href="https://health-ri.atlassian.net/wiki/x/AYCjE"
             className="text-blue-500 hover:underline"
           >
-            datacatalogue&#64;health-ri.nl
-          </a>{" "}
-          of via de Servicedesk.
+            https://health-ri.atlassian.net/wiki/x/AYCjE
+          </a>
         </p>
 
         <PageSubHeading className="my-4">

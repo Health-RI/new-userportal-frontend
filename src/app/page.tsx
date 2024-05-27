@@ -24,7 +24,7 @@ const HomePage = () => {
         <div className="text-center md:pl-4 md:pr-4 lg:text-left">
           <DatasetCounter />
           <SearchBar queryParams={queryParams} size="large" />
-          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-1/2">
+          <div className="mx-auto mt-12 w-full rounded-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-sm lg:mx-0 lg:w-3/4">
             <h2 className="mb-4 text-4xl font-bold text-primary">
               Welkom bij Health-RI
             </h2>
@@ -67,7 +67,6 @@ const HomePage = () => {
                 Metadata onboarding on the National Catalogue
               </a>
             </p>
-
             <div className="flex justify-center lg:justify-start">
               <Link href="/datasets">
                 <button className="inline-block rounded bg-primary px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-secondary">
@@ -77,12 +76,12 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center md:justify-end">
+        <div className="flex items-center justify-center md:justify-end">
           <div className="w-full">
             <Image
               src={hri_banner}
               alt="Health-RI Visualization"
-              className="rounded-lg"
+              className="rounded-lg object-cover"
               width={600}
               height={400}
             />

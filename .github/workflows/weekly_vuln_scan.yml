@@ -40,7 +40,7 @@ jobs:
           TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
 
           # Filter out the 'main' tag and get the latest two tags
-          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '$1 != "main" {print $1}' | head -n 2)
+          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '$1 != "main" {print $1}' | head -n 2 | tr '\n' ' ')
 
           # Print the results
           echo "Tags fetched: $LATEST_TAGS"

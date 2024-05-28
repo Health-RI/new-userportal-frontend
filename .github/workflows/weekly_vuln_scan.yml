@@ -15,6 +15,9 @@ jobs:
       - name: Setup Docker
         run: |
           sudo service docker start
+          docker context ls
+          docker context use default
+          docker info
 
       - name: Login to GitHub Container Registry
         run: |

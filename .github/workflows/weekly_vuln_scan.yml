@@ -18,7 +18,7 @@ jobs:
       - name: Setup Docker
         run: |
           sudo service docker start
-          docker info
+          docker ps
 
       - name: Login to GitHub Container Registry
         run: |
@@ -51,9 +51,10 @@ jobs:
           for TAG in "${TAGS[@]}"
           do
             IMAGE_TAG="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$TAG"
-            echo "Pulling and scanning $IMAGE_TAG"
+            echo "Pulling $IMAGE_TAG"
             docker pull $IMAGE_TAG || exit 1
-            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG" || exit 1
+            echo "Scanning $IMAGE_TAG with Trivy"
+            trivy image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG" || exit 1
           done
 
       - name: OSS Review Toolkit (ORT) Analysis

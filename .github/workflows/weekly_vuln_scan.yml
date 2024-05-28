@@ -26,7 +26,7 @@ jobs:
           TAGS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/${IMAGE}/tags" | jq -r '."tags"[]' | sort -Vr)
           echo "Tags fetched: $TAGS"
           # Filtering for the last patch of each of the latest two minor versions
-          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -Vr | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | head -n 2)
+          LATEST_PATCHES=$(echo $TAGS | tr ' ' '\n' | grep -E '^sha-[a-z0-9]+$' | sort -Vr | awk -F '.' '{key=$1"."$2; if(!a[key] || $3 > a[key]) {a[key]=$0}} END {for (i in a) print a[i]}' | head -n 2)
           echo "Latest two patches: $LATEST_PATCHES"
           echo "LATEST_PATCHES=$LATEST_PATCHES" >> $GITHUB_ENV
 

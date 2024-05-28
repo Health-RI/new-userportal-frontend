@@ -35,18 +35,17 @@ jobs:
           IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend"
           # Fetch the response from the GitHub API
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/genomicdatainfrastructure/packages/container/gdi-userportal-frontend/versions")
-    
-         # Extract tags and creation dates, then sort by creation date
-         TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
-    
-         # Filter out the 'main' tag and get the latest two tags
-         LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '$1 != "main" {print $1}' | head -n 2)
-    
-         # Print the results
-         echo "Tags fetched: $LATEST_TAGS"
-    
-         echo "LATEST_PATCHES=$LATEST_TAGS" >> $GITHUB_ENV
 
+          # Extract tags and creation dates, then sort by creation date
+          TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
+
+          # Filter out the 'main' tag and get the latest two tags
+          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '$1 != "main" {print $1}' | head -n 2)
+
+          # Print the results
+          echo "Tags fetched: $LATEST_TAGS"
+
+          echo "LATEST_PATCHES=$LATEST_TAGS" >> $GITHUB_ENV
 
       - name: Pull and Scan Docker Images with Trivy
         run: |

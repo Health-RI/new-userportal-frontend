@@ -12,22 +12,27 @@ jobs:
   fetch-and-scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Setup Docker
         run: |
           sudo service docker start
-          docker context ls
-          docker context use default
           docker info
 
       - name: Login to GitHub Container Registry
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker info
 
       - name: List Docker Image Tags and Fetch Latest Two
         run: |
           IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend"
-          # Fetch the response from the GitHub API
+          echo "Fetching Docker image tags..."
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/genomicdatainfrastructure/packages/container/gdi-userportal-frontend/versions")
+
+          # Log the response for debugging
+          echo "Response from curl: $RESPONSE"
 
           # Extract tags and creation dates, then sort by creation date
           TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
@@ -47,8 +52,8 @@ jobs:
           do
             IMAGE_TAG="ghcr.io/genomicdatainfrastructure/gdi-userportal-frontend:$TAG"
             echo "Pulling and scanning $IMAGE_TAG"
-            docker pull $IMAGE_TAG
-            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG"
+            docker pull $IMAGE_TAG || exit 1
+            docker run --rm aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG" || exit 1
           done
 
       - name: OSS Review Toolkit (ORT) Analysis

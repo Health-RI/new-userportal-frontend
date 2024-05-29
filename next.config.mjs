@@ -31,6 +31,33 @@ const nextConfig = {
       },
     ];
   },
+
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "^(catalog|catalogue|catalogus)\\.healthdata\\.nl$",
+          },
+        ],
+        destination: "https://healthdata.nl/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "^www\\.healthdata\\.nl$",
+          },
+        ],
+        destination: "https://healthdata.nl/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -42,12 +42,9 @@ const HomePage = () => {
             </p>
             <p className="mb-6 text-lg">
               Voor meer uitleg over deze catalogus, zie{" "}
-              <a
-                href="https://catalogus-test.healthdata.nl/about"
-                className="text-blue-500 hover:underline"
-              >
+              <Link href="/about" className="text-blue-500 hover:underline">
                 Over de catalogus
-              </a>
+              </Link>
             </p>
             <p className="mb-6 text-lg">
               Voor meer informatie over Health-RI, zie{" "}

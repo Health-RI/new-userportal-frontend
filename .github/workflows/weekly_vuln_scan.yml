@@ -12,18 +12,11 @@ jobs:
   fetch-and-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Setup Docker
-        run: |
-          sudo service docker start
-          docker ps
+        run: sudo service docker start
 
       - name: Login to GitHub Container Registry
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker info
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: List Docker Image Tags and Fetch Latest Two
         run: |
@@ -37,8 +30,8 @@ jobs:
           # Extract tags and creation dates, then sort by creation date
           TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
 
-          # Filter out the 'main' tag and get the latest two tags
-          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '$1 != "main" {print $1}' | head -n 2 | tr '\n' ' ')
+          # Filter out the 'main' tag and get the latest tag from each of the latest two minor versions
+          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '{split($1, a, "."); key=a[1] "." a[2]; if (!seen[key]++) print $0}' | head -n 2 | tr '\n' ' ')
 
           # Print the results
           echo "Tags fetched: $LATEST_TAGS"

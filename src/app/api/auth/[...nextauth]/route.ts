@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { authOptions } from '@/utils/auth';
 import NextAuth from 'next-auth/next';
+import { authOptions } from '../config';
 
 const handler = NextAuth(authOptions);
 

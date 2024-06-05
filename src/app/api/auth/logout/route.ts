@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { authOptions, getToken } from '@/utils/auth';
 import { getServerSession } from 'next-auth';
+import { getToken } from '../auth';
+import { authOptions } from '../config';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -15,6 +16,7 @@ export async function GET() {
     try {
       await fetch(url);
     } catch (err) {
+      console.error(`Could not log out from Keycloak`, err);
       return new Response(null, { status: 500 });
     }
   }

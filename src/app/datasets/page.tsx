@@ -17,7 +17,7 @@ import {
   DatasetSearchQueryFacet,
   FacetGroup,
 } from "@/services/discovery/types/datasetSearch.types";
-import { SCREEN_SIZE, pixelWidthToScreenSize } from "@/utils/windowSize";
+import { SCREEN_SIZE } from "@/utils/windowSize";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AxiosError } from "axios";
@@ -61,8 +61,7 @@ const DATASET_PER_PAGE = 12;
 
 export default function DatasetPage() {
   const queryParams = useSearchParams();
-  const { width } = useWindowSize();
-  const screenSize = pixelWidthToScreenSize(width);
+  const screenSize = useWindowSize();
   const [isFullScreenFilterOpen, toggleFullScreenFilter] = useState(false);
   const [response, setResponse] = useState<DatasetResponse>({
     status: "loading",

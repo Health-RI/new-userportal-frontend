@@ -2,9 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import { SCREEN_SIZE, pixelWidthToScreenSize } from '@/utils/windowSize';
 import { useEffect, useState } from 'react';
 
-function useWindowSize() {
+function useWindowSize(): SCREEN_SIZE {
   const [windowSize, setWindowSize] = useState({
     width: 1024,
     height: 1024,
@@ -24,7 +25,7 @@ function useWindowSize() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return windowSize;
+  return pixelWidthToScreenSize(windowSize.width);
 }
 
-export { useWindowSize };
+export { SCREEN_SIZE, useWindowSize };

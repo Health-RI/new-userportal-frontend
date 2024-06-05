@@ -28,10 +28,10 @@ jobs:
           echo "Response from curl: $RESPONSE"
 
           # Extract tags and creation dates, then sort by creation date
-          TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | "\($tag) \(.created_at)"' | sort -k2 -r)
+          TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | select($tag | test("^sha-[a-z0-9]+$")) | "\($tag) \(.created_at)"' | sort -k2 -r)
 
-          # Filter out the 'main' tag and get the latest tag from each of the latest two minor versions
-          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '{split($1, a, "."); key=a[1] "." a[2]; if (!seen[key]++) print $0}' | head -n 2 | tr '\n' ' ')
+          # Get the latest tag from each of the latest two minor versions
+          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '{split($1, a, "."); key=a[1] "." a[2]; if (!seen[key]++) print $1}' | head -n 2 | tr '\n' ' ')
 
           # Print the results
           echo "Tags fetched: $LATEST_TAGS"

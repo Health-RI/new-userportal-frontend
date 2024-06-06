@@ -173,7 +173,7 @@ export default function DatasetPage() {
               })}
             </div>
             <div className="col-start-0 col-span-12 xl:col-span-8 xl:col-start-5">
-              <DatasetList datasets={response.datasets!} showBasket={true} />
+              <DatasetList datasets={response.datasets!} />
             </div>
             <div className="col-start-0 col-span-12 mt-10 xl:col-span-8 xl:col-start-5 ">
               <PaginationContainer

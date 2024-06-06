@@ -13,17 +13,18 @@ import { retrieveEntitlements } from "@/services/daam/index.client";
 import { AxiosError } from "axios";
 import ErrorBoundary from "@/app/error";
 import { datasetList } from "@/services/discovery/index.public";
-import { DEFAULT_DATASET_SEARCH_QUERY } from "@/services/discovery/utils";
-import { SearchedDataset } from "@/services/discovery/types/dataset.types";
-import DatasetList from "@/components/DatasetList";
+import { DatasetEntitlement } from "@/services/discovery/types/dataset.types";
+import { DatasetSearchOptions } from "@/services/discovery/types/datasetSearch.types";
+import { mapToDatasetEntitlement } from "@/utils/datasetEntitlementMap";
+import EntitlementsList from "./EntitlementsList";
 
 interface EntitelementsResponse {
-  grantedDatasets?: SearchedDataset[];
+  datasetEntitlements?: DatasetEntitlement[];
   status: Status;
   errorCode?: number;
 }
 
-function GrantedDatasetsPage() {
+function EntitelementsPage() {
   const [response, setResponse] = useState<EntitelementsResponse>({
     status: "loading",
   });
@@ -32,15 +33,22 @@ function GrantedDatasetsPage() {
     async function fetchData() {
       try {
         const entitlements = await retrieveEntitlements();
-        const datasets = await datasetList(DEFAULT_DATASET_SEARCH_QUERY);
 
-        const grantedDatasets = datasets.data.datasets.filter(
-          (d) =>
-            entitlements.data.findIndex((e) => e.identifier === d.identifier) !=
-            -1,
+        const options: DatasetSearchOptions = {
+          limit: 1000,
+        };
+
+        const datasets = await datasetList(options);
+
+        const datasetEntitlements = mapToDatasetEntitlement(
+          datasets.data.datasets,
+          entitlements.data.entitlements,
         );
 
-        setResponse({ grantedDatasets: grantedDatasets, status: "success" });
+        setResponse({
+          datasetEntitlements: datasetEntitlements,
+          status: "success",
+        });
       } catch (error) {
         if (error instanceof AxiosError) {
           setResponse({ status: "error", errorCode: error.response?.status });
@@ -60,18 +68,15 @@ function GrantedDatasetsPage() {
 
   return (
     <PageContainer className="pt-5 md:pt-10">
-      <PageHeading className="mb-4">Granted Datasets</PageHeading>
-      <p>You have been granted access to these datasets</p>
+      <PageHeading className="mb-4">Entitlements</PageHeading>
+      <p>You have been granted these </p>
       <ListContainer>
         <List>
-          <DatasetList
-            datasets={response.grantedDatasets ?? []}
-            showBasket={false}
-          />
+          <EntitlementsList entitlements={response.datasetEntitlements ?? []} />
         </List>
       </ListContainer>
     </PageContainer>
   );
 }
 
-export default GrantedDatasetsPage;
+export default EntitelementsPage;

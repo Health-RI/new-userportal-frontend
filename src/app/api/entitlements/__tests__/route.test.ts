@@ -45,12 +45,12 @@ describe('GET function', () => {
     const mockApiResponse = {
       data: [
         {
-          identifier: 'identifier 1',
+          datasetId: 'identifier 1',
           start: '12-01-2024',
           end: '12-12-2024',
         },
         {
-          identifier: 'identifier 1',
+          datasetId: 'identifier 1',
           start: '12-01-2024',
           end: '12-12-2024',
         },

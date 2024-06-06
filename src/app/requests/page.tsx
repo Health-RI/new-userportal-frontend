@@ -14,7 +14,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import ApplicationsPage from "./applications";
-import GrantedDatasetsPage from "./grantedDatasets";
+import EntitelementsPage from "./entitlements";
 
 function createTabItems(): ITabItem[] {
   return [
@@ -23,7 +23,7 @@ function createTabItems(): ITabItem[] {
       icon: faFileText,
     },
     {
-      name: "granted datasets",
+      name: "entitlements",
       icon: faDatabase,
     },
   ];
@@ -62,7 +62,7 @@ function RequestPage() {
       {activeTab === "applications" ? (
         <ApplicationsPage />
       ) : (
-        <GrantedDatasetsPage />
+        <EntitelementsPage />
       )}
     </PageContainer>
   );

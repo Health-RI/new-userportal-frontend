@@ -12,6 +12,10 @@ import { retrieveEntitlements } from '@/services/daam/index.server';
 export async function GET() {
   const session: ExtendedSession | null = await getServerSession(authOptions);
 
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const response = await retrieveEntitlements(session!);
 

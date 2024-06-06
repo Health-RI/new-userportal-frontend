@@ -15,10 +15,17 @@ import Link from "next/link";
 
 type DatasetCardProps = {
   dataset: SearchedDataset;
-  showBasket: boolean;
+  isEntitlement: boolean;
+  start?: string;
+  end?: string;
 };
 
-function DatasetCard({ dataset, showBasket }: DatasetCardProps) {
+function DatasetCard({
+  dataset,
+  isEntitlement = false,
+  start,
+  end,
+}: DatasetCardProps) {
   const screenSize = useWindowSize();
   const truncatedDesc = dataset.description
     ? truncateDescription(dataset.description, screenSize)
@@ -46,6 +53,18 @@ function DatasetCard({ dataset, showBasket }: DatasetCardProps) {
         <Link href={`/datasets/${dataset.id}`} className="hover:underline">
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
+        {isEntitlement && (
+          <>
+            <p className="font-date text-sm text-info md:text-base">
+              <span className="text-primary">Start: </span>
+              {!!start ? formatDate(start) : "-"}
+            </p>
+            <p className="font-date text-sm text-info md:text-base">
+              <span className="text-primary">End: </span>
+              {!!end ? formatDate(end) : "-"}
+            </p>
+          </>
+        )}
         <p className="font-date text-sm text-info md:text-base">
           {formatDate(dataset.createdAt)}
         </p>
@@ -67,7 +86,7 @@ function DatasetCard({ dataset, showBasket }: DatasetCardProps) {
             found
           </span>
         )}
-        {!isLoading && showBasket && (
+        {!isLoading && !isEntitlement && (
           <Button
             text={isInBasket ? "Remove from basket" : "Add to basket"}
             icon={isInBasket ? faMinusCircle : faPlusCircle}

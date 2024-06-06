@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 PNED G.I.E.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { ExtendedSession } from '@/app/api/auth/auth.types';
 import { RetrieveGrantedDatasetIdentifiers } from '@/types/entitlements.types';
 import { decrypt } from '@/utils/encryption';

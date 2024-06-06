@@ -68,7 +68,7 @@ function EntitelementsPage() {
   return (
     <PageContainer className="pt-5 md:pt-10">
       <PageHeading className="mb-4">Entitlements</PageHeading>
-      <p>You have been granted these </p>
+      <p>You have been granted these entitlements.</p>
       <ListContainer>
         <List>
           <EntitlementsList entitlements={response.datasetEntitlements ?? []} />

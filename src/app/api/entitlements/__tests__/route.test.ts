@@ -14,6 +14,7 @@ jest.mock('next-auth/next');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedGetServerSession = getServerSession as jest.MockedFunction<typeof getServerSession>;
+const encryptedToken = encrypt('decryptedToken');
 
 describe('GET function', () => {
   beforeEach(() => {
@@ -30,7 +31,6 @@ describe('GET function', () => {
   });
 
   test('returns error if Axios request fails', async () => {
-    const encryptedToken = encrypt('decryptedToken');
     mockedGetServerSession.mockResolvedValueOnce({ access_token: encryptedToken });
     mockedAxios.get.mockRejectedValueOnce(new Error('Server error'));
 
@@ -41,7 +41,6 @@ describe('GET function', () => {
   });
 
   test('successfully gets entitlements', async () => {
-    const encryptedToken = encrypt('decryptedToken');
     const mockApiResponse = {
       data: [
         {

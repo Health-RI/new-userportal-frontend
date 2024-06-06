@@ -11,12 +11,11 @@ import { useEffect, useState } from "react";
 import { Status } from "@/utils/pageStatus.types";
 import { retrieveEntitlements } from "@/services/daam/index.client";
 import { AxiosError } from "axios";
-import ErrorBoundary from "@/app/error";
-import { datasetList } from "@/services/discovery/index.public";
 import { DatasetEntitlement } from "@/services/discovery/types/dataset.types";
-import { DatasetSearchOptions } from "@/services/discovery/types/datasetSearch.types";
-import { mapToDatasetEntitlement } from "@/utils/datasetEntitlementMap";
+import { createDatasetEntitlmenets } from "@/utils/datasetEntitlements";
 import EntitlementsList from "./EntitlementsList";
+import LoadingContainer from "@/components/LoadingContainer";
+import Error from "@/app/error";
 
 interface EntitelementsResponse {
   datasetEntitlements?: DatasetEntitlement[];
@@ -34,14 +33,7 @@ function EntitelementsPage() {
       try {
         const entitlements = await retrieveEntitlements();
 
-        const options: DatasetSearchOptions = {
-          limit: 1000,
-        };
-
-        const datasets = await datasetList(options);
-
-        const datasetEntitlements = mapToDatasetEntitlement(
-          datasets.data.datasets,
+        const datasetEntitlements = await createDatasetEntitlmenets(
           entitlements.data.entitlements,
         );
 
@@ -62,8 +54,15 @@ function EntitelementsPage() {
     fetchData();
   }, []);
 
-  if (response.status === "error") {
-    return <ErrorBoundary statusCode={response.errorCode} />;
+  if (response.status === "loading") {
+    return (
+      <LoadingContainer
+        text="Retrieving entitlements..."
+        className="text-center"
+      />
+    );
+  } else if (response.status === "error") {
+    return <Error statusCode={response.errorCode} />;
   }
 
   return (

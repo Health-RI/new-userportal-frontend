@@ -15,7 +15,7 @@ export const mapToDatasetEntitlement = (datasets: SearchedDataset[], entitlement
   }));
 };
 
-export const createDatasetEntitlmenets = async (entitlements: Entitlement[]): Promise<DatasetEntitlement[]> => {
+export const createDatasetEntitlements = async (entitlements: Entitlement[]): Promise<DatasetEntitlement[]> => {
   const bulkSize = 1000;
   let options: DatasetSearchOptions = {
     limit: bulkSize,

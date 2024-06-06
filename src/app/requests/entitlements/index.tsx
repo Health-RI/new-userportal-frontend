@@ -12,7 +12,7 @@ import { Status } from "@/utils/pageStatus.types";
 import { retrieveEntitlements } from "@/services/daam/index.client";
 import { AxiosError } from "axios";
 import { DatasetEntitlement } from "@/services/discovery/types/dataset.types";
-import { createDatasetEntitlmenets } from "@/utils/datasetEntitlements";
+import { createDatasetEntitlements } from "@/utils/datasetEntitlements";
 import EntitlementsList from "./EntitlementsList";
 import LoadingContainer from "@/components/LoadingContainer";
 import Error from "@/app/error";
@@ -33,7 +33,7 @@ function EntitelementsPage() {
       try {
         const entitlements = await retrieveEntitlements();
 
-        const datasetEntitlements = await createDatasetEntitlmenets(
+        const datasetEntitlements = await createDatasetEntitlements(
           entitlements.data.entitlements,
         );
 

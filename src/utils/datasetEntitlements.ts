@@ -16,32 +16,12 @@ export const mapToDatasetEntitlement = (datasets: SearchedDataset[], entitlement
 };
 
 export const createDatasetEntitlements = async (entitlements: Entitlement[]): Promise<DatasetEntitlement[]> => {
-  const bulkSize = 1000;
   let options: DatasetSearchOptions = {
-    limit: bulkSize,
-    offset: 0,
+    limit: 1000,
+    facets: entitlements.map((e) => ({ facetGroup: 'ckan', facet: 'identifier', value: e.datasetId })),
   };
 
-  let retrivedDatasets = [] as SearchedDataset[];
+  const datasetsResponse = await datasetList(options);
 
-  while (true) {
-    const datasetsResponse = await datasetList(options);
-    const datasetCount = datasetsResponse.data.count;
-
-    retrivedDatasets = [...retrivedDatasets, ...datasetsResponse.data.datasets];
-
-    if (datasetCount <= bulkSize) {
-      break;
-    }
-
-    if (datasetCount <= retrivedDatasets.length) {
-      break;
-    }
-
-    options = {
-      offset: retrivedDatasets.length,
-    };
-  }
-
-  return mapToDatasetEntitlement(retrivedDatasets, entitlements);
+  return mapToDatasetEntitlement(datasetsResponse.data.datasets, entitlements);
 };

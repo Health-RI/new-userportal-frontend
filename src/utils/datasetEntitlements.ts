@@ -16,7 +16,7 @@ export const mapToDatasetEntitlement = (datasets: SearchedDataset[], entitlement
 };
 
 export const createDatasetEntitlements = async (entitlements: Entitlement[]): Promise<DatasetEntitlement[]> => {
-  let options: DatasetSearchOptions = {
+  const options: DatasetSearchOptions = {
     limit: 1000,
     facets: entitlements.map((e) => ({ facetGroup: 'ckan', facet: 'identifier', value: e.datasetId })),
   };

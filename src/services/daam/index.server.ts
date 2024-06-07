@@ -11,6 +11,7 @@ import { makeAddAttachmentToApplication } from './backend/addAttachmentToApplica
 import { makeCreateApplication } from './backend/createApplication';
 import { makeListApplications } from './backend/listApplications';
 import { makeRetrieveApplication } from './backend/retrieveApplication';
+import { makeRetrieveEntitlements } from './backend/retrieveEntitlements';
 import { makeSaveFormsAndDuos } from './backend/saveFormAndDuos';
 import { makeSubmitApplication } from './backend/submitApplication';
 
@@ -20,6 +21,7 @@ const retrieveApplication = makeRetrieveApplication(serverConfig.daamUrl);
 const addAttachmentToApplication = makeAddAttachmentToApplication(serverConfig.daamUrl);
 const saveFormAndDuos = makeSaveFormsAndDuos(serverConfig.daamUrl);
 const submitApplication = makeSubmitApplication(serverConfig.daamUrl);
+const retrieveEntitlements = makeRetrieveEntitlements(serverConfig.daamUrl);
 
 export {
   addAttachmentToApplication,
@@ -28,4 +30,5 @@ export {
   retrieveApplication,
   saveFormAndDuos,
   submitApplication,
+  retrieveEntitlements,
 };

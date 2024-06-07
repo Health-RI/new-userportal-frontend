@@ -5,18 +5,18 @@
 import List from "@/components/List";
 import ListItem from "@/components/List/ListItem";
 import { SearchedDataset } from "@/services/discovery/types/dataset.types";
-import DatasetItem from "./DatasetItem";
+import DatasetCard from "@/components/DatasetCard";
 
 type DatasetListProps = {
   datasets: SearchedDataset[];
 };
 
-function DatasetList({ datasets }: DatasetListProps) {
+function DatasetList({ datasets }: Readonly<DatasetListProps>) {
   return (
     <List>
       {datasets.map((dataset: SearchedDataset) => (
         <ListItem key={dataset.id}>
-          <DatasetItem dataset={dataset} />
+          <DatasetCard dataset={dataset} isEntitlement={false} />
         </ListItem>
       ))}
     </List>

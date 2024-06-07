@@ -17,8 +17,8 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import ApplicationItem from "./ApplicationItem";
-
-type Status = "loading" | "error" | "success";
+import { Status } from "@/utils/pageStatus.types";
+import LoadingContainer from "@/components/LoadingContainer";
 
 interface ApplicationResponse {
   status: Status;
@@ -49,7 +49,14 @@ const ApplicationsPage: React.FC = () => {
     fetchData();
   }, []);
 
-  if (response.status === "error") {
+  if (response.status === "loading") {
+    return (
+      <LoadingContainer
+        text="Retrieving applications..."
+        className="text-center"
+      />
+    );
+  } else if (response.status === "error") {
     return <Error statusCode={response.errorCode} />;
   }
 

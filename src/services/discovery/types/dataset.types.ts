@@ -37,6 +37,12 @@ export type SearchedDataset = {
   recordsCount?: number;
 };
 
+export type DatasetEntitlement = {
+  dataset?: SearchedDataset;
+  start: string;
+  end: string;
+};
+
 export interface RetrievedDistribution {
   id: string;
   title: string;

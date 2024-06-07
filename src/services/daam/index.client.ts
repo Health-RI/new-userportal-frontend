@@ -5,5 +5,6 @@
 import { addAttachmentToApplication } from './client/addAttachmentToApplication';
 import { createApplication } from './client/createApplication';
 import { listApplications } from './client/listApplications';
+import { retrieveEntitlements } from './client/retrieveEntitlements';
 
-export { addAttachmentToApplication, createApplication, listApplications };
+export { addAttachmentToApplication, createApplication, listApplications, retrieveEntitlements };

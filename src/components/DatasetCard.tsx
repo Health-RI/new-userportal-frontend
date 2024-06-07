@@ -25,7 +25,7 @@ function DatasetCard({
   isEntitlement = false,
   start,
   end,
-}: DatasetCardProps) {
+}: Readonly<DatasetCardProps>) {
   const screenSize = useWindowSize();
   const truncatedDesc = dataset.description
     ? truncateDescription(dataset.description, screenSize)
@@ -57,11 +57,11 @@ function DatasetCard({
           <>
             <p className="font-date text-sm text-info md:text-base">
               <span className="text-primary">Start: </span>
-              {!!start ? formatDate(start) : "-"}
+              {!start ? "-" : formatDate(start)}
             </p>
             <p className="font-date text-sm text-info md:text-base">
               <span className="text-primary">End: </span>
-              {!!end ? formatDate(end) : "-"}
+              {!end ? "-" : formatDate(end)}
             </p>
           </>
         )}
@@ -77,7 +77,7 @@ function DatasetCard({
       <div
         className={
           "mt-4 flex w-full " +
-          (!!dataset.recordsCount ? "justify-between" : "justify-end")
+          (!dataset.recordsCount ? "justify-end" : "justify-between")
         }
       >
         {!!dataset.recordsCount && (

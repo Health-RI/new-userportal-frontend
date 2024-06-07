@@ -17,7 +17,7 @@ export async function GET() {
   }
 
   try {
-    const response = await retrieveEntitlements(session!);
+    const response = await retrieveEntitlements(session);
 
     return NextResponse.json(response.data);
   } catch (error) {

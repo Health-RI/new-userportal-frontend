@@ -48,7 +48,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
@@ -62,14 +61,13 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},priority=900
             type=semver,pattern={{major}},priority=800
             type=sha,priority=1000
-  
+
       - name: Extract last tag
         id: tag
         run: |
           IFS=',' read -ra TAGS <<< "${{ steps.meta.outputs.tags }}"
           LAST_INDEX=$((${#TAGS[@]} - 1))
           echo "last_tag=${TAGS[LAST_INDEX]}" >> $GITHUB_OUTPUT
-  
 
       - name: Build Docker image for scanning
         uses: docker/build-push-action@v5

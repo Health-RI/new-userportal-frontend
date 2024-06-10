@@ -84,6 +84,6 @@ export enum DatasetSource {
 }
 
 export enum QueryOperator {
-  And = 'and',
-  Or = 'or',
+  And = 'AND',
+  Or = 'OR',
 }

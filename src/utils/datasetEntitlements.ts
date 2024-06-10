@@ -4,7 +4,7 @@
 
 import { datasetList } from '@/services/discovery/index.public';
 import { DatasetEntitlement, SearchedDataset } from '@/services/discovery/types/dataset.types';
-import { DatasetSearchOptions } from '@/services/discovery/types/datasetSearch.types';
+import { DatasetSearchOptions, QueryOperator } from '@/services/discovery/types/datasetSearch.types';
 import { Entitlement } from '@/types/entitlements.types';
 
 export const mapToDatasetEntitlement = (datasets: SearchedDataset[], entitlements: Entitlement[]): DatasetEntitlement[] => {
@@ -19,6 +19,7 @@ export const createDatasetEntitlements = async (entitlements: Entitlement[]): Pr
   const options: DatasetSearchOptions = {
     limit: 1000,
     facets: entitlements.map((e) => ({ facetGroup: 'ckan', facet: 'identifier', value: e.datasetId })),
+    operator: QueryOperator.Or,
   };
 
   const datasetsResponse = await datasetList(options);

@@ -11,6 +11,7 @@ export interface DatasetSearchOptions {
   query?: string;
   sort?: string;
   include_private?: boolean;
+  operator?: QueryOperator;
 }
 
 export interface DatasetsSearchResult {
@@ -51,6 +52,7 @@ export type DatasetSearchQuery = {
   sort?: string;
   rows?: number;
   start?: number;
+  operator?: QueryOperator;
 };
 
 export type ValueLabel = {
@@ -79,4 +81,9 @@ export type Facet = {
 export enum DatasetSource {
   Ckan = 'ckan',
   Beacon = 'beacon',
+}
+
+export enum QueryOperator {
+  And = 'AND',
+  Or = 'OR',
 }

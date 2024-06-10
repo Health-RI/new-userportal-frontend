@@ -15,6 +15,7 @@ export const makeDatasetList = (discoveryUrl: string) => {
       query: options?.query,
       sort: options?.sort,
       facets: options.facets,
+      operator: options.operator,
     } as DatasetSearchQuery;
 
     return await axios.post<DatasetsSearchResponse>(`${discoveryUrl}/api/v1/datasets/search`, datasetSearchQuery, {

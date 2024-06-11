@@ -53,7 +53,7 @@ function DatasetCard({
         <Link href={`/datasets/${dataset.id}`} className="hover:underline">
           <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
         </Link>
-        {isEntitlement && (
+        {isEntitlement ? (
           <>
             <p className="font-date text-sm text-info md:text-base">
               <span className="text-primary">Start: </span>
@@ -64,10 +64,11 @@ function DatasetCard({
               {!end ? "-" : formatDate(end)}
             </p>
           </>
+        ) : (
+          <p className="font-date text-sm text-info md:text-base">
+            {formatDate(dataset.createdAt)}
+          </p>
         )}
-        <p className="font-date text-sm text-info md:text-base">
-          {formatDate(dataset.createdAt)}
-        </p>
       </div>
       <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>
       {truncatedDesc && (

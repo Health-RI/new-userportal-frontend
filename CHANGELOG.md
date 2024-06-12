@@ -25,10 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-
 ## [v1.2.0] - 2024-06-12
 
 ### Added
+
 - feat: Setup GDI Brand fonts by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/81
 - feat: #56 add state management and router by @admy7 in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/82
 - feat: Add GDI branding color schemes by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/83
@@ -77,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: hide date on entitlmenets by @sulejmank in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/259
 
 ### Changed
+
 - chore: Rename components by @admy7 in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/211
 - chore: #69 test application routes by @admy7 in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/216
 - refactor: #128 remove white background from existing favicon by @EmiPali in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/247
@@ -101,6 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - doc: #55 Improve README.md by @nolliia in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/79
 
 ### Fixed
+
 - fix: REUSE compliance and linting issues by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/80
 - fix: add type check in CI and remove eot fonts (only needed to support IE 6-IE 8 and is not supported by nextjs) by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/92
 - fix: #95 The actions menu dropdown does not close by @nolliia in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/97
@@ -108,7 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix: primary is secondary and vice-versa by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/108
 - fix: loading btn turning into logged in user on page reload by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/121
 - fix: use correct colors by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/122
-- fix: Prepend NEXT_PUBLIC_ before env variables to make it available in both client and backend by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/139
+- fix: Prepend NEXT*PUBLIC* before env variables to make it available in both client and backend by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/139
 - fix: Home page improvements by @inderps in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/141
 - fix(azure-deployment): Trigger repull on new catalogue version by upd… by @hcvdwerf in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/137
 - fix: #125 Fix Lucene query by @brunopacheco1 in https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/pull/144

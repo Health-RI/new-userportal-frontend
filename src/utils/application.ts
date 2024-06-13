@@ -24,6 +24,17 @@ function updateFormWithNewAttachment(
   );
 }
 
+function updateFormsInputValues(forms: Form[], formId: number, fieldId: number, newValue: string): Form[] {
+  return forms.map((form) => (form.id === formId ? updateFormInputValues(form, fieldId, newValue) : form));
+}
+
+function updateFormInputValues(form: Form, fieldId: number, newValue: string): Form {
+  return {
+    ...form,
+    fields: form.fields.map((field) => (field.id === fieldId ? { ...field, value: newValue } : field)),
+  };
+}
+
 function updateFormFieldWithNewAttachment(
   form: Form,
   fieldId: number,
@@ -64,4 +75,5 @@ export {
   formatApplicationProp,
   isApplicationEditable,
   updateFormWithNewAttachment,
+  updateFormsInputValues,
 };

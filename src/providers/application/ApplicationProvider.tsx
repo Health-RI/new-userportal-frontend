@@ -14,6 +14,7 @@ import {
   addAttachmentIdToFieldValue,
   deleteAttachmentIdFromFieldValue,
   updateFormWithNewAttachment,
+  updateFormsInputValues,
 } from "@/utils/application";
 import { useParams } from "next/navigation";
 import {
@@ -46,6 +47,27 @@ function reducer(
       return {
         ...state,
         application: action.payload as RetrievedApplication,
+        isLoading: false,
+      };
+
+    case ApplicationActionType.INPUT_SAVED:
+      const payload = action.payload as {
+        formId: number;
+        fieldId: number;
+        newValue: string;
+      };
+
+      return {
+        ...state,
+        application: {
+          ...state.application,
+          forms: updateFormsInputValues(
+            state.application!.forms,
+            payload.formId,
+            payload.fieldId,
+            payload.newValue,
+          ),
+        } as RetrievedApplication,
         isLoading: false,
       };
 
@@ -187,6 +209,39 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
     }
   }
 
+  async function updateInputFields(
+    formId: number,
+    fieldId: number,
+    newValue: string,
+  ): Promise<void> {
+    try {
+      dispatch({ type: ApplicationActionType.LOADING });
+
+      const action = {
+        type: ApplicationActionType.INPUT_SAVED,
+        payload: {
+          formId: formId,
+          fieldId: fieldId,
+          newValue: newValue,
+        },
+      };
+
+      dispatch(action);
+
+      const { forms: updatedForms } = reducer(
+        { application, isLoading, error },
+        action,
+      ).application as RetrievedApplication;
+      const response = await saveFormAndDuos(updatedForms);
+      if (response.ok) fetchApplication();
+    } catch (error) {
+      dispatch({
+        type: ApplicationActionType.REJECTED,
+        payload: "Failed to save application",
+      });
+    }
+  }
+
   async function deleteAttachment(
     formId: number,
     fieldId: number,
@@ -275,6 +330,7 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
         addAttachment,
         deleteAttachment,
         submitApplication,
+        updateInputFields,
         clearError,
       }}
     >

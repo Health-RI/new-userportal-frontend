@@ -76,7 +76,7 @@ interface FormField {
   private: boolean;
   visible: boolean;
   title: Label[];
-  type: string;
+  type: FieldType;
 }
 
 interface InvitedMember {
@@ -131,6 +131,12 @@ export interface SaveFormField {
 export interface SaveDUOCode {
   duoId: number;
   restrictions: SaveDUOCodeRestriction[];
+}
+
+export enum FieldType {
+  TEXT = 'text',
+  TEXT_AREA = 'texta',
+  ATTACHMENT = 'attachment',
 }
 
 interface SaveDUOCodeRestriction {

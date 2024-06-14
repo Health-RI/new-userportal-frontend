@@ -62,7 +62,7 @@ function reducer(
         application: {
           ...state.application,
           forms: updateFormsInputValues(
-            state.application?.forms!,
+            state.application!.forms,
             payload.formId,
             payload.fieldId,
             payload.newValue,
@@ -156,7 +156,6 @@ function ApplicationProvider({ children }: ApplicationProviderProps) {
 
     if (response.ok) {
       const retrievedApplication = await response.json();
-      console.log(retrievedApplication);
       dispatch({
         type: ApplicationActionType.APPLICATION_LOADED,
         payload: retrievedApplication,

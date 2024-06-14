@@ -20,11 +20,13 @@ function InputFormField({ formId, field, title }: InputFormFieldProps) {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      updateInputFields(formId, field.id, inputValue);
+      if (inputValue !== field.value) {
+        updateInputFields(formId, field.id, inputValue);
+      }
     }, 2000);
 
     return () => clearTimeout(timeoutId);
-  }, [inputValue, 2000]);
+  }, [inputValue, formId, field, updateInputFields]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

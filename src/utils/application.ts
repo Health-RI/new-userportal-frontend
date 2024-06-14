@@ -31,7 +31,7 @@ function updateFormsInputValues(forms: Form[], formId: number, fieldId: number, 
 function updateFormInputValues(form: Form, fieldId: number, newValue: string): Form {
   return {
     ...form,
-    fields: form.fields.map((field) => (field.id === fieldId ? { ...field, value: newValue } : field)),
+    fields: form.fields.map((field) => (field.id === fieldId ? { ...field, value: newValue ?? '' } : field)),
   };
 }
 

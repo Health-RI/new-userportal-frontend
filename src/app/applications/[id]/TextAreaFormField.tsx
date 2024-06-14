@@ -6,6 +6,7 @@
 
 import { useApplicationDetails } from "@/providers/application/ApplicationProvider";
 import { FormField } from "@/types/application.types";
+import { useEffect, useState } from "react";
 
 type TextAreaFormFieldProps = {
   field: FormField;
@@ -14,7 +15,20 @@ type TextAreaFormFieldProps = {
 };
 
 function TextAreaFormField({ formId, field, title }: TextAreaFormFieldProps) {
-  const { isLoading } = useApplicationDetails();
+  const { isLoading, updateInputFields } = useApplicationDetails();
+  const [inputValue, setInputValue] = useState(field.value);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      updateInputFields(formId, field.id, inputValue);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, [inputValue, 2000]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(event.target.value);
+  };
 
   return (
     <div className="rounded border p-4">
@@ -24,7 +38,10 @@ function TextAreaFormField({ formId, field, title }: TextAreaFormFieldProps) {
         </div>
         <textarea
           placeholder={title}
+          rows={5}
+          value={inputValue}
           className="mt-4 w-full rounded-lg border-2 border-primary px-4 py-[9px] shadow-sm transition-all duration-200 ease-in-out hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+          onChange={handleInputChange}
           disabled={isLoading}
         />
       </div>

@@ -135,6 +135,30 @@ const AboutPage: React.FC = () => {
         .
       </p>
 
+      <PageSubHeading className="my-4">Huidige ontwikkelingen</PageSubHeading>
+      <p>
+        U kunt de huidige ontwikkelingen en updates over de Catalogus,
+        metadatastandaard en onboarding van datasets vinden op de pagina{" "}
+        <a
+          href="https://health-ri.atlassian.net/wiki/spaces/FSD/pages/473464833/Current+ontwikkelingen"
+          className="text-blue-500 hover:underline"
+        >
+          Huidige ontwikkelingen
+        </a>
+        .
+      </p>
+      <p>
+        Als u uw gegevens wilt onboarden, neem dan contact op met de Health-RI
+        servicedesk op{" "}
+        <a
+          href="mailto:servicedesk@health-ri.nl?subject=Onboarding"
+          className="text-blue-500 hover:underline"
+        >
+          servicedesk@health-ri.nl
+        </a>{" "}
+        met het woord <strong>Onboarding</strong> in het onderwerp.
+      </p>
+
       <PageSubHeading className="my-4">Beoogde doorontwikkeling</PageSubHeading>
       <p>
         In de vervolgontwikkeling zal op basis van Health-DCAT de set aan

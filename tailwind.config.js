@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import { themeConfig } from './src/config/theme.ts';
+import { themeConfig } from "./src/config/theme.ts";
 
 export default {
   content: [

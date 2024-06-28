@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'dotenv/config';
-import { exposeFont, tabularFont, satoshiFont, robotoFont } from "./fonts";
+import { exposeFont, tabularFont, satoshiFont, robotoFont } from './fonts';
 
 type FontType = 'LIGHT' | 'MEDIUM' | 'SANS';
 

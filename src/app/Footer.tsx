@@ -17,7 +17,7 @@ import flag from "../public/eu-flag.png";
 
 function Footer() {
   return (
-    <footer className="mt-8 flex flex-col items-center justify-between gap-y-4 border-t-4 border-t-primary bg-white-smoke p-7 md:flex-row md:gap-x-4 md:gap-y-0">
+    <footer className="border-t-primary bg-white-smoke mt-8 flex flex-col items-center justify-between gap-y-4 border-t-4 p-7 md:flex-row md:gap-x-4 md:gap-y-0">
       <div className="flex items-center gap-4">
         <Image src={flag} alt="EU flag" width={80} />
         <p className="text-xs md:text-sm">
@@ -28,7 +28,7 @@ function Footer() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex flex-row justify-center gap-11 text-primary">
+        <div className="text-primary flex flex-row justify-center gap-11">
           <a
             href="https://www.linkedin.com/company/gdi-euproject/"
             target="_blank"
@@ -72,7 +72,7 @@ function Footer() {
           </a>
         </div>
         <a
-          className="text-xs hover:text-info md:text-left md:text-sm"
+          className="hover:text-info text-xs md:text-left md:text-sm"
           href="mailto:gdi-coordination@elixir-europe.org"
         >
           gdi-coordination&#64;elixir-europe.org

@@ -13,7 +13,7 @@ function ListItem({ children, className }: ListItemProps) {
   return (
     <li
       className={cn(
-        "break-words rounded-lg border bg-white-smoke p-8",
+        "bg-white-smoke break-words rounded-lg border p-8",
         className,
       )}
     >

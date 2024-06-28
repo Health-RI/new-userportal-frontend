@@ -41,7 +41,7 @@ const DistributionAccordion = ({
           <div
             onClick={() => toggleItem(index)}
             onKeyPress={() => toggleItem(index)}
-            className="flex cursor-pointer items-center justify-between rounded border-2 border-b-0 bg-white-smoke p-4"
+            className="bg-white-smoke flex cursor-pointer items-center justify-between rounded border-2 border-b-0 p-4"
           >
             <span className="flex items-center">
               <FontAwesomeIcon icon={faFile} className="text-primary" />
@@ -49,7 +49,7 @@ const DistributionAccordion = ({
                 {distribution.title}
               </span>
               {distribution.format && (
-                <span className="mx-2 inline-block bg-warning px-2.5 py-0.5 font-medium text-xs text-black">
+                <span className="bg-warning mx-2 inline-block px-2.5 py-0.5 font-medium text-xs text-black">
                   {distribution.format.label}
                 </span>
               )}

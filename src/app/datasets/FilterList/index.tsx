@@ -43,9 +43,9 @@ function FilterList({
   }
 
   return (
-    <div className="flex flex-col gap-y-10 rounded-lg bg-white-smoke px-6 py-8">
+    <div className="bg-white-smoke flex flex-col gap-y-10 rounded-lg px-6 py-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl text-primary">
+        <h1 className="text-primary text-xl">
           <span className="mr-2">
             <FontAwesomeIcon icon={faFilter} />
           </span>

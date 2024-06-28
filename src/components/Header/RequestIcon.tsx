@@ -14,7 +14,9 @@ interface RequestIconProps {
 const RequestIcon: React.FC<RequestIconProps> = ({ isActive }) => (
   <Link
     href="/requests"
-    className={`flex items-center text-info hover:text-hover-color ${isActive ? "text-primary" : ""}`}
+    className={`text-info hover:text-hover-color flex items-center ${
+      isActive ? "text-primary" : ""
+    }`}
   >
     <FontAwesomeIcon icon={faFolderOpen} className="text-xl lg:text-2xl" />
   </Link>

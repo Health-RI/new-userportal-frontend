@@ -128,7 +128,7 @@ export default function DatasetPage() {
               if (group.facets.length > 0) {
                 return (
                   <div
-                    className="col-start-0 col-span-12 rounded-lg border bg-white-smoke"
+                    className="col-start-0 bg-white-smoke col-span-12 rounded-lg border"
                     key={group.key}
                   >
                     <FilterList
@@ -146,21 +146,23 @@ export default function DatasetPage() {
             <div className="col-start-0 col-span-12 flex items-center justify-between xl:col-span-10 xl:col-start-2">
               <SearchBar queryParams={queryParams} />
               <button
-                className="ml-4 h-11 rounded-lg bg-info px-4 text-xs text-white hover:bg-secondary md:text-xs xl:hidden"
+                className="bg-info hover:bg-secondary ml-4 h-11 rounded-lg px-4 text-xs text-white md:text-xs xl:hidden"
                 onClick={() => toggleFullScreenFilter(!isFullScreenFilterOpen)}
               >
                 <FontAwesomeIcon icon={faFilter} />
               </button>
             </div>
-            <p className="col-start-0 col-span-12 mb-12 mt-5 text-center text-sm text-info">
-              {`${response.datasetCount!} ${response.datasetCount! > 1 ? "datasets" : "dataset"} found`}
+            <p className="col-start-0 text-info col-span-12 mb-12 mt-5 text-center text-sm">
+              {`${response.datasetCount!} ${
+                response.datasetCount! > 1 ? "datasets" : "dataset"
+              } found`}
             </p>
             <div className="col-start-0 col-span-4 flex flex-col gap-4">
               {response.facetGroups?.map((group) => {
                 if (group.facets.length > 0) {
                   return (
                     <div
-                      className="border-1 col-start-0 col-span-4 mr-6 hidden h-fit rounded-lg border bg-white-smoke xl:block"
+                      className="border-1 col-start-0 bg-white-smoke col-span-4 mr-6 hidden h-fit rounded-lg border xl:block"
                       key={group.key}
                     >
                       <FilterList

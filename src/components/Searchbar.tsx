@@ -106,18 +106,18 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
       <div className="relative">
         <input
           placeholder="Search"
-          className={`${sizeClass} w-full rounded-lg border-2 border-primary px-4 py-[9px] shadow-sm transition-all duration-200 ease-in-out hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary`}
+          className={`${sizeClass} border-primary focus:ring-primary w-full rounded-lg border-2 px-4 py-[9px] shadow-sm transition-all duration-200 ease-in-out hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2`}
           value={query}
           onChange={handleQueryChange}
           onBlur={handleBlur}
           onKeyDown={handleEnter}
         ></input>
         {suggestions.length > 0 && (
-          <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-white-smoke bg-white shadow-lg">
+          <div className="border-white-smoke absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg">
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion.id}
-                className="w-full cursor-pointer px-4 py-2 text-left first:rounded-t-md last:rounded-b-md hover:bg-primary hover:text-white"
+                className="hover:bg-primary w-full cursor-pointer px-4 py-2 text-left first:rounded-t-md last:rounded-b-md hover:text-white"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion.title}
@@ -126,11 +126,11 @@ function SearchBar({ queryParams, size }: SearchBarProps) {
           </div>
         )}
         <div
-          className={`${sizeClass} item-stretch absolute bottom-0 right-0 flex border-primary`}
+          className={`${sizeClass} item-stretch border-primary absolute bottom-0 right-0 flex`}
         >
           <button
             type="submit"
-            className="flex w-full cursor-pointer items-center rounded-r-lg bg-primary px-4 tracking-wide text-white transition-colors duration-200 hover:bg-secondary sm:w-auto"
+            className="bg-primary hover:bg-secondary flex w-full cursor-pointer items-center rounded-r-lg px-4 tracking-wide text-white transition-colors duration-200 sm:w-auto"
           >
             <FontAwesomeIcon icon={faSearch} />
           </button>

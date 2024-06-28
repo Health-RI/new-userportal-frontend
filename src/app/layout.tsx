@@ -7,7 +7,6 @@ import { DatasetBasketProvider } from "@/providers/DatasetBasketProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { PublicEnvScript } from "next-runtime-env";
-import { getSelectedFonts } from "@/utils/fontSelector";
 import Footer from "./Footer";
 import SessionProviderWrapper from "./SessionProviderWrapper";
 import "./globals.css";

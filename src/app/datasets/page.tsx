@@ -128,7 +128,7 @@ export default function DatasetPage() {
               if (group.facets.length > 0) {
                 return (
                   <div
-                    className="col-start-0 bg-white-smoke col-span-12 rounded-lg border"
+                    className="col-start-0 bg-surface col-span-12 rounded-lg border"
                     key={group.key}
                   >
                     <FilterList
@@ -162,7 +162,7 @@ export default function DatasetPage() {
                 if (group.facets.length > 0) {
                   return (
                     <div
-                      className="border-1 col-start-0 bg-white-smoke col-span-4 mr-6 hidden h-fit rounded-lg border xl:block"
+                      className="border-1 col-start-0 bg-surface col-span-4 mr-6 hidden h-fit rounded-lg border xl:block"
                       key={group.key}
                     >
                       <FilterList

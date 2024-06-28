@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Disclaimer() {
   return (
-    <div className="md:mt-15 bg-claret m-5 mt-20 flex flex-row items-center gap-4 rounded-lg p-5 text-white">
+    <div className="md:mt-15 bg-disclaimer m-5 mt-20 flex flex-row items-center gap-4 rounded-lg p-5 text-white">
       <div className="text-2xl">
         <FontAwesomeIcon icon={faExclamationCircle} />
       </div>

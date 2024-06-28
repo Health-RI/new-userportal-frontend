@@ -10,11 +10,8 @@ export const themeConfig = {
     info: process.env.NEXT_PUBLIC_COLOR_INFO,
     warning: process.env.NEXT_PUBLIC_COLOR_WARNING,
     'hover-color': process.env.NEXT_PUBLIC_COLOR_HOVER_COLOR,
-    'wine-berry': process.env.NEXT_PUBLIC_COLOR_WINE_BERRY,
-    claret: process.env.NEXT_PUBLIC_COLOR_CLARET,
-    'white-smoke': process.env.NEXT_PUBLIC_COLOR_WHITE_SMOKE,
-    'scampi-blue': process.env.NEXT_PUBLIC_COLOR_SCAMPI_BLUE,
-    'grandis-yellow': process.env.NEXT_PUBLIC_COLOR_GRANDIS_YELLOW,
+    disclaimer: process.env.NEXT_PUBLIC_disclaimer,
+    surface: process.env.NEXT_PUBLIC_COLOR_SURFACE,
   },
   fonts: {
     light: process.env.NEXT_PUBLIC_SELECTED_FONT_LIGHT,

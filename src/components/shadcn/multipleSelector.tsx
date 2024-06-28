@@ -555,7 +555,7 @@ const MultipleSelector = React.forwardRef<
                                 onChange?.(newOptions);
                               }}
                               className={cn(
-                                "hover:bg-white-smoke cursor-pointer",
+                                "hover:bg-surface cursor-pointer",
                                 option.disable &&
                                   "text-muted-foreground cursor-default",
                               )}

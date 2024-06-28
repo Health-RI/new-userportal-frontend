@@ -80,7 +80,7 @@ function Header() {
   }
 
   return (
-    <div className="bg-white-smoke flex w-full items-center justify-between px-4">
+    <div className="bg-surface flex w-full items-center justify-between px-4">
       <div className="flex justify-between gap-x-8 md:gap-x-12 lg:gap-x-24">
         <Link href="/">
           <Image
@@ -102,7 +102,7 @@ function Header() {
         <div className="text-primary hidden items-center gap-x-3 text-base font-semibold sm:flex lg:text-lg">
           <Link
             href="/"
-            className={`border-white-smoke hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
+            className={`border-surface hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
               activeTab === "/" ? "bg-primary text-white" : ""
             }`}
           >
@@ -110,7 +110,7 @@ function Header() {
           </Link>
           <Link
             href="/datasets"
-            className={`border-white-smoke hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
+            className={`border-surface hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
               activeTab.includes("datasets") ? "bg-primary text-white" : ""
             }`}
           >
@@ -118,7 +118,7 @@ function Header() {
           </Link>
           <Link
             href="/about"
-            className={`border-white-smoke hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
+            className={`border-surface hover:border-hover-color rounded-lg border-[1.5px] px-3 py-1 transition-colors duration-300 lg:px-7 ${
               activeTab === "/about" ? "bg-primary text-white" : ""
             }`}
           >
@@ -158,7 +158,7 @@ function Header() {
         {isMenuOpen && (
           <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg">
             {session && (
-              <div className="border-white-smoke border-b-[1.5px] px-4 py-2">
+              <div className="border-surface border-b-[1.5px] px-4 py-2">
                 <FontAwesomeIcon icon={faUser} className="mr-2" />
                 {session?.user?.name}
               </div>
@@ -181,7 +181,7 @@ function Header() {
             </Link>
             <Link
               href="/about"
-              className="border-white-smoke hover:bg-hover-color block border-b-[2px] px-4 py-2 hover:text-white"
+              className="border-surface hover:bg-hover-color block border-b-[2px] px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
@@ -197,7 +197,7 @@ function Header() {
             </Link>
             <Link
               href="/basket"
-              className="border-white-smoke hover:bg-hover-color block border-b-[2px] px-4 py-2 hover:text-white"
+              className="border-surface hover:bg-hover-color block border-b-[2px] px-4 py-2 hover:text-white"
               onClick={closeMenu}
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />

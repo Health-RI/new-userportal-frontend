@@ -16,4 +16,9 @@ export const themeConfig = {
     'scampi-blue': process.env.NEXT_PUBLIC_COLOR_SCAMPI_BLUE,
     'grandis-yellow': process.env.NEXT_PUBLIC_COLOR_GRANDIS_YELLOW,
   },
+  fonts: {
+    light: process.env.NEXT_PUBLIC_SELECTED_FONT_LIGHT,
+    medium: process.env.NEXT_PUBLIC_SELECTED_FONT_MEDIUM,
+    sans: process.env.NEXT_PUBLIC_SELECTED_FONT_SANS,
+  },
 };

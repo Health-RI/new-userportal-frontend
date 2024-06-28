@@ -4,10 +4,9 @@
 
 import 'dotenv/config';
 import { exposeFont, tabularFont, satoshiFont, robotoFont } from './fonts';
+import { themeConfig } from '@/config/theme';
 
-type FontType = 'LIGHT' | 'MEDIUM' | 'SANS';
-
-const fonts = {
+const fontMap = {
   expose: exposeFont,
   tabular: tabularFont,
   satoshi: satoshiFont,
@@ -15,18 +14,10 @@ const fonts = {
 };
 
 export function getSelectedFonts(): string {
-  const selectedFonts: Array<{ type: FontType; name: string | undefined }> = [
-    { type: 'LIGHT', name: process.env.NEXT_PUBLIC_SELECTED_FONT_LIGHT },
-    { type: 'MEDIUM', name: process.env.NEXT_PUBLIC_SELECTED_FONT_MEDIUM },
-    { type: 'SANS', name: process.env.NEXT_PUBLIC_SELECTED_FONT_SANS },
-  ];
-
-  return selectedFonts
-    .map(({ name }) => {
-      if (name && name.toLowerCase() in fonts) {
-        return fonts[name.toLowerCase() as keyof typeof fonts].variable;
-      }
-      return '';
+  return Object.values(themeConfig.fonts)
+    .map((fontName) => {
+      const font = fontMap[fontName as keyof typeof fontMap];
+      return font ? font.variable : '';
     })
     .filter(Boolean)
     .join(' ');

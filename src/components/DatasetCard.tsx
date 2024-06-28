@@ -51,26 +51,26 @@ function DatasetCard({
     <>
       <div className="mb-4 flex justify-between">
         <Link href={`/datasets/${dataset.id}`} className="hover:underline">
-          <h3 className="text-xl text-primary md:text-2xl">{dataset.title}</h3>
+          <h3 className="text-primary text-xl md:text-2xl">{dataset.title}</h3>
         </Link>
         {isEntitlement ? (
           <>
-            <p className="font-date text-sm text-info md:text-base">
+            <p className="font-date text-info text-sm md:text-base">
               <span className="text-primary">Start: </span>
               {!start ? "-" : formatDate(start)}
             </p>
-            <p className="font-date text-sm text-info md:text-base">
+            <p className="font-date text-info text-sm md:text-base">
               <span className="text-primary">End: </span>
               {!end ? "-" : formatDate(end)}
             </p>
           </>
         ) : (
-          <p className="font-date text-sm text-info md:text-base">
+          <p className="font-date text-info text-sm md:text-base">
             {formatDate(dataset.createdAt)}
           </p>
         )}
       </div>
-      <p className="mb-4 text-sm text-info md:text-base">{dataset.catalogue}</p>
+      <p className="text-info mb-4 text-sm md:text-base">{dataset.catalogue}</p>
       {truncatedDesc && (
         <p className="mb-4 text-xs md:text-sm">{truncatedDesc}</p>
       )}
@@ -82,7 +82,7 @@ function DatasetCard({
         }
       >
         {!!dataset.recordsCount && (
-          <span className="mt-4 flex rounded bg-info px-2 py-1 text-xs font-bold text-white">
+          <span className="bg-info mt-4 flex rounded px-2 py-1 text-xs font-bold text-white">
             {dataset.recordsCount} record{dataset.recordsCount > 1 ? "s" : ""}{" "}
             found
           </span>

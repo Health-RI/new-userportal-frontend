@@ -425,7 +425,7 @@ const MultipleSelector = React.forwardRef<
       >
         <div
           className={cn(
-            "border-input ring-offset-background focus-within:ring-ring hover:border-input-hover group rounded-md border bg-white px-3 py-2 text-sm ring-info transition-all duration-200 ease-in-out focus-within:ring-2 focus-within:ring-offset-2",
+            "border-input ring-offset-background focus-within:ring-ring hover:border-input-hover ring-info group rounded-md border bg-white px-3 py-2 text-sm transition-all duration-200 ease-in-out focus-within:ring-2 focus-within:ring-offset-2",
             className,
           )}
         >
@@ -454,7 +454,9 @@ const MultipleSelector = React.forwardRef<
                   : placeholder
               }
               className={cn(
-                `placeholder:text-muted-foreground placeholder:text-md ml-2 flex-1 bg-transparent outline-none placeholder:text-black ${selected.length ? "mb-2" : ""}`,
+                `placeholder:text-muted-foreground placeholder:text-md ml-2 flex-1 bg-transparent outline-none placeholder:text-black ${
+                  selected.length ? "mb-2" : ""
+                }`,
                 inputProps?.className,
               )}
             />
@@ -553,7 +555,7 @@ const MultipleSelector = React.forwardRef<
                                 onChange?.(newOptions);
                               }}
                               className={cn(
-                                "cursor-pointer hover:bg-white-smoke",
+                                "hover:bg-white-smoke cursor-pointer",
                                 option.disable &&
                                   "text-muted-foreground cursor-default",
                               )}

@@ -16,7 +16,7 @@ function FormContainer({ form }: FormContainerProps) {
 
   return (
     <div className="mt-8">
-      <h3 className="mb-4 text-2xl text-primary">{formTitle}</h3>
+      <h3 className="text-primary mb-4 text-2xl">{formTitle}</h3>
       <ul className="space-y-4">
         {form.fields.map(
           (field) =>

@@ -45,17 +45,17 @@ export default function ErrorBoundary({
       <div className="container mx-auto w-full max-w-3xl p-4 md:p-8">
         <div>
           {process.env.NODE_ENV === "development" && error && (
-            <div className="bg-primary p-4 text-warning">
+            <div className="bg-primary text-warning p-4">
               <p className="font-medium">{error.message}</p>
               {error.stack && (
                 <pre className="mt-4 overflow-x-auto">{error.stack}</pre>
               )}
             </div>
           )}
-          <h1 className="mt-3 text-2xl font-semibold text-primary md:text-3xl">
+          <h1 className="text-primary mt-3 text-2xl font-semibold md:text-3xl">
             {heading}
           </h1>
-          <p className="mt-4 text-primary">{message}</p>
+          <p className="text-primary mt-4">{message}</p>
           <div className="mt-6">
             <Button
               href="/"

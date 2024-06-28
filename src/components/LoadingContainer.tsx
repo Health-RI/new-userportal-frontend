@@ -18,7 +18,7 @@ function LoadingContainer({ text, className }: LoadingContainerProps) {
       style={{ height: "calc(100vh - 100px)" }}
     >
       <div className="flex h-full items-center justify-center">
-        <div className="text-lg font-semibold text-primary">{text}</div>
+        <div className="text-primary text-lg font-semibold">{text}</div>
       </div>
     </div>
   );

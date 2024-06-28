@@ -20,7 +20,7 @@ const DatasetList: React.FC<DatasetListProps> = ({ datasets }) =>
       key={`${dataset.id}-${index}`}
     >
       <FontAwesomeIcon icon={faDatabase} className="text-md text-info" />
-      <h3 className="sm:text-md break-all text-base font-bold text-info lg:text-lg">
+      <h3 className="sm:text-md text-info break-all text-base font-bold lg:text-lg">
         {getLabelName(dataset.title)}
       </h3>
     </span>

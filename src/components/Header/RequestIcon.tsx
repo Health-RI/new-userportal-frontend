@@ -14,7 +14,7 @@ interface RequestIconProps {
 const RequestIcon: React.FC<RequestIconProps> = ({ isActive }) => (
   <Link
     href="/requests"
-    className={`text-info hover:text-hover-color flex items-center ${
+    className={`flex items-center text-info hover:text-hover-color ${
       isActive ? "text-primary" : ""
     }`}
   >

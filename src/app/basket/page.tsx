@@ -101,7 +101,7 @@ export default function Page() {
           <DatasetList datasets={basket} />
         ) : (
           <div className="flex w-full flex-col items-center justify-center gap-4">
-            <p className="text-primary text-center text-lg">
+            <p className="text-center text-lg text-primary">
               Your basket is empty.
             </p>
             <Button

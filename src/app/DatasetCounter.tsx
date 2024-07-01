@@ -18,11 +18,11 @@ export function DatasetCounter() {
   }, []);
 
   if (count === null) {
-    return <div className="text-primary text-xl font-bold">Loading...</div>;
+    return <div className="text-xl font-bold text-primary">Loading...</div>;
   }
 
   return (
-    <div className="text-primary mb-4 mt-10 flex items-baseline">
+    <div className="mb-4 mt-10 flex items-baseline text-primary">
       <p className="mr-3 text-4xl font-bold">{count.toLocaleString("en-GB")}</p>
       <p className="self-end text-xl font-bold">Datasets</p>
     </div>

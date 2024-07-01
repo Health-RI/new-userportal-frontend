@@ -103,13 +103,13 @@ export default function ApplicationDetailsPage() {
             lastEvent.eventType,
           )} at ${formatDateTime(lastEvent.eventTime.toString())}`}</p>
           <div>
-            <div className="bg-secondary h-[2px] opacity-80"></div>
+            <div className="h-[2px] bg-secondary opacity-80"></div>
 
             <div className="my-8 w-full lg:hidden">
               <Sidebar items={sidebarItems} />
             </div>
 
-            <div className="bg-secondary mt-5 h-[2px] opacity-80 lg:hidden"></div>
+            <div className="mt-5 h-[2px] bg-secondary opacity-80 lg:hidden"></div>
             <ul>
               {application.forms.map(
                 (form) =>

@@ -29,7 +29,7 @@ function FileUploadFormField({ field, formId, title }: FileUploadFieldProps) {
     <div className="rounded border p-4">
       <div className="flex justify-between">
         <div>
-          <h3 className="text-primary text-lg sm:text-xl">{`${title} ${
+          <h3 className="text-lg text-primary sm:text-xl">{`${title} ${
             field.optional ? "(Optional)" : ""
           }`}</h3>
         </div>
@@ -43,7 +43,7 @@ function FileUploadFormField({ field, formId, title }: FileUploadFieldProps) {
           />
           <label
             htmlFor={`input-file-${field.id}`}
-            className={`bg-info cursor-pointer rounded-lg p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs ${
+            className={`cursor-pointer rounded-lg bg-info p-2 py-2 text-[9px] font-bold tracking-wide text-white transition-colors duration-200 hover:opacity-80 sm:w-auto sm:px-4 sm:text-xs ${
               isLoading ? "cursor-not-allowed opacity-10" : ""
             }`}
           >

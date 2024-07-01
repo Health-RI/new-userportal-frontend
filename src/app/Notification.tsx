@@ -10,9 +10,9 @@ function Notification() {
     <div className="relative">
       <FontAwesomeIcon
         icon={faBell}
-        className="text-info text-[24px] md:text-[27px]"
+        className="text-[24px] text-info md:text-[27px]"
       />
-      <div className="bg-primary absolute right-0 top-0.5 h-3 w-3 rounded-full"></div>
+      <div className="absolute right-0 top-0.5 h-3 w-3 rounded-full bg-primary"></div>
     </div>
   );
 }

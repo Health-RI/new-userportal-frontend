@@ -12,7 +12,7 @@ interface ListItemProps {
 function ListItem({ children, className }: ListItemProps) {
   return (
     <li
-      className={cn("bg-surface break-words rounded-lg border p-8", className)}
+      className={cn("break-words rounded-lg border bg-surface p-8", className)}
     >
       {children}
     </li>

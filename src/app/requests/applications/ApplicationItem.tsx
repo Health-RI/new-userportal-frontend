@@ -52,11 +52,11 @@ export default function ApplicationItem({
                 window.location.href = `/applications/${application.id}`;
               }}
             >
-              <h3 className="text-primary text-xl md:text-2xl">
+              <h3 className="text-xl text-primary md:text-2xl">
                 {application.title}
               </h3>
             </a>
-            <div className="bg-warning rounded px-2.5 py-0.5 text-sm font-semibold">
+            <div className="rounded bg-warning px-2.5 py-0.5 text-sm font-semibold">
               {application.currentState.split("/").pop()}
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function ApplicationItem({
         <div className="mt-4 flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
           <div className="md:flex-1">
             <div className="mb-4">
-              <h3 className="text-primary mb-1 text-lg font-semibold">
+              <h3 className="mb-1 text-lg font-semibold text-primary">
                 Description
               </h3>
               <p className="text-md">
@@ -82,7 +82,7 @@ export default function ApplicationItem({
               </p>
             </div>
             <div className="mb-4">
-              <h3 className="text-primary mb-1 text-lg font-semibold">
+              <h3 className="mb-1 text-lg font-semibold text-primary">
                 Created At
               </h3>
               <p className="text-md font-date">
@@ -90,7 +90,7 @@ export default function ApplicationItem({
               </p>
             </div>
             <div>
-              <h3 className="text-primary mb-1 text-lg font-semibold">
+              <h3 className="mb-1 text-lg font-semibold text-primary">
                 State Modified At
               </h3>
               <p className="text-md font-date">
@@ -99,7 +99,7 @@ export default function ApplicationItem({
             </div>
           </div>
           <div className="md:flex-1">
-            <h3 className="text-primary mb-4 text-lg font-bold">Datasets</h3>
+            <h3 className="mb-4 text-lg font-bold text-primary">Datasets</h3>
             <DatasetList datasets={application.datasets} />
           </div>
         </div>

@@ -78,7 +78,7 @@ const ApplicationsPage: React.FC = () => {
           </List>
         ) : (
           <div className="flex w-full flex-col items-center justify-center gap-4">
-            <p className="text-md text-primary text-center">
+            <p className="text-md text-center text-primary">
               You don&apos;t have any applications yet.
             </p>
             <Button

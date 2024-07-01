@@ -38,7 +38,7 @@ function Avatar({ user }: AvatarProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="bg-info hover:bg-hover-color flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-[8px] text-xs text-white shadow-sm transition-all duration-300 md:p-[10px] md:text-[13px] lg:h-9 lg:w-9">
+        <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-info p-[8px] text-xs text-white shadow-sm transition-all duration-300 hover:bg-hover-color md:p-[10px] md:text-[13px] lg:h-9 lg:w-9">
           {user?.image ? (
             <Image src={user.image} alt="avatar" className="rounded-full" />
           ) : (
@@ -51,7 +51,7 @@ function Avatar({ user }: AvatarProps) {
       <DropdownMenuContent className="bg-white">
         <DropdownMenuGroup>
           <DropdownMenuItem
-            className="hover:bg-hover-color cursor-pointer gap-x-3 transition-all duration-300 hover:text-white"
+            className="cursor-pointer gap-x-3 transition-all duration-300 hover:bg-hover-color hover:text-white"
             onClick={handleSignOut}
           >
             <FontAwesomeIcon icon={faSignOut} className="text-sm" />

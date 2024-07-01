@@ -22,7 +22,7 @@ function TabItem({ tabItem, activeTab, setActiveTab }: TabItemProps) {
   return (
     <button
       onClick={() => setActiveTab(tabItem.name)}
-      className={`hover:bg-surface focus:text-primary flex w-full items-center justify-center gap-x-3 py-4 lg:px-20 xl:px-32 ${
+      className={`flex w-full items-center justify-center gap-x-3 py-4 hover:bg-surface focus:text-primary lg:px-20 xl:px-32 ${
         tabItem.name.toLowerCase() === activeTab ? "text-primary" : "text-black"
       } transition-all duration-300 ease-linear`}
     >

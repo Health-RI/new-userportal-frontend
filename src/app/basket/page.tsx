@@ -61,6 +61,7 @@ export default function Page() {
           text="Login to request"
           onClick={() => signIn("keycloak")}
           type="primary"
+          disabled={true}
         />
       );
     } else {

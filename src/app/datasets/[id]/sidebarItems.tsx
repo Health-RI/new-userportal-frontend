@@ -43,6 +43,15 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
       value: createTextItem(dataset.publisherName),
     },
     {
+      label: "Creator",
+      value: createLinkItems(
+        dataset.creator?.map((creator) => ({
+          label: creator.label,
+          url: creator.value,
+        })),
+      ),
+    },
+    {
       label: "Identifier",
       value: createTextItem(dataset.identifier),
     },
@@ -63,11 +72,13 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
       ),
     },
     {
-      label: "Contact URI",
-      value: createLinkItem({
-        label: dataset.contact?.label,
-        url: dataset.contact?.value,
-      }),
+      label: "Contact Point",
+      value: createLinkItems(
+        dataset.contact?.map((contact) => ({
+          label: contact.label,
+          url: contact.value,
+        })),
+      ),
     },
     {
       label: "Access rights",

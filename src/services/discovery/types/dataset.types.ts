@@ -15,7 +15,8 @@ export interface RetrievedDataset {
   modifiedAt: string;
   url: string;
   languages: ValueLabel[];
-  contact: ValueLabel;
+  contact: ValueLabel[];
+  creator: ValueLabel[];
   hasVersions: ValueLabel[];
   accessRights: ValueLabel;
   conformsTo: ValueLabel[];

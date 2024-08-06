@@ -45,9 +45,9 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
     {
       label: "Creator",
       value: createLinkItems(
-        dataset.creator?.map((creator) => ({
-          label: creator.label,
-          url: creator.value,
+        dataset.creators?.map((creators) => ({
+          label: creators.label,
+          url: creators.value,
         })),
       ),
     },
@@ -73,12 +73,8 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
     },
     {
       label: "Contact Point",
-      value: createLinkItems(
-        dataset.contact?.map((contact) => ({
-          label: contact.label,
-          url: contact.value,
-        })),
-      ),
+      value: <p>{<a href={dataset.contact?.value}>dataset.contact?.label</a> || "No contact provided."}</p>
+      ,
     },
     {
       label: "Access rights",

@@ -39,10 +39,10 @@ describe('datasetGet', () => {
     expect(dataset.themes[0].label).toEqual('label');
     expect(dataset.themes[0].value).toEqual('value');
 
-    expect(dataset.contact[0].label).toEqual('Test Contact');
-    expect(dataset.contact[0].value).toEqual('mailto:test@example.com');
-    expect(dataset.creator[0].label).toEqual('label');
-    expect(dataset.creator[0].value).toEqual('value');
+    expect(dataset.contacts[0].name).toEqual('Test Contact');
+    expect(dataset.contacts[0].uri).toEqual('mailto:test@example.com');
+    expect(dataset.creators[0].label).toEqual('label');
+    expect(dataset.creators[0].value).toEqual('value');
 
     expect(dataset.publisherName).toEqual('Publisher');
     expect(dataset.catalogue).toEqual('Organization');

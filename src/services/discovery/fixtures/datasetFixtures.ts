@@ -13,13 +13,14 @@ export const retrivedDatasetFixture = {
       label: 'label',
     },
   ],
-  contact: [
+  contacts: [
     {
-      label: 'Test Contact',
-      value: 'mailto:test@example.com',
+      name: 'Test Contact',
+      uri: 'mailto:test@example.com',
+      email: 'test@example.com',
     },
   ],
-  creator: [
+  creators: [
     {
       label: 'label',
       value: 'value',

@@ -73,8 +73,12 @@ function createDatasetSidebarItems(dataset: RetrievedDataset): SidebarItem[] {
     },
     {
       label: "Contact Point",
-      value: <p>{<a href={dataset.contact?.value}>dataset.contact?.label</a> || "No contact provided."}</p>
-      ,
+      value: createLinkItems(
+        dataset.contacts?.map((contact) => ({
+          label: contact.name ? contact.name : contact.uri,
+          url: contact.uri,
+        })),
+      ),
     },
     {
       label: "Access rights",

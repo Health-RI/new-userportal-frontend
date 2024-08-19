@@ -15,7 +15,8 @@ export interface RetrievedDataset {
   modifiedAt: string;
   url: string;
   languages: ValueLabel[];
-  contact: ValueLabel;
+  contacts: ContactPoint[];
+  creators: ValueLabel[];
   hasVersions: ValueLabel[];
   accessRights: ValueLabel;
   conformsTo: ValueLabel[];
@@ -51,3 +52,9 @@ export interface RetrievedDistribution {
   createdAt: string;
   modifiedAt: string;
 }
+
+export type ContactPoint = {
+  name: string;
+  email: string;
+  uri: string;
+};

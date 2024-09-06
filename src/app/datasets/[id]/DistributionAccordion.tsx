@@ -2,15 +2,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RetrievedDistribution } from "@/services/discovery/types/dataset.types";
+import { formatDate } from "@/utils/formatDate";
 import {
   faChevronDown,
   faChevronUp,
   faFile,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatDate } from "@/utils/formatDate";
-import { RetrievedDistribution } from "@/services/discovery/types/dataset.types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef, useState } from "react";
 
 interface DistributionAccordionProps {
   distributions: RetrievedDistribution[];
@@ -60,7 +60,9 @@ const DistributionAccordion = ({
             />
           </div>
           <div
-            ref={(el) => (contentRefs.current[index] = el)}
+            ref={(el) => {
+              contentRefs.current[index] = el;
+            }}
             style={{
               maxHeight:
                 openIndex === index
